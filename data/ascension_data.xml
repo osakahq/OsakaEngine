@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<game name="Ascension: Gates of Heaven" width="512" height="448" linefeed="windows">
+	<!-- TinyXML2 adds an extra backslash so no need for \\ -->
+	<!-- The screens are always initialized in Ascension.cpp -->
+	<!--<screens>
+		<startmenu 
+			background-sprite="startmenu_background" 
+			title-sprite="startmenu_title" 
+			subtitle-sprite="startmenu_subtitle" loadgame-screen="loadgame" options-screen="options" />
+	</screens>-->
+	<!-- Types of loadings -->
+	<!-- always-load-unload in asset property bypasses all types of loading meaning that it will ALWAYS unload/load like a heavy video -->
+	<!--  . FULL_LOAD_STARTUP: 			Loads everything from the start. No unload -->
+	<!--  . SMARTLOAD_PARCIAL_NOUNLOAD: Loads the current scene, and obeys the always-load parameter. No unload. -->
+	<!--  . SMARTLOAD_FULL_NOUNLOAD 	Loads the current scene, and loads all the related scenes (ignores always-load). No unload -->
+	<!--  . SMARTLOAD 					Obeys the related scene parameters and unloads according to those parameters. -->
+	<asset-map loading="SMARTLOAD_PARCIAL_NOUNLOAD">
+		<!-- This is not exactly necessary but it allows fine unloading tunning -->
+		<init-load>
+			<asset id="texturemap_common" />
+			<asset id="s_cursor_move" />
+			<asset id="s_cursor_cancel" />
+		</init-load>
+		<scenes>
+			<scene id="startmenu">
+				<assets>
+					<asset id="texturemap_cinematics" />
+					<asset id="s_startmenu" />
+				</assets>
+				<related-scenes>
+					<scene id="loadgame" always-load="true" when-switch-unload-self="false" />
+					<scene id="options" always-load="true" when-switch-unload-self="false" />
+
+					<scene id="credits" always-load="true" when-switch-unload-self="false" />
+					<!-- new game -->
+					<scene id="playback_intro" always-load="false" when-switch-unload-self="true" />
+				</related-scenes>
+			</scene>
+			<scene id="loadgame">
+				<!-- Since it has no related scenes rule, when it changes itself to another scene if that scene has -->
+				<!-- loadgame scene, then it won't be unloaded, otherwise it will be unloaded. -->
+				<assets>
+					<asset id="s_startmenu" />
+				</assets>
+				<!-- There is no related scene logically, because the initiators are startmenu and world/instance -->
+				<!-- And because of that, there is no need to worry about loading other scenes. -->
+				<!-- Also, normally these type of screens have unload-self="false" in parent (see "startmenu")-->
+			</scene>
+			<scene id="options">
+				<assets>
+					<!-- <asset id="s_startmenu" /> !-->
+				</assets>
+				<!-- Same explanation as in "loadgame" -->
+			</scene>
+			<scene id="credits">
+				<assets>
+					<asset id="texturemap_cinematics" />
+				</assets>
+				<!-- Same explanation as in "loadgame"  -->
+			</scene>
+			<scene id="playback_intro">
+				<assets>
+					<asset id="video_intro" always-load-unload="true" />
+					<asset id="texturemap_cinematics" />
+				</assets>
+				<related-scenes>
+					<scene id="instance_town1" always-load="true" when-switch-unload-self="true" />
+				</related-scenes>
+			</scene>
+			<scene id="instance_town1">
+				<assets>
+					<!-- <asset id="texturemap_cinematics" /> -->
+				</assets>
+				<related-scenes>
+					<scene id="world_earth" always-load="false" when-switch-unload-self="false" />
+					<scene id="battle_town1" always-load="true" when-switch-unload-self="false" />
+				</related-scenes>
+			</scene>
+			<scene id="battle_town1">
+				<assets>
+					<asset id="texturemap_cinematics" />
+				</assets>
+			</scene>
+			<scene id="world_earth">
+				<assets>
+					<!-- <asset id="texturemap_cinematics" /> -->
+				</assets>
+				<related-scenes>
+					<!-- It is by pure logic that instance_town1 has unload-self=false -->
+					<!-- Since this is not an intensive graphics game, it is fine to leave world_earth loaded -->
+					<!--  . when player is in instance_town1, OTHERWISE... -->
+					<!--  . If it is an intensive graphic game then it should always be unloaded -->
+					<scene id="instance_town1" always-load="false" when-switch-unload-self="false" />
+					<scene id="battle_world1" always-load="true" when-switch-unload-self="false" />
+				</related-scenes>
+			</scene>
+		</scenes>
+	</asset-map>
+
+	<spritemaps>
+		<spritemap id="texturemap_cinematics" filename="data\cinematics.png" colorkey-r="255" colorkey-g="0" colorkey-b="255">
+			startmenu_background = 0 0 614 608
+			startmenu_subtitle = 0 608 496 35
+			startmenu_title = 614 0 400 51
+		</spritemap>
+		<spritemap id="texturemap_common" filename="data\common.png" colorkey-r="255" colorkey-g="0" colorkey-b="255">
+			focus = 0 32 16 16
+			table = 0 0 32 32
+			wood_center = 32 0 32 32
+			font_! = 0 48 12 14
+			font_# = 16 32 12 14
+			font_$ = 28 32 12 14
+			font_% = 12 48 12 14
+			font__amp = 24 46 12 14
+			font_( = 40 32 12 14
+			font_) = 36 46 12 14
+			font_, = 52 32 12 14
+			font_- = 48 46 12 14
+			font_@ = 64 0 12 14
+			font_^ = 76 0 12 14
+			font__( = 64 14 12 14
+			font__) = 88 0 12 14
+			font__- = 76 14 12 14
+			font__A1 = 64 28 12 14
+			font__A2 = 100 0 12 14
+			font__A3 = 88 14 12 14
+			font__A4 = 76 28 12 14
+			font__arrowdown = 64 42 12 14
+			font__arrowleft = 112 0 12 14
+			font__arrowright = 100 14 12 14
+			font__arrowup = 88 28 12 14
+			font__ast = 76 42 12 14
+			font__B1 = 112 14 12 14
+			font__C1 = 100 28 12 14
+			font__circle = 88 42 12 14
+			font__ddot = 112 28 12 14
+			font__dot = 100 42 12 14
+			font__dotcomma = 112 42 12 14
+			font__dquote = 0 62 12 14
+			font__E1 = 12 62 12 14
+			font__E2 = 0 76 12 14
+			font__E3 = 24 60 12 14
+			font__E4 = 12 76 12 14
+			font__eqmark = 0 90 12 14
+			font__equal = 36 60 12 14
+			font__fdiagonal = 24 74 12 14
+			font__gt = 12 90 12 14
+			font__heart = 0 104 12 14
+			font__I1 = 48 60 12 14
+			font__I2 = 36 74 12 14
+			font__I3 = 24 88 12 14
+			font__I4 = 12 104 12 14
+			font__i5 = 60 56 12 14
+			font__line = 48 74 12 14
+			font__lt = 36 88 12 14
+			font__o = 24 102 12 14
+			font__O1 = 72 56 12 14
+			font__O2 = 60 70 12 14
+			font__O3 = 48 88 12 14
+			font__O4 = 36 102 12 14
+			font__sa = 84 56 12 14
+			font__song = 72 70 12 14
+			font__sqmark = 60 84 12 14
+			font__squote = 48 102 12 14
+			font__star = 96 56 12 14
+			font__tilde = 84 70 12 14
+			font__U1 = 72 84 12 14
+			font__U2 = 60 98 12 14
+			font__U3 = 108 56 12 14
+			font__U4 = 96 70 12 14
+			font__ucomma = 84 84 12 14
+			font__x = 72 98 12 14
+			font__yen = 60 112 12 14
+			font_{ = 108 70 12 14
+			font_} = 96 84 12 14
+			font_+ = 84 98 12 14
+			font_0 = 72 112 12 14
+			font_1 = 108 84 12 14
+			font_2 = 96 98 12 14
+			font_3 = 84 112 12 14
+			font_4 = 108 98 12 14
+			font_5 = 96 112 12 14
+			font_6 = 108 112 12 14
+			font_7 = 124 0 12 14
+			font_8 = 136 0 12 14
+			font_9 = 124 14 12 14
+			font_A = 148 0 12 14
+			font_B = 136 14 12 14
+			font_C = 124 28 12 14
+			font_D = 160 0 12 14
+			font_E = 148 14 12 14
+			font_F = 136 28 12 14
+			font_G = 124 42 12 14
+			font_H = 172 0 12 14
+			font_I = 160 14 12 14
+			font_J = 148 28 12 14
+			font_K = 120 56 12 14
+			font_L = 136 42 12 14
+			font_M = 184 0 12 14
+			font_N = 172 14 12 14
+			font_Ñ = 132 56 12 14
+			font_O = 160 28 12 14
+			font_P = 120 70 12 14
+			font_Q = 148 42 12 14
+			font_R = 196 0 12 14
+			font_S = 184 14 12 14
+			font_T = 172 28 12 14
+			font_U = 144 56 12 14
+			font_V = 160 42 12 14
+			font_W = 132 70 12 14
+			font_X = 120 84 12 14
+			font_Y = 208 0 12 14
+			font_Z = 196 14 12 14
+		</spritemap>
+	</spritemaps>
+	<fontmap error-sprite="_i5">
+		<character sprite="font__i5" id="_i5" />
+		
+		<character sprite="font_a" id="a" />
+		<character sprite="font_b" id="b" />
+		<character sprite="font_c" id="c" />
+		<character sprite="font_d" id="d" />
+		<character sprite="font_e" id="e" />
+		<character sprite="font_f" id="f" />
+		<character sprite="font_g" id="g" />
+		<character sprite="font_h" id="h" />
+		<character sprite="font_i" id="i" />
+		<character sprite="font_j" id="j" />
+		<character sprite="font_k" id="k" />
+		<character sprite="font_l" id="l" />
+		<character sprite="font_m" id="m" />
+		<character sprite="font_n" id="n" />
+		<character sprite="font_ñ" id="ñ" />
+		<character sprite="font_o" id="o" />
+		<character sprite="font_p" id="p" />
+		<character sprite="font_q" id="q" />
+		<character sprite="font_r" id="r" />
+		<character sprite="font_s" id="s" />
+		<character sprite="font_t" id="t" />
+		<character sprite="font_u" id="u" />
+		<character sprite="font_v" id="v" />
+		<character sprite="font_w" id="w" />
+		<character sprite="font_x" id="x" />
+		<character sprite="font_y" id="y" />
+		<character sprite="font_z" id="z" />
+		
+		<character sprite="font_A" id="A" />
+		<character sprite="font_B" id="B" />
+		<character sprite="font_C" id="C" />
+		<character sprite="font_D" id="D" />
+		<character sprite="font_E" id="E" />
+		<character sprite="font_F" id="F" />
+		<character sprite="font_G" id="G" />
+		<character sprite="font_H" id="H" />
+		<character sprite="font_I" id="I" />
+		<character sprite="font_J" id="J" />
+		<character sprite="font_K" id="K" />
+		<character sprite="font_L" id="L" />
+		<character sprite="font_M" id="M" />
+		<character sprite="font_N" id="N" />
+		<character sprite="font_Ñ" id="Ñ" />
+		<character sprite="font_O" id="O" />
+		<character sprite="font_P" id="P" />
+		<character sprite="font_Q" id="Q" />
+		<character sprite="font_R" id="R" />
+		<character sprite="font_S" id="S" />
+		<character sprite="font_T" id="T" />
+		<character sprite="font_U" id="U" />
+		<character sprite="font_V" id="V" />
+		<character sprite="font_W" id="W" />
+		<character sprite="font_X" id="X" />
+		<character sprite="font_Y" id="Y" />
+		<character sprite="font_Z" id="Z" />
+	</fontmap>
+
+	<ui-sprites>
+		<cursor sprite="focus" />
+		<window>
+			<top-left-corner sprite="sprite_window_top_left_corner" />
+		</window>
+	</ui-sprites>
+
+	<sounds>
+		<sound type="bgm" id="s_startmenu" filename="data\title.mid" />
+		<sound type="effect" id="s_cursor_move" filename="data\cursor_move.wav" />
+		<sound type="effect" id="s_cursor_cancel" filename="data\cursor_cancel.wav" />
+	</sounds>
+	
+	<!-- GAME -->
+	<core-stats>
+		<hp stat="hp" />
+		<mp stat="mp" />
+		<!-- This means a character instead of using MP as MP. It uses energy -->
+		<!-- So, in BattleScript: If a character has stat ene instead of MP, it uses ENE instead of MP  -->
+		<!-- It is basically the same exact thing. But Battle has to query the energy stat every update-->
+		<mp stat="ene" />
+	</core-stats>
+	
+	<stats>
+		<stat id="hp" name="Health" abbr="HP" />
+		<stat id="mp" name="Mana" abbr="MP" />
+		<stat id="ene" name="Energy" abbr="Ene" />
+		
+		<stat id="str" name="Strength"	abbr="Str" />
+		<stat id="int" name="Intellect" abbr="Int" />
+		<stat id="dex" name="Dexterity" abbr="Dex" />
+		<stat id="def" name="Defense"	abbr="Def" />
+		<stat id="atk" name="Attack"	abbr="Atk" />
+	</stats>
+
+	<world-transports>
+		<transport type="sky" />
+		<transport type="terrain">
+			<animations>
+				<animation id="transport_idle">
+					<sprite id="" />
+					<sprite id="" />
+				</animation>
+			</animations>
+		</transport>
+	</world-transports>
+	
+	<credits>
+		<credit>Osaka -hallonavi@gmail.com-</credit>
+	</credits>
+
+	<game-sessions>
+		<!-- Game session samples -->
+		<session id="default">
+			
+		</session>
+		<session id="ff8_laguna_story">
+
+		</session>
+	</game-sessions>
+</game>
