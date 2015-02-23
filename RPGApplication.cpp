@@ -67,14 +67,16 @@ namespace Osaka{
 			/* Runs every update. */
 			timem->UpdateTicks();
 
-			if( firstUpdate != 2 ){ //2 means the first update section has been called.
+			if( firstUpdate != 2 ){
+				//Means it hasn't called the firstupdate section
 				if( firstUpdate == 1 ){ //1 = first update(true)
 					/* Basically, we are waiting for a full loop to end, and then we switch the first scene. Scenes should only be inside the loop */
 					SwitchTransition(first_scene.c_str(), Engine::EmptyScenePassParamsPTR);
 					firstUpdate = 2; //2 = first_update(false)
-				}
-				if( firstUpdate == 0 ) //0 = initialized
+
+				}else if( firstUpdate == 0 ){//0 = initialized
 					firstUpdate = 1; //1 = first update has passed
+				}
 			}
 		}
 		void RPGApplication::Run(const char* scene){

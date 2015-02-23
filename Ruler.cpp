@@ -5,12 +5,13 @@
 namespace Osaka{
 	namespace RPGLib{
 		Ruler::Ruler(int width, int height){
-			this->width = width;
-			this->heigth = height;
+			max_width = width;
+			max_height = height;
 
 			//These are always 0
 			x_top_left_corner = 0;
 			y_top_left_corner = 0;
+
 		}
 		Ruler::~Ruler(){
 		}

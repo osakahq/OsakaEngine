@@ -39,8 +39,8 @@ namespace Osaka{
 			SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
 		}
 		void SDLLib::Clear(){
-			SDL_RenderClear(renderer);
 			SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
+			SDL_RenderClear(renderer);
 		}
 		void SDLLib::Render(){
 			SDL_RenderPresent(renderer);
@@ -54,6 +54,8 @@ namespace Osaka{
 			this->render_color = render_color;
 		}
 		void SDLLib::ShowWindow(){
+			/* So the alpha value works */
+			SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 			SDL_ShowWindow(window);
 		}
 		

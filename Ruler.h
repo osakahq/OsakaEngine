@@ -13,13 +13,11 @@ namespace Osaka{
 			int x_top_left_corner;
 			int y_top_left_corner;
 
+			//Window size
 			int max_width;
 			int max_height;
 
 		private:
-			//Window size
-			int width;
-			int heigth;
 		};
 	}
 }
