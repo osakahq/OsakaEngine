@@ -73,6 +73,11 @@ namespace Osaka{
 			/* NOT Owner. The owner is in EApplication because the scene is inserted into the scene list.
 			 * Responsible of adding the loading scene (itself) and calling GameLoader */
 			RPGLoadingScenePTR loadingscene;
+
+
+			//This is used to insert the first scene. This needed because when you call `scene->Show()` it should be already inside the Run:loop
+			bool firstUpdate;
+			std::string first_scene;
 		};
 	}
 }

@@ -77,7 +77,6 @@ namespace Osaka{
 		void LoadingScript::Unload(){
 		}
 		void LoadingScript::Show(Engine::EScenePassParamsPTR& params){
-			/* IMPORTANT! At the beginning, this is called OUTSIDE of the loop (See RPGApplication::Run()) */
 			LoadingPassParamsPTR lparams = std::dynamic_pointer_cast<LoadingPassParams>(params);
 			scene_id = lparams->scene;
 			scene_params = lparams->send_params;

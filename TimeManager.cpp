@@ -5,7 +5,7 @@ namespace Osaka{
 	namespace RPGLib{
 
 		TimeManager::TimeManager(){
-			/* Because LoadingScene is inserted into the scene stack before the loop begins, it doesn't get a chance do to `TimeManager->UpdateTicks();` */
+			/* Just in case */
 			ticks = SDL_GetTicks();
 		}
 		TimeManager::~TimeManager(){

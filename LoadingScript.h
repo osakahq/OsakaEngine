@@ -41,7 +41,7 @@ namespace Osaka{
 
 			/* This is the id of the scene to switch */
 			std::string scene_id;
-			/* This is the scene params to send when calling app->bottomstack */
+			/* This is the scene params to send when calling app->Stack/BottomStack */
 			Engine::EScenePassParamsPTR scene_params;
 			TransitionType::Value transition_type;
 

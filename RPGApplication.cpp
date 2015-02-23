@@ -28,6 +28,8 @@ namespace Osaka{
 			this->sessionm = nullptr;
 			assetm = nullptr;
 			ruler = nullptr;
+
+			firstUpdate = false;
 		}
 
 		RPGApplication::~RPGApplication(){
@@ -64,9 +66,15 @@ namespace Osaka{
 			EApplication::Update();
 			/* Runs every update. */
 			timem->UpdateTicks();
+
+			if( firstUpdate == true ){
+				/* Basically, we are waiting for a full loop to end, and then we switch the first scene. Scenes should only be inside the loop */
+				SwitchTransition(first_scene.c_str(), Engine::EmptyScenePassParamsPTR);
+			}
+			firstUpdate = true;
 		}
 		void RPGApplication::Run(const char* scene){
-			SwitchTransition(scene, Engine::EmptyScenePassParamsPTR);
+			first_scene = scene;
 			EApplication::Run();
 		}
 
