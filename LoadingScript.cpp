@@ -50,6 +50,7 @@ namespace Osaka{
 		}
 
 		void LoadingScript::OnCanvasEndAnimation(Component::EventArgs& e){
+			app->debug->l("[LoadingScript] OnCanvasEndAnimation");
 			//If transitiontype == Stack, there is no endAnimation.
 			app->Remove(parent->id.c_str());
 
@@ -83,6 +84,7 @@ namespace Osaka{
 		}
 
 		void LoadingScript::Hide(){
+			app->debug->l("[LoadingScript] Hide");
 		}
 		void LoadingScript::StandBy(){
 		}

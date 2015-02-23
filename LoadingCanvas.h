@@ -46,6 +46,9 @@ namespace Osaka{
 			/* So we can know we finished, the first animation */
 			bool onMidAnimation;
 
+			/* This is used when we no longer need to update but only draw (fade out animation ended) */
+			bool skipUpdate;
+
 			/* Color of the box. The only value changing, is the alpha */
 			Engine::RGBA_HEX color;
 

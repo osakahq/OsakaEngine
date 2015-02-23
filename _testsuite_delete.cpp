@@ -36,10 +36,10 @@
 		_check_delete_info["AssetManager"] = false;
 		_check_delete_info["TimeManager"] = false;
 
-		_check_delete_info["RPGScene_delete"] = false;
-		_check_delete_info["Canvas_delete"] = false;
-		_check_delete_info["Script_delete"] = false;
-		_check_delete_info["UserInterface_delete"] = false;
+		_check_delete_info["RPGScene_delete"] = true;
+		_check_delete_info["Canvas_delete"] = true;
+		_check_delete_info["Script_delete"] = true;
+		_check_delete_info["UserInterface_delete"] = true;
 		
 		_check_delete_info["RPGScene"] = true;
 		_check_delete_info["Texture"] = true;

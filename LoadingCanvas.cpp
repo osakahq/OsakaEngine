@@ -14,6 +14,7 @@ namespace Osaka{
 	namespace RPGLib{
 		LoadingCanvas::LoadingCanvas(RPGApplicationPTR& app) : Canvas(app){
 			isAnimating = false;
+			skipUpdate = false;
 			beginSecondPart = false;
 			onMidAnimation = false;
 			midAnimation = std::make_shared<Component::EventHandler>();
@@ -55,10 +56,12 @@ namespace Osaka{
 			isAnimating = true;
 			beginSecondPart = false;
 			onMidAnimation = false;
+			skipUpdate = false;
 			color.a = 0;
 			timer->Start();
 		}
 		void LoadingCanvas::BeginEndAnimation(){
+			app->debug->l("[LoadingCanvas] Begin second part of animation");
 			beginSecondPart = true;
 		}
 		void LoadingCanvas::Show(){
@@ -75,6 +78,8 @@ namespace Osaka{
 		}
 
 		void LoadingCanvas::Update(){
+			if( skipUpdate )
+				return;
 			const float fadeInTime = 750;
 			const float fadeOutTime = 750;
 			if( isAnimating ){
@@ -88,7 +93,22 @@ namespace Osaka{
 						midAnimation->raise(Component::EmptyEventArgs);
 					}
 				}else{
-
+					if( beginSecondPart ){
+						if( color.a == 255 && timer->IsStarted() == false ){
+							//With this `if` we make sure that the animation (fade in) ends before we start the fade out animation
+							//Doesn't matter if script called `BeginEndAnimation()` earlier than expected
+							timer->Start();
+						}else{
+							//This means we are ready to go fade out and the fade in animation ended
+							color.a = static_cast<Uint8>( 255.f - Utils::Clamp( std::ceil((timer->GetTicks() / fadeOutTime)*255.f), 0.f, 255.f) );
+							if( timer->GetTicks() >= fadeOutTime ){
+								timer->Stop();
+								endAnimation->raise(Component::EmptyEventArgs);
+								skipUpdate = true;
+							}
+						}
+					}
+					
 				}
 			}
 		}
