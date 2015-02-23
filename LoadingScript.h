@@ -13,7 +13,7 @@ namespace Osaka{
 			LoadingScript(RPGApplicationPTR& app);
 			~LoadingScript();
 			void _delete();
-			void Init();
+			
 			void Init(RPGLoadingScenePTR& parent, LoadingCanvasPTR& canvas, LoadingUIPTR& ui);
 			void Load();
 			void Unload();

@@ -1,7 +1,10 @@
  #include "stdafx.h"
 #include "engine_include.h"
 #include "gamedata_include.h"
+#include "EScene.h"
+#include "RPGScene.h"
 #include "Debug.h"
+#include "Factory.h"
 #include "ServerConn.h"
 #include "RPGFactory.h"
 #include "GameData.h"
@@ -46,7 +49,7 @@ namespace Osaka{
 			//For the scenes, We have to create TestScenes
 
 			/* Test1 (PlaybackImage) = tests AssetManager, RPGLoadingScene, PlaybackImage */
-
+			rpgapp->AddScene("test1", std::static_pointer_cast<Engine::EScene>(rpgapp->factory->CreatePlaybackIntroScene("test1")));
 			rpgapp->Run("test1");
 		}
 		void RPGLibTestSuite::MakeAssert(const char* test, bool passed){

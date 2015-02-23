@@ -33,9 +33,7 @@ namespace Osaka{
 
 			scene_params = nullptr;
 		}
-		void LoadingScript::Init(){
-			app->debug->e("[LoadingScript] Can't call init. Call Init(RPGLoadingScene)");
-		}
+		
 		void LoadingScript::Init(RPGLoadingScenePTR& parent, LoadingCanvasPTR& canvas, LoadingUIPTR& ui){
 			this->parent = parent;
 			this->canvas = canvas;

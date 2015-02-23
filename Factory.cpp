@@ -13,12 +13,19 @@
 #include "IFileLoader.h"
 #include "RPGApplication.h"
 //----
+#include "RPGScene.h"
 #include "Canvas.h"
 #include "Script.h"
 #include "UserInterface.h"
+
 #include "LoadingScript.h"
 #include "LoadingCanvas.h"
 #include "LoadingUI.h"
+
+#include "PlaybackIntroCanvas.h"
+#include "PlaybackIntroScript.h"
+#include "PlaybackIntroUI.h"
+
 #include "RPGLoadingScene.h"
 //---
 #include "Debug.h"
@@ -81,6 +88,26 @@ namespace Osaka{
 			ui->Init();
 
 			return loadingscene;
+		}
+
+		RPGScenePTR Factory::CreatePlaybackIntroScene(const char* name){
+			PlaybackIntroCanvasPTR canvas = std::make_shared<PlaybackIntroCanvas>(app);
+			PlaybackIntroUIPTR ui = std::make_shared<PlaybackIntroUI>(app);
+			PlaybackIntroScriptPTR script = std::make_shared<PlaybackIntroScript>(app);
+
+			RPGScenePTR scene = std::shared_ptr<RPGScene>(
+				new RPGScene(name, app, 
+					std::static_pointer_cast<Canvas>(canvas), 
+					std::static_pointer_cast<UserInterface>(ui), 
+					std::static_pointer_cast<Script>(script)
+				)
+			);
+
+			script->Init(canvas, ui);
+			canvas->Init();
+			ui->Init();
+
+			return scene;
 		}
 
 		TimerPTR Factory::CreateTimer(){

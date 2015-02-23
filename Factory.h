@@ -22,6 +22,7 @@ namespace Osaka{
 			Engine::SoundPTR CreateSound(sound_dataPTR& data);
 			// Scenes
 			RPGLoadingScenePTR CreateRPGLoadingScene(const char* name);
+			RPGScenePTR CreatePlaybackIntroScene(const char* name);
 
 			TimerPTR CreateTimer();
 

@@ -50,6 +50,7 @@ namespace Osaka{
 		class GameSession;		typedef std::shared_ptr<GameSession>		GameSessionPTR;
 		class GameSessionManager;	typedef std::shared_ptr<GameSessionManager>GameSessionManagerPTR;
 
+		class RPGScene;			typedef std::shared_ptr<RPGScene>		RPGScenePTR;
 		class Canvas;			typedef std::shared_ptr<Canvas>			CanvasPTR;
 		class Script;			typedef std::shared_ptr<Script>			ScriptPTR;
 		class UserInterface;	typedef std::shared_ptr<UserInterface>	UserInterfacePTR;
@@ -59,6 +60,12 @@ namespace Osaka{
 		class LoadingUI;		typedef std::shared_ptr<LoadingUI>			LoadingUIPTR;
 		class RPGLoadingScene;	typedef std::shared_ptr<RPGLoadingScene>	RPGLoadingScenePTR;
 
+		/*** SCENES *****/
+		class PlaybackIntroCanvas;	typedef std::shared_ptr<PlaybackIntroCanvas>		PlaybackIntroCanvasPTR;
+		class PlaybackIntroScript;	typedef std::shared_ptr<PlaybackIntroScript>		PlaybackIntroScriptPTR;
+		class PlaybackIntroUI;		typedef std::shared_ptr<PlaybackIntroUI>			PlaybackIntroUIPTR;
+		/*****************************/
+		
 		class Ruler;			typedef std::shared_ptr<Ruler>	RulerPTR;
 		class TimeManager;		typedef std::shared_ptr<TimeManager>	TimeManagerPTR;
 		class Timer;			typedef std::shared_ptr<Timer>	TimerPTR;
