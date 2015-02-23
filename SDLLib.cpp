@@ -32,7 +32,7 @@ namespace Osaka{
 		void SDLLib::_delete(){
 			debug = nullptr;
 		}
-		void SDLLib::ResetRender(RGBA_HEX render_color){
+		void SDLLib::SetRenderColor(RGBA_HEX& render_color){
 			SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
 		}
 		void SDLLib::ResetRenderColor(){

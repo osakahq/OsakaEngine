@@ -13,9 +13,12 @@ namespace Osaka{
 			EApplication(Debug::DebugPTR& d, SDLLibPTR& sdl, IFileLoaderPTR& fileloader);
 			virtual ~EApplication();
 			virtual void _delete();
+
 			/* NOT Owner. debug always has to be set because the basic function is to log. And even in production you need to log. */
 			Debug::DebugPTR debug;
-			
+			/* Owner. The main functions of SDL */
+			SDLLibPTR sdl;
+
 			/* */
 			void Init();
 			/* Takes owner ship of the scene */
@@ -43,9 +46,6 @@ namespace Osaka{
 		private:
 			/* Owner. This class is the owner of the scenes. So, it is its responsability to delete them */
 			std::unordered_map<std::string, EScenePTR> scenes;
-
-			/* Owner. The main functions of SDL */
-			SDLLibPTR sdl;
 
 			/* Owner. Strategy pattern to load directly from file or with PhysicsFS */
 			IFileLoaderPTR fileloader;

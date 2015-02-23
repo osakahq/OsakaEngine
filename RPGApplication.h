@@ -76,7 +76,8 @@ namespace Osaka{
 
 
 			//This is used to insert the first scene. This needed because when you call `scene->Show()` it should be already inside the Run:loop
-			bool firstUpdate;
+			/* 0 = initialized, 1 = first update(true), 2 = first update(false) */
+			short firstUpdate;
 			std::string first_scene;
 		};
 	}

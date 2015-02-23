@@ -21,7 +21,7 @@ namespace Osaka{
 			/* In rpg_bootstrap everything is loaded and texture class need a validr renderer,
 			 * so instead of calling Start() inside EApplication, we just show the window */
 			void ShowWindow();
-			void ResetRender(RGBA_HEX render_color);
+			void SetRenderColor(RGBA_HEX& render_color);
 			void ResetRenderColor();
 			void Clear();
 			void Render();
