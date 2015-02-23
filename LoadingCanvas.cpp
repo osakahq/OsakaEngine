@@ -1,10 +1,13 @@
  #include "stdafx.h"
+#include "Ruler.h"
+#include "SDLLib.h"
 #include "Debug.h"
 #include "Timer.h"
 #include "EventArgs.h"
 #include "EventHandler.h"
 #include "Canvas.h"
 #include "RPGApplication.h"
+#include "Utils.h"
 #include "LoadingCanvas.h"
 #include "osaka_forward.h"
 namespace Osaka{
@@ -12,9 +15,19 @@ namespace Osaka{
 		LoadingCanvas::LoadingCanvas(RPGApplicationPTR& app) : Canvas(app){
 			isAnimating = false;
 			beginSecondPart = false;
-			alpha = 0;
+			onMidAnimation = false;
 			midAnimation = std::make_shared<Component::EventHandler>();
 			endAnimation = std::make_shared<Component::EventHandler>();
+
+			color.r = 0;
+			color.g = 0;
+			color.b = 0;
+			color.a = 0;
+
+			carp.x = app->ruler->x_top_left_corner;
+			carp.y = app->ruler->y_top_left_corner;
+			carp.w = app->ruler->max_width;
+			carp.h = app->ruler->max_height;
 		}
 		LoadingCanvas::~LoadingCanvas(){
 #ifdef _DEBUG
@@ -40,6 +53,9 @@ namespace Osaka{
 		void LoadingCanvas::StartAnimation(TransitionType::Value type){
 			this->type = type;
 			isAnimating = true;
+			beginSecondPart = false;
+			onMidAnimation = false;
+			color.a = 0;
 			timer->Start();
 		}
 		void LoadingCanvas::BeginEndAnimation(){
@@ -59,13 +75,26 @@ namespace Osaka{
 		}
 
 		void LoadingCanvas::Update(){
-			
-			if( isAnimating && timer->GetTicks() >= 1000 ){
-				app->debug->l("[LoadingCanvas] 1 second");
-				timer->Reset(1000);
+			const float fadeInTime = 750;
+			if( isAnimating ){
+				if( onMidAnimation == false ){
+					//This means we are animating, but we are in the fade in part
+					//Alpha is related to how much time has passed. The animation must be finished in 1 second (fade in)
+					color.a = static_cast<Uint8>(Utils::Clamp( std::ceil((timer->GetTicks() / fadeInTime)*255.f), 0.f, 255.f));
+					if( timer->GetTicks() >= fadeInTime ){
+						timer->Stop();
+						onMidAnimation = true;
+					}
+				}else{
+
+				}
 			}
 		}
 		void LoadingCanvas::Draw(){
+			if( isAnimating ){
+				app->sdl->SetRenderColor(color);
+				SDL_RenderFillRect(app->sdl->renderer, &carp);
+			}
 		}
 
 		void LoadingCanvas::Reset(){

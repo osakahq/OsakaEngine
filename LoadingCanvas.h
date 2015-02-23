@@ -2,6 +2,7 @@
 
 #ifndef RPGLIB_LOADINGCANVAS_H
 #define RPGLIB_LOADINGCANVAS_H
+#include "engine_include.h"
 #include "rpglib_include.h"
 #include "Canvas.h"
 #include "osaka_forward.h"
@@ -37,16 +38,22 @@ namespace Osaka{
 			/* Switch or stack animation? */
 			TransitionType::Value type;
 
+			/* From Script */
 			bool isAnimating;
-			/* When the animation starts, it has to stop in black (and letters "loading"), we need script to let us know when to being the end animation */
+			/* From Script. When the animation starts, it has to stop in black (and letters "loading"), we need script to let us know when to being the end animation */
 			bool beginSecondPart;
 
+			/* So we can know we finished, the first animation */
+			bool onMidAnimation;
 
-			/* Transparency of the box */
-			Uint8 alpha;
+			/* Color of the box. The only value changing, is the alpha */
+			Engine::RGBA_HEX color;
 
 			/* Timer for the animation */
 			TimerPTR timer;
+
+			/* The box that covers the entire screen */
+			SDL_Rect carp;
 		};
 	}
 }
