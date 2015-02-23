@@ -44,7 +44,10 @@ namespace Osaka{
 			//It has to be the same as in Ascension.cpp
 			rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
 			//For the scenes, We have to create TestScenes
-			rpgapp->Run("texturemanager_test_1");
+
+			/* Test1 = tests AssetManager, RPGLoadingScene, PlaybackImage */
+
+			rpgapp->Run("test1");
 		}
 		void RPGLibTestSuite::MakeAssert(const char* test, bool passed){
 			std::string str = test;

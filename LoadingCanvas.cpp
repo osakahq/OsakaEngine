@@ -76,6 +76,7 @@ namespace Osaka{
 
 		void LoadingCanvas::Update(){
 			const float fadeInTime = 750;
+			const float fadeOutTime = 750;
 			if( isAnimating ){
 				if( onMidAnimation == false ){
 					//This means we are animating, but we are in the fade in part
@@ -84,6 +85,7 @@ namespace Osaka{
 					if( timer->GetTicks() >= fadeInTime ){
 						timer->Stop();
 						onMidAnimation = true;
+						midAnimation->raise(Component::EmptyEventArgs);
 					}
 				}else{
 
