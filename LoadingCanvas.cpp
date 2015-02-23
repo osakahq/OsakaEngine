@@ -85,7 +85,7 @@ namespace Osaka{
 					if( timer->GetTicks() >= fadeInTime ){
 						timer->Stop();
 						onMidAnimation = true;
-						midAnimation->raise(Component::EmptyEventArgs);
+						//midAnimation->raise(Component::EmptyEventArgs);
 					}
 				}else{
 

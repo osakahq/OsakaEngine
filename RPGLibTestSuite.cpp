@@ -45,7 +45,7 @@ namespace Osaka{
 			rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
 			//For the scenes, We have to create TestScenes
 
-			/* Test1 = tests AssetManager, RPGLoadingScene, PlaybackImage */
+			/* Test1 (PlaybackImage) = tests AssetManager, RPGLoadingScene, PlaybackImage */
 
 			rpgapp->Run("test1");
 		}
