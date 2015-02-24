@@ -251,9 +251,8 @@
 		<character sprite="font_7" id="7" />
 		<character sprite="font_8" id="8" />
 		<character sprite="font_9" id="9" />
+		<character sprite="font__eqmark" id="?" />
 
-		<character sprite="font__i5" id="_i5" />
-		
 		<character sprite="font_a" id="a" />
 		<character sprite="font_b" id="b" />
 		<character sprite="font_c" id="c" />

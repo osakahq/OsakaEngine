@@ -198,6 +198,11 @@ namespace Osaka{
 			MakeAssert("[TestLoadGameFile] Test #35", data->default_render_color_data.b == 0xFF );
 			MakeAssert("[TestLoadGameFile] Test #36", data->default_render_color_data.a == 0xFF );
 
+
+			/* Fonts */
+			MakeAssert("[TestLoadGameFile] Test #37", strcmp(data->fontmap_error.c_str(), "?") == 0 );
+			MakeAssert("[TestLoadGameFile] Test #38", strcmp(data->fontmap->at('?')->sprite.c_str(), "font__sqmark") == 0 );
+
 			debug->l("[TestLoadGameFile] End");
 		}
 	}

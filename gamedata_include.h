@@ -71,6 +71,8 @@ namespace Osaka{
 		};
 		struct fontcharacter_data{
 			fontcharacter_data(){};
+			std::string id;
+			std::string sprite;
 		};
 		struct instance_data{
 			instance_data(){};

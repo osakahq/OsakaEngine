@@ -7,7 +7,7 @@
 namespace Osaka{
 	namespace RPGLib{
 		struct battle_data;struct character_data;struct credits_data;struct enemy_data;
-		struct fontcharacter_data;struct instance_data;struct loadgame_data;struct npc_data;
+		struct instance_data;struct loadgame_data;struct npc_data;
 		struct savegame_data;struct spell_data;
 		struct startmenu_data;struct stat_data;struct video_data;struct world_data;
 
@@ -49,7 +49,10 @@ namespace Osaka{
 			std::unordered_map<std::string, stat_data*>			stats;
 			std::unordered_map<std::string, video_data*>		videos;
 			std::unordered_map<std::string, world_data*>		worlds;
-			std::unordered_map<std::string, fontcharacter_data*>	fontmap;
+
+			std::string fontmap_error;
+			std::shared_ptr<std::unordered_map<char, fontcharacter_dataPTR>>	fontmap;
+
 			std::shared_ptr<std::unordered_map<std::string, sound_dataPTR>>		sounds;
 			std::shared_ptr<std::unordered_map<std::string, spritemap_dataPTR>>	spritemaps;
 				/* This one contains id of the sprite and id of the spritemap(texture).

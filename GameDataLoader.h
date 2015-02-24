@@ -41,6 +41,9 @@ namespace Osaka{
 
 			void LoadSpritemaps(GameDataPTR& data, rapidxml::xml_node<>& spritemaps_node, std::string linefeed);
 			void LoadSounds(GameDataPTR& data, rapidxml::xml_node<>& sounds_node);
+
+			void LoadFontmap(GameDataPTR& data, rapidxml::xml_node<>& fontmap_node);
+
 			void LoadBattleData(GameDataPTR& data, rapidxml::xml_node<>& node);
 			void LoadCharacterData(GameDataPTR& data, rapidxml::xml_node<>& node);
 

@@ -91,6 +91,8 @@ namespace Osaka{
 		/*Hash map*/			typedef std::shared_ptr<std::unordered_map<std::string, scene_dataPTR>> unorderedmap_scene_dataPTR;
 		struct related_scene_data;
 	
+		struct fontcharacter_data;	typedef std::shared_ptr<fontcharacter_data>		fontcharacter_dataPTR;
+		/*Hash map*/				typedef std::shared_ptr<std::unordered_map<char, fontcharacter_dataPTR>> unorderedmap_fontcharacter_dataPTR;
 	}
 }
 #endif;

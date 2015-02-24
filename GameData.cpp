@@ -16,6 +16,8 @@ namespace Osaka{
 			assets_type = std::make_shared<std::unordered_map<std::string, unsigned int>>();	
 			assets_initload = std::make_shared<std::unordered_map<std::string, asset_initload_dataPTR>>();
 			assets_scenes = std::make_shared<std::unordered_map<std::string, scene_dataPTR>>();
+
+			fontmap = std::make_shared<std::unordered_map<char, fontcharacter_dataPTR>>();
 		}
 		GameData::~GameData(){
 #ifdef _DEBUG
@@ -36,8 +38,9 @@ namespace Osaka{
 			stats.clear();
 			videos.clear();
 			worlds.clear();
-			fontmap.clear();
 
+			fontmap->clear(); fontmap = nullptr;
+			
 			//This is only needed when the structs have a PTR to free.
 			//for(auto it = sounds->begin(); it != sounds->end(); ++it ) it->second->_delete();
 			sounds->clear(); sounds = nullptr;

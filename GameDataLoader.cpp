@@ -90,6 +90,9 @@ namespace Osaka{
 			debug->l("[GameData] Loading sound data...");
 				LoadSounds(data, *root->first_node("sounds"));
 
+			debug->l("[GameData] Loading fontmap data...");
+				LoadFontmap(data, *root->first_node("fontmap"));
+
 			return data;
 		}
 
@@ -328,6 +331,22 @@ namespace Osaka{
 					data->spritemaps->insert(std::make_pair(spritemap->id, spritemap));
 				}
 			}//End for (no more spritemapS)
+		}
+	
+		void GameDataLoader::LoadFontmap(GameDataPTR& data, rapidxml::xml_node<>& fontmap_node){
+			//Inside <fontmap> node
+
+			data->fontmap_error = fontmap_node.first_attribute("error-sprite")->value();
+
+			fontcharacter_dataPTR character;
+			for(rapidxml::xml_node<>* character_node = fontmap_node.first_node(); character_node != NULL; character_node = character_node->next_sibling("character")){
+				character = std::make_shared<fontcharacter_data>();
+				character->id = character_node->first_attribute("id")->value();
+				character->sprite = character_node->first_attribute("sprite")->value();
+
+				char id = character->id.c_str()[0];
+				data->fontmap->insert(std::make_pair(id, character));
+			}
 		}
 	}
 }

@@ -1,21 +1,26 @@
  #include "stdafx.h"
 #ifndef RPGLIB_FONTMANAGER_H
 #define RPGLIB_FONTMANAGER_H
-
+#include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		struct fontcharacter_data;
-
+		
 		class FontManager{
 		public:
-			FontManager();
+			FontManager(TextureManagerPTR& texture, std::string _fontmap_error);
 			~FontManager();
 			void _delete();
-			void SetFontmap(std::unordered_map<std::string, fontcharacter_data*>& fontmap);
+			void SetFontmap(unorderedmap_fontcharacter_dataPTR& fontmap);
+
+			//void RenderText(const char* text);
+			void RenderText(const std::string text);
 		/* ----------------------------------------------------------------------------------- */
 		private:
+			const std::string fontmap_error;
 			/* NOT Owner. */
-			std::unordered_map<std::string, fontcharacter_data*>* fontmap;
+			unorderedmap_fontcharacter_dataPTR fontmap;
+			/* NOT Owner */
+			TextureManagerPTR texture;
 		};
 	}
 }
