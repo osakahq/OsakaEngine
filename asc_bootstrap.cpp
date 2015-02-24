@@ -35,7 +35,7 @@ namespace Osaka{
 			GameDataPTR data = loader->LoadGameFile(filedata);
 
 			Engine::SDLLibPTR lib = std::make_shared<Engine::SDLLib>(debug);
-			lib->Init(data->name.c_str(), data->window_width, data->window_height, data->default_render_color_data);
+			lib->Init(data->name.c_str(), data->window_width, data->window_height, data->default_render_color_data, data->vsync);
 			lib->Start(); //Creates Hidden Window
 
 			Engine::IFileLoaderPTR fileloader;

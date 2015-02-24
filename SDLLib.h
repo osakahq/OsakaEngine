@@ -16,7 +16,7 @@ namespace Osaka{
 			~SDLLib();
 			void _delete();
 			/* Creates all that is needed for a full functionality of SDL */
-			void Init(const char* title, int window_width, int window_height, RGBA_HEX& render_color);
+			void Init(const char* title, int window_width, int window_height, RGBA_HEX& render_color, bool vsync);
 			bool Start();
 			/* In rpg_bootstrap everything is loaded and texture class need a validr renderer,
 			 * so instead of calling Start() inside EApplication, we just show the window */
@@ -49,6 +49,9 @@ namespace Osaka{
 
 			/* OWNER */
 			SDL_Window* window;
+
+			/* Caps the framerate 60fps */
+			bool vsync;
 		};
 	}
 }

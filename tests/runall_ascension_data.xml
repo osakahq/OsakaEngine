@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<game name="Ascension: Gates of Heaven" width="512" height="448" linefeed="windows">
+<!-- If specify vsync=true then fps will always be 60. time per frame in ms -->
+<game name="Ascension: Gates of Heaven" width="512" height="448" linefeed="windows" vsync="true" time-per-frame="16">
 	<default-render-color>
 		<r>255</r>
 		<g>255</g>

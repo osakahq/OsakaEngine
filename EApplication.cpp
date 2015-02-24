@@ -31,8 +31,9 @@ namespace Osaka{
 			fileloader->_delete(); fileloader = nullptr;
 			debug = nullptr;
 		}
-		void EApplication::Init(){
-			
+		void EApplication::Init(bool vsync, int timePerFrame){
+			this->vsync = vsync;
+			this->timePerFrame = timePerFrame;
 		}
 		void EApplication::AddScene(std::string id, EScenePTR& scene){
 			//Takes ownership of the scene
@@ -129,7 +130,12 @@ namespace Osaka{
 			std::string tempStack[EAPP_MAXSTACK];
 			int tempStackItems = 0;
 			
+			const bool _vsync = vsync;
+			const int _timePerFrame = timePerFrame;
+			Uint32 timePerFrame = 0;
+
 			while(!quit){
+				timePerFrame = SDL_GetTicks();
 				while( SDL_PollEvent(&e) != 0 ){
 					if( e.type == SDL_QUIT ){
 						quit = true;
@@ -154,8 +160,13 @@ namespace Osaka{
 					this->scenes[tempStack[i]]->Draw();
 				}
 				sdl->Render();
-				//Remove this
-				SDL_Delay(17);
+
+				if( !_vsync ){
+					if( _timePerFrame > (SDL_GetTicks() - timePerFrame) ){
+						//if 16 > 10 then-> 16 - 10 = 6ms to delay
+						SDL_Delay(_timePerFrame - (SDL_GetTicks() - timePerFrame));
+					}
+				}
 			}
 			
 

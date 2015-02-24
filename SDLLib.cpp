@@ -9,6 +9,8 @@ namespace Osaka{
 			this->debug = debug;
 			window = NULL;
 			renderer = NULL;
+
+			vsync = true;
 		}
 		SDLLib::~SDLLib(){
 #ifdef _DEBUG
@@ -46,11 +48,12 @@ namespace Osaka{
 			SDL_RenderPresent(renderer);
 		}
 
-		void SDLLib::Init(const char* title, int window_width, int window_height, RGBA_HEX& render_color){
+		void SDLLib::Init(const char* title, int window_width, int window_height, RGBA_HEX& render_color, bool vsync){
 			this->title = title;
 			this->window_width = window_width;
 			this->window_height = window_height;
 
+			this->vsync = vsync;
 			this->render_color = render_color;
 		}
 		void SDLLib::ShowWindow(){
@@ -75,9 +78,13 @@ namespace Osaka{
 				debug->l(std::string("[SDLLib] Window could not be created! SDL_Error: ")+SDL_GetError());
 				return false;
 			}
-			
+			Uint32 flag = SDL_RENDERER_ACCELERATED;
+			if( vsync ){
+				debug->l("[SDLLib] VSync On");
+				flag |= SDL_RENDERER_PRESENTVSYNC;
+			}
 			//Create renderer for window
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+			renderer = SDL_CreateRenderer(window, -1, flag);
 			if( renderer == NULL ){
 				debug->l(std::string("[SDLLib] Renderer could not be created. SDL Error: ") + SDL_GetError());
 				return false;

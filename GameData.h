@@ -19,7 +19,8 @@ namespace Osaka{
 			std::string name;
 			int window_width;
 			int window_height;
-
+			bool vsync;
+			int time_per_frame; //in ms
 			//OWNER of all below
 			//These screens are created in Ascension.cpp
 			//startmenu_data*		startmenu;

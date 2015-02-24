@@ -20,7 +20,7 @@ namespace Osaka{
 			SDLLibPTR sdl;
 
 			/* */
-			void Init();
+			void Init(bool vsync, int timePerFrame);
 			/* Takes owner ship of the scene */
 			void AddScene(std::string id, EScenePTR& scene);
 
@@ -55,6 +55,11 @@ namespace Osaka{
 			int stackItems;
 			/* This is used to not copy the stack every loop */
 			bool stackHasChanged;
+
+			/* If vsync is off then we cap the framerate */
+			bool vsync;
+			/* If vsync is true, fps is ignored. */
+			int timePerFrame;
 		};
 	}
 }

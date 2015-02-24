@@ -39,6 +39,9 @@ namespace Osaka{
 			data->window_width = std::stoi(std::string(root->first_attribute("width")->value()));
 			data->window_height = std::stoi(std::string(root->first_attribute("height")->value()));
 			
+			data->vsync = GetTrueFalse(root->first_attribute("vsync")->value());
+			data->time_per_frame = std::stoi(std::string(root->first_attribute("time-per-frame")->value()));
+
 			std::string linefeed;
 			/* This is needed because SplitString doesn't behave as a normal split function. "\r\n" is taking as 2 separate tokens
 			 * For some reason if the file has \r\n and linefeed='\n', it bugs out. */
