@@ -44,10 +44,10 @@ namespace Osaka{
 		void PlaybackIntroScript::StandBy(){
 		}
 		void PlaybackIntroScript::StandBy(Engine::EScenePassParamsPTR& params){
-			printf("TEST PlaybackIntroScript standby\n");
+			
 		}
 		void PlaybackIntroScript::Focus(){
-			printf("TEST PlaybackIntroScript focus\n");
+			
 		}
 		void PlaybackIntroScript::Update(){
 			

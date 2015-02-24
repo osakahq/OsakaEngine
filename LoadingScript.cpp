@@ -50,7 +50,7 @@ namespace Osaka{
 		}
 
 		void LoadingScript::OnCanvasEndAnimation(Component::EventArgs& e){
-			app->debug->l("[LoadingScript] OnCanvasEndAnimation");
+			app->debug->l("[LoadingScript] OnCanvasEndAnimation (Switch)");
 			//If transitiontype == Stack, there is no endAnimation.
 			app->Remove(parent->id.c_str());
 
@@ -58,6 +58,7 @@ namespace Osaka{
 		}
 		void LoadingScript::OnCanvasMidAnimation(Component::EventArgs& e){
 			if( transition_type == TransitionType::STACK ){
+				app->debug->l("[LoadingScript] OnCanvasMidAnimation::Stack");
 				//If it is stack then, there is no fade out animation
 				app->Stack(scene_id.c_str(), scene_params);
 				/* It has to be in this order because if there is an scene below this one, it will `Focus()` then immediately `StandBy()` */
@@ -65,6 +66,7 @@ namespace Osaka{
 
 				ResetVariables();
 			}else if( transition_type == TransitionType::SWITCH ){
+				app->debug->l("[LoadingScript] OnCanvasMidAnimation::Switch");
 				/* Remove all scenes except this one */
 				app->RemoveAllFromStack(parent->id.c_str());
 				app->BottomStack(scene_id.c_str(), scene_params);

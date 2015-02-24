@@ -77,10 +77,10 @@ namespace Osaka{
 			if( position == -1 ){
 				debug->e("[EApplication] Unkown scene (Remove function).");
 			}
-
-			if( position == stackItems ){
-				//If the scene to remove is top, then we have to let the next one scene know it is its turn
-				scenes[stack[stackItems]]->Focus();
+			
+			if( position == stackItems && stackItems > 0 ){
+				//If the scene to remove is top and there is more than 1, then we have to let the next one(-1 from position) scene know it is its turn
+				scenes[stack[position-1]]->Focus();
 			}
 
 			scenes[stack[position]]->Hide();
