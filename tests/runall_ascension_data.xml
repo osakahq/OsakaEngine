@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- If specify vsync=true then fps will always be 60. time per frame in ms -->
-<game name="Ascension: Gates of Heaven" width="512" height="448" linefeed="windows" vsync="false" time-per-frame="16">
+<game name="Ascension: Gates of Heaven" width="512" height="448" linefeed="windows" vsync="false" time-per-frame="16" target-fps="60">
 	<default-render-color>
 		<r>255</r>
 		<g>255</g>
@@ -241,6 +241,17 @@
 		</spritemap>
 	</spritemaps>
 	<fontmap error-sprite="_i5">
+		<character sprite="font_0" id="0" />
+		<character sprite="font_1" id="1" />
+		<character sprite="font_2" id="2" />
+		<character sprite="font_3" id="3" />
+		<character sprite="font_4" id="4" />
+		<character sprite="font_5" id="5" />
+		<character sprite="font_6" id="6" />
+		<character sprite="font_7" id="7" />
+		<character sprite="font_8" id="8" />
+		<character sprite="font_9" id="9" />
+
 		<character sprite="font__i5" id="_i5" />
 		
 		<character sprite="font_a" id="a" />

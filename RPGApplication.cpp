@@ -1,5 +1,6 @@
  #include "stdafx.h"
 
+#include "FPSCounter.h"
 #include "EScenePassParams.h"
 #include "EScene.h"
 #include "Debug.h"
@@ -17,7 +18,6 @@
 #include "GameSessionManager.h"
 #include "RPGLoadingScene.h"
 
-#include "FPSCounter.h"
 #include "IFileLoader.h"
 #include "EApplication.h"
 #include "RPGScene.h"
@@ -53,6 +53,7 @@ namespace Osaka{
 			ruler->_delete(); ruler = nullptr;
 			timem->_delete(); timem = nullptr;
 			counter->_delete(); counter = nullptr;
+			
 			loadingscene = nullptr;
 		}
 		void RPGApplication::Init(bool vsync, int timePerFrame){
@@ -88,6 +89,7 @@ namespace Osaka{
 
 		void RPGApplication::Run(const char* scene){
 			first_scene = scene;
+			counter->Start();
 			EApplication::Run();
 		}
 

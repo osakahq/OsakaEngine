@@ -41,6 +41,7 @@ namespace Osaka{
 			
 			data->vsync = GetTrueFalse(root->first_attribute("vsync")->value());
 			data->time_per_frame = std::stoi(std::string(root->first_attribute("time-per-frame")->value()));
+			data->target_fps = std::stoi(std::string(root->first_attribute("target-fps")->value()));
 
 			std::string linefeed;
 			/* This is needed because SplitString doesn't behave as a normal split function. "\r\n" is taking as 2 separate tokens

@@ -9,6 +9,7 @@
 #include "DefaultFileLoader.h"
 #include "GameDataLoader.h"
 
+#include "FPSCounter.h"
 #include "AssetManager.h"
 #include "RPGLoadingScene.h"
 
@@ -80,6 +81,9 @@ namespace Osaka{
 			TimeManagerPTR timem = std::make_shared<TimeManager>();
 			app->timem = timem;
 			factory->timem = timem;
+
+			FPSCounterPTR counter = std::make_shared<FPSCounter>(factory->CreateTimer(), fontm, data->target_fps);
+			app->counter = counter;
 
 			/* LoadingScene needs the name of the loadingscene so it can Stack/Switch the scene */
 			RPGLoadingScenePTR loadingscene = factory->CreateRPGLoadingScene("rpglib_loadingscene");

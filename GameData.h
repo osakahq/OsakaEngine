@@ -21,6 +21,7 @@ namespace Osaka{
 			int window_height;
 			bool vsync;
 			int time_per_frame; //in ms
+			int target_fps;
 			//OWNER of all below
 			//These screens are created in Ascension.cpp
 			//startmenu_data*		startmenu;
