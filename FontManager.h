@@ -12,8 +12,8 @@ namespace Osaka{
 			void _delete();
 			void SetFontmap(unorderedmap_fontcharacter_dataPTR& fontmap);
 
-			//void RenderText(const char* text);
-			void RenderText(const std::string text);
+			void RenderText(const char* text, const Engine::render_info& render);
+			void RenderText(const std::string text, const Engine::render_info& render);
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			const std::string fontmap_error;

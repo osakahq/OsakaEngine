@@ -63,9 +63,9 @@ namespace Osaka{
 			SDL_SetTextureBlendMode(texture, mode);
 		}
 
-		void Texture::Render(const render_info& info){
-			SDL_Rect renderQuad = {info.x, info.y, info.clip.w, info.clip.h};
-			SDL_RenderCopyEx(renderer, texture, &info.clip, &renderQuad, info.angle, info.center, info.flip);
+		void Texture::Render(const SDL_Rect& clip, const render_info& info){
+			SDL_Rect renderQuad = {info.x, info.y, clip.w, clip.h};
+			SDL_RenderCopyEx(renderer, texture, &clip, &renderQuad, info.angle, info.center, info.flip);
 		}
 		void Texture::Render(int x, int y, SDL_Rect& clip, double angle, const SDL_Point* center){
 			//Optional: angle = 0.0, center = NULL

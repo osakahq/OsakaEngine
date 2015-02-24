@@ -10,7 +10,7 @@ namespace Osaka{
 			asset_loading_type = AssetLoadingType::NOT_SET;
 			sounds = std::make_shared<std::unordered_map<std::string, sound_dataPTR>>();
 			spritemaps = std::make_shared<std::unordered_map<std::string, spritemap_dataPTR>>();
-			sprite_ids = std::make_shared<std::unordered_map<std::string, std::string>>();
+			sprite_ids = std::make_shared<std::unordered_map<std::string, sprite_dataPTR>>();
 			gamesessions = std::make_shared<std::unordered_map<std::string, gamesession_dataPTR>>();
 
 			assets_type = std::make_shared<std::unordered_map<std::string, unsigned int>>();	

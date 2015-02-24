@@ -57,7 +57,7 @@ namespace Osaka{
 			std::shared_ptr<std::unordered_map<std::string, spritemap_dataPTR>>	spritemaps;
 				/* This one contains id of the sprite and id of the spritemap(texture).
 				 * So I can search for it easily in `spritemaps` */
-				std::shared_ptr<std::unordered_map<std::string, std::string>>		sprite_ids;
+				std::shared_ptr<std::unordered_map<std::string, sprite_dataPTR>> sprite_ids;
 
 			/* Sample gamesessions. */
 			std::shared_ptr<std::unordered_map<std::string, gamesession_dataPTR>>	gamesessions;

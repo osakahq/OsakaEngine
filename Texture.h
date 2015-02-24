@@ -27,7 +27,7 @@ namespace Osaka{
 			void Render(int x, int y, SDL_Rect& clip, SDL_RendererFlip flip, double angle = 0.0, const SDL_Point* center = NULL);
 			void Render(int x, int y, SDL_Rect& clip, double angle = 0.0, const SDL_Point* center = NULL);
 			void Render(int x, int y, SDL_Rect& clip, double angle = 0.0, const SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
-			void Render(const render_info& info);
+			void Render(const SDL_Rect& clip, const render_info& info);
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			/* Owner */

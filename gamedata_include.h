@@ -98,10 +98,8 @@ namespace Osaka{
 		struct sprite_data{
 			sprite_data(){};
 			std::string id;
-			int x;
-			int y;
-			int w;
-			int h;
+			std::string belongs_to_texture;
+			SDL_Rect clip;
 		};
 		struct spritemap_data{
 			spritemap_data(){}

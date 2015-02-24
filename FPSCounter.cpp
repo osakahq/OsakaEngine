@@ -1,5 +1,6 @@
  #include "stdafx.h"
 
+#include "engine_include.h"
 #include "Timer.h"
 #include "FontManager.h"
 #include "FPSCounter.h"
@@ -24,6 +25,12 @@ namespace Osaka{
 			timer->Start();
 		}
 		void FPSCounter::EndOfFrame(){
+			Engine::render_info info = {
+				10, 10, 0, NULL, SDL_FLIP_NONE
+			};
+			
+
+			font->RenderText(std::string("HOLA"), info);
 			frames++;
 			if( timer->GetTicks() >= 1000 ){
 				timer->Reset(1000);

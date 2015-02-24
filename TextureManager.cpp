@@ -40,7 +40,8 @@ namespace Osaka{
 		}
 
 		void TextureManager::RenderSprite(const std::string& id, const Engine::render_info& render){
-			textures[sprite_ids->at(id)]->Render(render);
+			sprite_dataPTR sprite = sprite_ids->at(id);
+			textures[sprite->belongs_to_texture]->Render(sprite->clip, render);
 		}
 	}
 }

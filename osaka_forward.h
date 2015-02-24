@@ -77,8 +77,11 @@ namespace Osaka{
 
 		struct spritemap_data;	typedef std::shared_ptr<spritemap_data>											spritemap_dataPTR;
 		/*Hash map*/			typedef std::shared_ptr<std::unordered_map<std::string, spritemap_dataPTR>>		unorderedmap_spritemap_dataPTR;
-		/*Hash map*/			typedef std::shared_ptr<std::unordered_map<std::string, std::string>>			unorderedmap_spriteids_dataPTR;
+		struct sprite_data;		typedef std::shared_ptr<sprite_data>											sprite_dataPTR;
+		/*Hash map*/			typedef std::shared_ptr<std::unordered_map<std::string, sprite_dataPTR>>		unorderedmap_spriteids_dataPTR;
+
 		
+
 		struct gamesession_data;typedef std::shared_ptr<gamesession_data>										gamesession_dataPTR;
 		/*Hash map*/			typedef std::shared_ptr<std::unordered_map<std::string, gamesession_dataPTR>>	unorderedmap_gamesession_dataPTR;
 

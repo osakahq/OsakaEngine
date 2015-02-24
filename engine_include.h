@@ -6,10 +6,9 @@ namespace Osaka{
 	namespace Engine{
 		//This is used so that TextureManager:RenderSprite isn't obligated to put all the parameters that Texture:Render has
 		struct render_info{
-			render_info() : center(NULL) {}
+			//render_info() : center(NULL) {}
 			int x;
 			int y; 
-			SDL_Rect clip;
 			double angle;
 			SDL_Point* center; 
 			SDL_RendererFlip flip;

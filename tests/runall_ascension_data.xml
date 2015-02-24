@@ -240,7 +240,7 @@
 			font_Z = 196 14 12 14
 		</spritemap>
 	</spritemaps>
-	<fontmap error-sprite="_i5">
+	<fontmap error-sprite="?">
 		<character sprite="font_0" id="0" />
 		<character sprite="font_1" id="1" />
 		<character sprite="font_2" id="2" />
@@ -267,7 +267,7 @@
 		<character sprite="font_l" id="l" />
 		<character sprite="font_m" id="m" />
 		<character sprite="font_n" id="n" />
-		<character sprite="font_ñ" id="ñ" />
+		<!-- <character sprite="font_ñ" id="ñ" /> !-->
 		<character sprite="font_o" id="o" />
 		<character sprite="font_p" id="p" />
 		<character sprite="font_q" id="q" />
@@ -295,7 +295,7 @@
 		<character sprite="font_L" id="L" />
 		<character sprite="font_M" id="M" />
 		<character sprite="font_N" id="N" />
-		<character sprite="font_Ñ" id="Ñ" />
+		<!-- <character sprite="font_Ñ" id="Ñ" /> !-->
 		<character sprite="font_O" id="O" />
 		<character sprite="font_P" id="P" />
 		<character sprite="font_Q" id="Q" />

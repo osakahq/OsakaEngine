@@ -303,7 +303,8 @@ namespace Osaka{
 					//at(0) = sprite_id
 					//We have to strim it because of the space before = (spriteid[ ]= 0 0 32 32)
 					temp_sprite.id = Utils::TrimString(spriteinfo_text.at(0));
-					
+					temp_sprite.belongs_to_texture = spritemap->id;
+
 					std::vector<std::string> temp_coords;
 					//at(1) = 0 0 32 32
 					Utils::SplitString(temp_coords, spriteinfo_text.at(1), " ");
@@ -311,15 +312,22 @@ namespace Osaka{
 					int coord_i = -1;
 					for( auto it_coords = temp_coords.begin(); it_coords != temp_coords.end(); ++it_coords ){
 						switch(++coord_i){
-						case 0: temp_sprite.x = stoi(*it_coords); break;
-						case 1: temp_sprite.y = stoi(*it_coords); break;
-						case 2: temp_sprite.w = stoi(*it_coords); break;
+						case 0: temp_sprite.clip.x = stoi(*it_coords); break;
+						case 1: temp_sprite.clip.y = stoi(*it_coords); break;
+						case 2: temp_sprite.clip.w = stoi(*it_coords); break;
 						case 3:
-							temp_sprite.h = stoi(*it_coords);
+							temp_sprite.clip.h = stoi(*it_coords);
 							//This is a copy. Inserts the sprite into the spritemap
 							spritemap->sprites.insert(std::make_pair(temp_sprite.id, temp_sprite));
+
 							//Insert the id of the sprite and where it belongs (spritemap) so I can search them easily
-							data->sprite_ids->insert(std::make_pair(temp_sprite.id, spritemap->id));
+							sprite_dataPTR temp_spritePTR = std::make_shared<sprite_data>();
+							temp_spritePTR->id = temp_sprite.id;
+							temp_spritePTR->belongs_to_texture = spritemap->id;
+							temp_spritePTR->clip.x = temp_sprite.clip.x; temp_spritePTR->clip.y = temp_sprite.clip.y;
+							temp_spritePTR->clip.w = temp_sprite.clip.w; temp_spritePTR->clip.h = temp_sprite.clip.h;
+
+							data->sprite_ids->insert(std::make_pair(temp_sprite.id, temp_spritePTR));
 							break;
 						}
 					}
@@ -343,6 +351,9 @@ namespace Osaka{
 				character = std::make_shared<fontcharacter_data>();
 				character->id = character_node->first_attribute("id")->value();
 				character->sprite = character_node->first_attribute("sprite")->value();
+
+				if( character->id.length() != 1 )
+					debug->e("[GameDataLoader] ID fontmap sprite has to be 1 character (char)");
 
 				char id = character->id.c_str()[0];
 				data->fontmap->insert(std::make_pair(id, character));

@@ -20,8 +20,15 @@ namespace Osaka{
 			this->fontmap = fontmap;
 		}
 
-		void FontManager::RenderText(const std::string text){
-
+		void FontManager::RenderText(const char* text, const Engine::render_info& render){
+			for(const char* c = text; *c; ++c){
+				texture->RenderSprite(fontmap->at(*c)->sprite, render);
+			}
+		}
+		void FontManager::RenderText(const std::string text, const Engine::render_info& render){
+			for(const char c : text){
+				texture->RenderSprite(fontmap->at(c)->sprite, render);
+			}
 		}
 	}
 }
