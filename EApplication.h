@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ #include "stdafx.h"
 #ifndef ENGINE_EAPPLICATION_H
 #define ENGINE_EAPPLICATION_H
 #include "osaka_forward.h"
@@ -26,6 +26,8 @@ namespace Osaka{
 
 			/* In case the derived class wants to run some code every update */
 			virtual void Update();
+			virtual void AfterDraw();
+
 			/* This is the main loop. */
 			virtual void Run();
 

@@ -32,12 +32,15 @@ namespace Osaka{
 			RulerPTR ruler;
 			/* Owner */
 			TimeManagerPTR timem;
+			/* Owner */
+			FPSCounterPTR counter;
 
 			/* Check that the references are set */
-			virtual void Init();
+			virtual void Init(bool vsync, int timePerFrame);
 
 			/* Runs every frame */
 			virtual void Update();
+			virtual void AfterDraw();
 			/* Initializes the first scene and then passes it to EApplicacion (base class) */
 			virtual void Run(const char* scene);
 

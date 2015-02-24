@@ -17,6 +17,7 @@
 #include "GameSessionManager.h"
 #include "RPGLoadingScene.h"
 
+#include "FPSCounter.h"
 #include "IFileLoader.h"
 #include "EApplication.h"
 #include "RPGScene.h"
@@ -28,6 +29,7 @@ namespace Osaka{
 			this->sessionm = nullptr;
 			assetm = nullptr;
 			ruler = nullptr;
+			counter = nullptr;
 
 			firstUpdate = 0; //init
 		}
@@ -50,13 +52,13 @@ namespace Osaka{
 
 			ruler->_delete(); ruler = nullptr;
 			timem->_delete(); timem = nullptr;
-
+			counter->_delete(); counter = nullptr;
 			loadingscene = nullptr;
 		}
-		void RPGApplication::Init(){
-			EApplication::Init();
+		void RPGApplication::Init(bool vsync, int timePerFrame){
+			EApplication::Init(vsync, timePerFrame);
 			if( settings == nullptr || gameData == nullptr  || factory == nullptr || rpgfactory == nullptr || 
-				loader == nullptr || assetm == nullptr || loadingscene == nullptr || ruler == nullptr || timem == nullptr )
+				loader == nullptr || assetm == nullptr || loadingscene == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr)
 			{
 				debug->e("[RPGApplication] Init failed.");
 			}
@@ -79,6 +81,11 @@ namespace Osaka{
 				}
 			}
 		}
+		void RPGApplication::AfterDraw(){
+			EApplication::AfterDraw();
+			counter->EndOfFrame();
+		}
+
 		void RPGApplication::Run(const char* scene){
 			first_scene = scene;
 			EApplication::Run();

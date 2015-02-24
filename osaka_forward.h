@@ -50,6 +50,8 @@ namespace Osaka{
 		class GameSession;		typedef std::shared_ptr<GameSession>		GameSessionPTR;
 		class GameSessionManager;	typedef std::shared_ptr<GameSessionManager>GameSessionManagerPTR;
 
+		class FPSCounter;		typedef std::shared_ptr<FPSCounter>		FPSCounterPTR;
+
 		class RPGScene;			typedef std::shared_ptr<RPGScene>		RPGScenePTR;
 		class Canvas;			typedef std::shared_ptr<Canvas>			CanvasPTR;
 		class Script;			typedef std::shared_ptr<Script>			ScriptPTR;

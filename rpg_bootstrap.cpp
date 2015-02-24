@@ -88,7 +88,7 @@ namespace Osaka{
 			Engine::EScenePTR temp = loadingscene;
 			app->AddScene("rpglib_loadingscene", temp);
 
-			app->Init();
+			app->Init(data->vsync, data->time_per_frame);
 			factory->Init();
 			assetm->Init();
 
