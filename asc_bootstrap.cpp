@@ -28,7 +28,7 @@ namespace Osaka{
 		using namespace RPGLib;
 
 		AscApplicationPTR asc_bootstrap(const char* filedata, const char* filesettings, Debug::DebugPTR& debug){
-			printf("\n========\nTODO COPY WHATEVER THE CHANGES I DID TO RPG_BOOTSTRAP\n");
+			/*xxxxxxxxxxxxxxprintf("\n========\nTODO COPY WHATEVER THE CHANGES I DID TO RPG_BOOTSTRAP\n");
 			FactoryPTR factory = std::make_shared<Factory>(debug);
 
 			GameDataLoaderPTR loader = std::make_shared<GameDataLoader>(debug, factory);
@@ -75,18 +75,19 @@ namespace Osaka{
 			assetm->soundm = soundm;
 			app->assetm = assetm;
 			factory->assetm = assetm;
-
+			xxxxxxxxxxxxxxxxxxxxxx*/
 			/* LoadingScene needs the name of the loadingscene so it can Stack/Switch the scene */
-			RPGLoadingScenePTR loadingscene = factory->CreateRPGLoadingScene("rpglib_loadingscene");
+			/*RPGLoadingScenePTR loadingscene = factory->CreateRPGLoadingScene("rpglib_loadingscene");
 			app->SetLoadingScene(loadingscene);
 			Engine::EScenePTR temp = loadingscene;
 			app->AddScene("rpglib_loadingscene", temp);
 
 			app->Init(data->vsync, data->time_per_frame);
 			factory->Init();
-			assetm->Init();
+			assetm->Init();*/
 
-			return app;
+			//return app;
+			return nullptr;
 		}
 	}
 }

@@ -34,6 +34,7 @@ namespace Osaka{
 				textures[it->first] = texture;
 			}
 		}
+		/* This is called from AssetManager */
 		void TextureManager::LoadTexture(const std::string id){
 			spritemap_dataPTR spritemap = spritemaps->at(id);
 			textures.at(id)->Load(spritemap->filename.c_str(), spritemap->colorkey);
