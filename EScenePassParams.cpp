@@ -6,7 +6,9 @@ namespace Osaka{
 
 		}
 		EScenePassParams::~EScenePassParams(){
-
+#ifdef _DEBUG
+			_CHECKDELETE("EScenePassParams");
+#endif	
 		}
 		//Global empty params
 		//EScenePassParams EmptyScenePassParams;

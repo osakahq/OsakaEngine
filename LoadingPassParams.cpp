@@ -8,6 +8,9 @@ namespace Osaka{
 
 		}
 		LoadingPassParams::~LoadingPassParams(){
+#ifdef _DEBUG
+			_CHECKDELETE("LoadingPassParams");
+#endif	
 			send_params = nullptr;
 		}
 	}

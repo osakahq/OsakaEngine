@@ -12,7 +12,7 @@ namespace Osaka{
 		 * See the thread function (ProcessLoad()) */
 		struct LoadThreadParams{
 			std::string scene;
-			std::function<void(Component::EventArgs&)> callback;
+			std::function<void()> callback;
 		};
 		/* Do not be confused with GameDataLoader. This is for scene.load/unload and asset loading 
 		 * TODO: For now, unload is not yet implemented (only videos are unload-able) */
@@ -24,7 +24,7 @@ namespace Osaka{
 			
 			void Init();
 			void ProcessLoad();
-			void LoadScene(std::string scene, std::function<void(Component::EventArgs&)> callback);
+			void LoadScene(std::string scene, std::function<void()> callback);
 			
 
 			/* Owner. Managers */

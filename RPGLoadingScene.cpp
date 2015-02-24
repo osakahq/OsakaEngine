@@ -35,12 +35,11 @@ namespace Osaka{
 			
 			//WARNING: Using raw pointer
 			RPGLoadingScene* raw_loadingscene = this;
-			assetm->LoadScene(name, [raw_loadingscene](Component::EventArgs& e){
+			assetm->LoadScene(name, [raw_loadingscene](){
 				/* This anonymous function will be called inside AssetManager:ProcessLoad function (the other thread) */
 				raw_loadingscene->LoadCompleted();
 			});
 
-			//TODO: I'm not sure how to downgrade a PTR
 			Engine::EScenePassParamsPTR loadingparams_ptr = std::make_shared<LoadingPassParams>();
 			LoadingPassParams* loadingparams = (LoadingPassParams*)loadingparams_ptr.get();
 			loadingparams->send_params = params;

@@ -66,7 +66,7 @@ namespace Osaka{
 			loadThread = CreateThread(NULL, 0, &AssetManager_ProcessLoad, this, 0, NULL);
 		}
 
-		void AssetManager::LoadScene(std::string scene, std::function<void(Component::EventArgs&)> callback){
+		void AssetManager::LoadScene(std::string scene, std::function<void()> callback){
 			/* If signaled to stop or if the event hasn't resetted yet */
 			if( signalStopLoadThread || (DWORD)WaitForSingleObject(sceneToLoadEvent, 0) == WAIT_OBJECT_0 ){
 				debug->e("[AssetManager] Can't load another scene when a scene is already being loaded.");
@@ -85,7 +85,7 @@ namespace Osaka{
 
 				debug->l("TODO PROCESSLOAD");
 				//WARNING: the callback is using rawpointer (see RPGLoadingScene::SceneTransition())
-				threadParams.callback(Component::EmptyEventArgs);
+				threadParams.callback();
 				ResetEvent(sceneToLoadEvent);
 			}
 			debug->l("[AssetManager] ProcessLoad thread ended gracefully.");

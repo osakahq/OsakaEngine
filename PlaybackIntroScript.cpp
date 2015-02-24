@@ -47,7 +47,7 @@ namespace Osaka{
 			
 		}
 		void PlaybackIntroScript::Focus(){
-			
+			app->debug->l("[PlaybackIntroScript] Focus");
 		}
 		void PlaybackIntroScript::Update(){
 			

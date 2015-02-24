@@ -15,6 +15,8 @@ namespace Osaka{
 	namespace RPGLib{
 		LoadingScript::LoadingScript(RPGApplicationPTR& app) : Script(app){
 			ResetVariables();
+			canvas = nullptr;
+			ui = nullptr;
 		}
 		LoadingScript::~LoadingScript(){
 #ifdef _DEBUG
@@ -91,7 +93,7 @@ namespace Osaka{
 		void LoadingScript::StandBy(){
 		}
 		void LoadingScript::StandBy(Engine::EScenePassParamsPTR& params){
-
+			Show(params);
 		}
 		void LoadingScript::Focus(){
 		}
