@@ -30,6 +30,7 @@ void bTestSuite(){
 		test->End();
 		test->_delete(); test = nullptr;
 	}
+	Engine::EmptyScenePassParamsPTR = nullptr;
 #ifdef _DEBUG
 	_ENDCHECKDELETE();
 #endif
@@ -62,7 +63,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	//For tests:
 	bTestSuite();
 	//Ascension();
-
+	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program */
+	Engine::EmptyScenePassParamsPTR = nullptr;
 	getchar();
 	return 0;
 }
