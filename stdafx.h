@@ -31,6 +31,7 @@
 #include <iostream>
 #include <fstream>
 
+#include <math.h>
 #include <algorithm> 
 #include <cctype>
 #include <locale>

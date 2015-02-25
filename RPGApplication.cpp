@@ -82,14 +82,14 @@ namespace Osaka{
 				}
 			}
 		}
-		void RPGApplication::AfterDraw(){
-			EApplication::AfterDraw();
-			counter->EndOfFrame();
+		void RPGApplication::BeforePresent(){
+			EApplication::BeforePresent();
+			counter->BeforePresent();
 		}
 
 		void RPGApplication::RenderTime(Uint32 frame_ms){
 			//This function is only called when _DEBUG
-			counter->EndOfLoop(frame_ms);
+			counter->AfterPresent(frame_ms);
 		}
 
 		void RPGApplication::Run(const char* scene){

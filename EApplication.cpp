@@ -159,14 +159,13 @@ namespace Osaka{
 				for(int i = 0; i <= tempStackItems; i++){
 					this->scenes[tempStack[i]]->Draw();
 				}
-				//FPS Counter must be BEFORE SDL_Present because vsync will SDL_Delay inside SDL present function
-				this->AfterDraw();
+				this->BeforePresent();
 				sdl->Present();
 
 #ifdef _DEBUG
 				this->RenderTime(SDL_GetTicks() - frame_ms);
 #endif
-
+				//_vsync is a constant = no branch problem
 				if( !_vsync ){
 					if( _targetTimePerFrame > (SDL_GetTicks() - frame_ms) ){
 						//if 16 > 10 then-> 16 - 10 = 6ms to delay
@@ -177,19 +176,21 @@ namespace Osaka{
 				//Para revisar el FPS cuando NO es debug, es en FPSCounter
 #ifdef _DEBUG
 				//Esto va despues para tomar en cuenta el delay, y estar seguros que aun con el delay, no pasen de 16ms
-				//Se pone FPS_TARGET_MS_PER_FRAME+1 porque en VSYNC siempre es 17ms por frame. Cuando se hace cap manual, cada frame se hace RAPIDO
-				if( (SDL_GetTicks() - frame_ms) > _targetTimePerFrame+1 ){
-					std::string _temp = "[EApplication] Last frame took ms to render: ";
-					_temp.append(std::to_string(SDL_GetTicks() - frame_ms));
-					debug->l(_temp);
+				if( _vsync ){
+					if( (SDL_GetTicks() - frame_ms) > _targetTimePerFrame+1 ){
+						//Se pone FPS_TARGET_MS_PER_FRAME+1 porque en VSYNC siempre es 17/16ms por frame.
+						printf("[FPS] Last frame took longer than expected to render.\n");
+					}
+				}else{
+					if( (SDL_GetTicks() - frame_ms) > _targetTimePerFrame ){
+						printf("[FPS] Last frame took longer than expected to render.\n");
+					}
 				}
 #endif
 			}
-			
-
 		}
 		void EApplication::Update(){/* Nothing for now */}
-		void EApplication::AfterDraw(){/* Nothing for now */}
+		void EApplication::BeforePresent(){/* Nothing for now */}
 		//void EApplication::RenderTime(Uint32 frame_ms){}
 	}
 }

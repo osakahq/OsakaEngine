@@ -40,7 +40,7 @@ namespace Osaka{
 
 			/* Runs every frame */
 			virtual void Update();
-			virtual void AfterDraw();
+			virtual void BeforePresent();
 			virtual void RenderTime(Uint32 frame_ms);
 			/* Initializes the first scene and then passes it to EApplicacion (base class) */
 			virtual void Run(const char* scene);

@@ -26,7 +26,7 @@ namespace Osaka{
 
 			/* In case the derived class wants to run some code every update */
 			virtual void Update();
-			virtual void AfterDraw();
+			virtual void BeforePresent();
 			virtual void RenderTime(Uint32 frame_ms) = 0;
 
 			/* This is the main loop. */

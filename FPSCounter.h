@@ -14,10 +14,10 @@ namespace Osaka{
 			/* This is called before EApplication::Run() (in RPGApplication, right outside the loop) */
 			void Start();
 			/* This is called after the draw loop and before SDL_Present and before manual cap (if vsync is on) */
-			void EndOfFrame();
+			void BeforePresent();
 
 			/* Only called when _DEBUG */
-			void EndOfLoop(Uint32 frame_ms);
+			void AfterPresent(Uint32 frame_ms);
 		private:
 			/* NOT Owner */
 			Debug::DebugPTR debug;
@@ -36,6 +36,8 @@ namespace Osaka{
 			const bool show_sum_frames;
 			Uint32 sum_frame_ms;
 			std::string average_frame_ms;
+			/* We need to make sure that average ms frames is perfect. That is why we need a separate variable (from frames) */
+			int calls;
 		};
 	}
 }
