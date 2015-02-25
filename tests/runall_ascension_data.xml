@@ -256,33 +256,33 @@
 		<character sprite="font__dot" id="." />
 		<character sprite="font__ddot" id=":" />
 
-		<character sprite="font_a" id="a" />
-		<character sprite="font_b" id="b" />
-		<character sprite="font_c" id="c" />
-		<character sprite="font_d" id="d" />
-		<character sprite="font_e" id="e" />
-		<character sprite="font_f" id="f" />
-		<character sprite="font_g" id="g" />
-		<character sprite="font_h" id="h" />
-		<character sprite="font_i" id="i" />
-		<character sprite="font_j" id="j" />
-		<character sprite="font_k" id="k" />
-		<character sprite="font_l" id="l" />
-		<character sprite="font_m" id="m" />
-		<character sprite="font_n" id="n" />
+		<character sprite="font_A" id="a" />
+		<character sprite="font_B" id="b" />
+		<character sprite="font_C" id="c" />
+		<character sprite="font_D" id="d" />
+		<character sprite="font_E" id="e" />
+		<character sprite="font_F" id="f" />
+		<character sprite="font_G" id="g" />
+		<character sprite="font_H" id="h" />
+		<character sprite="font_I" id="i" />
+		<character sprite="font_J" id="j" />
+		<character sprite="font_K" id="k" />
+		<character sprite="font_L" id="l" />
+		<character sprite="font_M" id="m" />
+		<character sprite="font_N" id="n" />
 		<!-- <character sprite="font_ñ" id="ñ" /> !-->
-		<character sprite="font_o" id="o" />
-		<character sprite="font_p" id="p" />
-		<character sprite="font_q" id="q" />
-		<character sprite="font_r" id="r" />
-		<character sprite="font_s" id="s" />
-		<character sprite="font_t" id="t" />
-		<character sprite="font_u" id="u" />
-		<character sprite="font_v" id="v" />
-		<character sprite="font_w" id="w" />
-		<character sprite="font_x" id="x" />
-		<character sprite="font_y" id="y" />
-		<character sprite="font_z" id="z" />
+		<character sprite="font_O" id="o" />
+		<character sprite="font_P" id="p" />
+		<character sprite="font_Q" id="q" />
+		<character sprite="font_R" id="r" />
+		<character sprite="font_S" id="s" />
+		<character sprite="font_T" id="t" />
+		<character sprite="font_U" id="u" />
+		<character sprite="font_V" id="v" />
+		<character sprite="font_W" id="w" />
+		<character sprite="font_X" id="x" />
+		<character sprite="font_Y" id="y" />
+		<character sprite="font_Z" id="z" />
 		
 		<character sprite="font_A" id="A" />
 		<character sprite="font_B" id="B" />
