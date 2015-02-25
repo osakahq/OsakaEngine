@@ -82,7 +82,7 @@ namespace Osaka{
 			app->timem = timem;
 			factory->timem = timem;
 
-			FPSCounterPTR counter = std::make_shared<FPSCounter>(debug, fontm, data->target_fps);
+			FPSCounterPTR counter = std::make_shared<FPSCounter>(debug, fontm, data->target_fps, data->fontmap_space_x, data->fontmap_space_y);
 			app->counter = counter;
 
 			/* LoadingScene needs the name of the loadingscene so it can Stack/Switch the scene */

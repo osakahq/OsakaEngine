@@ -8,7 +8,7 @@ namespace Osaka{
 
 		class FPSCounter{
 		public:
-			FPSCounter(Debug::DebugPTR& debug, FontManagerPTR& font, int target_fps);
+			FPSCounter(Debug::DebugPTR& debug, FontManagerPTR& font, int target_fps, int _space_x, int _space_y);
 			~FPSCounter();
 			void _delete();
 			/* This is called before EApplication::Run() (in RPGApplication, right outside the loop) */
@@ -27,6 +27,10 @@ namespace Osaka{
 			/* For every second, show the counted frames */
 			Uint32 ticks;
 
+			/* The space for each character in the fontmap */
+			const int space_x;
+			const int space_y;
+			
 			std::string current_fps;
 
 			const int target_fps;

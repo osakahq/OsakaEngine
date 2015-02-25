@@ -254,6 +254,8 @@
 		<character sprite="font__eqmark" id="?" />
 		<character sprite="font_X" id=" " />
 		<character sprite="font__dot" id="." />
+		<character sprite="font__ddot" id=":" />
+
 		<character sprite="font_a" id="a" />
 		<character sprite="font_b" id="b" />
 		<character sprite="font_c" id="c" />

@@ -8,7 +8,8 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		FPSCounter::FPSCounter(Debug::DebugPTR& debug, FontManagerPTR& font, int _target_fps) : target_fps(_target_fps)
+		FPSCounter::FPSCounter(Debug::DebugPTR& debug, FontManagerPTR& font, int _target_fps, int _space_x, int _space_y) 
+			: target_fps(_target_fps), space_x(_space_x*4), space_y(_space_y)
 #ifdef _DEBUG
 			,show_sum_frames(true)
 #else
@@ -47,8 +48,8 @@ namespace Osaka{
 					sum_frame_ms = 0;
 					calls = 0;
 				}
-
-				font->RenderTextLine(average_frame_ms, 5, 20);
+				font->RenderTextLine("avg", 5, space_y+5);
+				font->RenderTextLine(average_frame_ms, space_x, space_y+5);
 			}
 			
 			frames++;
@@ -64,7 +65,8 @@ namespace Osaka{
 					debug->l("[FPS] FPSCounter was called very late: " + std::to_string(time));
 				}
 			}
-			font->RenderTextLine(current_fps, 5, 5);
+			font->RenderTextLine("fps", 5, 5);
+			font->RenderTextLine(current_fps, space_x, 5);
 		}
 
 		/* This function is only called when _DEBUG. Because it is after RenderPresent */
