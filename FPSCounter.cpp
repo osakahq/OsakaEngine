@@ -28,7 +28,7 @@ namespace Osaka{
 			timer->Start();
 		}
 		void FPSCounter::EndOfFrame(){
-			
+			font->RenderTextMultiple("HOLA HOLA HOLA HOLA HOLA WTFASDASD", 50, 50, 10);
 			frames++;
 			if( timer->GetTicks() >= 1000 ){
 				current_fps = std::to_string(frames);

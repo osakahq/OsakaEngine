@@ -51,6 +51,8 @@ namespace Osaka{
 			std::unordered_map<std::string, world_data*>		worlds;
 
 			std::string fontmap_error;
+			int fontmap_space_x;
+			int fontmap_space_y;
 			std::shared_ptr<std::unordered_map<char, fontcharacter_dataPTR>>	fontmap;
 
 			std::shared_ptr<std::unordered_map<std::string, sound_dataPTR>>		sounds;

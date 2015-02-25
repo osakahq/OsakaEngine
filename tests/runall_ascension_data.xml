@@ -240,7 +240,7 @@
 			font_Z = 196 14 12 14
 		</spritemap>
 	</spritemaps>
-	<fontmap error-sprite="?">
+	<fontmap error-sprite="?" space-x="12" space-y="14">
 		<character sprite="font_0" id="0" />
 		<character sprite="font_1" id="1" />
 		<character sprite="font_2" id="2" />
@@ -252,6 +252,7 @@
 		<character sprite="font_8" id="8" />
 		<character sprite="font_9" id="9" />
 		<character sprite="font__eqmark" id="?" />
+		<character sprite="font_X" id=" " />
 
 		<character sprite="font_a" id="a" />
 		<character sprite="font_b" id="b" />

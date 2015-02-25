@@ -345,6 +345,8 @@ namespace Osaka{
 			//Inside <fontmap> node
 
 			data->fontmap_error = fontmap_node.first_attribute("error-sprite")->value();
+			data->fontmap_space_x = std::stoi(fontmap_node.first_attribute("space-x")->value());
+			data->fontmap_space_y = std::stoi(fontmap_node.first_attribute("space-y")->value());;
 
 			fontcharacter_dataPTR character;
 			for(rapidxml::xml_node<>* character_node = fontmap_node.first_node(); character_node != NULL; character_node = character_node->next_sibling("character")){
