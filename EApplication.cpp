@@ -161,7 +161,11 @@ namespace Osaka{
 				}
 				//FPS Counter must be BEFORE SDL_Present because vsync will SDL_Delay inside SDL present function
 				this->AfterDraw();
-				sdl->Render();
+				sdl->Present();
+
+#ifdef _DEBUG
+				this->RenderTime(SDL_GetTicks() - frame_ms);
+#endif
 
 				if( !_vsync ){
 					if( _targetTimePerFrame > (SDL_GetTicks() - frame_ms) ){
@@ -186,5 +190,6 @@ namespace Osaka{
 		}
 		void EApplication::Update(){/* Nothing for now */}
 		void EApplication::AfterDraw(){/* Nothing for now */}
+		//void EApplication::RenderTime(Uint32 frame_ms){}
 	}
 }

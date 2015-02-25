@@ -24,7 +24,7 @@ namespace Osaka{
 			void SetRenderColor(RGBA_HEX& render_color);
 			void ResetRenderColor();
 			void Clear();
-			void Render();
+			void Present();
 
 			//These sound functions could be in their own class but they are fine in here.
 			void PlayMusic(Mix_Music& music);

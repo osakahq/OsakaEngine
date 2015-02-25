@@ -42,16 +42,27 @@ namespace Osaka{
 		void FontManager::RenderTextMultiple(const char* text, const int x, const int y, const int max_slots){
 			Engine::render_info render(x, y, 0, NULL, SDL_FLIP_NONE);
 
-			int slot = 1;
+			int slot = 0;
 			for(const char* c = text; *c; ++c){
 				if( slot++ == max_slots ){
-					/* I think Ascension is responsible of crafting the message according to its message box size */
+					/* I think Ascension is responsible of crafting the message according to its message box size
+					 * But just in case, we do a simple check, if current c is A-Za-z and next also is A-Za-z */
 					//texture->RenderSprite(fontmap->at(' ')->sprite, render);
+
+					//A-Z
+					//if( *c >= 65 && *c <= 90 && *c >= 97 && *c <= 122 ){
+					//	if( *(c+1) ){
+					//
+					//	}
+					//}
+
 					render.x = x;
 					render.y += space_y;
 					slot = 1;
 				}
-				texture->RenderSprite(fontmap->at(*c)->sprite, render);
+				if( *c != ' ' ){
+					texture->RenderSprite(fontmap->at(*c)->sprite, render);
+				}
 				render.x += space_x;
 			}
 		}

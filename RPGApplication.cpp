@@ -87,6 +87,11 @@ namespace Osaka{
 			counter->EndOfFrame();
 		}
 
+		void RPGApplication::RenderTime(Uint32 frame_ms){
+			//This function is only called when _DEBUG
+			counter->EndOfLoop(frame_ms);
+		}
+
 		void RPGApplication::Run(const char* scene){
 			first_scene = scene;
 			counter->Start();

@@ -44,7 +44,7 @@ namespace Osaka{
 			SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
 			SDL_RenderClear(renderer);
 		}
-		void SDLLib::Render(){
+		void SDLLib::Present(){
 			SDL_RenderPresent(renderer);
 		}
 
