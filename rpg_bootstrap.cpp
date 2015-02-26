@@ -47,7 +47,7 @@ namespace Osaka{
 			RulerPTR ruler = std::make_shared<Ruler>(data->window_width, data->window_height);
 
 			RPGApplicationPTR app = std::make_shared<RPGApplication>(debug, lib, fileloader);
-			factory->renderer = lib->renderer;
+			factory->sdl = lib;
 			factory->fileloader = fileloader;
 			factory->app = app;
 			app->factory = factory;
@@ -64,7 +64,7 @@ namespace Osaka{
 			TextureManagerPTR texturem = std::make_shared<TextureManager>(factory);
 			texturem->SetSpritemaps(data->spritemaps, data->sprite_ids);
 			
-			FontManagerPTR fontm = std::make_shared<FontManager>(texturem, data->fontmap_error, data->fontmap_space_x, data->fontmap_space_y);
+			FontManagerPTR fontm = std::make_shared<FontManager>(*lib->GetRAWSDLRenderer(), texturem, data->fontmap_error, data->fontmap_space_x, data->fontmap_space_y);
 			fontm->SetFontmap(data->fontmap);
 			
 			SoundManagerPTR soundm = std::make_shared<SoundManager>(factory, lib);
@@ -95,6 +95,7 @@ namespace Osaka{
 			app->Init(data->vsync, data->time_per_frame);
 			factory->Init();
 			assetm->Init();
+			fontm->Init();
 
 			return app;
 		}

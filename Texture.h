@@ -6,7 +6,7 @@ namespace Osaka{
 	
 	namespace Engine{
 		struct RGB_HEX;
-		struct render_info;
+		struct render_info_ex;
 		/* This class is technically a spritemap */
 		class Texture {
 		public:
@@ -22,12 +22,14 @@ namespace Osaka{
 			int GetWeight();
 			int GetHeight();
 
-			/*
-			 * Optional parameters: angle, center. */
-			void Render(int x, int y, SDL_Rect& clip, SDL_RendererFlip flip, double angle = 0.0, const SDL_Point* center = NULL);
-			void Render(int x, int y, SDL_Rect& clip, double angle = 0.0, const SDL_Point* center = NULL);
-			void Render(int x, int y, SDL_Rect& clip, double angle = 0.0, const SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
-			void Render(const SDL_Rect& clip, const render_info& info);
+			/* This is the one you should call normally */
+			void Render(const int x, const int y, const SDL_Rect& clip);
+
+			//RenderCopyEx = expensive
+			void RenderEx(const SDL_Rect& clip, const render_info_ex& info);
+
+			/* Doesn't give away ownership */
+			SDL_Texture* GetRAWSDLTexture();
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			/* Owner */

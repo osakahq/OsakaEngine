@@ -35,8 +35,8 @@ namespace Osaka{
 			void SetVolume(int volume, int channel = -1);
 			void SetMusicVolume(int volume);
 
-			/* Owner */
-			SDL_Renderer* renderer;
+			/* Doesn't give away ownership */
+			SDL_Renderer* GetRAWSDLRenderer();
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			std::string title;
@@ -49,6 +49,8 @@ namespace Osaka{
 
 			/* OWNER */
 			SDL_Window* window;
+			/* Owner */
+			SDL_Renderer* renderer;
 
 			/* Caps the framerate 60fps */
 			bool vsync;

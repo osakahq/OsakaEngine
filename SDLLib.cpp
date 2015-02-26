@@ -34,6 +34,13 @@ namespace Osaka{
 		void SDLLib::_delete(){
 			debug = nullptr;
 		}
+		SDL_Renderer* SDLLib::GetRAWSDLRenderer(){
+			if( renderer == NULL ){
+				throw std::exception("[SDLLib] GetRAWSDLRenderer > texture is NULL");
+			}
+			//Doesn't give away ownership
+			return renderer;
+		}
 		void SDLLib::SetRenderColor(RGBA_HEX& render_color){
 			SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
 		}

@@ -53,6 +53,7 @@ namespace Osaka{
 			std::string fontmap_error;
 			int fontmap_space_x;
 			int fontmap_space_y;
+			/* Because the function we use to read the xml file is only char, we can only accept char */
 			std::shared_ptr<std::unordered_map<char, fontcharacter_dataPTR>>	fontmap;
 
 			std::shared_ptr<std::unordered_map<std::string, sound_dataPTR>>		sounds;

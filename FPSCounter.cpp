@@ -10,7 +10,7 @@ namespace Osaka{
 	namespace RPGLib{
 		FPSCounter::FPSCounter(Debug::DebugPTR& debug, FontManagerPTR& font, int _target_fps, int _space_x, int _space_y) 
 			: target_fps(_target_fps), space_x(_space_x*4), space_y(_space_y)
-#ifdef _DEBUG
+#ifdef OSAKA_SHOWAVERAGEFPS
 			,show_sum_frames(true)
 #else
 			,show_sum_frames(false)
@@ -44,7 +44,7 @@ namespace Osaka{
 				//show_sum_frames is a constant
 				if( calls == target_fps ){
 					//Only when _DEBUG
-					average_frame_ms = std::to_string( sum_frame_ms / calls );
+					average_frame_ms = std::to_string( static_cast<float>(sum_frame_ms) / calls );
 					sum_frame_ms = 0;
 					calls = 0;
 				}

@@ -1,6 +1,7 @@
  #include "stdafx.h"
 
 #include "gamedata_include.h"
+#include "SDLLib.h"
 #include "TimeManager.h"
 #include "Timer.h"
 #include "Sound.h"
@@ -36,6 +37,12 @@ namespace Osaka{
 	namespace RPGLib{
 		Factory::Factory(Debug::DebugPTR& debug){
 			this->debug = debug;
+
+			sdl = nullptr;
+			app = nullptr;
+			fileloader = nullptr;
+			assetm = nullptr;
+			timem = nullptr;
 		}
 		Factory::~Factory(){
 #ifdef _DEBUG
@@ -43,6 +50,7 @@ namespace Osaka{
 #endif				
 		}
 		void Factory::_delete(){
+			sdl = nullptr;
 			debug = nullptr;
 			assetm = nullptr;
 			fileloader = nullptr;
@@ -50,7 +58,7 @@ namespace Osaka{
 			timem = nullptr;
 		}
 		void Factory::Init(){
-			if( app == nullptr || renderer == nullptr || fileloader == nullptr || assetm == nullptr || timem == nullptr ){
+			if( app == nullptr || sdl == nullptr || fileloader == nullptr || assetm == nullptr || timem == nullptr ){
 				debug->e("[Factory] Init failed.");
 			}
 		}
@@ -58,7 +66,7 @@ namespace Osaka{
 			return std::make_shared<GameData>();
 		}
 		Engine::TexturePTR Factory::CreateTexture(){
-			return std::make_shared<Engine::Texture>(*renderer, debug, fileloader);
+			return std::make_shared<Engine::Texture>(*sdl->GetRAWSDLRenderer(), debug, fileloader);
 		}
 		Engine::SoundPTR Factory::CreateSound(sound_dataPTR& data){
 			Engine::SoundPTR sound;

@@ -29,6 +29,9 @@ namespace Osaka{
 		protected:
 			/* NOT Owner */
 			RPGApplicationPTR app;
+
+			/* NOT Owner. Raw */
+			SDL_Renderer* raw_renderer;
 		};
 	}
 }

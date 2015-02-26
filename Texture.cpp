@@ -63,24 +63,23 @@ namespace Osaka{
 			SDL_SetTextureBlendMode(texture, mode);
 		}
 
-		void Texture::Render(const SDL_Rect& clip, const render_info& info){
+		SDL_Texture* Texture::GetRAWSDLTexture(){
+			if( texture == NULL ){
+				throw std::exception("[Texture] GetRAWSDLTexture > texture is NULL");
+			}
+			//Doesn't give away ownership
+			return texture;
+		}
+
+		void Texture::Render(const int x, const int y, const SDL_Rect& clip){
+			const SDL_Rect renderQuad = {x, y, clip.w, clip.h};
+			SDL_RenderCopy(renderer, texture, &clip, &renderQuad);
+		}
+
+		void Texture::RenderEx(const SDL_Rect& clip, const render_info_ex& info){
+			//Expensive
 			SDL_Rect renderQuad = {info.x, info.y, clip.w, clip.h};
 			SDL_RenderCopyEx(renderer, texture, &clip, &renderQuad, info.angle, info.center, info.flip);
-		}
-		void Texture::Render(int x, int y, SDL_Rect& clip, double angle, const SDL_Point* center){
-			//Optional: angle = 0.0, center = NULL
-			SDL_Rect renderQuad = {x, y, clip.w, clip.h};
-			SDL_RenderCopyEx(renderer, texture, &clip, &renderQuad, angle, center, SDL_FLIP_NONE);
-		}
-		void Texture::Render(int x, int y, SDL_Rect& clip, SDL_RendererFlip flip, double angle, const SDL_Point* center){
-			//Optional: angle = 0.0, center = NULL
-			SDL_Rect renderQuad = {x, y, clip.w, clip.h};
-			SDL_RenderCopyEx(renderer, texture, &clip, &renderQuad, angle, center, flip);
-		}
-		void Texture::Render(int x, int y, SDL_Rect& clip, double angle, const SDL_Point* center, SDL_RendererFlip flip){
-			//Optional: angle = 0.0, center = NULL, flip = SDL_FLIP_NONE
-			SDL_Rect renderQuad = {x, y, clip.w, clip.h};
-			SDL_RenderCopyEx(renderer, texture, &clip, &renderQuad, angle, center, flip);
 		}
 		
 		int Texture::GetWeight(){

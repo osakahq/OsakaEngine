@@ -17,10 +17,10 @@ namespace Osaka{
 			void Init(PlaybackIntroCanvasPTR& canvas, PlaybackIntroUIPTR& ui);
 			void Load();
 			void Unload();
-			void Show(Engine::EScenePassParamsPTR& params);
+			void Show(Engine::ESceneArgsPTR& params);
 			void Hide();
 			void StandBy();
-			void StandBy(Engine::EScenePassParamsPTR& params);
+			void StandBy(Engine::ESceneArgsPTR& params);
 			void Focus();
 			void Update();
 			void Draw();

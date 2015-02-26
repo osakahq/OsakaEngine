@@ -1,46 +1,67 @@
 #include "stdafx.h"
+#include "rpglib_include.h"
 #include "gamedata_include.h"
 #include "TextureManager.h"
 #include "FontManager.h"
 
 namespace Osaka{
 	namespace RPGLib{
-		FontManager::FontManager(TextureManagerPTR& texture, std::string _fontmap_error, int _space_x, int _space_y) 
-			: fontmap_error(_fontmap_error), space_x(_space_x), space_y(_space_y)
+		FontManager::FontManager(SDL_Renderer& _renderer, TextureManagerPTR& texture, std::string _fontmap_error, int _space_x, int _space_y) 
+			: fontmap_error(_fontmap_error), fontmap_char_space_x(_space_x), fontmap_char_space_y(_space_y)
 		{
 			fontmap = nullptr;
 			this->texture = texture;
+			raw_renderer = &_renderer;
+
+			for(int i = 0; i < FONTMANAGER_MAX_CHAR; ++i)
+				sprites[i] = NULL;
 		}
 		FontManager::~FontManager(){
 
 		}
 		void FontManager::_delete(){
+			raw_renderer = NULL;
+
+			for(int i = 0; i < FONTMANAGER_MAX_CHAR; ++i){
+				if( sprites[i] != NULL )
+					delete sprites[i];
+			}
+			
 			fontmap = nullptr;
 			texture = nullptr;
 		}
 		void FontManager::SetFontmap(unorderedmap_fontcharacter_dataPTR& fontmap){
 			this->fontmap = fontmap;
 		}
+		void FontManager::Init(){
+			for( auto it = fontmap->begin(); it != fontmap->end(); ++it ){
+				//it->first = char
+				if( (int)it->first >= FONTMANAGER_MAX_CHAR )
+					throw std::exception("[FontManager] Outside of limit > FONTMANAGER_MAX_CHAR");
+				sprites[(int)it->first] = texture->CreateSpriteRAWPointer(it->second->sprite.c_str());
+			}
+		}
 
 		void FontManager::RenderTextLine(const char* text, const int x, const int y){
-			Engine::render_info render(x, y, 0, NULL, SDL_FLIP_NONE);
-
+			//Because we know all fontmap sprites are the same size, we set the quad space_x, space_y
+			SDL_Rect quad = {x, y, fontmap_char_space_x, fontmap_char_space_y};
 			for(const char* c = text; *c; ++c){
-				texture->RenderSprite(fontmap->at(*c)->sprite, render);
-				render.x += space_x;
+				SDL_RenderCopy(raw_renderer, sprites[(int)*c]->raw_texture, &sprites[(int)*c]->clip, &quad);
+				quad.x += fontmap_char_space_x;
 			}
 		}
 		void FontManager::RenderTextLine(const std::string text, const int x, const int y){
-			Engine::render_info render(x, y, 0, NULL, SDL_FLIP_NONE);
-
+			//Because we know all fontmap sprites are the same size, we set the quad space_x, space_y
+			SDL_Rect quad = {x, y, fontmap_char_space_x, fontmap_char_space_y};
 			for(const char c : text){
-				texture->RenderSprite(fontmap->at(c)->sprite, render);
-				render.x += space_x;
+				SDL_RenderCopy(raw_renderer, sprites[(int)c]->raw_texture, &sprites[(int)c]->clip, &quad);
+				quad.x += fontmap_char_space_x;
 			}
 		}
 
 		void FontManager::RenderTextMultiple(const char* text, const int x, const int y, const int max_slots){
-			Engine::render_info render(x, y, 0, NULL, SDL_FLIP_NONE);
+			return;
+			Engine::render_info_ex render(x, y, 0, NULL, SDL_FLIP_NONE);
 
 			int slot = 0;
 			for(const char* c = text; *c; ++c){
@@ -57,13 +78,13 @@ namespace Osaka{
 					//}
 
 					render.x = x;
-					render.y += space_y;
+					render.y += fontmap_char_space_y;
 					slot = 1;
 				}
 				if( *c != ' ' ){
-					texture->RenderSprite(fontmap->at(*c)->sprite, render);
+					//texture->RenderSprite(fontmap->at(*c)->sprite, render);
 				}
-				render.x += space_x;
+				render.x += fontmap_char_space_x;
 			}
 		}
 	}

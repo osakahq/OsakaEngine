@@ -30,7 +30,6 @@ namespace Osaka{
 			Engine::TexturePTR texture;
 			for( auto it = spritemaps->begin(); it!= spritemaps->end(); ++it ){
 				texture = factory->CreateTexture();
-				//texture->Load(it->second->filename.c_str(), it->second->colorkey);
 				textures[it->first] = texture;
 			}
 		}
@@ -40,9 +39,20 @@ namespace Osaka{
 			textures.at(id)->Load(spritemap->filename.c_str(), spritemap->colorkey);
 		}
 
-		void TextureManager::RenderSprite(const std::string& id, const Engine::render_info& render){
+		void TextureManager::RenderSprite(const int x, const int y, const std::string& id){
 			sprite_dataPTR sprite = sprite_ids->at(id);
-			textures[sprite->belongs_to_texture]->Render(sprite->clip, render);
+			textures[sprite->belongs_to_texture]->Render(x, y, sprite->clip);
 		}
+
+		sprite_info TextureManager::CreateSprite(const std::string& id){
+			sprite_dataPTR sprite = sprite_ids->at(id);
+			return sprite_info(textures[sprite->belongs_to_texture].get()->GetRAWSDLTexture(), sprite->clip);
+		}
+
+		sprite_info* TextureManager::CreateSpriteRAWPointer(const std::string& id){
+			sprite_dataPTR sprite = sprite_ids->at(id);
+			return new sprite_info(textures[sprite->belongs_to_texture].get()->GetRAWSDLTexture(), sprite->clip);
+		}
+
 	}
 }

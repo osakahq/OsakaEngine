@@ -26,8 +26,8 @@ namespace Osaka{
 
 			TimerPTR CreateTimer();
 
-			/* NOT Owner */
-			SDL_Renderer* renderer;
+			/* NOT Owner. */
+			Engine::SDLLibPTR sdl;
 			// NOT Owner
 			RPGApplicationPTR app;
 			Engine::IFileLoaderPTR fileloader;

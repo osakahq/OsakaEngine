@@ -41,8 +41,8 @@
 		_check_delete_info["Script_delete"] = true;
 		_check_delete_info["UserInterface_delete"] = true;
 		
-		_check_delete_info["EScenePassParams"] = true;
-		_check_delete_info["LoadingPassParams"] = true;
+		_check_delete_info["ESceneArgs"] = true;
+		_check_delete_info["LoadingArgs"] = true;
 
 		_check_delete_info["RPGScene"] = true;
 		_check_delete_info["Texture"] = true;
