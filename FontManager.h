@@ -16,9 +16,10 @@ namespace Osaka{
 			FontManager(SDL_Renderer& renderer, TextureManagerPTR& texture, std::string _fontmap_error, int _space_x, int _space_y);
 			~FontManager();
 			void _delete();
-			void Init();
-			void SetFontmap(unorderedmap_fontcharacter_dataPTR& fontmap);
 
+			void SetFontmap(unorderedmap_fontcharacter_dataPTR& fontmap);
+			void Init();
+			
 			void RenderTextLine(const char* text, const int x, const int y);
 			void RenderTextLine(const std::string text, const int x, const int y);
 

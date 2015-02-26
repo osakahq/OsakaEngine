@@ -122,7 +122,6 @@ namespace Osaka{
 		void EApplication::Run(){
 			/* See SDLLib:ShowWindow().h for explanation */
 			sdl->ShowWindow();
-			debug->l("[TODO EApp] SDL DELAY");
 			
 			bool quit = false;
 			SDL_Event e;

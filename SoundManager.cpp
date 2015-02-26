@@ -47,14 +47,12 @@ namespace Osaka{
 
 
 		void SoundManager::PlaySoundEffect(std::string id, int times){
-			//TODO: I'm not sure how to upcast a shared_ptr
 			Engine::SoundPTR sound = this->esounds[std::string(id)];
 			Engine::SoundEffect* effect = (Engine::SoundEffect*)sound.get();
 			effect->Play(times);
 		}
 
 		void SoundManager::PlayMusic(std::string id){
-			//TODO: I'm not sure how to upcast a shared_ptr
 			Engine::SoundPTR sound = this->esounds[std::string(id)];
 			Engine::Music* music = (Engine::Music*)sound.get();
 			sdl->PlayMusic(*music->GetRAWMixMusic());

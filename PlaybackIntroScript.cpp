@@ -138,7 +138,7 @@ namespace Osaka{
 			sprite_info sprite = app->assetm->texturem->CreateSprite("font_A");
 			sprite.quad.x = 5;
 			sprite.quad.y = 35;
-			for(int i = 0; i < 10; ++i){
+			for(int i = 0; i < 5; ++i){
 				for(int i = 0; i < 988; ++i){
 					SDL_RenderCopy(raw_renderer, sprite.raw_texture, &sprite.clip, &sprite.quad);
 					
