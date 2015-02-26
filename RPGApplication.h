@@ -54,8 +54,8 @@ namespace Osaka{
 			GameSessionManagerPTR GetGameSessionManager();
 
 			//Function wrappers for RPGLoadingScene
-			void SwitchTransition(const char* scene, Engine::EScenePassParamsPTR& params);
-			void StackTransition(const char* scene, Engine::EScenePassParamsPTR& params);
+			void SwitchTransition(const char* scene, Engine::ESceneArgsPTR& params);
+			void StackTransition(const char* scene, Engine::ESceneArgsPTR& params);
 
 			/* - gamesessionm_struct = rpgfactory->CreateGameSessionStructs(this.sessionm);
 			 * - gameloader->savegame(gamesessionm_struct, filename); */

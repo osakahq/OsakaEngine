@@ -4,8 +4,8 @@
 #include "Debug.h"
 #include "LoadingCanvas.h"
 #include "LoadingUI.h"
-#include "EScenePassParams.h"
-#include "LoadingPassParams.h"
+#include "ESceneArgs.h"
+#include "LoadingArgs.h"
 #include "RPGLoadingScene.h"
 #include "RPGApplication.h"
 #include "Script.h"
@@ -33,7 +33,6 @@ namespace Osaka{
 			parent = nullptr;
 
 			canvas->endAnimation->Unhook(LOADINGSCRIPT_ENDANIMATION);
-			/* Does not matter if mid animation was already unhooked. EventHandler does not throw an exception anymore */
 			canvas->midAnimation->Unhook(LOADINGSCRIPT_MIDANIMATION);
 			canvas = nullptr;
 			ui = nullptr;
@@ -84,8 +83,8 @@ namespace Osaka{
 		}
 		void LoadingScript::Unload(){
 		}
-		void LoadingScript::Show(Engine::EScenePassParamsPTR& params){
-			LoadingPassParamsPTR lparams = std::dynamic_pointer_cast<LoadingPassParams>(params);
+		void LoadingScript::Show(Engine::ESceneArgsPTR& params){
+			LoadingArgsPTR lparams = std::dynamic_pointer_cast<LoadingArgs>(params);
 			scene_id = lparams->scene;
 			scene_params = lparams->send_params;
 			transition_type = lparams->type;
@@ -97,7 +96,7 @@ namespace Osaka{
 		}
 		void LoadingScript::StandBy(){
 		}
-		void LoadingScript::StandBy(Engine::EScenePassParamsPTR& params){
+		void LoadingScript::StandBy(Engine::ESceneArgsPTR& params){
 			Show(params);
 		}
 		void LoadingScript::Focus(){

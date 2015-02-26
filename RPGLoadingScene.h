@@ -13,7 +13,7 @@ namespace Osaka{
 			~RPGLoadingScene();
 			void _delete();
 			/* This function calls GameLoader function and adds itself to the loop as a normal EScene */
-			void SceneTransition(const char* name, Engine::EScenePassParamsPTR& params, TransitionType::Value type);
+			void SceneTransition(const char* name, Engine::ESceneArgsPTR& params, TransitionType::Value type);
 			/* This function is accesed by the other loading thread.
 			 * It is called inside the anonymous function that this class sets on GameLoader function */
 			void LoadCompleted();

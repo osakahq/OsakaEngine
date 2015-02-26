@@ -2,8 +2,11 @@
 //
 #include "stdafx.h"
 
+#include "EventArgs.h"
+#include "EventHandler.h"
+
 #include "Utils.h"
-#include "EScenePassParams.h"
+#include "ESceneArgs.h"
 #include "RPGFactory.h"
 #include "asc_bootstrap.h"
 #include "Debug.h"
@@ -31,7 +34,7 @@ void bTestSuite(){
 		test->End();
 		test->_delete(); test = nullptr;
 	}
-	Engine::EmptyScenePassParamsPTR = nullptr;
+	Engine::EmptyESceneArgsPTR = nullptr;
 #ifdef _DEBUG
 	_ENDCHECKDELETE();
 #endif
@@ -57,7 +60,7 @@ void Ascension(){
 
 	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program 
 	 * or EmptyScenePassParamsPTR will call to a disposed function (when the program exits) */
-	Engine::EmptyScenePassParamsPTR = nullptr;
+	Engine::EmptyESceneArgsPTR = nullptr;
 }
 
 int _tmain(int argc, _TCHAR* argv[])

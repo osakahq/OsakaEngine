@@ -54,6 +54,9 @@ namespace Osaka{
 			scenes = nullptr;
 
 			debug = nullptr;
+
+			/* If we don't do this, the copied variables will never be freed */
+			threadParams.callback = nullptr;
 		}
 
 		void AssetManager::Init(){
@@ -72,6 +75,7 @@ namespace Osaka{
 				debug->e("[AssetManager] Can't load another scene when a scene is already being loaded.");
 				return;
 			}
+			/* std::function need to be set to `nullptr` when done */
 			threadParams.callback = callback;
 			threadParams.scene = scene;
 			SetEvent(sceneToLoadEvent);
@@ -87,6 +91,9 @@ namespace Osaka{
 				//WARNING: the callback is using rawpointer (see RPGLoadingScene::SceneTransition())
 				threadParams.callback();
 				ResetEvent(sceneToLoadEvent);
+
+				/* If we don't do this, the copied variables will never be freed */
+				threadParams.callback = nullptr;
 			}
 			debug->l("[AssetManager] ProcessLoad thread ended gracefully.");
 		}

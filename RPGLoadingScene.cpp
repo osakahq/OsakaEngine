@@ -1,7 +1,7 @@
  #include "stdafx.h"
 #include "EventArgs.h"
-#include "EScenePassParams.h"
-#include "LoadingPassParams.h"
+#include "ESceneArgs.h"
+#include "LoadingArgs.h"
 #include "Canvas.h"
 #include "UserInterface.h"
 #include "Script.h"
@@ -31,17 +31,17 @@ namespace Osaka{
 			RPGScene::_delete();
 			assetm = nullptr;
 		}
-		void RPGLoadingScene::SceneTransition(const char* name, Engine::EScenePassParamsPTR& params, TransitionType::Value type){
+		void RPGLoadingScene::SceneTransition(const char* name, Engine::ESceneArgsPTR& params, TransitionType::Value type){
 			
-			//WARNING: Using raw pointer
+			/* Using a raw pointer. There is no problem because the only way the anonymous function will be called is when this class calls `assetm->LoadScene(...)` */
 			RPGLoadingScene* raw_loadingscene = this;
 			assetm->LoadScene(name, [raw_loadingscene](){
 				/* This anonymous function will be called inside AssetManager:ProcessLoad function (the other thread) */
 				raw_loadingscene->LoadCompleted();
 			});
 
-			Engine::EScenePassParamsPTR loadingparams_ptr = std::make_shared<LoadingPassParams>();
-			LoadingPassParams* loadingparams = (LoadingPassParams*)loadingparams_ptr.get();
+			Engine::ESceneArgsPTR loadingparams_ptr = std::make_shared<LoadingArgs>();
+			LoadingArgs* loadingparams = (LoadingArgs*)loadingparams_ptr.get();
 			loadingparams->send_params = params;
 			loadingparams->scene = name;
 			loadingparams->type = type;

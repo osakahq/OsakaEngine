@@ -15,7 +15,7 @@
 //Forward declarations. Unfortunately, it's easier to make them pointers
 namespace Osaka{
 	namespace Component{
-		class EventHandler; 
+		class EventHandler; typedef std::shared_ptr<EventHandler> EventHandlerPTR;
 		class EventArgs;
 	}
 	namespace Debug{
@@ -68,9 +68,9 @@ namespace Osaka{
 
 			//MEMBERS -------------------------------------------------------------
 			//This is the event when someone has been recieved. See WinProc->FD_Read
-			Component::EventHandler* ConnectionRecieveEvent;
+			Component::EventHandlerPTR ConnectionRecieveEventPTR;
 			//This fires when the connection is up
-			Component::EventHandler* ConnectedEvent;
+			Component::EventHandlerPTR ConnectedEventPTR;
 		private:
 			//MEMBERS -------------------------------------------------------------
 			//Window (for the message queue loop) for the non blocking socket

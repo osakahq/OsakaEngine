@@ -19,14 +19,12 @@ namespace Osaka{
 		class Log;				typedef std::shared_ptr<Log>			LogPTR;
 	}
 	namespace Engine{
-		class EScenePassParams;		typedef std::shared_ptr<EScenePassParams> EScenePassParamsPTR;
-
 		class IFileLoader;			typedef std::shared_ptr<IFileLoader>	IFileLoaderPTR;
 		class DefaultFileLoader;	typedef std::shared_ptr<DefaultFileLoader>	DefaultFileLoaderPTR;
 		class PhysicsFSFileLoader;	typedef std::shared_ptr<PhysicsFSFileLoader>PhysicsFSFileLoaderPTR;
 
-		class EScene;				typedef std::shared_ptr<EScene>				EScenePTR;
-		class EScenePassParams;		typedef std::shared_ptr<EScenePassParams>	EScenePassParamsPTR;
+		class EScene;				typedef std::shared_ptr<EScene>			EScenePTR;
+		class ESceneArgs;		typedef std::shared_ptr<ESceneArgs>			ESceneArgsPTR;
 
 		class Sound;				typedef std::shared_ptr<Sound>			SoundPTR;
 		class SoundEffect;			typedef std::shared_ptr<SoundEffect>	SoundEffectPTR;
@@ -73,29 +71,29 @@ namespace Osaka{
 		class Timer;			typedef std::shared_ptr<Timer>	TimerPTR;
 
 		struct sound_data;		typedef std::shared_ptr<sound_data>												sound_dataPTR;
-		/*Hash map*/			typedef std::shared_ptr<std::unordered_map<std::string, sound_dataPTR>>			unorderedmap_sound_dataPTR;
+		/* Hash map */			typedef std::shared_ptr<std::unordered_map<std::string, sound_dataPTR>>			unorderedmap_sound_dataPTR;
 
 		struct spritemap_data;	typedef std::shared_ptr<spritemap_data>											spritemap_dataPTR;
-		/*Hash map*/			typedef std::shared_ptr<std::unordered_map<std::string, spritemap_dataPTR>>		unorderedmap_spritemap_dataPTR;
+		/* Hash map */			typedef std::shared_ptr<std::unordered_map<std::string, spritemap_dataPTR>>		unorderedmap_spritemap_dataPTR;
 		struct sprite_data;		typedef std::shared_ptr<sprite_data>											sprite_dataPTR;
-		/*Hash map*/			typedef std::shared_ptr<std::unordered_map<std::string, sprite_dataPTR>>		unorderedmap_spriteids_dataPTR;
+		/* Hash map */			typedef std::shared_ptr<std::unordered_map<std::string, sprite_dataPTR>>		unorderedmap_spriteids_dataPTR;
 
 		
 
 		struct gamesession_data;typedef std::shared_ptr<gamesession_data>										gamesession_dataPTR;
-		/*Hash map*/			typedef std::shared_ptr<std::unordered_map<std::string, gamesession_dataPTR>>	unorderedmap_gamesession_dataPTR;
+		/* Hash map */			typedef std::shared_ptr<std::unordered_map<std::string, gamesession_dataPTR>>	unorderedmap_gamesession_dataPTR;
 
 		struct asset_initload_data;		typedef std::shared_ptr<asset_initload_data>							asset_initload_dataPTR;
-		/*Hash map*/			typedef std::shared_ptr<std::unordered_map<std::string, asset_initload_dataPTR>> unorderedmap_asset_initload_dataPTR;
+		/* Hash map */			typedef std::shared_ptr<std::unordered_map<std::string, asset_initload_dataPTR>> unorderedmap_asset_initload_dataPTR;
 
 		typedef std::shared_ptr<std::unordered_map<std::string, unsigned int>> unorderedmap_assets_typePTR;
 
 		struct scene_data;		typedef std::shared_ptr<scene_data>							scene_dataPTR;
-		/*Hash map*/			typedef std::shared_ptr<std::unordered_map<std::string, scene_dataPTR>> unorderedmap_scene_dataPTR;
+		/* Hash map */			typedef std::shared_ptr<std::unordered_map<std::string, scene_dataPTR>> unorderedmap_scene_dataPTR;
 		struct related_scene_data;
 	
 		struct fontcharacter_data;	typedef std::shared_ptr<fontcharacter_data>		fontcharacter_dataPTR;
-		/*Hash map*/				typedef std::shared_ptr<std::unordered_map<char, fontcharacter_dataPTR>> unorderedmap_fontcharacter_dataPTR;
+		/* Hash map */				typedef std::shared_ptr<std::unordered_map<char, fontcharacter_dataPTR>> unorderedmap_fontcharacter_dataPTR;
 	}
 }
 #endif;

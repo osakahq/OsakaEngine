@@ -21,15 +21,5 @@ namespace Osaka{
 			}
 			return false;
 		}
-		//RecieveEventArgs::RecieveEventArgs(char* message){
-			//EventArgs();
-			//this->setMessage(message);
-		//}
-		//void RecieveEventArgs::setMessage(char* message){
-			//char* message and char message[] are the same things
-			//Doesn't matter if the pointer (message) goes away because I copy the value
-			//strcpy_s(this->message, message);
-		//}
-
 	}
 }

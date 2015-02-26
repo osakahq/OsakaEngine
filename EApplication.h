@@ -35,11 +35,11 @@ namespace Osaka{
 			// EScenePassParams it is used to pass a param to the soon to be actived scene
 			// For scenes to communicate, the caller scene should bind a callback in EScenePassParams or the other solution written in the notes.
 			/* Makes a transition to switch scene. It removes all scenes from the stack. */
-			void Switch(const char* scene, EScenePassParamsPTR& in_param);
+			void Switch(const char* scene, ESceneArgsPTR& in_param);
 			/* Instead of transition, it is superimposed on the current scene. This means no loading scene. */
-			void Stack(const char* scene, EScenePassParamsPTR& in_param);
+			void Stack(const char* scene, ESceneArgsPTR& in_param);
 			/* Stacks an scene to the bottom of the stack */
-			void BottomStack(const char* scene, EScenePassParamsPTR& in_param);
+			void BottomStack(const char* scene, ESceneArgsPTR& in_param);
 			/* Removes a scene from the stack */
 			void Remove(const char* scene);
 			/* Removes all scenes from the stack */

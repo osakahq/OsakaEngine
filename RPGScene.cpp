@@ -43,7 +43,7 @@ namespace Osaka{
 			ui->Unload();
 			canvas->Unload();
 		}
-		void RPGScene::Show(Engine::EScenePassParamsPTR& params){
+		void RPGScene::Show(Engine::ESceneArgsPTR& params){
 			script->Show(params);
 			ui->Show();
 			canvas->Show();
@@ -58,7 +58,7 @@ namespace Osaka{
 			ui->StandBy();
 			canvas->StandBy();
 		}
-		void RPGScene::StandBy(Engine::EScenePassParamsPTR& params){
+		void RPGScene::StandBy(Engine::ESceneArgsPTR& params){
 			script->StandBy(params);
 			ui->StandBy();
 			canvas->StandBy();

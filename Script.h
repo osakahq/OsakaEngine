@@ -14,10 +14,10 @@ namespace Osaka{
 			//For their explanation see `EScene.h`
 			virtual void Load() = 0;
 			virtual void Unload() = 0;
-			virtual void Show(Engine::EScenePassParamsPTR& params) = 0;
+			virtual void Show(Engine::ESceneArgsPTR& params) = 0;
 			virtual void Hide() = 0;
 			virtual void StandBy() = 0;
-			virtual void StandBy(Engine::EScenePassParamsPTR& params) = 0;
+			virtual void StandBy(Engine::ESceneArgsPTR& params) = 0;
 			virtual void Focus() = 0;
 			virtual void Update() = 0;
 			virtual void Draw() = 0;

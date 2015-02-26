@@ -19,10 +19,10 @@ namespace Osaka{
 			virtual void Load();
 			virtual void Unload();
 
-			virtual void Show(Engine::EScenePassParamsPTR& params);
+			virtual void Show(Engine::ESceneArgsPTR& params);
 			virtual void Hide();
 			virtual void StandBy();
-			virtual void StandBy(Engine::EScenePassParamsPTR& params);
+			virtual void StandBy(Engine::ESceneArgsPTR& params);
 			virtual void Focus();
 
 			virtual void Update();

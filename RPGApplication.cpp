@@ -1,7 +1,7 @@
  #include "stdafx.h"
 
 #include "FPSCounter.h"
-#include "EScenePassParams.h"
+#include "ESceneArgs.h"
 #include "EScene.h"
 #include "Debug.h"
 #include "Settings.h"
@@ -74,7 +74,7 @@ namespace Osaka{
 				//Means it hasn't called the firstupdate section
 				if( firstUpdate == 1 ){ //1 = first update(true)
 					/* Basically, we are waiting for a full loop to end, and then we switch the first scene. Scenes should only be inside the loop */
-					SwitchTransition(first_scene.c_str(), Engine::EmptyScenePassParamsPTR);
+					SwitchTransition(first_scene.c_str(), Engine::EmptyESceneArgsPTR);
 					firstUpdate = 2; //2 = first_update(false)
 
 				}else if( firstUpdate == 0 ){//0 = initialized
@@ -112,10 +112,10 @@ namespace Osaka{
 			return sessionm;
 		}
 
-		void RPGApplication::SwitchTransition(const char* scene, Engine::EScenePassParamsPTR& params){
+		void RPGApplication::SwitchTransition(const char* scene, Engine::ESceneArgsPTR& params){
 			loadingscene->SceneTransition(scene, params, TransitionType::SWITCH);
 		}
-		void RPGApplication::StackTransition(const char* scene, Engine::EScenePassParamsPTR& params){
+		void RPGApplication::StackTransition(const char* scene, Engine::ESceneArgsPTR& params){
 			loadingscene->SceneTransition(scene, params, TransitionType::STACK);
 		}
 

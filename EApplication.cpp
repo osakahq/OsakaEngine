@@ -1,7 +1,7 @@
  #include "stdafx.h"
 #include "SDLLib.h"
 #include "Debug.h"
-#include "EScenePassParams.h"
+#include "ESceneArgs.h"
 #include "EScene.h"
 #include "IFileLoader.h"
 #include "EApplication.h"
@@ -40,14 +40,14 @@ namespace Osaka{
 			scenes[id] = scene;
 		}
 
-		void EApplication::Switch(const char* scene, EScenePassParamsPTR& in_param){
+		void EApplication::Switch(const char* scene, ESceneArgsPTR& in_param){
 			RemoveAllFromStack();
 			stackItems++;
 			stack[stackItems] = scene;
 			scenes[scene]->Show(in_param);
 			stackHasChanged = true;
 		}
-		void EApplication::Stack(const char* scene, EScenePassParamsPTR& in_param){
+		void EApplication::Stack(const char* scene, ESceneArgsPTR& in_param){
 			//We only need to call StandBy on current top scene because the others are already in standby
 			this->scenes[stack[this->stackItems]]->StandBy();
 
@@ -56,7 +56,7 @@ namespace Osaka{
 			scenes[scene]->Show(in_param);
 			stackHasChanged = true;
 		}
-		void EApplication::BottomStack(const char* scene, EScenePassParamsPTR& in_param){
+		void EApplication::BottomStack(const char* scene, ESceneArgsPTR& in_param){
 			//We push the array 1 position so we leave 0 free
 			for(int i = this->stackItems; i >= 0; i--){
 				stack[i+1] = stack[i];
@@ -162,7 +162,7 @@ namespace Osaka{
 				this->BeforePresent();
 				sdl->Present();
 
-#ifdef _DEBUG
+#ifdef OSAKA_SHOWAVERAGEFPS
 				this->RenderTime(SDL_GetTicks() - frame_ms);
 #endif
 				//_vsync is a constant = no branch problem

@@ -20,13 +20,13 @@ namespace Osaka{
 			virtual void Unload() = 0;
 
 			/* Called when `Switch()/Stack()` functions are called */
-			virtual void Show(EScenePassParamsPTR& params) = 0;
+			virtual void Show(ESceneArgsPTR& params) = 0;
 			/* Called when Remove(scene) or RemoveAllFromStack is called */
 			virtual void Hide() = 0;
 			/* Called when a new scene is stacked */
 			virtual void StandBy() = 0;
 			/* When calling BottomStack, it is put at the bottom so it is like Show() but was called to the bottom of the stack */
-			virtual void StandBy(EScenePassParamsPTR& params) = 0;
+			virtual void StandBy(ESceneArgsPTR& params) = 0;
 			/* This only happens when 2 scenes are stacked, then the top one is `Remove()`ed and the new top scene is called with `Focus()` */
 			virtual void Focus() = 0;
 

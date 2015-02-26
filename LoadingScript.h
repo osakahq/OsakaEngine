@@ -17,10 +17,10 @@ namespace Osaka{
 			void Init(RPGLoadingScenePTR& parent, LoadingCanvasPTR& canvas, LoadingUIPTR& ui);
 			void Load();
 			void Unload();
-			void Show(Engine::EScenePassParamsPTR& params);
+			void Show(Engine::ESceneArgsPTR& params);
 			void Hide();
 			void StandBy();
-			void StandBy(Engine::EScenePassParamsPTR& params);
+			void StandBy(Engine::ESceneArgsPTR& params);
 			void Focus();
 			void Update();
 			void Draw();
@@ -42,7 +42,7 @@ namespace Osaka{
 			/* This is the id of the scene to switch */
 			std::string scene_id;
 			/* This is the scene params to send when calling app->Stack/BottomStack */
-			Engine::EScenePassParamsPTR scene_params;
+			Engine::ESceneArgsPTR scene_params;
 			TransitionType::Value transition_type;
 
 			/* NOT Owner. Ownership is in RPGLoadingScene */
