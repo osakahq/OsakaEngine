@@ -5,6 +5,8 @@
 #include "Debug.h"
 #include "ServerConn.h"
 
+#define SERVERCONN_CONNECTION_RECIEVE 394981
+#define SERVERCONN_CONNECTED_EVENT 162746
 namespace Osaka{
 	namespace Network{
 
@@ -46,7 +48,7 @@ namespace Osaka{
 
 			InitializeCriticalSection(&this->csCleanup);
 			this->ConnectionRecieveEvent = new Component::EventHandler();
-			this->ConnectionRecieveEvent->m_hook(this, 99, std::bind(&ServerConn::RecieveEvent, this, std::placeholders::_1));
+			this->ConnectionRecieveEvent->Hook(SERVERCONN_CONNECTION_RECIEVE+99, std::bind(&ServerConn::RecieveEvent, this, std::placeholders::_1));
 
 			state.bytes_read = 0;
 			//no performance hit
@@ -62,7 +64,7 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("ServerConn");
 #endif
-			this->ConnectionRecieveEvent->m_unhook(this, 99);
+			this->ConnectionRecieveEvent->Unhook(SERVERCONN_CONNECTION_RECIEVE+99);
 
 			delete ConnectionRecieveEvent;
 			delete ConnectedEvent;
@@ -82,7 +84,7 @@ namespace Osaka{
 	
 			if( pingThread == NULL ){
 				ServerConn* c = this;
-				this->ConnectedEvent->m_hook(this, 2, [c](Component::EventArgs& e){
+				this->ConnectedEvent->Hook(SERVERCONN_CONNECTED_EVENT+2, [c](Component::EventArgs& e){
 					c->pingThread = CreateThread(NULL, 0, &ServerConn_StartPing, c, 0, NULL);
 				});
 			}
@@ -97,7 +99,7 @@ namespace Osaka{
 			if( !this->Connect() ){
 				this->CleanupConnection();
 			}
-			ConnectedEvent->raise(Component::EmptyEventArgs);
+			ConnectedEvent->Raise(Component::EmptyEventArgs);
 			MSG msg;
 			ZeroMemory(&msg, sizeof(MSG));
 	
@@ -109,7 +111,7 @@ namespace Osaka{
 
 		void ServerConn::Ping(){
 			//This function will always be called because if you see ConnectedEvent.raise() will be called regardless if this->Connect() returns true
-			this->ConnectedEvent->m_unhook(this, 2);
+			this->ConnectedEvent->Unhook(SERVERCONN_CONNECTED_EVENT+2);
 			HANDLE hConnectedEvent = CreateEvent(NULL, TRUE, FALSE, TEXT("DebugClient_Ping_ConnectedEvent"));
 			while(connIsUp){
 				this->Send("~client-im-here");
@@ -123,7 +125,7 @@ namespace Osaka{
 		bool ServerConn::StartAndWaitForConnection(){
 	
 			HANDLE hConnectedEvent = CreateEvent(NULL, TRUE, FALSE, TEXT("DebugClient_Stop_ConnectedEvent"));
-			this->ConnectedEvent->m_hook(this, 1, [hConnectedEvent](Component::EventArgs& e){
+			this->ConnectedEvent->Hook(SERVERCONN_CONNECTED_EVENT+1, [hConnectedEvent](Component::EventArgs& e){
 				SetEvent(hConnectedEvent);
 			});
 
@@ -132,7 +134,7 @@ namespace Osaka{
 			if( (DWORD)WaitForSingleObject(hConnectedEvent, 1000) == WAIT_OBJECT_0 ){
 				//ret = true;
 			}
-			this->ConnectedEvent->m_unhook(this, 1);
+			this->ConnectedEvent->Unhook(SERVERCONN_CONNECTED_EVENT+1);
 			CloseHandle(hConnectedEvent);
 
 			return connIsUp;
@@ -147,7 +149,7 @@ namespace Osaka{
 
 			if( connIsUp && skipSend == false ){
 				HANDLE hRecieveEvent = CreateEvent(NULL, TRUE, FALSE, TEXT("DebugClient_Stop_RecieveEvent"));
-				this->ConnectionRecieveEvent->m_hook(this, 1, [hRecieveEvent](Component::EventArgs& e){
+				this->ConnectionRecieveEvent->Hook(SERVERCONN_CONNECTION_RECIEVE+1, [hRecieveEvent](Component::EventArgs& e){
 					RecieveEventArgs& re = (RecieveEventArgs&)e;
 					if( re.find("~bye") ){
 						SetEvent(hRecieveEvent);
@@ -161,7 +163,7 @@ namespace Osaka{
 					}
 				}
 
-				this->ConnectionRecieveEvent->m_unhook(this, 1);
+				this->ConnectionRecieveEvent->Unhook(SERVERCONN_CONNECTION_RECIEVE+1);
 				CloseHandle(hRecieveEvent);
 			}
 	
@@ -335,7 +337,7 @@ namespace Osaka{
 					if( messages.size() > 0 ){
 						RecieveEventArgs* e = new RecieveEventArgs(&messages);
 						//&e is the address of the pointer. *e is the address where it is pointing
-						ConnectionRecieveEvent->raise(*e);
+						ConnectionRecieveEvent->Raise(*e);
 						//I can do this because .raise() and the calls are called in this same thread.
 						//When it gets to `delete e`, nothing bad will happen.
 						//Otherwise (raising in another thread), I would need a lock here.

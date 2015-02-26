@@ -1,6 +1,7 @@
  // OsakaEngine.cpp : Defines the entry point for the console application.
 //
 #include "stdafx.h"
+
 #include "Utils.h"
 #include "EScenePassParams.h"
 #include "RPGFactory.h"
@@ -53,6 +54,10 @@ void Ascension(){
 	conn = nullptr;
 	app->_delete(); app = nullptr;
 	debug->_delete(); debug = nullptr;
+
+	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program 
+	 * or EmptyScenePassParamsPTR will call to a disposed function (when the program exits) */
+	Engine::EmptyScenePassParamsPTR = nullptr;
 }
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -60,11 +65,10 @@ int _tmain(int argc, _TCHAR* argv[])
 #ifdef _CRTDBG_MAP_ALLOC
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 #endif
-	//For tests:
+	
 	bTestSuite();
 	//Ascension();
-	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program */
-	Engine::EmptyScenePassParamsPTR = nullptr;
+	
 	getchar();
 	return 0;
 }

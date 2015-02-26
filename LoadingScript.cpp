@@ -11,6 +11,11 @@
 #include "Script.h"
 #include "LoadingScript.h"
 #include "osaka_forward.h"
+
+#define LOADINGSCRIPT_MIDANIMATION 116260
+#define LOADINGSCRIPT_ENDANIMATION 976838
+
+
 namespace Osaka{
 	namespace RPGLib{
 		LoadingScript::LoadingScript(RPGApplicationPTR& app) : Script(app){
@@ -27,9 +32,9 @@ namespace Osaka{
 			Script::_delete();
 			parent = nullptr;
 
-			canvas->endAnimation->unhook(this);
+			canvas->endAnimation->Unhook(LOADINGSCRIPT_ENDANIMATION);
 			/* Does not matter if mid animation was already unhooked. EventHandler does not throw an exception anymore */
-			canvas->midAnimation->unhook(this);
+			canvas->midAnimation->Unhook(LOADINGSCRIPT_MIDANIMATION);
 			canvas = nullptr;
 			ui = nullptr;
 
@@ -42,8 +47,8 @@ namespace Osaka{
 			this->ui = ui;
 
 			//If transitiontype == Stack, there is no endAnimation.
-			canvas->endAnimation->hook(this, std::bind(&LoadingScript::OnCanvasEndAnimation, this, std::placeholders::_1));
-			canvas->midAnimation->hook(this, std::bind(&LoadingScript::OnCanvasMidAnimation, this, std::placeholders::_1));
+			canvas->endAnimation->Hook(LOADINGSCRIPT_ENDANIMATION, std::bind(&LoadingScript::OnCanvasEndAnimation, this, std::placeholders::_1));
+			canvas->midAnimation->Hook(LOADINGSCRIPT_MIDANIMATION, std::bind(&LoadingScript::OnCanvasMidAnimation, this, std::placeholders::_1));
 		}
 		void LoadingScript::ResetVariables(){
 			scene_id = "";

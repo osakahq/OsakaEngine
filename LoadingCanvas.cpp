@@ -90,7 +90,7 @@ namespace Osaka{
 					if( timer->GetTicks() >= fadeInTime ){
 						timer->Stop();
 						onMidAnimation = true;
-						midAnimation->raise(Component::EmptyEventArgs);
+						midAnimation->Raise(Component::EmptyEventArgs);
 					}
 				}else{
 					if( beginSecondPart ){
@@ -103,7 +103,7 @@ namespace Osaka{
 							color.a = static_cast<Uint8>( 255.f - Utils::Clamp( std::ceil((timer->GetTicks() / fadeOutTime)*255.f), 0.f, 255.f) );
 							if( timer->GetTicks() >= fadeOutTime ){
 								timer->Stop();
-								endAnimation->raise(Component::EmptyEventArgs);
+								endAnimation->Raise(Component::EmptyEventArgs);
 								skipUpdate = true;
 							}
 						}
