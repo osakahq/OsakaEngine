@@ -20,6 +20,11 @@ namespace Osaka{
 		void Music::_delete(){
 			Sound::_delete();
 		}
+		Mix_Music* Music::GetRAWMixMusic(){
+			if( music == NULL )
+				throw std::exception("[Music] music is NULL");
+			return music;
+		}
 		void Music::Load(const char* filename){
 			if( music != NULL ){
 				debug->l("[Music] WARNING! Sound is already loaded: " + std::string(filename));

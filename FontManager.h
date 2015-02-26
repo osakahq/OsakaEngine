@@ -4,7 +4,8 @@
 #include "rpglib_include.h"
 #include "osaka_forward.h"
 
-/* It is 128 because in the standard char has 128 representable characters: http://www.cplusplus.com/doc/ascii/ */
+/* It is 128 because in the standard char has 128 representable characters: http://www.cplusplus.com/doc/ascii/ 
+ * List of characters: http://web.cs.mun.ca/~michael/c/ascii-table.html */
 #define FONTMANAGER_MAX_CHAR 128
 
 namespace Osaka{

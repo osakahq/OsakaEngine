@@ -11,13 +11,14 @@ namespace Osaka{
 			Music(Debug::DebugPTR& debug, IFileLoaderPTR & fileloader);
 			~Music();
 			void _delete();
-			/* Owner */
-			Mix_Music* music;
-
+			
 			void Load(const char* filename);
+
+			Mix_Music* GetRAWMixMusic();
 		/* ----------------------------------------------------------------------------------- */
 		private:
-			
+			/* Owner */
+			Mix_Music* music;
 		};
 	}
 }

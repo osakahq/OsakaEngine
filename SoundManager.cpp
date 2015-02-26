@@ -57,7 +57,7 @@ namespace Osaka{
 			//TODO: I'm not sure how to upcast a shared_ptr
 			Engine::SoundPTR sound = this->esounds[std::string(id)];
 			Engine::Music* music = (Engine::Music*)sound.get();
-			sdl->PlayMusic(*music->music);
+			sdl->PlayMusic(*music->GetRAWMixMusic());
 		}
 		void SoundManager::PauseMusic(){
 			sdl->PauseMusic();

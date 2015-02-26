@@ -26,6 +26,10 @@ namespace Osaka{
 			effect = fileloader->LoadWAV(filename);
 		}
 		void SoundEffect::Play(int times){
+#ifdef _DEBUG
+			if( effect == NULL )
+				throw std::exception("[SoundEffect] effect is NULL");
+#endif
 			Mix_PlayChannel(-1, effect, 0);
 		}
 	}
