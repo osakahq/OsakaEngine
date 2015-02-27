@@ -13,9 +13,8 @@
 namespace Osaka{
 	namespace RPGLib{
 
-		GameDataLoader::GameDataLoader(Debug::DebugPTR& debug, FactoryPTR& factory){
+		GameDataLoader::GameDataLoader(Debug::DebugPTR& debug){
 			this->debug = debug;
-			this->factory = factory;
 		}
 		GameDataLoader::~GameDataLoader(){
 #ifdef _DEBUG
@@ -24,10 +23,9 @@ namespace Osaka{
 		}
 		void GameDataLoader::_delete(){
 			debug = nullptr;
-			factory = nullptr;
 		}
-		GameDataPTR GameDataLoader::LoadGameFile(const char* filename){
-			GameDataPTR data = factory->CreateGameData();
+		void GameDataLoader::LoadGameFile(const char* filename, GameDataPTR data){
+			//GameDataPTR data = factory->CreateGameData();
 
 			rapidxml::xml_document<> doc;
 			rapidxml::file<> xmlFile(filename); //Char
@@ -93,7 +91,6 @@ namespace Osaka{
 			debug->l("[GameData] Loading fontmap data...");
 				LoadFontmap(data, *root->first_node("fontmap"));
 
-			return data;
 		}
 
 		void GameDataLoader::LoadInitialAssetmap(GameDataPTR& data, rapidxml::xml_node<>& init_load_node){

@@ -59,7 +59,7 @@ namespace Osaka{
 		void RPGApplication::Init(bool vsync, int timePerFrame){
 			EApplication::Init(vsync, timePerFrame);
 			if( settings == nullptr || gameData == nullptr  || factory == nullptr || rpgfactory == nullptr || 
-				loader == nullptr || assetm == nullptr || loadingscene == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr)
+				loader == nullptr || assetm == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr)
 			{
 				debug->e("[RPGApplication] Init failed.");
 			}
@@ -93,6 +93,8 @@ namespace Osaka{
 		}
 
 		void RPGApplication::Run(const char* scene){
+			if( loadingscene == nullptr )
+				throw std::exception("[RPGApplication] loadingscene is nullptr");
 			first_scene = scene;
 			counter->Start();
 			EApplication::Run();

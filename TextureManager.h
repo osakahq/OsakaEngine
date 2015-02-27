@@ -15,6 +15,7 @@ namespace Osaka{
 			~TextureManager();
 			void _delete();
 			void SetSpritemaps(unorderedmap_spritemap_dataPTR& spritemaps, unorderedmap_spriteids_dataPTR& sprite_ids);
+			void Init();
 			void LoadTexture(const std::string id);
 
 			void RenderSprite(const int x, const int y, const std::string& id);

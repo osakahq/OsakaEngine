@@ -81,7 +81,7 @@ namespace Osaka{
 		void Debug::l(const char* str){
 			if( noDebug )
 				return;
-			if( log == NULL ){
+			if( log == nullptr ){
 				//This should never happen.
 				throw std::exception("[Debug] log is null");
 				return;

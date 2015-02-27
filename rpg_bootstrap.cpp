@@ -28,49 +28,48 @@ namespace Osaka{
 	namespace RPGLib{
 		
 		RPGApplicationPTR rpg_bootstrap(const char* filedata, const char* filesettings, Debug::DebugPTR& debug){
-			FactoryPTR factory = std::make_shared<Factory>(debug);
+			/* ----------------------------------------------------------------------- */
+			/* --- Game Data --------------------------------------------------------- */
+			GameDataPTR data = std::make_shared<GameData>();
+			GameDataLoaderPTR loader = std::make_shared<GameDataLoader>(debug);
+			loader->LoadGameFile(filedata, data);
 
-			GameDataLoaderPTR loader = std::make_shared<GameDataLoader>(debug, factory);
-			GameDataPTR data = loader->LoadGameFile(filedata);
-
-			Engine::SDLLibPTR lib = std::make_shared<Engine::SDLLib>(debug);
-			lib->Init(data->name.c_str(), data->window_width, data->window_height, data->default_render_color_data, data->vsync);
-			lib->Start(); //Creates Hidden Window
-
+			/* ----------------------------------------------------------------------- */
+			/* --- App. At this point, the game data from the file is fully loaded. -- */
 			Engine::IFileLoaderPTR fileloader;
 #ifdef _DEBUG
 			fileloader = std::make_shared<Engine::DefaultFileLoader>();
 #else
-			//Only do this when everything is ready to go.
+			/* Only do this when everything is ready to go. */
 			fileloader = std::make_shared<Engine::PhysicsFSFileLoader>(debug, "tests\\tests.7z");
 #endif
-			RulerPTR ruler = std::make_shared<Ruler>(data->window_width, data->window_height);
-
+			Engine::SDLLibPTR lib = std::make_shared<Engine::SDLLib>(debug);
 			RPGApplicationPTR app = std::make_shared<RPGApplication>(debug, lib, fileloader);
+			app->loader = loader;
+			app->gameData = data;
+
+			/* ----------------------------------------------------------------------- */
+			/* --- Factory ----------------------------------------------------------- */
+			FactoryPTR factory = std::make_shared<Factory>(debug);
 			factory->sdl = lib;
 			factory->fileloader = fileloader;
 			factory->app = app;
 			app->factory = factory;
-			app->loader = loader;
-			app->gameData = data;
-			app->ruler = ruler;
 
 			RPGFactoryPTR rpgfactory = std::make_shared<RPGFactory>(debug, data);
 			app->rpgfactory = rpgfactory;
 			
-			SettingsPTR settings = std::make_shared<Settings>(filesettings);
-			app->settings = settings;
-
+			/* ------------------------------------------------------------------------ */
+			/* --- Managers ----------------------------------------------------------- */
 			TextureManagerPTR texturem = std::make_shared<TextureManager>(factory);
 			texturem->SetSpritemaps(data->spritemaps, data->sprite_ids);
 			
-			FontManagerPTR fontm = std::make_shared<FontManager>(*lib->GetRAWSDLRenderer(), texturem, data->fontmap_error, data->fontmap_space_x, data->fontmap_space_y);
+			FontManagerPTR fontm = std::make_shared<FontManager>(texturem, data->fontmap_error, data->fontmap_space_x, data->fontmap_space_y);
 			fontm->SetFontmap(data->fontmap);
 			
 			SoundManagerPTR soundm = std::make_shared<SoundManager>(factory, lib);
 			soundm->SetSounds(data->sounds);
 			
-			//-----------------------------------------------------------------------------
 			AssetManagerPTR assetm = std::make_shared<AssetManager>(debug, data->assets_type, data->assets_initload, data->assets_scenes);
 			assetm->texturem = texturem;
 			assetm->fontm = fontm;
@@ -82,20 +81,40 @@ namespace Osaka{
 			app->timem = timem;
 			factory->timem = timem;
 
+			/* -------------------------------------------------------------------- */
+			/* --- Misc ----------------------------------------------------------- */
+			SettingsPTR settings = std::make_shared<Settings>(filesettings);
+			app->settings = settings;
+
+			RulerPTR ruler = std::make_shared<Ruler>(data->window_width, data->window_height);
+			app->ruler = ruler;
+
 			FPSCounterPTR counter = std::make_shared<FPSCounter>(debug, fontm, data->target_fps, data->fontmap_space_x, data->fontmap_space_y);
 			app->counter = counter;
 
-			/* LoadingScene needs the name of the loadingscene so it can Stack/Switch the scene */
-			RPGLoadingScenePTR loadingscene = factory->CreateRPGLoadingScene("rpglib_loadingscene");
-			loadingscene->Load();
-			app->SetLoadingScene(loadingscene);
-			Engine::EScenePTR temp = loadingscene;
-			app->AddScene("rpglib_loadingscene", temp);
+			/* -------------------------------------------------------------------- */
+			/* --- Init ----------------------------------------------------------- */
+			lib->Init(data->name.c_str(), data->window_width, data->window_height, data->default_render_color_data, data->vsync);
+			lib->Start(); //Creates Hidden Window
+
+			factory->Check();
+			texturem->Init();
+			soundm->Init();
+			/* AssetManager must be after Texture/Sound because it loads the initial assets */
+			assetm->Init();
+			/* FontManager must be after AssetManager because it will call TextureManager to create sprite_data* and they have SDL_Texture* raw pointer */
+			fontm->Init(*lib->GetRAWSDLRenderer());
 
 			app->Init(data->vsync, data->time_per_frame);
-			factory->Init();
-			assetm->Init();
-			fontm->Init();
+
+			/* -------------------------------------------------------------------- */
+			/* --- After this point, everything is loaded ------------------------------------------------------------------- */
+			/* LoadingScene needs the name of the loadingscene so it can Stack/Switch itself */
+			RPGLoadingScenePTR loadingscene = factory->CreateRPGLoadingScene("rpglib_loadingscene");
+			app->SetLoadingScene(loadingscene);
+			/* We need to call Load because the place to call `scene->Load()` is in AssetManager */
+			loadingscene->Load();
+			app->AddScene("rpglib_loadingscene", std::static_pointer_cast<Engine::EScene>(loadingscene));
 
 			return app;
 		}

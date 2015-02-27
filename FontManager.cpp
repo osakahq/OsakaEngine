@@ -6,12 +6,11 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		FontManager::FontManager(SDL_Renderer& _renderer, TextureManagerPTR& texture, std::string _fontmap_error, int _space_x, int _space_y) 
+		FontManager::FontManager(TextureManagerPTR& texture, std::string _fontmap_error, int _space_x, int _space_y) 
 			: fontmap_error(_fontmap_error), fontmap_char_space_x(_space_x), fontmap_char_space_y(_space_y)
 		{
 			fontmap = nullptr;
 			this->texture = texture;
-			raw_renderer = &_renderer;
 
 			for(int i = 0; i < FONTMANAGER_MAX_CHAR; ++i)
 				sprites[i] = NULL;
@@ -33,7 +32,9 @@ namespace Osaka{
 		void FontManager::SetFontmap(unorderedmap_fontcharacter_dataPTR& fontmap){
 			this->fontmap = fontmap;
 		}
-		void FontManager::Init(){
+		void FontManager::Init(SDL_Renderer& _renderer){
+			raw_renderer = &_renderer;
+
 			for( auto it = fontmap->begin(); it != fontmap->end(); ++it ){
 				//it->first = char
 				if( (int)it->first >= FONTMANAGER_MAX_CHAR )

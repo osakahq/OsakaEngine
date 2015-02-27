@@ -10,7 +10,7 @@ namespace Osaka{
 			SoundManager(FactoryPTR& factory, Engine::SDLLibPTR& sdl);
 			~SoundManager();
 			void _delete();
-
+			void Init();
 			void SetSounds(unorderedmap_sound_dataPTR& sounds);
 			void LoadSound(const std::string id);
 

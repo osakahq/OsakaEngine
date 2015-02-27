@@ -16,11 +16,11 @@ namespace Osaka{
 
 		class GameDataLoader{
 		public:
-			GameDataLoader(Debug::DebugPTR& debug, FactoryPTR& factory);
+			GameDataLoader(Debug::DebugPTR& debug);
 			~GameDataLoader();
 			void _delete();
 			/* The one who calls it, gets the ownership of GameData */
-			GameDataPTR LoadGameFile(const char* filename);
+			void LoadGameFile(const char* filename, GameDataPTR data);
 
 			/* Doesn't take ownership. */
 			bool SaveGame(unorderedmap_gamesession_dataPTR& gamesessions, const char* filename);
@@ -30,9 +30,6 @@ namespace Osaka{
 		private:
 			/* NOT Owner*/
 			Debug::DebugPTR debug;
-
-			/* NOT Owner*/
-			FactoryPTR factory;
 
 			void LoadInitialAssetmap(GameDataPTR& data, rapidxml::xml_node<>& init_load_node);
 			void LoadAssetGroups(unorderedmap_group_data& groups, rapidxml::xml_node<>& groups_node);

@@ -14,10 +14,9 @@ namespace Osaka{
 			~Factory();
 			void _delete();
 			/* Check that the references are set */
-			void Init();
+			void Check();
 
 			// Gives away ownership.
-			GameDataPTR CreateGameData();
 			Engine::TexturePTR CreateTexture();
 			Engine::SoundPTR CreateSound(sound_dataPTR& data);
 			// Scenes

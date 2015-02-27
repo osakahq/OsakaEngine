@@ -26,13 +26,14 @@ namespace Osaka{
 		}
 		void SoundManager::SetSounds(unorderedmap_sound_dataPTR& sounds){
 			this->sounds = sounds;
+		}
+		void SoundManager::Init(){
 			Engine::SoundPTR sound;
 			for( auto it = sounds->begin(); it!= sounds->end(); ++it ){
 				sound = factory->CreateSound(it->second);
 				//sound->Load((*it->second).filename.c_str());
 				this->esounds[it->first] = sound;
 			}
-
 		}
 		void SoundManager::LoadSound(const std::string id){
 			esounds.at(id)->Load(sounds->at(id)->filename.c_str());

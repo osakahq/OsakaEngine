@@ -26,7 +26,8 @@ namespace Osaka{
 		void TextureManager::SetSpritemaps(unorderedmap_spritemap_dataPTR& spritemaps, unorderedmap_spriteids_dataPTR& sprite_ids){
 			this->spritemaps = spritemaps;
 			this->sprite_ids = sprite_ids;
-
+		}
+		void TextureManager::Init(){
 			Engine::TexturePTR texture;
 			for( auto it = spritemaps->begin(); it!= spritemaps->end(); ++it ){
 				texture = factory->CreateTexture();

@@ -37,12 +37,6 @@ namespace Osaka{
 	namespace RPGLib{
 		Factory::Factory(Debug::DebugPTR& debug){
 			this->debug = debug;
-
-			sdl = nullptr;
-			app = nullptr;
-			fileloader = nullptr;
-			assetm = nullptr;
-			timem = nullptr;
 		}
 		Factory::~Factory(){
 #ifdef _DEBUG
@@ -57,18 +51,24 @@ namespace Osaka{
 			app = nullptr;
 			timem = nullptr;
 		}
-		void Factory::Init(){
+		void Factory::Check(){
 			if( app == nullptr || sdl == nullptr || fileloader == nullptr || assetm == nullptr || timem == nullptr ){
 				debug->e("[Factory] Init failed.");
 			}
 		}
-		GameDataPTR Factory::CreateGameData(){
-			return std::make_shared<GameData>();
-		}
+		
 		Engine::TexturePTR Factory::CreateTexture(){
+#ifdef _DEBUG
+			if( fileloader == nullptr )
+				throw std::exception("[Factory] fileloader is nullptr");
+#endif
 			return std::make_shared<Engine::Texture>(*sdl->GetRAWSDLRenderer(), debug, fileloader);
 		}
 		Engine::SoundPTR Factory::CreateSound(sound_dataPTR& data){
+#ifdef _DEBUG
+			if( fileloader == nullptr )
+				throw std::exception("[Factory] fileloader is nullptr");
+#endif
 			Engine::SoundPTR sound;
 			if( data->type == SoundType::BGM ){
 				sound = std::make_shared<Engine::Music>(debug, fileloader);
@@ -79,6 +79,10 @@ namespace Osaka{
 		}
 
 		RPGLoadingScenePTR Factory::CreateRPGLoadingScene(const char* name){
+#ifdef _DEBUG
+			if( assetm == nullptr )
+				throw std::exception("[Factory] assetm is nullptr");
+#endif
 			LoadingCanvasPTR canvas = std::make_shared<LoadingCanvas>(app);
 			LoadingUIPTR ui = std::make_shared<LoadingUI>(app);
 			LoadingScriptPTR script = std::make_shared<LoadingScript>(app);
@@ -94,6 +98,8 @@ namespace Osaka{
 			script->Init(loadingscene, canvas, ui);
 			canvas->Init(CreateTimer());
 			ui->Init();
+
+			loadingscene->Init();
 
 			return loadingscene;
 		}
@@ -115,10 +121,16 @@ namespace Osaka{
 			canvas->Init();
 			ui->Init();
 
+			scene->Init();
+
 			return scene;
 		}
 
 		TimerPTR Factory::CreateTimer(){
+#ifdef _DEBUG
+			if( timem == nullptr )
+				throw std::exception("[Factory] timem is nullptr");
+#endif
 			TimerPTR timer = std::make_shared<Timer>(timem);
 			return timer;
 		}

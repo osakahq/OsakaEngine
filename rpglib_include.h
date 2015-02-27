@@ -11,7 +11,8 @@ namespace Osaka{
 			};
 		};
 
-		/* This is an optimized way to render many sprites instead of each frame looking up inside the unordered_maps */
+		/* This is an optimized way to render many sprites instead of each frame looking up inside the unordered_maps 
+		 * This is created in TextureManager */
 		struct sprite_info{
 			sprite_info(SDL_Texture* t, SDL_Rect& _clip) 
 				: raw_texture(t), clip(_clip)
@@ -30,7 +31,6 @@ namespace Osaka{
 			//In case, you only need w/h
 			int w;
 			int h;
-
 		};
 
 		//typedef std::shared_ptr<sprite_info> sprite_infoPTR;
