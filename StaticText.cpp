@@ -19,6 +19,7 @@ namespace Osaka{
 
 		}
 		void StaticText::_delete(){
+			//If sprite_info had _delete() function, it should be called before `delete *it;`
 			for( auto it = sprites.begin(); it != sprites.end(); ++it){
 				delete *it;
 			}

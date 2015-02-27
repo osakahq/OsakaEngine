@@ -1,5 +1,6 @@
  #include "stdafx.h"
 
+#include "StaticText.h"
 #include "engine_include.h"
 #include "Debug.h"
 #include "Timer.h"
@@ -30,6 +31,9 @@ namespace Osaka{
 		void FPSCounter::_delete(){
 			font = nullptr;
 			debug = nullptr;
+
+			stext_fps->_delete(); stext_fps = nullptr;
+			stext_avg->_delete(); stext_avg = nullptr;
 		}
 		
 		void FPSCounter::Start(){
@@ -37,6 +41,9 @@ namespace Osaka{
 			debug->l("[FPSCounter] The second number is the average time in milliseconds per frame when " + std::to_string(target_fps) + " frames have passed.");
 			debug->l("[FPSCounter] The second number INCLUDES `sdl->Present()`");
 			ticks = SDL_GetTicks();
+
+			stext_fps = font->CreateStaticText("fps", 5, 5, 3);
+			stext_avg = font->CreateStaticText("avg", 5, space_y + 5, 3);
 		}
 		
 		void FPSCounter::BeforePresent(){
@@ -48,7 +55,7 @@ namespace Osaka{
 					sum_frame_ms = 0;
 					calls = 0;
 				}
-				font->RenderTextLine("avg", 5, space_y+5);
+				stext_avg->Render();
 				font->RenderTextLine(average_frame_ms, space_x, space_y+5);
 			}
 			
@@ -65,7 +72,7 @@ namespace Osaka{
 					debug->l("[FPS] FPSCounter was called very late: " + std::to_string(time));
 				}
 			}
-			font->RenderTextLine("fps", 5, 5);
+			stext_fps->Render();
 			font->RenderTextLine(current_fps, space_x, 5);
 		}
 

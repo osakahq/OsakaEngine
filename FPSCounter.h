@@ -42,6 +42,12 @@ namespace Osaka{
 			std::string average_frame_ms;
 			/* We need to make sure that average ms frames is perfect. That is why we need a separate variable (from frames) */
 			int calls;
+
+			//Text for FPS and AVG
+			/* Owner */
+			StaticTextPTR stext_fps;
+			/* Owner */
+			StaticTextPTR stext_avg;
 		};
 	}
 }
