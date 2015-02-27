@@ -47,12 +47,12 @@ namespace Osaka{
 
 		sprite_info TextureManager::CreateSprite(const std::string& id){
 			sprite_dataPTR sprite = sprite_ids->at(id);
-			return sprite_info(textures[sprite->belongs_to_texture].get()->GetRAWSDLTexture(), sprite->clip);
+			return sprite_info(textures[sprite->belongs_to_texture].get()->GetRAWSDLTexture(), sprite->clip, 0, 0);
 		}
 
 		sprite_info* TextureManager::CreateSpriteRAWPointer(const std::string& id){
 			sprite_dataPTR sprite = sprite_ids->at(id);
-			return new sprite_info(textures[sprite->belongs_to_texture].get()->GetRAWSDLTexture(), sprite->clip);
+			return new sprite_info(textures[sprite->belongs_to_texture].get()->GetRAWSDLTexture(), sprite->clip, 0, 0);
 		}
 
 	}

@@ -255,6 +255,7 @@
 		<character sprite="font_X" id=" " />
 		<character sprite="font__dot" id="." />
 		<character sprite="font__ddot" id=":" />
+		<character sprite="font__-" id="-" />
 
 		<character sprite="font_A" id="a" />
 		<character sprite="font_B" id="b" />

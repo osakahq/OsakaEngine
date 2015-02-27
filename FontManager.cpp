@@ -2,6 +2,7 @@
 #include "rpglib_include.h"
 #include "gamedata_include.h"
 #include "TextureManager.h"
+#include "StaticText.h"
 #include "FontManager.h"
 
 namespace Osaka{
@@ -60,33 +61,129 @@ namespace Osaka{
 			}
 		}
 
+		void FontManager::RenderTextMultiple(const std::string& str, const int x, const int y, const int max_slots){
+			RenderTextMultiple(str.c_str(), x, y, max_slots);
+		}
 		void FontManager::RenderTextMultiple(const char* text, const int x, const int y, const int max_slots){
-			return;
-			Engine::render_info_ex render(x, y, 0, NULL, SDL_FLIP_NONE);
-
+#ifdef _DEBUG
+			if( max_slots <= 1 ){
+				throw std::exception("[FontManager] RenderTextMultiple > max_slots is to little");
+			}
+#endif
+			/* This code is also in CreateStaticText. */
+			SDL_Rect quad = {x, y, fontmap_char_space_x, fontmap_char_space_y};
 			int slot = 0;
 			for(const char* c = text; *c; ++c){
-				if( slot++ == max_slots ){
-					/* I think Ascension is responsible of crafting the message according to its message box size
-					 * But just in case, we do a simple check, if current c is A-Za-z and next also is A-Za-z */
-					//texture->RenderSprite(fontmap->at(' ')->sprite, render);
+				slot++;
 
-					//A-Z
-					//if( *c >= 65 && *c <= 90 && *c >= 97 && *c <= 122 ){
-					//	if( *(c+1) ){
-					//
-					//	}
-					//}
+				if( slot == max_slots ){
+					if( *(c-1) == ' ' ){ //[Hey _] 2 spaces
+						//If its time to go to new line, and the behind current one is a space:
+						--c; //We need to go back because we didn't print the current one
+						quad.x = x;
+						quad.y += fontmap_char_space_y;
+						slot = 0;
+						continue;
+					}
+					if( *c == ' ' ){
+						//If the current one is a space, then we just go to a new line
+						quad.x = x;
+						quad.y += fontmap_char_space_y;
+						slot = 0;
+						continue;
+					}
+					
+					//If the current one is a printable character
+					if( (int)*c >= 33 && (int)*c <= 126 ){
+						//If the next one isnt \0 and is not a space
+						if( *(c+1) != 0 && *(c+1) != ' ' ){
+							//We need to print a `dash`
+							SDL_RenderCopy(raw_renderer, sprites[(int)'-']->raw_texture, &sprites[(int)'-']->clip, &quad);
 
-					render.x = x;
-					render.y += fontmap_char_space_y;
-					slot = 1;
+							quad.x = x;
+							quad.y += fontmap_char_space_y;
+
+							//And we need to print the one that should be printed but in the next line
+							SDL_RenderCopy(raw_renderer, sprites[(int)*c]->raw_texture, &sprites[(int)*c]->clip, &quad);
+							quad.x += fontmap_char_space_x;
+							slot = 1; //Because we printed 2 (`dash` and the current one)
+						}else{
+							//If the next one (after the current one) is a space then we don't need `dash`
+							SDL_RenderCopy(raw_renderer, sprites[(int)*c]->raw_texture, &sprites[(int)*c]->clip, &quad);
+							quad.x = x;
+							quad.y += fontmap_char_space_y;
+							slot = 0;
+						}
+					}
+
+				}else{
+					//If it is not a space, then we render (if it is a space, we just increment x)
+					if( *c != ' ' ){
+						SDL_RenderCopy(raw_renderer, sprites[(int)*c]->raw_texture, &sprites[(int)*c]->clip, &quad);
+					}
+					//If it is a new line and the first character on that line is a space, don't print and "re-use" that space
+					if( slot == 1 && *c == ' ' ){
+						slot--;
+					}else{
+						//If it is not a space, increase x
+						quad.x += fontmap_char_space_x;
+					}
 				}
-				if( *c != ' ' ){
-					//texture->RenderSprite(fontmap->at(*c)->sprite, render);
-				}
-				render.x += fontmap_char_space_x;
 			}
+		}
+
+		StaticTextPTR FontManager::CreateStaticText(const char* text, const int x, const int y, const int max_slots){
+			int text_size = strlen(text);
+			std::vector<sprite_info*> vector;
+			vector.reserve( text_size + (int)std::ceil(((float)text_size/max_slots)) );
+			
+			SDL_Rect quad = {x, y, fontmap_char_space_x, fontmap_char_space_y};
+			int slot = 0;
+			/* This procedure is the same as the one in RenderMultipleText. For info go to that function and for modifications, must be done on both */
+			for(const char* c = text; *c; ++c){
+				slot++;
+				if( slot == max_slots ){
+					if( *(c-1) == ' ' ){
+						--c;
+						quad.x = x;
+						quad.y += fontmap_char_space_y;
+						slot = 0;
+						continue;
+					}
+					if( *c == ' ' ){
+						quad.x = x;
+						quad.y += fontmap_char_space_y;
+						slot = 0;
+						continue;
+					}
+					if( (int)*c >= 33 && (int)*c <= 126 ){
+						if( *(c+1) != 0 && *(c+1) != ' ' ){
+							vector.push_back(new sprite_info(sprites[(int)'-']->raw_texture, sprites[(int)'-']->clip, quad.x, quad.y));
+							quad.x = x;
+							quad.y += fontmap_char_space_y;
+							vector.push_back(new sprite_info(sprites[(int)*c]->raw_texture, sprites[(int)*c]->clip, quad.x, quad.y));
+							quad.x += fontmap_char_space_x;
+							slot = 1;
+						}else{
+							vector.push_back(new sprite_info(sprites[(int)*c]->raw_texture, sprites[(int)*c]->clip, quad.x, quad.y));
+							quad.x = x;
+							quad.y += fontmap_char_space_y;
+							slot = 0;
+						}
+					}
+				}else{
+					if( *c != ' ' ){
+						vector.push_back(new sprite_info(sprites[(int)*c]->raw_texture, sprites[(int)*c]->clip, quad.x, quad.y));
+					}
+					if( slot == 1 && *c == ' ' ){
+						slot--;
+					}else{
+						quad.x += fontmap_char_space_x;
+					}
+				}
+			}
+
+			return std::make_shared<StaticText>(*raw_renderer, vector, max_slots, fontmap_char_space_x, fontmap_char_space_y);
 		}
 	}
 }

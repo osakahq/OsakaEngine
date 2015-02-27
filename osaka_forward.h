@@ -41,7 +41,10 @@ namespace Osaka{
 		class RPGFactory;		typedef std::shared_ptr<RPGFactory>		RPGFactoryPTR;
 		class Settings;			typedef std::shared_ptr<Settings>		SettingsPTR;
 		class TextureManager;	typedef std::shared_ptr<TextureManager> TextureManagerPTR;
+
 		class FontManager;		typedef std::shared_ptr<FontManager>	FontManagerPTR;
+		class StaticText;		typedef std::shared_ptr<StaticText>		StaticTextPTR;
+
 		class SoundManager;		typedef std::shared_ptr<SoundManager>	SoundManagerPTR;
 
 		class AssetManager;		typedef std::shared_ptr<AssetManager>		AssetManagerPTR;

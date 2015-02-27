@@ -24,6 +24,10 @@ namespace Osaka{
 			void RenderTextLine(const std::string text, const int x, const int y);
 
 			void RenderTextMultiple(const char* text, const int x, const int y, const int max_slots);
+			void RenderTextMultiple(const std::string& str, const int x, const int y, const int max_slots);
+
+			/* Gives away ownership. */
+			StaticTextPTR CreateStaticText(const char* text, const int x, const int y, const int max_slots);
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			const std::string fontmap_error;

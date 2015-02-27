@@ -14,10 +14,11 @@ namespace Osaka{
 		/* This is an optimized way to render many sprites instead of each frame looking up inside the unordered_maps 
 		 * This is created in TextureManager */
 		struct sprite_info{
-			sprite_info(SDL_Texture* t, SDL_Rect& _clip) 
+			sprite_info(SDL_Texture* t, const SDL_Rect& _clip, int x, int y) 
 				: raw_texture(t), clip(_clip)
 			{
-				quad.x = quad.y = 0;
+				quad.x = x;
+				quad.y = y;
 				w = quad.w = clip.w;
 				h = quad.h = clip.h;
 				if( t == NULL ){
