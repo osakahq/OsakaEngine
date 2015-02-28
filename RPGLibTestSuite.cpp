@@ -11,7 +11,7 @@
 #include "GameData.h"
 #include "RPGApplication.h"
 #include "rpg_bootstrap.h"
-#include "ApplicationCreator.h"
+#include "RPGApplicationCreator.h"
 #include "RPGLibTestSuite.h"
 #include "ConsoleColors.h"
 #include "_testsuite_macro.h"
@@ -46,7 +46,7 @@ namespace Osaka{
 			/* This has to be the same as in Ascension.cpp */
 			debug->l("[RPGLibTestSuite] Run");
 			
-			Utils::ApplicationCreatorPTR appcreator = std::make_shared<Utils::ApplicationCreator>();
+			Utils::RPGApplicationCreatorPTR appcreator = std::make_shared<Utils::RPGApplicationCreator>();
 
 			this->rpgapp = rpg_bootstrap("tests\\runall_ascension_data.xml", "tests\\generic_settings.xml", "tests\\pack_file.7z", debug, appcreator);
 			appcreator = nullptr;

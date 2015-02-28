@@ -6,7 +6,7 @@
 #include "RPGApplication.h"
 #include "AscApplication.h"
 
-#include "ApplicationCreator.h"
+#include "RPGApplicationCreator.h"
 #include "AscApplicationCreator.h"
 
 namespace Osaka{

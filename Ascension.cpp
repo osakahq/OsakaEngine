@@ -36,7 +36,7 @@ void Ascension(){
 	
 	Asc::AscApplicationCreatorPTR appcreator = std::make_shared<Asc::AscApplicationCreator>();
 	Asc::AscApplicationPTR app = std::static_pointer_cast<Asc::AscApplication>(
-		RPGLib::rpg_bootstrap("tests\\runall_ascension_data.xml", "tests\\runall_settings.xml", "data\\data_01.opk", debug, std::static_pointer_cast<Utils::ApplicationCreator>(appcreator))
+		RPGLib::rpg_bootstrap("tests\\runall_ascension_data.xml", "tests\\runall_settings.xml", "data\\data_01.opk", debug, std::static_pointer_cast<Utils::RPGApplicationCreator>(appcreator))
 	);
 	appcreator = nullptr;
 

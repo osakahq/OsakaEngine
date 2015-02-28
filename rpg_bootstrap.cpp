@@ -21,14 +21,14 @@
 #include "SoundManager.h"
 #include "Factory.h"
 #include "RPGFactory.h"
-#include "ApplicationCreator.h"
+#include "RPGApplicationCreator.h"
 
 #include "rpg_bootstrap.h"
 
 namespace Osaka{
 	namespace RPGLib{
 		
-		RPGApplicationPTR rpg_bootstrap(const char* filedata, const char* filesettings, const char* pack_file, Debug::DebugPTR& debug, Utils::ApplicationCreatorPTR& appcreator){
+		RPGApplicationPTR rpg_bootstrap(const char* filedata, const char* filesettings, const char* pack_file, Debug::DebugPTR& debug, Utils::RPGApplicationCreatorPTR& appcreator){
 			/* ----------------------------------------------------------------------- */
 			/* --- Game Data --------------------------------------------------------- */
 			GameDataPTR data = std::make_shared<GameData>();
