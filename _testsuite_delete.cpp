@@ -12,7 +12,7 @@
 	//bool = multiple calls
 	std::unordered_map<std::string, bool> _check_delete_info;
 
-	void _STARTCHECKDELETE(){
+	void _STARTCHECKDELETE(bool ascension){
 		std::cout << Osaka::Debug::yellow << "[+Debug] Start check. " << Osaka::Debug::white << std::endl;
 		_check_delete_init = true;
 		_check_delete_info["Debug"] = false;
@@ -54,6 +54,10 @@
 		_check_delete_info["Canvas"] = true;
 		_check_delete_info["GameSession"] = true;
 		_check_delete_info["Timer"] = true;
+
+		if( ascension ){
+			_check_delete_info["AscApplication"] = false;
+		}
 	}
 	
 	void _CHECKDELETE(std::string classname, bool deconstructor){

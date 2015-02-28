@@ -12,31 +12,23 @@
 #include "Factory.h"
 #include "RPGFactory.h"
 #include "rpg_bootstrap.h"
-#include "RPGLibTestSuite.h"
 
 #include "AscApplicationCreator.h"
 #include "AscApplication.h"
 
+#include "testsuite_run.h"
+
 #include "osaka_forward.h"
 #include "asc_forward.h"
 
-#include "physfsrwops.h"
 using namespace Osaka::RPGLib;
 using namespace Osaka;
 
-//TODO: moverla a rpg_bootstrap.cpp?
-void bTestSuite(){
-	TestSuite::RPGLibTestSuitePTR test = std::make_shared<TestSuite::RPGLibTestSuite>();
-	//This runs all tests
-	test->RunTests();
-	//You can call individual tests
-	//test->TestLoadGameFile(false);
-	test->End();
-	test->_delete(); test = nullptr;
-}
-
 void Ascension(){
-//This main function is the owner of Debug and App
+#ifdef _DEBUG
+	_STARTCHECKDELETE(true);
+#endif
+	//This main function is the owner of Debug and App
 	Debug::DebugPTR debug = std::make_shared<Debug::Debug>("log.txt", true, Debug::DEBUG_LEVEL::CONSOLE);
 	Network::ServerConnPTR conn = std::make_shared<Network::ServerConn>(debug);
 	debug->init(conn);
@@ -56,6 +48,13 @@ void Ascension(){
 	conn = nullptr;
 	app->_delete(); app = nullptr;
 	debug->_delete(); debug = nullptr;
+	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program 
+	 * or EmptyScenePassParamsPTR will call to a disposed function (when the program exits) */
+	Engine::EmptyESceneArgsPTR = nullptr;
+
+#ifdef _DEBUG
+	_ENDCHECKDELETE();
+#endif
 }
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -63,19 +62,9 @@ int _tmain(int argc, _TCHAR* argv[])
 #ifdef _CRTDBG_MAP_ALLOC
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 #endif
-#ifdef _DEBUG
-	_STARTCHECKDELETE();
-#endif
-	//bTestSuite();
-	Ascension();
+	TestSuite::run();
+	//Ascension();
 
-	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program 
-	 * or EmptyScenePassParamsPTR will call to a disposed function (when the program exits) */
-	Engine::EmptyESceneArgsPTR = nullptr;
-#ifdef _DEBUG
-	_ENDCHECKDELETE();
-#endif
-	
 	getchar();
 	return 0;
 }
