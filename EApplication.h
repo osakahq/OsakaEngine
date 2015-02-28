@@ -2,7 +2,7 @@
 #ifndef ENGINE_EAPPLICATION_H
 #define ENGINE_EAPPLICATION_H
 #include "osaka_forward.h"
-#define EAPP_MAXSTACK 99
+#define EAPP_MAXSTACK 20
 
 namespace Osaka{
 	
@@ -54,7 +54,7 @@ namespace Osaka{
 			IFileLoaderPTR fileloader;
 			
 			/* Owner of the stack. Scenes are in the `scenes` variable */
-			std::string stack[EAPP_MAXSTACK];
+			EScenePTR stack[EAPP_MAXSTACK];
 			int stackItems;
 			/* This is used to not copy the stack every loop */
 			bool stackHasChanged;

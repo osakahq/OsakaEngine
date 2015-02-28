@@ -30,6 +30,9 @@ namespace Osaka{
 			ui->_delete(); ui = nullptr;
 			app = nullptr;
 		}
+		std::string RPGScene::GetId(){
+			return this->id;
+		}
 		void RPGScene::Init(){
 			
 		}

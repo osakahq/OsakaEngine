@@ -32,6 +32,7 @@ namespace Osaka{
 			 *	. It is up to the script if it wants to do anything. */
 			virtual void Reset();
 
+			std::string GetId();
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			//Owner

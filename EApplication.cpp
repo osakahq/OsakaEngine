@@ -24,6 +24,9 @@ namespace Osaka{
 #endif			
 		}
 		void EApplication::_delete(){
+			for(int i = 0; i < EAPP_MAXSTACK; ++i){
+				stack[i] = nullptr;
+			}
 			for(auto it = scenes.begin(); it != scenes.end(); ++it )
 				it->second->_delete();
 			scenes.clear();
@@ -43,16 +46,16 @@ namespace Osaka{
 		void EApplication::Switch(const char* scene, ESceneArgsPTR& in_param){
 			RemoveAllFromStack();
 			stackItems++;
-			stack[stackItems] = scene;
+			stack[stackItems] = scenes[scene];
 			scenes[scene]->Show(in_param);
 			stackHasChanged = true;
 		}
 		void EApplication::Stack(const char* scene, ESceneArgsPTR& in_param){
 			//We only need to call StandBy on current top scene because the others are already in standby
-			this->scenes[stack[this->stackItems]]->StandBy();
+			stack[this->stackItems]->StandBy();
 
 			stackItems++;
-			stack[stackItems] = scene;
+			stack[stackItems] = scenes[scene];
 			scenes[scene]->Show(in_param);
 			stackHasChanged = true;
 		}
@@ -63,14 +66,14 @@ namespace Osaka{
 			}
 			
 			stackItems++;
-			stack[0] = scene;
+			stack[0] = scenes[scene];
 			scenes[scene]->StandBy(in_param);	
 			stackHasChanged = true;
 		}
 		void EApplication::Remove(const char* scene){
 			int position = -1;
 			for(int i = 0; i <= this->stackItems; i++){
-				if( strcmp(stack[i].c_str(), scene) == 0 ){
+				if( strcmp(stack[i]->GetId().c_str(), scene) == 0 ){
 					position = i;
 					break;
 				}
@@ -81,10 +84,10 @@ namespace Osaka{
 			
 			if( position == stackItems && stackItems > 0 ){
 				//If the scene to remove is top and there is more than 1, then we have to let the next one(-1 from position) scene know it is its turn
-				scenes[stack[position-1]]->Focus();
+				stack[position-1]->Focus();
 			}
 
-			scenes[stack[position]]->Hide();
+			stack[position]->Hide();
 			//We move the array backwards, effectively replacing the scene to remove
 			for(int i = position; i <= this->stackItems; i++){
 				stack[i] = stack[i+1];
@@ -96,7 +99,7 @@ namespace Osaka{
 			bool gainedFocus = false;
 
 			for(int i = 0; i <= this->stackItems; i++){
-				if( except_scene != NULL && strcmp(stack[i].c_str(), except_scene) == 0 ){
+				if( except_scene != NULL && strcmp(stack[i]->GetId().c_str(), except_scene) == 0 ){
 					if( i != this->stackItems ){
 						/* This means the scene wasn't at top and Focus() needs to be called */
 						gainedFocus = true;
@@ -105,17 +108,17 @@ namespace Osaka{
 					continue;
 
 				}
-				this->scenes[stack[i]]->Hide();
+				stack[i]->Hide();
 			}
 			this->stackItems = -1;
 			stackHasChanged = true;
 
 			if( except_scene != NULL ){
 				stackItems++;
-				stack[stackItems] = except_scene;
+				stack[stackItems] = scenes[except_scene];
 				/* If the except_scene wasn't at the top, then it Focus() needs to be called */
 				if( gainedFocus )
-					scenes[stack[stackItems]]->Focus();
+					stack[stackItems]->Focus();
 			}
 		}
 
@@ -126,7 +129,7 @@ namespace Osaka{
 			bool quit = false;
 			SDL_Event e;
 
-			std::string tempStack[EAPP_MAXSTACK];
+			EScenePTR tempStack[EAPP_MAXSTACK];
 			int tempStackItems = 0;
 			
 			const bool _vsync = vsync;
@@ -152,11 +155,11 @@ namespace Osaka{
 
 				this->Update();
 				for(int i = 0; i <= tempStackItems; i++){
-					this->scenes[tempStack[i]]->Update();
+					tempStack[i]->Update();
 				}
 				sdl->Clear();
 				for(int i = 0; i <= tempStackItems; i++){
-					this->scenes[tempStack[i]]->Draw();
+					tempStack[i]->Draw();
 				}
 				this->BeforePresent();
 				sdl->Present();
