@@ -116,7 +116,7 @@ namespace Osaka{
 			while(connIsUp){
 				this->Send("~client-im-here");
 				//TODO: I could use instead Sleep(milliseconds)
-				(DWORD)WaitForSingleObject(hConnectedEvent, DEBUG_PING); //Always wait 2 second
+				WaitForSingleObject(hConnectedEvent, DEBUG_PING); //Always wait 2 second
 			}
 	
 			CloseHandle(hConnectedEvent);
@@ -223,7 +223,8 @@ namespace Osaka{
 			msg.insert(0, MESSAGE_PACKET_STR);
 			int size = msg.size();
 
-			char buffer[MESSAGE_PACKET_SIZE+1]; //You need 2 extra spaces for \n
+			char buffer[MESSAGE_PACKET_SIZE+1]; //You need 2 extra spaces for \0
+			strcpy_s(buffer, ""); //Initialize char*
 			//23
 			_itoa_s(size, buffer, 10);
 	
