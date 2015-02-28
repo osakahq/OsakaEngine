@@ -20,26 +20,15 @@
 using namespace Osaka::RPGLib;
 using namespace Osaka;
 
-//moverla a rpg_bootstrap.cpp?
+//TODO: moverla a rpg_bootstrap.cpp?
 void bTestSuite(){
-#ifdef _DEBUG
-	_STARTCHECKDELETE();
-#endif
-	{
-		TestSuite::RPGLibTestSuitePTR test = std::make_shared<TestSuite::RPGLibTestSuite>();
-		//This runs all tests
-		test->RunTests();
-		//You can call individual tests
-		//test->TestLoadGameFile(false);
-		test->End();
-		test->_delete(); test = nullptr;
-	}
-	Engine::EmptyESceneArgsPTR = nullptr;
-#ifdef _DEBUG
-	_ENDCHECKDELETE();
-#endif
-	getchar();
-	std::exit(0);
+	TestSuite::RPGLibTestSuitePTR test = std::make_shared<TestSuite::RPGLibTestSuite>();
+	//This runs all tests
+	test->RunTests();
+	//You can call individual tests
+	//test->TestLoadGameFile(false);
+	test->End();
+	test->_delete(); test = nullptr;
 }
 
 void Ascension(){
@@ -57,10 +46,6 @@ void Ascension(){
 	conn = nullptr;
 	app->_delete(); app = nullptr;
 	debug->_delete(); debug = nullptr;
-
-	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program 
-	 * or EmptyScenePassParamsPTR will call to a disposed function (when the program exits) */
-	Engine::EmptyESceneArgsPTR = nullptr;
 }
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -68,9 +53,18 @@ int _tmain(int argc, _TCHAR* argv[])
 #ifdef _CRTDBG_MAP_ALLOC
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 #endif
-	
+#ifdef _DEBUG
+	_STARTCHECKDELETE();
+#endif
 	bTestSuite();
 	//Ascension();
+
+	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program 
+	 * or EmptyScenePassParamsPTR will call to a disposed function (when the program exits) */
+	Engine::EmptyESceneArgsPTR = nullptr;
+#ifdef _DEBUG
+	_ENDCHECKDELETE();
+#endif
 	
 	getchar();
 	return 0;
