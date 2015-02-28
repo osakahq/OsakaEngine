@@ -114,8 +114,11 @@ namespace Osaka{
 		}
 		void LoadingCanvas::Draw(){
 			if( isAnimating ){
-				app->sdl->SetRenderColor(color);
+				//app->sdl->SetRenderColor(color);
+				SDL_SetRenderDrawColor(raw_renderer, color.r, color.g, color.b, color.a);
+				SDL_SetRenderDrawBlendMode(raw_renderer, SDL_BLENDMODE_BLEND);
 				SDL_RenderFillRect(raw_renderer, &carp);
+				SDL_SetRenderDrawBlendMode(raw_renderer, SDL_BLENDMODE_NONE);
 			}
 		}
 

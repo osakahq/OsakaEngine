@@ -27,6 +27,7 @@ namespace Osaka{
 			}
 			SDL_Texture* raw_texture;
 			const SDL_Rect clip;
+			/* `quad` may be ignored or used to save the coordinates of `this` sprite */
 			SDL_Rect quad;
 
 			//In case, you only need w/h

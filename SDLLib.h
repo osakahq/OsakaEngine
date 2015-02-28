@@ -26,6 +26,10 @@ namespace Osaka{
 			void Clear();
 			void Present();
 
+			/* This function is when the next thing to render needs to have "transparent". After rendering that, `ResetRenderBlendMode` must be called */
+			void SetRenderAlphaMode();
+			void ResetRenderBlendMode();
+
 			//These sound functions could be in their own class but they are fine in here.
 			void PlayMusic(Mix_Music& music);
 			void PauseMusic();

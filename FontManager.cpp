@@ -93,7 +93,7 @@ namespace Osaka{
 						continue;
 					}
 					
-					//If the current one is a printable character
+					//If the current one is a printable character (it doesn't include space)
 					if( (int)*c >= 33 && (int)*c <= 126 ){
 						//If the next one isnt \0 and is not a space
 						if( *(c+1) != 0 && *(c+1) != ' ' ){
