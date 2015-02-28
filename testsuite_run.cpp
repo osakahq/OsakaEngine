@@ -1,30 +1,42 @@
  #include "stdafx.h"
 
+#include "Debug.h"
 #include "ESceneArgs.h"
 #include "RPGLibTestSuite.h"
+#include "_testsuite_macro.h"
 #include "testsuite_run.h"
 
 namespace Osaka{
 	namespace TestSuite{
+
 		void run(){
-#ifdef _DEBUG
-	_STARTCHECKDELETE(false);
-#endif
-	{
 			TestSuite::RPGLibTestSuitePTR test = std::make_shared<TestSuite::RPGLibTestSuite>();
-			//This runs all tests
-			test->RunTests();
-			//You can call individual tests
-			//test->TestLoadGameFile(false);
-			test->End();
-			test->_delete(); test = nullptr;
-	}
-			Engine::EmptyESceneArgsPTR = nullptr;
-#ifdef _DEBUG
-	_ENDCHECKDELETE();
-#endif
-			getchar();
-			std::exit(0);
+			/* This is for faster OSAKA_ASSERT (macro) */
+			OsakaAssertBegin(test);
+
+			std::string resp;
+			printf("[RPGLibTestSuite] Welcome\n");
+			printf("[RPGLibTestSuite] Please select if you want to test [g]ameDataLoader or run [s]cene tests: ");
+			std::getline(std::cin, resp);
+
+			if( resp == "g" ){
+				test->IndividualTest_LoadGameFileTest("tests\\IndividualTest_LoadGameFileTest\\data.xml", false);
+			}else if( resp == "s" ){
+				/* We always do want to check delete */
+				_STARTCHECKDELETE(false);
+				test->Run("test1");
+			}else{
+				printf("[RPGLibTestSuite] Invalid command. [g] or [s] only.\n");
+			}
+
+			test->CheckResults();
+			OsakaAssertEnd();
+			test->_delete(); 
+			test = nullptr;
+
+			if( resp == "s" ){
+				_ENDCHECKDELETE();
+			}
 		}
 	}
 }

@@ -32,7 +32,7 @@ void Ascension(){
 	Debug::DebugPTR debug = std::make_shared<Debug::Debug>("log.txt", true, Debug::DEBUG_LEVEL::CONSOLE);
 	Network::ServerConnPTR conn = std::make_shared<Network::ServerConn>(debug);
 	debug->init(conn);
-	debug->l("[Ascension] ==========================================");
+	debug->l("[Ascension] Start");
 	
 	Asc::AscApplicationCreatorPTR appcreator = std::make_shared<Asc::AscApplicationCreator>();
 	Asc::AscApplicationPTR app = std::static_pointer_cast<Asc::AscApplication>(
@@ -48,10 +48,7 @@ void Ascension(){
 	conn = nullptr;
 	app->_delete(); app = nullptr;
 	debug->_delete(); debug = nullptr;
-	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program 
-	 * or EmptyScenePassParamsPTR will call to a disposed function (when the program exits) */
-	Engine::EmptyESceneArgsPTR = nullptr;
-
+	
 #ifdef _DEBUG
 	_ENDCHECKDELETE();
 #endif
@@ -64,6 +61,10 @@ int _tmain(int argc, _TCHAR* argv[])
 #endif
 	TestSuite::run();
 	//Ascension();
+
+	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program 
+	 * or EmptyScenePassParamsPTR will call to a disposed function (when the program exits) */
+	Engine::EmptyESceneArgsPTR = nullptr;
 
 	getchar();
 	return 0;

@@ -8,6 +8,8 @@
 namespace Osaka{
 	namespace Utils{
 
+		/* This class exists because you can't dynamically create a class from text in C++.
+		 * TODO: Maybe create a factory that creates all other classes if you need them to extend them */
 		class ApplicationCreator{
 		public:
 			/* Gives away ownership */
