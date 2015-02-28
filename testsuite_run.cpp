@@ -30,6 +30,7 @@ namespace Osaka{
 			}
 
 			test->CheckResults();
+			/* Rember to always call `OsakaAssertEnd()` when `OsakaAssertBegin(...)` is called */
 			OsakaAssertEnd();
 			test->_delete(); 
 			test = nullptr;
