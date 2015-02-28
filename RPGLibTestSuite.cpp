@@ -42,20 +42,26 @@ namespace Osaka{
 			debug->_delete(); debug = nullptr;
 		}
 		
-		void RPGLibTestSuite::Run(const char* scene){
+		void RPGLibTestSuite::Run(TEST_PHASE::Value phase){
 			/* This has to be the same as in Ascension.cpp */
 			debug->l("[RPGLibTestSuite] Run");
 			
 			Utils::RPGApplicationCreatorPTR appcreator = std::make_shared<Utils::RPGApplicationCreator>();
 
-			this->rpgapp = rpg_bootstrap("tests\\runall_ascension_data.xml", "tests\\generic_settings.xml", "tests\\pack_file.7z", debug, appcreator);
+			/* To know which phase does what, refer to `testsuite_run.cpp` */
+			switch(phase){
+			case TEST_PHASE::PHASE1:
+				this->rpgapp = rpg_bootstrap("tests\\SceneTests_Phase1\\phase1_data.xml", "tests\\SceneTests_Phase1\\does_not_exists.xml", "tests\\SceneTests_Phase1\\does_not_exists.7z", debug, appcreator);
+				rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
+
+				rpgapp->AddScene("phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->factory->CreatePlaybackIntroScene("phase1_test1")));
+				rpgapp->Run("phase1_test1");
+				break;
+			default:
+				debug->l("[RPGLibTestSuite] Unkown phase.");
+				break;
+			}
 			appcreator = nullptr;
-			
-			rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
-			
-			/* Test1 (PlaybackImage) = tests AssetManager, RPGLoadingScene, PlaybackImage */
-			rpgapp->AddScene("test1", std::static_pointer_cast<Engine::EScene>(rpgapp->factory->CreatePlaybackIntroScene("test1")));
-			rpgapp->Run(scene);
 		}
 		void RPGLibTestSuite::MakeAssert(const bool test, const int cline, const char* cfile){
 			if( test ){

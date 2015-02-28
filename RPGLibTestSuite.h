@@ -8,6 +8,13 @@ namespace Osaka{
 	namespace TestSuite{
 		using namespace RPGLib;
 
+		struct TEST_PHASE{
+			TEST_PHASE(){}
+			enum Value{
+				PHASE1 = 1, PHASE2 = 2
+			};
+		};
+
 		class RPGLibTestSuite{
 		public:
 			RPGLibTestSuite();
@@ -15,7 +22,7 @@ namespace Osaka{
 			void _delete();
 
 			/* This funcion calls all the tests */
-			void Run(const char* scene);
+			void Run(TEST_PHASE::Value phase);
 			/* This function must be called in order to show fail/success */
 			void MakeAssert(const bool test, const int cline, const char* cfile);
 			/* Check if test any has failed. `MakeAssert` must be called */

@@ -124,123 +124,25 @@
 		</scenes>
 	</asset-map>
 
-	<spritemaps>
-		<spritemap id="texturemap_cinematics" filename="tests\cinematics.png" colorkey-r="255" colorkey-g="0" colorkey-b="255">
-			startmenu_background = 0 0 614 608
-			startmenu_subtitle = 0 608 496 35
-			startmenu_title = 614 0 400 51
-		</spritemap>
-		<spritemap id="texturemap_common" filename="tests\common.png" colorkey-r="255" colorkey-g="0" colorkey-b="255">
-			focus = 0 32 16 16
-			table = 0 0 32 32
-			wood_center = 32 0 32 32
-			font_! = 0 48 12 14
-			font_# = 16 32 12 14
-			font_$ = 28 32 12 14
-			font_% = 12 48 12 14
-			font__amp = 24 46 12 14
-			font_( = 40 32 12 14
-			font_) = 36 46 12 14
-			font_, = 52 32 12 14
-			font_- = 48 46 12 14
-			font_@ = 64 0 12 14
-			font_^ = 76 0 12 14
-			font__( = 64 14 12 14
-			font__) = 88 0 12 14
-			font__- = 76 14 12 14
-			font__A1 = 64 28 12 14
-			font__A2 = 100 0 12 14
-			font__A3 = 88 14 12 14
-			font__A4 = 76 28 12 14
-			font__arrowdown = 64 42 12 14
-			font__arrowleft = 112 0 12 14
-			font__arrowright = 100 14 12 14
-			font__arrowup = 88 28 12 14
-			font__ast = 76 42 12 14
-			font__B1 = 112 14 12 14
-			font__C1 = 100 28 12 14
-			font__circle = 88 42 12 14
-			font__ddot = 112 28 12 14
-			font__dot = 100 42 12 14
-			font__dotcomma = 112 42 12 14
-			font__dquote = 0 62 12 14
-			font__E1 = 12 62 12 14
-			font__E2 = 0 76 12 14
-			font__E3 = 24 60 12 14
-			font__E4 = 12 76 12 14
-			font__eqmark = 0 90 12 14
-			font__equal = 36 60 12 14
-			font__fdiagonal = 24 74 12 14
-			font__gt = 12 90 12 14
-			font__heart = 0 104 12 14
-			font__I1 = 48 60 12 14
-			font__I2 = 36 74 12 14
-			font__I3 = 24 88 12 14
-			font__I4 = 12 104 12 14
-			font__i5 = 60 56 12 14
-			font__line = 48 74 12 14
-			font__lt = 36 88 12 14
-			font__o = 24 102 12 14
-			font__O1 = 72 56 12 14
-			font__O2 = 60 70 12 14
-			font__O3 = 48 88 12 14
-			font__O4 = 36 102 12 14
-			font__sa = 84 56 12 14
-			font__song = 72 70 12 14
-			font__sqmark = 60 84 12 14
-			font__squote = 48 102 12 14
-			font__star = 96 56 12 14
-			font__tilde = 84 70 12 14
-			font__U1 = 72 84 12 14
-			font__U2 = 60 98 12 14
-			font__U3 = 108 56 12 14
-			font__U4 = 96 70 12 14
-			font__ucomma = 84 84 12 14
-			font__x = 72 98 12 14
-			font__yen = 60 112 12 14
-			font_{ = 108 70 12 14
-			font_} = 96 84 12 14
-			font_+ = 84 98 12 14
-			font_0 = 72 112 12 14
-			font_1 = 108 84 12 14
-			font_2 = 96 98 12 14
-			font_3 = 84 112 12 14
-			font_4 = 108 98 12 14
-			font_5 = 96 112 12 14
-			font_6 = 108 112 12 14
-			font_7 = 124 0 12 14
-			font_8 = 136 0 12 14
-			font_9 = 124 14 12 14
-			font_A = 148 0 12 14
-			font_B = 136 14 12 14
-			font_C = 124 28 12 14
-			font_D = 160 0 12 14
-			font_E = 148 14 12 14
-			font_F = 136 28 12 14
-			font_G = 124 42 12 14
-			font_H = 172 0 12 14
-			font_I = 160 14 12 14
-			font_J = 148 28 12 14
-			font_K = 120 56 12 14
-			font_L = 136 42 12 14
-			font_M = 184 0 12 14
-			font_N = 172 14 12 14
-			font_Ñ = 132 56 12 14
-			font_O = 160 28 12 14
-			font_P = 120 70 12 14
-			font_Q = 148 42 12 14
-			font_R = 196 0 12 14
-			font_S = 184 14 12 14
-			font_T = 172 28 12 14
-			font_U = 144 56 12 14
-			font_V = 160 42 12 14
-			font_W = 132 70 12 14
-			font_X = 120 84 12 14
-			font_Y = 208 0 12 14
-			font_Z = 196 14 12 14
-		</spritemap>
-	</spritemaps>
 	<fontmap error-sprite="?" space-x="12" space-y="14">
+		<!-- This is temporary. -->
+		<character sprite="font_+" id=" " />
+		<character sprite="font_!" id="!" />
+		<character sprite="font__dquote" id="&quot;" />
+		<character sprite="font_#" id="#" />
+		<character sprite="font_$" id="$" />
+		<character sprite="font_%" id="%" />
+		<character sprite="font__amp" id="&amp;" />
+		<character sprite="font__squote" id="'" />
+		<character sprite="font__(" id="(" />
+		<character sprite="font__)" id=")" />
+		<character sprite="font__ast" id="*" />
+		<character sprite="font_+" id="+" />
+		<character sprite="font_," id="," />
+		<character sprite="font__-" id="-" />
+		<character sprite="font__dot" id="." />
+		<character sprite="font__fdiagonal" id="/" />
+
 		<character sprite="font_0" id="0" />
 		<character sprite="font_1" id="1" />
 		<character sprite="font_2" id="2" />
@@ -251,40 +153,27 @@
 		<character sprite="font_7" id="7" />
 		<character sprite="font_8" id="8" />
 		<character sprite="font_9" id="9" />
-		<character sprite="font__eqmark" id="?" />
-		<character sprite="font_X" id=" " />
-		<character sprite="font__dot" id="." />
 		<character sprite="font__ddot" id=":" />
-		<character sprite="font__-" id="-" />
+		<character sprite="font__dotcomma" id=";" />
+		<character sprite="font__lt" id="<" />
+		<character sprite="font__equal" id="=" />
+		<character sprite="font__gt" id=">" />
+		<character sprite="font__eqmark" id="?" />
+		<character sprite="font_@" id="@" />
+		<character sprite="font_(" id="(" />
+		<!-- I don't have a \ sprite -->
+		<character sprite="font__heart" id="&#92;" />
+		<character sprite="font_)" id=")" />
+		<character sprite="font_^" id="^" />
+		<!-- I don't have a _ sprite -->
+		<character sprite="font__circle" id="_" />
+		<character sprite="font__o" id="`" />
 
-		<character sprite="font_A" id="a" />
-		<character sprite="font_B" id="b" />
-		<character sprite="font_C" id="c" />
-		<character sprite="font_D" id="d" />
-		<character sprite="font_E" id="e" />
-		<character sprite="font_F" id="f" />
-		<character sprite="font_G" id="g" />
-		<character sprite="font_H" id="h" />
-		<character sprite="font_I" id="i" />
-		<character sprite="font_J" id="j" />
-		<character sprite="font_K" id="k" />
-		<character sprite="font_L" id="l" />
-		<character sprite="font_M" id="m" />
-		<character sprite="font_N" id="n" />
-		<!-- <character sprite="font_ñ" id="ñ" /> !-->
-		<character sprite="font_O" id="o" />
-		<character sprite="font_P" id="p" />
-		<character sprite="font_Q" id="q" />
-		<character sprite="font_R" id="r" />
-		<character sprite="font_S" id="s" />
-		<character sprite="font_T" id="t" />
-		<character sprite="font_U" id="u" />
-		<character sprite="font_V" id="v" />
-		<character sprite="font_W" id="w" />
-		<character sprite="font_X" id="x" />
-		<character sprite="font_Y" id="y" />
-		<character sprite="font_Z" id="z" />
-		
+		<character sprite="font_{" id="{" />
+		<character sprite="font__line" id="|" />
+		<character sprite="font_}" id="}" />
+		<character sprite="font__tilde" id="~" />
+
 		<character sprite="font_A" id="A" />
 		<character sprite="font_B" id="B" />
 		<character sprite="font_C" id="C" />
@@ -299,7 +188,6 @@
 		<character sprite="font_L" id="L" />
 		<character sprite="font_M" id="M" />
 		<character sprite="font_N" id="N" />
-		<!-- <character sprite="font_Ñ" id="Ñ" /> !-->
 		<character sprite="font_O" id="O" />
 		<character sprite="font_P" id="P" />
 		<character sprite="font_Q" id="Q" />
@@ -312,6 +200,32 @@
 		<character sprite="font_X" id="X" />
 		<character sprite="font_Y" id="Y" />
 		<character sprite="font_Z" id="Z" />
+		<character sprite="font_a1" id="a" />
+		<character sprite="font_b1" id="b" />
+		<character sprite="font_c1" id="c" />
+		<character sprite="font_d1" id="d" />
+		<character sprite="font_e1" id="e" />
+		<character sprite="font_f1" id="f" />
+		<character sprite="font_g1" id="g" />
+		<character sprite="font_h1" id="h" />
+		<character sprite="font_i1" id="i" />
+		<character sprite="font_j1" id="j" />
+		<character sprite="font_k1" id="k" />
+		<character sprite="font_l1" id="l" />
+		<character sprite="font_m1" id="m" />
+		<character sprite="font_n1" id="n" />
+		<character sprite="font_o1" id="o" />
+		<character sprite="font_p1" id="p" />
+		<character sprite="font_q1" id="q" />
+		<character sprite="font_r1" id="r" />
+		<character sprite="font_s1" id="s" />
+		<character sprite="font_t1" id="t" />
+		<character sprite="font_u1" id="u" />
+		<character sprite="font_v1" id="v" />
+		<character sprite="font_w1" id="w" />
+		<character sprite="font_x1" id="x" />
+		<character sprite="font_y1" id="y" />
+		<character sprite="font_z1" id="z" />
 	</fontmap>
 
 	<ui-sprites>
@@ -374,4 +288,149 @@
 
 		</session>
 	</game-sessions>
+
+	<spritemaps>
+		<spritemap id="texturemap_cinematics" filename="tests\SceneTests_Phase1\cinematics.png" colorkey-r="255" colorkey-g="0" colorkey-b="255">
+			engine_logo = 0 0 512 448
+			gamestudio_logo = 512 0 512 448
+			startmenu_background = 0 448 512 448
+			startmenu_subtitle = 0 896 495 35
+			startmenu_title = 0 931 399 51
+		</spritemap>
+		<spritemap id="texturemap_common" filename="tests\SceneTests_Phase1\common.png" colorkey-r="255" colorkey-g="0" colorkey-b="255">
+			cursor = 0 32 16 16
+			table = 0 0 32 32
+			wood_center = 32 0 32 32
+			font_! = 0 48 12 14
+			font_# = 16 32 12 14
+			font_$ = 28 32 12 14
+			font_% = 12 48 12 14
+			font_( = 24 46 12 14
+			font_) = 40 32 12 14
+			font_, = 36 46 12 14
+			font_- = 52 32 12 14
+			font_@ = 48 46 12 14
+			font_^ = 64 0 12 14
+			font__( = 76 0 12 14
+			font__) = 64 14 12 14
+			font__- = 88 0 12 14
+			font__A1 = 76 14 12 14
+			font__A2 = 64 28 12 14
+			font__A3 = 100 0 12 14
+			font__A4 = 88 14 12 14
+			font__amp = 76 28 12 14
+			font__arrowdown = 64 42 12 14
+			font__arrowleft = 112 0 12 14
+			font__arrowright = 100 14 12 14
+			font__arrowup = 88 28 12 14
+			font__ast = 76 42 12 14
+			font__B1 = 112 14 12 14
+			font__C1 = 100 28 12 14
+			font__circle = 88 42 12 14
+			font__ddot = 112 28 12 14
+			font__dot = 100 42 12 14
+			font__dotcomma = 112 42 12 14
+			font__dquote = 0 62 12 14
+			font__E1 = 12 62 12 14
+			font__E2 = 0 76 12 14
+			font__E3 = 24 60 12 14
+			font__E4 = 12 76 12 14
+			font__eqmark = 0 90 12 14
+			font__equal = 36 60 12 14
+			font__fdiagonal = 24 74 12 14
+			font__gt = 12 90 12 14
+			font__heart = 0 104 12 14
+			font__I1 = 48 60 12 14
+			font__I2 = 36 74 12 14
+			font__I3 = 24 88 12 14
+			font__I4 = 12 104 12 14
+			font__i5 = 60 56 12 14
+			font__line = 48 74 12 14
+			font__lt = 36 88 12 14
+			font__N1 = 24 102 12 14
+			font__o = 72 56 12 14
+			font__O1 = 60 70 12 14
+			font__O2 = 48 88 12 14
+			font__O3 = 36 102 12 14
+			font__O4 = 84 56 12 14
+			font__sa = 72 70 12 14
+			font__song = 60 84 12 14
+			font__sqmark = 48 102 12 14
+			font__squote = 96 56 12 14
+			font__star = 84 70 12 14
+			font__tilde = 72 84 12 14
+			font__U1 = 60 98 12 14
+			font__U2 = 108 56 12 14
+			font__U3 = 96 70 12 14
+			font__U4 = 84 84 12 14
+			font__ucomma = 72 98 12 14
+			font__x = 60 112 12 14
+			font__yen = 108 70 12 14
+			font_{ = 96 84 12 14
+			font_} = 84 98 12 14
+			font_+ = 72 112 12 14
+			font_0 = 108 84 12 14
+			font_1 = 96 98 12 14
+			font_2 = 84 112 12 14
+			font_3 = 108 98 12 14
+			font_4 = 96 112 12 14
+			font_5 = 108 112 12 14
+			font_6 = 124 0 12 14
+			font_7 = 136 0 12 14
+			font_8 = 124 14 12 14
+			font_9 = 148 0 12 14
+			font_A = 136 14 12 14
+			font_a1 = 124 28 12 14
+			font_B = 160 0 12 14
+			font_b1 = 148 14 12 14
+			font_C = 136 28 12 14
+			font_c1 = 124 42 12 14
+			font_D = 172 0 12 14
+			font_d1 = 160 14 12 14
+			font_E = 148 28 12 14
+			font_e1 = 120 56 12 14
+			font_F = 136 42 12 14
+			font_f1 = 184 0 12 14
+			font_G = 172 14 12 14
+			font_g1 = 132 56 12 14
+			font_H = 160 28 12 14
+			font_h1 = 120 70 12 14
+			font_I = 148 42 12 14
+			font_i1 = 196 0 12 14
+			font_J = 184 14 12 14
+			font_j1 = 172 28 12 14
+			font_K = 144 56 12 14
+			font_k1 = 160 42 12 14
+			font_L = 132 70 12 14
+			font_l1 = 120 84 12 14
+			font_M = 208 0 12 14
+			font_m1 = 196 14 12 14
+			font_N = 184 28 12 14
+			font_n1 = 156 56 12 14
+			font_O = 172 42 12 14
+			font_o1 = 144 70 12 14
+			font_P = 132 84 12 14
+			font_p1 = 120 98 12 14
+			font_Q = 220 0 12 14
+			font_q1 = 208 14 12 14
+			font_R = 196 28 12 14
+			font_r1 = 168 56 12 14
+			font_S = 184 42 12 14
+			font_s1 = 156 70 12 14
+			font_T = 144 84 12 14
+			font_t1 = 132 98 12 14
+			font_U = 120 112 12 14
+			font_u1 = 232 0 12 14
+			font_V = 220 14 12 14
+			font_v1 = 208 28 12 14
+			font_W = 180 56 12 14
+			font_w1 = 168 70 12 14
+			font_X = 196 42 12 14
+			font_x1 = 156 84 12 14
+			font_Y = 144 98 12 14
+			font_y1 = 132 112 12 14
+			font_Z = 244 0 12 14
+			font_z1 = 232 14 12 14
+		</spritemap>
+	</spritemaps>
 </game>
