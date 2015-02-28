@@ -21,13 +21,14 @@
 #include "SoundManager.h"
 #include "Factory.h"
 #include "RPGFactory.h"
+#include "ApplicationCreator.h"
 
 #include "rpg_bootstrap.h"
 
 namespace Osaka{
 	namespace RPGLib{
 		
-		RPGApplicationPTR rpg_bootstrap(const char* filedata, const char* filesettings, Debug::DebugPTR& debug){
+		RPGApplicationPTR rpg_bootstrap(const char* filedata, const char* filesettings, const char* pack_file, Debug::DebugPTR& debug, Utils::ApplicationCreatorPTR& appcreator){
 			/* ----------------------------------------------------------------------- */
 			/* --- Game Data --------------------------------------------------------- */
 			GameDataPTR data = std::make_shared<GameData>();
@@ -44,7 +45,7 @@ namespace Osaka{
 			fileloader = std::make_shared<Engine::PhysicsFSFileLoader>(debug, "tests\\tests.7z");
 #endif
 			Engine::SDLLibPTR lib = std::make_shared<Engine::SDLLib>(debug);
-			RPGApplicationPTR app = std::make_shared<RPGApplication>(debug, lib, fileloader);
+			RPGApplicationPTR app = appcreator->CreateApp(debug, lib, fileloader);
 			app->loader = loader;
 			app->gameData = data;
 

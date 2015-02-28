@@ -10,7 +10,7 @@ namespace Osaka{
 			//EScene();
 			virtual ~EScene(){};
 			virtual void _delete() = 0;
-			//Constructor and Init are essentially for the same thing: Initializing vars and dependency injection.
+
 			virtual void Init() = 0;
 			/* Load functions server the purpose of creating the classes, everything that the scene needs.
 			 * This function is called from GameLoader */

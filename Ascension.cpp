@@ -2,19 +2,23 @@
 //
 #include "stdafx.h"
 
-#include "EventArgs.h"
-#include "EventHandler.h"
-
-#include "Utils.h"
+#include "EScene.h"
+#include "RPGScene.h"
 #include "ESceneArgs.h"
-#include "RPGFactory.h"
-#include "asc_bootstrap.h"
+
 #include "Debug.h"
 #include "ServerConn.h"
+
+#include "Factory.h"
+#include "RPGFactory.h"
+#include "rpg_bootstrap.h"
 #include "RPGLibTestSuite.h"
+
+#include "AscApplicationCreator.h"
 #include "AscApplication.h"
-#include "RPGApplication.h"
+
 #include "osaka_forward.h"
+#include "asc_forward.h"
 
 #include "physfsrwops.h"
 using namespace Osaka::RPGLib;
@@ -38,11 +42,17 @@ void Ascension(){
 	debug->init(conn);
 	debug->l("[Ascension] ==========================================");
 	
-	//Asc::AscApplicationPTR app = Asc::asc_bootstrap("data\\ascension_data.xml", "data\\settings.xml", debug);
-	Asc::AscApplicationPTR app = Asc::asc_bootstrap("tests\\runall_ascension_data.xml", "tests\\runall_settings.xml", debug);
+	Asc::AscApplicationCreatorPTR appcreator = std::make_shared<Asc::AscApplicationCreator>();
+	Asc::AscApplicationPTR app = std::static_pointer_cast<Asc::AscApplication>(
+		RPGLib::rpg_bootstrap("tests\\runall_ascension_data.xml", "tests\\runall_settings.xml", "data\\data_01.opk", debug, std::static_pointer_cast<Utils::ApplicationCreator>(appcreator))
+	);
+	appcreator = nullptr;
+
 	app->SetGameSessionManager(app->rpgfactory->CreateGameSessionManagerFromGameData());
 	
-	app->Run("startmenu");
+	app->AddScene("test1", std::static_pointer_cast<Engine::EScene>(app->factory->CreatePlaybackIntroScene("test1")));
+	app->Run("test1");
+
 	conn = nullptr;
 	app->_delete(); app = nullptr;
 	debug->_delete(); debug = nullptr;
@@ -56,8 +66,8 @@ int _tmain(int argc, _TCHAR* argv[])
 #ifdef _DEBUG
 	_STARTCHECKDELETE();
 #endif
-	bTestSuite();
-	//Ascension();
+	//bTestSuite();
+	Ascension();
 
 	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program 
 	 * or EmptyScenePassParamsPTR will call to a disposed function (when the program exits) */

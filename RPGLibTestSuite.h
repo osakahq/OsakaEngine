@@ -33,7 +33,7 @@ namespace Osaka{
 
 			/* This inits call rpg_bootstrap.
 			 * I have to make sure that any of the constructor's/Init's function DON'T something */
-			void Init(const char* datafile, const char* settingsfile);
+			void Init(const char* datafile, const char* settingsfile, const char* pack_file);
 
 			/* Owner */
 			RPGApplicationPTR	rpgapp;

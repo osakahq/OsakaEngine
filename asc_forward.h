@@ -3,7 +3,8 @@
 #define ASC_FORWARD_H
 namespace Osaka{
 	namespace Asc{
-		class AscApplication;	typedef std::shared_ptr<AscApplication> AscApplicationPTR;
+		class AscApplicationCreator; typedef std::shared_ptr<AscApplicationCreator> AscApplicationCreatorPTR;
+		class AscApplication;		 typedef std::shared_ptr<AscApplication> AscApplicationPTR;
 	}
 }
 #endif;

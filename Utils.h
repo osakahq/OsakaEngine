@@ -1,5 +1,8 @@
  #include "stdafx.h"
 
+#ifndef UTIL_UTILS_H
+#define UTIL_UTILS_H
+
 namespace Osaka{
 	namespace Utils{
 		//TODO: Ponerlas como static inline?
@@ -16,3 +19,5 @@ namespace Osaka{
 		}
 	}
 }
+
+#endif

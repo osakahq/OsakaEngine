@@ -10,6 +10,7 @@
 #include "GameData.h"
 #include "RPGApplication.h"
 #include "rpg_bootstrap.h"
+#include "ApplicationCreator.h"
 #include "RPGLibTestSuite.h"
 #include "ConsoleColors.h"
 #include "osaka_forward.h"
@@ -30,7 +31,7 @@ namespace Osaka{
 			rpgapp->_delete(); rpgapp = nullptr;
 			debug->_delete(); debug = nullptr;
 		}
-		void RPGLibTestSuite::Init(const char* datafile, const char* settingsfile){
+		void RPGLibTestSuite::Init(const char* datafile, const char* settingsfile, const char* pack_file){
 			if( debug != nullptr )
 				return;
 			/* Essentially the same as Ascension.cpp but we do not set the GameSessionManager and Run. */
@@ -38,16 +39,18 @@ namespace Osaka{
 			Network::ServerConnPTR conn = std::make_shared<Network::ServerConn>(debug);
 			debug->init(conn);
 			debug->l("[RPGLibTestSuite] ==========================================");
-			this->rpgapp = rpg_bootstrap(datafile, settingsfile, debug);
+			Utils::ApplicationCreatorPTR appcreator = std::make_shared<Utils::ApplicationCreator>();
+
+			this->rpgapp = rpg_bootstrap(datafile, settingsfile, pack_file, debug, appcreator);
+			appcreator = nullptr;
 		}
 		void RPGLibTestSuite::RunTests(){
-			this->Init("tests\\runall_ascension_data.xml", "tests\\runall_settings.xml");
+			this->Init("tests\\runall_ascension_data.xml", "tests\\runall_settings.xml", "tests\\pack_file.7z");
 			TestLoadGameFile(false);
 			//Simulating a game.
 			//It has to be the same as in Ascension.cpp
 			rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
 			//For the scenes, We have to create TestScenes
-
 			/* Test1 (PlaybackImage) = tests AssetManager, RPGLoadingScene, PlaybackImage */
 			rpgapp->AddScene("test1", std::static_pointer_cast<Engine::EScene>(rpgapp->factory->CreatePlaybackIntroScene("test1")));
 			rpgapp->Run("test1");
@@ -84,7 +87,7 @@ namespace Osaka{
 		}
 		
 		void RPGLibTestSuite::TestLoadGameFile(bool verbose){
-			this->Init("tests\\runall_ascension_data.xml", "tests\\generic_settings.xml");
+			this->Init("tests\\runall_ascension_data.xml", "tests\\generic_settings.xml", "tests\\pack_file.7z");
 			/* Since the file is already loaded... we only need to make sure it is correctly loaded... */
 			debug->l("[TestLoadGameFile] Start");
 			debug->l("[TestLoadGameFile] Spritemaps count: " + std::to_string(this->rpgapp->gameData->spritemaps->size()));

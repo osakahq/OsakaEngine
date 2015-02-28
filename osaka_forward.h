@@ -18,6 +18,9 @@ namespace Osaka{
 		class Debug;			typedef std::shared_ptr<Debug>			DebugPTR;
 		class Log;				typedef std::shared_ptr<Log>			LogPTR;
 	}
+	namespace Utils{
+		class ApplicationCreator; typedef std::shared_ptr<ApplicationCreator> ApplicationCreatorPTR;
+	}
 	namespace Engine{
 		class IFileLoader;			typedef std::shared_ptr<IFileLoader>	IFileLoaderPTR;
 		class DefaultFileLoader;	typedef std::shared_ptr<DefaultFileLoader>	DefaultFileLoaderPTR;
