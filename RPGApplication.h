@@ -30,7 +30,7 @@ namespace Osaka{
 
 			/* Owner. Ruler */
 			RulerPTR ruler;
-			/* Owner */
+			/* Owner. This is the timer where the game relies on. */
 			TimeManagerPTR timem;
 			/* Owner */
 			FPSCounterPTR counter;
