@@ -101,7 +101,7 @@ namespace Osaka{
 			for(int i = 0; i <= this->stackItems; i++){
 				if( except_scene != NULL && strcmp(stack[i]->GetId().c_str(), except_scene) == 0 ){
 					if( i != this->stackItems ){
-						/* This means the scene wasn't at top and Focus() needs to be called */
+						/* This means the scene (except scene) wasn't at top and Focus() needs to be called */
 						gainedFocus = true;
 					}
 					//We just don't call Hide();

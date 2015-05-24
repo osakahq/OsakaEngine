@@ -97,7 +97,8 @@ namespace Osaka{
 		void LoadingScript::StandBy(){
 		}
 		void LoadingScript::StandBy(Engine::ESceneArgsPTR& params){
-			Show(params);
+			//Show shouldn't be called in here because LoadingScene doesn't have anything to do in Standby `Show(params);`
+			app->debug->l("TODO This should never be called. Remove me soon. (This is a test)");
 		}
 		void LoadingScript::Focus(){
 		}
