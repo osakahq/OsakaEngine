@@ -9,6 +9,9 @@
 #include "DefaultFileLoader.h"
 #include "GameDataLoader.h"
 
+#include "InitScene.h"
+#include "InitSceneArgs.h"
+
 #include "FPSCounter.h"
 #include "AssetManager.h"
 #include "RPGLoadingScene.h"
@@ -110,6 +113,11 @@ namespace Osaka{
 
 			/* -------------------------------------------------------------------- */
 			/* --- After this point, everything is loaded ------------------------------------------------------------------- */
+
+			InitScenePTR initscene = factory->CreateInitScene();
+			app->AddScene(initscene->GetId(), std::static_pointer_cast<Engine::EScene>(initscene));
+			app->SetInitScene(initscene);
+
 			/* LoadingScene needs the name of the loadingscene so it can Stack/Switch itself */
 			RPGLoadingScenePTR loadingscene = factory->CreateRPGLoadingScene("rpglib_loadingscene");
 			app->SetLoadingScene(loadingscene);

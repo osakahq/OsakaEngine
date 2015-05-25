@@ -66,6 +66,9 @@ namespace Osaka{
 		class LoadingUI;		typedef std::shared_ptr<LoadingUI>			LoadingUIPTR;
 		class RPGLoadingScene;	typedef std::shared_ptr<RPGLoadingScene>	RPGLoadingScenePTR;
 
+		class InitScene;		typedef std::shared_ptr<InitScene>	InitScenePTR;
+		class InitSceneArgs;	typedef std::shared_ptr<InitSceneArgs>	InitSceneArgsPTR;
+
 		/*** SCENES *****/
 		class PlaybackIntroCanvas;	typedef std::shared_ptr<PlaybackIntroCanvas>		PlaybackIntroCanvasPTR;
 		class PlaybackIntroScript;	typedef std::shared_ptr<PlaybackIntroScript>		PlaybackIntroScriptPTR;

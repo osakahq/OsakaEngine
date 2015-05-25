@@ -43,7 +43,7 @@ void Ascension(){
 	app->SetGameSessionManager(app->rpgfactory->CreateGameSessionManagerFromGameData());
 	
 	app->AddScene("test1", std::static_pointer_cast<Engine::EScene>(app->factory->CreatePlaybackIntroScene("test1")));
-	app->Run("test1");
+	app->Run("test1", Engine::EmptyESceneArgsPTR);
 
 	conn = nullptr;
 	app->_delete(); app = nullptr;

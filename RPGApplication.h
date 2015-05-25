@@ -13,6 +13,7 @@ namespace Osaka{
 			RPGApplication(Debug::DebugPTR& d, Engine::SDLLibPTR& sdl, Engine::IFileLoaderPTR& fileloader);
 			virtual ~RPGApplication();
 			virtual void _delete();
+
 			/* Owner. This has variables such as: volume, key controls, etc. */
 			SettingsPTR settings;
 			/* Owner. Holds all the data taken from the data game file */
@@ -43,10 +44,12 @@ namespace Osaka{
 			virtual void BeforePresent();
 			virtual void RenderTime(Uint32 frame_ms);
 			/* Initializes the first scene and then passes it to EApplicacion (base class) */
-			virtual void Run(const char* scene);
+			virtual void Run(const char* scene, Engine::ESceneArgsPTR& init_params);
 
 			/* NOT Owner. The owner is in EApplication because the scene is inserted into the scene list */
 			void SetLoadingScene(RPGLoadingScenePTR& scene);
+			/* NOT Owner.  */
+			void SetInitScene(InitScenePTR& scene);
 
 			/* Owner of GameSession. */
 			void SetGameSessionManager(GameSessionManagerPTR initialGSM);
@@ -54,8 +57,9 @@ namespace Osaka{
 			GameSessionManagerPTR GetGameSessionManager();
 
 			//Function wrappers for RPGLoadingScene
-			void SwitchTransition(const char* scene, Engine::ESceneArgsPTR& params);
-			void StackTransition(const char* scene, Engine::ESceneArgsPTR& params);
+			void FadeStackTransition(const char* scene, Engine::ESceneArgsPTR& params);
+			void FadeSwitchTransition(const char* scene, Engine::ESceneArgsPTR& params);
+			void LoadingStackTransition(const char* scene, Engine::ESceneArgsPTR& params);
 
 			/* - gamesessionm_struct = rpgfactory->CreateGameSessionStructs(this.sessionm);
 			 * - gameloader->savegame(gamesessionm_struct, filename); */
@@ -78,11 +82,9 @@ namespace Osaka{
 			 * Responsible of adding the loading scene (itself) and calling GameLoader */
 			RPGLoadingScenePTR loadingscene;
 
-
-			//This is used to insert the first scene. This needed because when you call `scene->Show()` it should be already inside the Run:loop
-			/* 0 = initialized, 1 = first update(true), 2 = first update(false) */
-			short firstUpdate;
-			std::string first_scene;
+			/* NOT Owner. 
+			 * This is the very first scene that is added and the only thing that does is to make the call to add the real first scene */
+			InitScenePTR initscene;
 		};
 	}
 }

@@ -11,6 +11,12 @@ namespace Osaka{
 				CONSOLE, FILE, NONE, REMOTE
 			};
 		};
+		struct DEBUG_LOGCOLOR{
+			DEBUG_LOGCOLOR(){}
+			enum Value{
+				BLUE, RED, GREEN, YELLOW, WHITE
+			};
+		};
 		
 		class Debug{
 		public:
@@ -23,6 +29,9 @@ namespace Osaka{
 			void stop();
 			void l(const char* str);
 			void l(std::string str);
+
+			void l(const char* str, DEBUG_LOGCOLOR::Value color);
+			void l(std::string str, DEBUG_LOGCOLOR::Value color);
 			//e is to show errors.
 			void e(const char* str);
 			void e(std::string str);

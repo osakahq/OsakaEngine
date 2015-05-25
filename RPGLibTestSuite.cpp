@@ -1,6 +1,7 @@
  #include "stdafx.h"
 #include "engine_include.h"
 #include "gamedata_include.h"
+#include "ESceneArgs.h"
 #include "EScene.h"
 #include "RPGScene.h"
 #include "Debug.h"
@@ -55,7 +56,7 @@ namespace Osaka{
 				rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
 
 				rpgapp->AddScene("phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->factory->CreatePlaybackIntroScene("phase1_test1")));
-				rpgapp->Run("phase1_test1");
+				rpgapp->Run("phase1_test1", Engine::EmptyESceneArgsPTR);
 				break;
 			default:
 				debug->l("[RPGLibTestSuite] Unkown phase.");

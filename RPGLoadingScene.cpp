@@ -1,4 +1,5 @@
  #include "stdafx.h"
+#include "Debug.h"
 #include "EventArgs.h"
 #include "ESceneArgs.h"
 #include "LoadingArgs.h"
@@ -31,7 +32,7 @@ namespace Osaka{
 			RPGScene::_delete();
 			assetm = nullptr;
 		}
-		void RPGLoadingScene::SceneTransition(const char* name, Engine::ESceneArgsPTR& params, TransitionType::Value type){
+		void RPGLoadingScene::StartTransition(const char* name, Engine::ESceneArgsPTR& params, TransitionType::Value type){
 			
 			/* Using a raw pointer. There is no problem because the only way the anonymous function will be called is when this class calls `assetm->LoadScene(...)` */
 			RPGLoadingScene* raw_loadingscene = this;
@@ -46,12 +47,9 @@ namespace Osaka{
 			loadingparams->scene = name;
 			loadingparams->type = type;
 
-			//When calling app->switch(this->id), EApp will call this class.
-			if( type == TransitionType::SWITCH ){
-				app->Switch(this->id.c_str(), loadingparams_ptr);
-			}else{
-				app->Stack(this->id.c_str(), loadingparams_ptr);
-			}
+			//When calling app->Stack(this->id), EApp will call this class.
+			//Doesn't matter which type of transition because FadeStack/Switch or LoadingStack, loadingscene has to be put on top of the current scene.
+			app->Stack(this->id.c_str(), loadingparams_ptr);
 		}
 		void RPGLoadingScene::LoadCompleted(){
 			//This funcion is called by the loading thread inside GameLoader

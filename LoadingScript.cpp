@@ -63,7 +63,7 @@ namespace Osaka{
 			ResetVariables();
 		}
 		void LoadingScript::OnCanvasMidAnimation(Component::EventArgs& e){
-			if( transition_type == TransitionType::STACK ){
+			if( transition_type == TransitionType::FADE_STACK ){
 				app->debug->l("[LoadingScript] OnCanvasMidAnimation::Stack");
 				//If it is stack then, there is no fade out animation
 				app->Stack(scene_id.c_str(), scene_params);
@@ -71,11 +71,13 @@ namespace Osaka{
 				app->Remove(parent->id.c_str());
 
 				ResetVariables();
-			}else if( transition_type == TransitionType::SWITCH ){
+			}else if( transition_type == TransitionType::FADE_SWITCH ){
 				app->debug->l("[LoadingScript] OnCanvasMidAnimation::Switch");
 				/* Remove all scenes except this one */
 				app->RemoveAllFromStack(parent->id.c_str());
 				app->BottomStack(scene_id.c_str(), scene_params);
+			}else if( transition_type == TransitionType::LOADING_STACK){
+				app->debug->e("[LoadingScript] LOADING_STACK NOT IMPLEMENTED YET");
 			}
 		}
 		void LoadingScript::Load(){

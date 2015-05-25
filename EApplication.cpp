@@ -148,8 +148,14 @@ namespace Osaka{
 				if( stackHasChanged ){
 					stackHasChanged = false;
 					tempStackItems = this->stackItems;
+#ifdef _DEBUG
+					debug->l("[EApplication] Current scenes in stack: (order from bottom to top)");
+#endif
 					for(int i = 0; i <= this->stackItems; i++){
 						tempStack[i] = stack[i];
+#ifdef _DEBUG
+						debug->l("\t"+std::to_string(i)+": "+stack[i]->GetId());
+#endif
 					}
 				}
 

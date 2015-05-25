@@ -1,6 +1,6 @@
  #include "stdafx.h"
-#ifndef RPGLIB_LOADINGPASSPARAMS_H
-#define RPGLIB_LOADINGPASSPARAMS_H
+#ifndef RPGLIB_LOADINGARGS_H
+#define RPGLIB_LOADINGARGS_H
 #include "rpglib_include.h"
 #include "ESceneArgs.h"
 #include "osaka_forward.h"

@@ -16,6 +16,8 @@
 #include "AssetManager.h"
 #include "TimeManager.h"
 #include "GameSessionManager.h"
+#include "InitScene.h"
+#include "InitSceneArgs.h"
 #include "RPGLoadingScene.h"
 
 #include "IFileLoader.h"
@@ -31,7 +33,6 @@ namespace Osaka{
 			ruler = nullptr;
 			counter = nullptr;
 
-			firstUpdate = 0; //init
 		}
 
 		RPGApplication::~RPGApplication(){
@@ -55,6 +56,7 @@ namespace Osaka{
 			counter->_delete(); counter = nullptr;
 			
 			loadingscene = nullptr;
+			initscene = nullptr;
 		}
 		void RPGApplication::Init(bool vsync, int timePerFrame){
 			EApplication::Init(vsync, timePerFrame);
@@ -70,17 +72,7 @@ namespace Osaka{
 			/* Runs every update. */
 			timem->UpdateTicks();
 
-			if( firstUpdate != 2 ){
-				//Means it hasn't called the firstupdate section
-				if( firstUpdate == 1 ){ //1 = first update(true)
-					/* Basically, we are waiting for a full loop to end, and then we switch the first scene. Scenes should only be inside the loop */
-					SwitchTransition(first_scene.c_str(), Engine::EmptyESceneArgsPTR);
-					firstUpdate = 2; //2 = first_update(false)
-
-				}else if( firstUpdate == 0 ){//0 = initialized
-					firstUpdate = 1; //1 = first update has passed
-				}
-			}
+			
 		}
 		void RPGApplication::BeforePresent(){
 			EApplication::BeforePresent();
@@ -92,11 +84,18 @@ namespace Osaka{
 			counter->AfterPresent(frame_ms);
 		}
 
-		void RPGApplication::Run(const char* scene){
-			if( loadingscene == nullptr )
-				throw std::exception("[RPGApplication] loadingscene is nullptr");
-			first_scene = scene;
+		void RPGApplication::Run(const char* scene, Engine::ESceneArgsPTR& init_params){
+			if( loadingscene == nullptr || initscene == nullptr )
+				throw std::exception("[RPGApplication] loadingscene is nullptr or initscene is nullptr");
+
 			counter->Start();
+
+			//We switch the init scene with the args that has the initial real scene
+			InitSceneArgsPTR args = std::make_shared<InitSceneArgs>();
+			args->scene = scene;
+			args->init_args = init_params; //These params are passed to the real first scene
+			this->Switch(initscene->GetId().c_str(), std::static_pointer_cast<Engine::ESceneArgs>(args));
+
 			EApplication::Run();
 		}
 
@@ -107,6 +106,9 @@ namespace Osaka{
 		void RPGApplication::SetLoadingScene(RPGLoadingScenePTR& scene){
 			this->loadingscene = scene;
 		}
+		void RPGApplication::SetInitScene(InitScenePTR& scene){
+			this->initscene = scene;
+		}
 
 		GameSessionManagerPTR RPGApplication::GetGameSessionManager(){
 			//See RPGScene:Reset() function
@@ -114,11 +116,14 @@ namespace Osaka{
 			return sessionm;
 		}
 
-		void RPGApplication::SwitchTransition(const char* scene, Engine::ESceneArgsPTR& params){
-			loadingscene->SceneTransition(scene, params, TransitionType::SWITCH);
+		void RPGApplication::FadeStackTransition(const char* scene, Engine::ESceneArgsPTR& params){
+			loadingscene->StartTransition(scene, params, TransitionType::FADE_STACK);
 		}
-		void RPGApplication::StackTransition(const char* scene, Engine::ESceneArgsPTR& params){
-			loadingscene->SceneTransition(scene, params, TransitionType::STACK);
+		void RPGApplication::FadeSwitchTransition(const char* scene, Engine::ESceneArgsPTR& params){
+			loadingscene->StartTransition(scene, params, TransitionType::FADE_SWITCH);
+		}
+		void RPGApplication::LoadingStackTransition(const char* scene, Engine::ESceneArgsPTR& params){
+			loadingscene->StartTransition(scene, params, TransitionType::LOADING_STACK);
 		}
 
 		void RPGApplication::SaveGame(const char* filename){

@@ -4,10 +4,13 @@
 
 namespace Osaka{
 	namespace RPGLib{
+		/* FADE_STACK: Fade in fade out, but stacking
+		 * FADE_SWITCH: Fade in fade out, but switching (removing all scenes)
+		 * LOADING_STACK: stacks the loading scene to show only "Loading..." text and then removes loading scene to stack the loaded scene */
 		struct TransitionType{
 			TransitionType(){}
 			enum Value{
-				SWITCH, STACK	
+				FADE_STACK, FADE_SWITCH, LOADING_STACK
 			};
 		};
 

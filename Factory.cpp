@@ -28,6 +28,8 @@
 #include "PlaybackIntroUI.h"
 
 #include "RPGLoadingScene.h"
+#include "InitScene.h"
+
 //---
 #include "Debug.h"
 #include "Factory.h"
@@ -76,6 +78,10 @@ namespace Osaka{
 				sound = std::make_shared<Engine::SoundEffect>(debug, fileloader);
 			}
 			return sound;
+		}
+
+		InitScenePTR Factory::CreateInitScene(){
+			return std::make_shared<RPGLib::InitScene>(app);
 		}
 
 		RPGLoadingScenePTR Factory::CreateRPGLoadingScene(const char* name){

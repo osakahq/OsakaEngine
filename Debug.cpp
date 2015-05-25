@@ -2,6 +2,7 @@
 #include "ServerConn.h"
 #include "Log.h"
 //For forward declarations, you need to add them last
+#include "ConsoleColors.h"
 #include "Debug.h"
 #include "osaka_forward.h"
 
@@ -74,6 +75,30 @@ namespace Osaka{
 			wstr.assign(str.begin(), str.end());
 			MessageBox(NULL, wstr.c_str(), L"Debug - Exception", NULL);
 			throw std::exception(str.c_str());
+		}
+		void Debug::l(const char* str, DEBUG_LOGCOLOR::Value color){
+			switch(color){
+			case DEBUG_LOGCOLOR::BLUE:
+				std::cout << blue;
+				break;
+			case DEBUG_LOGCOLOR::RED:
+				std::cout << red;
+				break;
+			case DEBUG_LOGCOLOR::GREEN:
+				std::cout << green;
+				break;
+			case DEBUG_LOGCOLOR::YELLOW:
+				std::cout << yellow;
+				break;
+			case DEBUG_LOGCOLOR::WHITE:
+				std::cout << white;
+				break;
+			}
+			l(str);
+			std::cout << white;
+		}
+		void Debug::l(std::string str, DEBUG_LOGCOLOR::Value color){
+			l(str.c_str(), color);
 		}
 		void Debug::l(std::string str){
 			l(str.c_str());
