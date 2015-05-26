@@ -11,24 +11,28 @@ namespace Osaka{
 			virtual ~Script();
 			virtual void _delete();
 			
+			virtual void Init(RPGScenePTR& parent);
 			//For their explanation see `EScene.h`
-			virtual void Load() = 0;
-			virtual void Unload() = 0;
-			virtual void Show(Engine::ESceneArgsPTR& params) = 0;
-			virtual void Hide() = 0;
-			virtual void StandBy() = 0;
-			virtual void StandBy(Engine::ESceneArgsPTR& params) = 0;
-			virtual void Focus() = 0;
-			virtual void Update() = 0;
-			virtual void Draw() = 0;
+			virtual void Load();
+			virtual void Unload();
 
-			/* Called by RPGApplication (exitgame,loadgame) */
-			virtual void Reset() = 0;
+			virtual void Ready(Engine::ESceneArgsPTR& params) = 0;
+			virtual void Exit();
+
+			virtual void Show();
+			virtual void StandBy();
+			virtual void Focus();
+
+			virtual void Update() = 0;
+			virtual void Draw();
 
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner */
 			RPGApplicationPTR app;
+
+			/* NOT Owner */
+			RPGScenePTR parent;
 
 			/* NOT Owner. Raw */
 			SDL_Renderer* raw_renderer;

@@ -10,20 +10,28 @@ namespace Osaka{
 			UserInterface(RPGApplicationPTR& app);
 			virtual ~UserInterface();
 			virtual void _delete();
-			virtual void Load() = 0;
-			virtual void Unload() = 0;
-			virtual void Show() = 0;
-			virtual void Hide() = 0;
-			virtual void StandBy() = 0;
-			virtual void Focus() = 0;
+			virtual void Init(RPGScenePTR& parent);
+
+			virtual void Load();
+			virtual void Unload();
+
+			virtual void Ready();
+			virtual void Exit();
+
+			virtual void Show();
+			virtual void StandBy();
+			virtual void Focus();
+
 			virtual void Update() = 0;
 			virtual void Draw() = 0;
 
-			virtual void Reset() = 0;
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner */
 			RPGApplicationPTR app;
+
+			/* NOT Owner */
+			RPGScenePTR parent;
 
 			/* NOT Owner. Raw */
 			SDL_Renderer* raw_renderer;

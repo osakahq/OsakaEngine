@@ -11,7 +11,7 @@ namespace Osaka{
 		public:
 			RPGLoadingScene(std::string id, RPGApplicationPTR& app, CanvasPTR& canvas, UserInterfacePTR& ui, ScriptPTR& script, AssetManagerPTR& assetm);
 			~RPGLoadingScene();
-			void _delete();
+			void _delete() override;
 			/* This function calls GameLoader function and adds itself to the loop as a normal EScene */
 			void StartTransition(const char* name, Engine::ESceneArgsPTR& params, TransitionType::Value type);
 			/* This function is accesed by the other loading thread.

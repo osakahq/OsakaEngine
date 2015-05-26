@@ -12,25 +12,12 @@ namespace Osaka{
 		void PlaybackIntroUI::_delete(){
 			UserInterface::_delete();
 		}
-		void PlaybackIntroUI::Init(){
-		}
-		void PlaybackIntroUI::Load(){
-		}
-		void PlaybackIntroUI::Unload(){
-		}
-		void PlaybackIntroUI::Show(){
-		}
-		void PlaybackIntroUI::Hide(){
-		}
-		void PlaybackIntroUI::StandBy(){
-		}
-		void PlaybackIntroUI::Focus(){
-		}
+		
 		void PlaybackIntroUI::Update(){
+			
 		}
 		void PlaybackIntroUI::Draw(){
-		}
-		void PlaybackIntroUI::Reset(){
+			
 		}
 	}
 }

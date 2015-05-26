@@ -21,38 +21,9 @@ namespace Osaka{
 		void PlaybackIntroCanvas::_delete(){
 			
 		}
-		void PlaybackIntroCanvas::Init(){
-			
-		}
-		void PlaybackIntroCanvas::Load(){
-			//this is called in rpg_bootstrap but not really needed.
-		}
-		void PlaybackIntroCanvas::Unload(){
-			//unload not implemented
-		}
-		
-		void PlaybackIntroCanvas::Show(){
-			//when the scene is switched
-		}
-		void PlaybackIntroCanvas::Hide(){
-			//when the scene is removed
-		}
-		void PlaybackIntroCanvas::StandBy(){
-			//when a scene is stacked on top of this one
-		}
-		void PlaybackIntroCanvas::Focus(){
-			//when a scene is removed and the next one is this one
-		}
-
 		void PlaybackIntroCanvas::Update(){
-			
 		}
 		void PlaybackIntroCanvas::Draw(){
-			
-		}
-
-		void PlaybackIntroCanvas::Reset(){
-			//does nothing but is called when gamesessionmanager changes
 		}
 	}
 }

@@ -34,37 +34,19 @@ namespace Osaka{
 			ui = nullptr;
 		}
 		
-		void PlaybackIntroScript::Init(PlaybackIntroCanvasPTR& canvas, PlaybackIntroUIPTR& ui){
+		void PlaybackIntroScript::Init(RPGScenePTR& parent, PlaybackIntroCanvasPTR& canvas, PlaybackIntroUIPTR& ui){
+			Script::Init(parent);
 			this->canvas = canvas;
 			this->ui = ui;
 		}
-		
-		void PlaybackIntroScript::Load(){
-			
-		}
-		void PlaybackIntroScript::Unload(){
-		}
-		void PlaybackIntroScript::Show(Engine::ESceneArgsPTR& params){
-			
-		}
+		void PlaybackIntroScript::Ready(Engine::ESceneArgsPTR& params){
 
-		void PlaybackIntroScript::Hide(){
-		}
-		void PlaybackIntroScript::StandBy(){
-		}
-		void PlaybackIntroScript::StandBy(Engine::ESceneArgsPTR& params){
-			
 		}
 		void PlaybackIntroScript::Focus(){
 			app->debug->l("[PlaybackIntroScript] Focus");
 		}
 		void PlaybackIntroScript::Update(){
 			
-		}
-		void PlaybackIntroScript::Draw(){
-			
-		}
-		void PlaybackIntroScript::Reset(){
 		}
 	}
 }

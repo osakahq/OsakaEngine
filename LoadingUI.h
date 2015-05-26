@@ -11,18 +11,11 @@ namespace Osaka{
 		public:
 			LoadingUI(RPGApplicationPTR& app);
 			~LoadingUI();
-			void _delete();
-			void Init();
-			void Load();
-			void Unload();
-			void Show();
-			void Hide();
-			void StandBy();
-			void Focus();
-			void Update();
-			void Draw();
+			void _delete() override;
 
-			void Reset();
+			void Update() override;
+			void Draw() override;
+
 		private:
 		};
 	}

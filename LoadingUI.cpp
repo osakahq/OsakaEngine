@@ -14,25 +14,11 @@ namespace Osaka{
 		void LoadingUI::_delete(){
 			UserInterface::_delete();
 		}
-		void LoadingUI::Init(){
-		}
-		void LoadingUI::Load(){
-		}
-		void LoadingUI::Unload(){
-		}
-		void LoadingUI::Show(){
-		}
-		void LoadingUI::Hide(){
-		}
-		void LoadingUI::StandBy(){
-		}
-		void LoadingUI::Focus(){
-		}
+		
 		void LoadingUI::Update(){
 		}
 		void LoadingUI::Draw(){
 		}
-		void LoadingUI::Reset(){
-		}
+		
 	}
 }

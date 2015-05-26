@@ -7,11 +7,11 @@ namespace Osaka{
 		
 		class EScene{
 		public:
-			//EScene();
+
+			/* This is so that the derived class deconstructor is called. */
 			virtual ~EScene(){};
 			virtual void _delete() = 0;
 
-			virtual void Init() = 0;
 			/* Load functions server the purpose of creating the classes, everything that the scene needs.
 			 * This function is called from GameLoader */
 			virtual void Load() = 0;
@@ -19,15 +19,16 @@ namespace Osaka{
 			 * Called from GameLoader */
 			virtual void Unload() = 0;
 
-			/* Called when `Switch()/Stack()` functions are called */
-			virtual void Show(ESceneArgsPTR& params) = 0;
-			/* Called when Remove(scene) or RemoveAllFromStack is called */
-			virtual void Hide() = 0;
-			/* Called when a new scene is stacked */
+			/* Called when the scene is removed from the stack */
+			virtual void Exit() = 0;
+
+			/* Called when the scene is added to the stack and when the scene has just been stacked but doesn't have initial focus */
+			virtual void ReadyStandBy(ESceneArgsPTR& params) = 0;
+			/* Called when the scene is added to the stack and when the scene has just been stacked and is on top of the stack (has focus) */
+			virtual void ReadyShow(ESceneArgsPTR& params) = 0;
+			/* Called when the scene is *no longer* on top of the stack (already in stack) */
 			virtual void StandBy() = 0;
-			/* When calling BottomStack, it is put at the bottom so it is like Show() but was called to the bottom of the stack */
-			virtual void StandBy(ESceneArgsPTR& params) = 0;
-			/* This only happens when 2 scenes are stacked, then the top one is `Remove()`ed and the new top scene is called with `Focus()` */
+			/* Called when the scene is BACK on top of the stack (already in stack) */
 			virtual void Focus() = 0;
 
 			virtual void Update() = 0;

@@ -102,8 +102,8 @@ namespace Osaka{
 			);
 
 			script->Init(loadingscene, canvas, ui);
-			canvas->Init(CreateTimer());
-			ui->Init();
+			canvas->Init(std::static_pointer_cast<RPGScene>(loadingscene), CreateTimer());
+			ui->Init(std::static_pointer_cast<RPGScene>(loadingscene));
 
 			loadingscene->Init();
 
@@ -123,9 +123,9 @@ namespace Osaka{
 				)
 			);
 
-			script->Init(canvas, ui);
-			canvas->Init();
-			ui->Init();
+			script->Init(scene, canvas, ui);
+			canvas->Init(scene);
+			ui->Init(scene);
 
 			scene->Init();
 

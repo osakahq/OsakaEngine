@@ -12,21 +12,14 @@ namespace Osaka{
 		public:
 			LoadingScript(RPGApplicationPTR& app);
 			~LoadingScript();
-			void _delete();
+			void _delete() override;
 			
 			void Init(RPGLoadingScenePTR& parent, LoadingCanvasPTR& canvas, LoadingUIPTR& ui);
-			void Load();
-			void Unload();
-			void Show(Engine::ESceneArgsPTR& params);
-			void Hide();
-			void StandBy();
-			void StandBy(Engine::ESceneArgsPTR& params);
-			void Focus();
-			void Update();
-			void Draw();
+			
+			void Ready(Engine::ESceneArgsPTR& params) override;
+			void Exit() override;
 
-			/* Called by RPGApplication (exitgame,loadgame) */
-			void Reset();
+			void Update() override;
 
 			/* Called when the animation is in total black (and with loading letters) */
 			void OnCanvasMidAnimation(Component::EventArgs& e);
@@ -34,7 +27,7 @@ namespace Osaka{
 			void OnCanvasEndAnimation(Component::EventArgs& e);
 		private:
 			/* NOT Owner. */
-			RPGLoadingScenePTR parent;
+			RPGLoadingScenePTR loadingparent;
 
 			/* A temporary variable so I don't have to call parent everytime */
 			bool loadCompleted;

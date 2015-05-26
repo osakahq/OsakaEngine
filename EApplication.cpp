@@ -47,16 +47,16 @@ namespace Osaka{
 			RemoveAllFromStack();
 			stackItems++;
 			stack[stackItems] = scenes[scene];
-			scenes[scene]->Show(in_param);
+			scenes[scene]->ReadyShow(in_param);
 			stackHasChanged = true;
 		}
 		void EApplication::Stack(const char* scene, ESceneArgsPTR& in_param){
-			//We only need to call StandBy on current top scene because the others are already in standby
+			//We only need to call LostFocus on current top scene because the others are already in standby
 			stack[this->stackItems]->StandBy();
 
 			stackItems++;
 			stack[stackItems] = scenes[scene];
-			scenes[scene]->Show(in_param);
+			scenes[scene]->ReadyShow(in_param);
 			stackHasChanged = true;
 		}
 		void EApplication::BottomStack(const char* scene, ESceneArgsPTR& in_param){
@@ -67,7 +67,7 @@ namespace Osaka{
 			
 			stackItems++;
 			stack[0] = scenes[scene];
-			scenes[scene]->StandBy(in_param);	
+			scenes[scene]->ReadyStandBy(in_param);	
 			stackHasChanged = true;
 		}
 		void EApplication::Remove(const char* scene){
@@ -87,7 +87,7 @@ namespace Osaka{
 				stack[position-1]->Focus();
 			}
 
-			stack[position]->Hide();
+			stack[position]->Exit();
 			//We move the array backwards, effectively replacing the scene to remove
 			for(int i = position; i <= this->stackItems; i++){
 				stack[i] = stack[i+1];
@@ -108,7 +108,7 @@ namespace Osaka{
 					continue;
 
 				}
-				stack[i]->Hide();
+				stack[i]->Exit();
 			}
 			this->stackItems = -1;
 			stackHasChanged = true;

@@ -10,24 +10,22 @@ namespace Osaka{
 		class InitScene : public Engine::EScene{
 		public:
 			InitScene(RPGApplicationPTR& app);
-			virtual ~InitScene();
-			virtual void _delete();
+			~InitScene();
+			void _delete() override;
 			
-			virtual void Init();
+			void ReadyShow(Engine::ESceneArgsPTR& params) override;
+			void Update() override;
+			
+			std::string GetId() override;
 
-			virtual void Load();
-			virtual void Unload();
-
-			virtual void Show(Engine::ESceneArgsPTR& params);
-			virtual void Hide();
-			virtual void StandBy();
-			virtual void StandBy(Engine::ESceneArgsPTR& params);
-			virtual void Focus();
-
-			virtual void Update();
-			virtual void Draw();
-
-			std::string GetId();
+			/* I need to implement these methods because I'm inheriting from EScene and not RPGScene */
+			void Load() override;
+			void Unload() override;
+			void Exit() override;
+			void ReadyStandBy(Engine::ESceneArgsPTR& params) override;
+			void StandBy() override;
+			void Focus() override;
+			void Draw() override;
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner */

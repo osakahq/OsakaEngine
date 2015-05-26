@@ -15,17 +15,8 @@ namespace Osaka{
 			~PlaybackIntroCanvas();
 			void _delete();
 
-			void Init();
-			void Load();
-			void Unload();
-			void Show();
-			void Hide();
-			void StandBy();
-			void Focus();
-			void Update();
-			void Draw();
-
-			void Reset();
+			void Update() override;
+			void Draw() override;
 		private:
 			
 		};

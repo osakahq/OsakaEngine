@@ -11,18 +11,10 @@ namespace Osaka{
 		public:
 			PlaybackIntroUI(RPGApplicationPTR& app);
 			~PlaybackIntroUI();
-			void _delete();
-			void Init();
-			void Load();
-			void Unload();
-			void Show();
-			void Hide();
-			void StandBy();
-			void Focus();
-			void Update();
-			void Draw();
-
-			void Reset();
+			void _delete() override;
+			
+			void Update() override;
+			void Draw() override;
 		private:
 		};
 	}

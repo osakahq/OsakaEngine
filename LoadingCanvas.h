@@ -13,19 +13,12 @@ namespace Osaka{
 		public:
 			LoadingCanvas(RPGApplicationPTR& app);
 			~LoadingCanvas();
-			void _delete();
+			void _delete() override;
 
-			void Init(TimerPTR& timer);
-			void Load();
-			void Unload();
-			void Show();
-			void Hide();
-			void StandBy();
-			void Focus();
-			void Update();
-			void Draw();
-
-			void Reset();
+			void Init(RPGScenePTR& parent, TimerPTR& timer);
+			
+			void Update() override;
+			void Draw() override;
 
 			void StartAnimation(TransitionType::Value type);
 			void BeginEndAnimation();

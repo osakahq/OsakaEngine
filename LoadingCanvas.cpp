@@ -41,16 +41,12 @@ namespace Osaka{
 			endAnimation = nullptr;
 			timer = nullptr;
 		}
-		void LoadingCanvas::Init(TimerPTR& timer){
+		void LoadingCanvas::Init(RPGScenePTR& parent, TimerPTR& timer){
+			Canvas::Init(parent);
 			//this is called in factory
 			this->timer = timer;
 		}
-		void LoadingCanvas::Load(){
-			//this is called in rpg_bootstrap but not really needed.
-		}
-		void LoadingCanvas::Unload(){
-			//unload not implemented
-		}
+		
 		void LoadingCanvas::StartAnimation(TransitionType::Value type){
 			this->type = type;
 			isAnimating = true;
@@ -64,19 +60,7 @@ namespace Osaka{
 			app->debug->l("[LoadingCanvas] Begin second part of animation");
 			beginSecondPart = true;
 		}
-		void LoadingCanvas::Show(){
-			//when the scene is switched
-		}
-		void LoadingCanvas::Hide(){
-			//when the scene is removed
-		}
-		void LoadingCanvas::StandBy(){
-			//when a scene is stacked on top of this one
-		}
-		void LoadingCanvas::Focus(){
-			//when a scene is removed and the next one is this one
-		}
-
+		
 		void LoadingCanvas::Update(){
 			if( skipUpdate )
 				return;
@@ -122,8 +106,5 @@ namespace Osaka{
 			}
 		}
 
-		void LoadingCanvas::Reset(){
-			//does nothing but is called when gamesessionmanager changes
-		}
 	}
 }

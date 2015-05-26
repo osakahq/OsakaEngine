@@ -12,22 +12,13 @@ namespace Osaka{
 		public:
 			PlaybackIntroScript(RPGApplicationPTR& app);
 			~PlaybackIntroScript();
-			void _delete();
+			void _delete() override;
 			
-			void Init(PlaybackIntroCanvasPTR& canvas, PlaybackIntroUIPTR& ui);
-			void Load();
-			void Unload();
-			void Show(Engine::ESceneArgsPTR& params);
-			void Hide();
-			void StandBy();
-			void StandBy(Engine::ESceneArgsPTR& params);
-			void Focus();
-			void Update();
-			void Draw();
-
-			/* Called by RPGApplication (exitgame,loadgame) */
-			void Reset();
-
+			void Init(RPGScenePTR& parent, PlaybackIntroCanvasPTR& canvas, PlaybackIntroUIPTR& ui);
+			void Ready(Engine::ESceneArgsPTR& params) override;
+			void Update() override;
+			void Focus() override;
+			
 		private:
 			/* NOT Owner. Ownership is in RPGScene */
 			PlaybackIntroCanvasPTR canvas;
