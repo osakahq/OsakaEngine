@@ -32,6 +32,9 @@ namespace Osaka{
 			/* A temporary variable so I don't have to call parent everytime */
 			bool loadCompleted;
 
+			/* To know when to start the canvas animation inside the update */
+			bool startAnimation;
+
 			/* This is the id of the scene to switch */
 			std::string scene_id;
 			/* This is the scene params to send when calling app->Stack/BottomStack */

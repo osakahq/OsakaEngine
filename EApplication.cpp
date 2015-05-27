@@ -51,7 +51,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void EApplication::Stack(const char* scene, ESceneArgsPTR& in_param){
-			//We only need to call LostFocus on current top scene because the others are already in standby
+			//We only need to call StandBy on current top scene because the others are already in standby
 			stack[this->stackItems]->StandBy();
 
 			stackItems++;
@@ -154,7 +154,7 @@ namespace Osaka{
 					for(int i = 0; i <= this->stackItems; i++){
 						tempStack[i] = stack[i];
 #ifdef _DEBUG
-						debug->l("\t"+std::to_string(i)+": "+stack[i]->GetId());
+						debug->l("[EApplication] \t"+std::to_string(i)+": "+stack[i]->GetId());
 #endif
 					}
 				}

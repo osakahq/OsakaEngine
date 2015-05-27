@@ -54,6 +54,7 @@ namespace Osaka{
 			scene_id = "";
 			scene_params = nullptr;
 			loadCompleted = false;
+			startAnimation = false;
 		}
 
 		void LoadingScript::OnCanvasEndAnimation(Component::EventArgs& e){
@@ -87,15 +88,18 @@ namespace Osaka{
 			scene_id = lparams->scene;
 			scene_params = lparams->send_params;
 			transition_type = lparams->type;
-			canvas->StartAnimation(lparams->type);
+			startAnimation = true;
 		}
 
 		void LoadingScript::Exit(){
-			app->debug->l("[LoadingScript] Hide");
+			app->debug->l("[LoadingScript] Exit");
 		}
 		
 		void LoadingScript::Update(){
-			if( !loadCompleted && loadingparent->isLoadCompleted() ){
+			if( startAnimation ){
+				canvas->StartAnimation(transition_type);
+				startAnimation = false;
+			} else if( !loadCompleted && loadingparent->isLoadCompleted() ){
 				loadCompleted = true;
 				canvas->BeginEndAnimation();
 			}
