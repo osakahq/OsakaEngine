@@ -8,13 +8,10 @@ namespace Osaka{
 		
 		class RPGScene : public Engine::EScene{
 		public:
-			RPGScene(std::string id, RPGApplicationPTR& app, CanvasPTR& canvas, UserInterfacePTR& ui, ScriptPTR& script);
+			RPGScene(std::string id, RPGApplicationPTR& app);
 			virtual ~RPGScene();
 			virtual void _delete();
 			
-			//For their explanations see `EScene.h`
-			virtual void Init();
-
 			virtual void Load();
 			virtual void Unload();
 
@@ -25,18 +22,27 @@ namespace Osaka{
 			virtual void StandBy();
 			virtual void Focus();
 
-			virtual void Update();
-			virtual void Draw();
+			void Update();
+			void Draw();
+
+			//Functions for the layers
+			void Stack(std::string id);
+			void StackBefore(std::string id, std::string ref_layer);
+			void StackAfter(std::string id, std::string ref_layer);
+			void Switch(std::string id);
+			void Remove(std::string id);
+			void RemoveAll();
 
 			std::string GetId();
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			std::string  id;
 			
-			//Owner
-			CanvasPTR canvas;
-			UserInterfacePTR ui;
-			ScriptPTR script;
+			/* Owner (layers). ID of the layer. */
+			std::unordered_map<std::string, LayerPTR> layers;
+			/* Layers are owned in the unorderedmap */
+			std::vector<LayerPTR> stack_layers;
+
 			/* NOT Owner */
 			RPGApplicationPTR app;
 
@@ -51,6 +57,10 @@ namespace Osaka{
 			 * This may only be called after calling `Stack("newscene"); this->StandByHide();` 
 			 * Just remember that EApplication will call `StandBy()` regardless. */
 			void StandByHide();
+
+			/* This is where the script code goes. */
+			virtual void ReadyEx(Engine::ESceneArgsPTR& params);
+			virtual void UpdateEx();
 		};
 	}
 }

@@ -57,6 +57,7 @@ namespace Osaka{
 		class FPSCounter;		typedef std::shared_ptr<FPSCounter>		FPSCounterPTR;
 
 		class RPGScene;			typedef std::shared_ptr<RPGScene>		RPGScenePTR;
+		class Layer;			typedef std::shared_ptr<Layer>			LayerPTR;
 		class Canvas;			typedef std::shared_ptr<Canvas>			CanvasPTR;
 		class Script;			typedef std::shared_ptr<Script>			ScriptPTR;
 		class UserInterface;	typedef std::shared_ptr<UserInterface>	UserInterfacePTR;
