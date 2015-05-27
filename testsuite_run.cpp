@@ -51,6 +51,7 @@ namespace Osaka{
 			OsakaAssertEnd();
 			test->_delete(); 
 			test = nullptr;
+			Engine::EmptyESceneArgsPTR = nullptr;
 
 			if( resp == "s" ){
 				_ENDCHECKDELETE();
