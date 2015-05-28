@@ -4,6 +4,7 @@
 namespace Osaka{
 	namespace Component{
 		class EventHandler;		typedef std::shared_ptr<EventHandler> EventHandlerPTR;
+		class EventArgs;
 		//TODO: I need to modify EventHandler class if I want EventArgsPTR
 		//class EventArgs;		typedef std::shared_ptr<EventArgs> EventArgsPTR;
 	}
@@ -58,13 +59,12 @@ namespace Osaka{
 
 		class RPGScene;			typedef std::shared_ptr<RPGScene>		RPGScenePTR;
 		class Layer;			typedef std::shared_ptr<Layer>			LayerPTR;
+		class LayerArgs;		typedef std::shared_ptr<LayerArgs>		LayerArgsPTR;
 		class Canvas;			typedef std::shared_ptr<Canvas>			CanvasPTR;
-		class Script;			typedef std::shared_ptr<Script>			ScriptPTR;
 		class UserInterface;	typedef std::shared_ptr<UserInterface>	UserInterfacePTR;
 
-		class LoadingCanvas;	typedef std::shared_ptr<LoadingCanvas>		LoadingCanvasPTR;
-		class LoadingScript;	typedef std::shared_ptr<LoadingScript>		LoadingScriptPTR;
-		class LoadingUI;		typedef std::shared_ptr<LoadingUI>			LoadingUIPTR;
+		class LoadingFadeLayer;	typedef std::shared_ptr<LoadingFadeLayer>		LoadingFadeLayerPTR;
+		class LoadingFadeCanvas;	typedef std::shared_ptr<LoadingFadeCanvas>		LoadingFadeCanvasPTR;
 		class RPGLoadingScene;	typedef std::shared_ptr<RPGLoadingScene>	RPGLoadingScenePTR;
 
 		class InitScene;		typedef std::shared_ptr<InitScene>	InitScenePTR;

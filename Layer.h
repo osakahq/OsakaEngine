@@ -16,7 +16,7 @@ namespace Osaka{
 			virtual void Unload();
 
 			/* When entering the stack(vector) in RPGScene */
-			virtual void Ready();
+			virtual void Ready(LayerArgsPTR& args);
 			/* When the layer exits the loop. This is always called if the layer was in stack when scene is exited. */
 			virtual void Exit();
 
@@ -48,6 +48,7 @@ namespace Osaka{
 			bool hidden;
 
 			void StandByHide(bool val);
+			/* The reason there is a special `UpdateEx()` is to not worry about copying the code inside `Update()` */
 			virtual void UpdateEx(); //This is where the code goes (script)
 		};
 	}

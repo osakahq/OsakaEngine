@@ -2,6 +2,7 @@
 
 #include "Debug.h"
 #include "ESceneArgs.h"
+#include "LayerArgs.h"
 #include "RPGLibTestSuite.h"
 #include "_testsuite_macro.h"
 #include "testsuite_run.h"
@@ -52,6 +53,7 @@ namespace Osaka{
 			test->_delete(); 
 			test = nullptr;
 			Engine::EmptyESceneArgsPTR = nullptr;
+			RPGLib::EmptyLayerArgsPTR = nullptr;
 
 			if( resp == "s" ){
 				_ENDCHECKDELETE();

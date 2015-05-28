@@ -1,7 +1,7 @@
  #include "stdafx.h"
 
-#ifndef RPGLIB_LOADINGCANVAS_H
-#define RPGLIB_LOADINGCANVAS_H
+#ifndef RPGLIB_LOADINGFADECANVAS_H
+#define RPGLIB_LOADINGFADECANVAS_H
 #include "engine_include.h"
 #include "rpglib_include.h"
 #include "Canvas.h"
@@ -9,14 +9,12 @@
 namespace Osaka{
 	namespace RPGLib{
 		
-		class LoadingCanvas : public Canvas{
+		class LoadingFadeCanvas : public Canvas{
 		public:
-			LoadingCanvas(RPGApplicationPTR& app);
-			~LoadingCanvas();
+			LoadingFadeCanvas(RPGApplicationPTR& app, TimerPTR& timer);
+			~LoadingFadeCanvas();
 			void _delete() override;
 
-			void Init(RPGScenePTR& parent, TimerPTR& timer);
-			
 			void Update() override;
 			void Draw() override;
 
@@ -45,7 +43,7 @@ namespace Osaka{
 			/* Color of the box. The only value changing, is the alpha */
 			Engine::RGBA_HEX color;
 
-			/* Timer for the animation */
+			/* Owner. Timer for the animation */
 			TimerPTR timer;
 
 			/* The box that covers the entire screen */

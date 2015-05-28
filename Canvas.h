@@ -10,8 +10,7 @@ namespace Osaka{
 			Canvas(RPGApplicationPTR& app);
 			virtual ~Canvas();
 			virtual void _delete();
-			virtual void Init(RPGScenePTR& parent);
-
+			
 			virtual void Load();
 			virtual void Unload();
 
@@ -28,9 +27,6 @@ namespace Osaka{
 		protected:
 			/* NOT Owner */
 			RPGApplicationPTR app;
-
-			/* NOT Owner */
-			RPGScenePTR parent;
 
 			/* NOT Owner. Raw */
 			SDL_Renderer* raw_renderer;

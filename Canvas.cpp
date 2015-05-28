@@ -9,7 +9,6 @@ namespace Osaka{
 		Canvas::Canvas(RPGApplicationPTR& app){
 			this->app = app;
 			raw_renderer = app->sdl->GetRAWSDLRenderer();
-			parent = nullptr;
 		}
 		Canvas::~Canvas(){
 #ifdef _DEBUG
@@ -22,11 +21,6 @@ namespace Osaka{
 #endif
 			raw_renderer = NULL;
 			app = nullptr;
-			parent = nullptr;
-		}
-
-		void Canvas::Init(RPGScenePTR& parent){
-			this->parent = parent;
 		}
 
 		/* These functions are not required to be implemented in the derived classes */

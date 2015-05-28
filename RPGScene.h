@@ -26,19 +26,22 @@ namespace Osaka{
 			void Draw();
 
 			//Functions for the layers
-			void Stack(std::string id);
-			void StackBefore(std::string id, std::string ref_layer);
-			void StackAfter(std::string id, std::string ref_layer);
-			void Switch(std::string id);
+			void Stack(std::string id, LayerArgsPTR& args);
+			void StackBefore(std::string id, std::string ref_layer, LayerArgsPTR& args);
+			void StackAfter(std::string id, std::string ref_layer, LayerArgsPTR& args);
+			void Switch(std::string id, LayerArgsPTR& args);
+
 			void Remove(std::string id);
 			void RemoveAll();
+			void Add(LayerPTR layer);
 
 			std::string GetId();
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			std::string  id;
 			
-			/* Owner (layers). ID of the layer. */
+			/* Owner (layers). ID of the layer. 
+			 * It is responsability of the derived class to add the layers into the vector */
 			std::unordered_map<std::string, LayerPTR> layers;
 			/* Layers are owned in the unorderedmap */
 			std::vector<LayerPTR> stack_layers;
@@ -60,6 +63,7 @@ namespace Osaka{
 
 			/* This is where the script code goes. */
 			virtual void ReadyEx(Engine::ESceneArgsPTR& params);
+			/* The reason there is a special `UpdateEx()` is to not worry about copying the code inside `Update()` */
 			virtual void UpdateEx();
 		};
 	}

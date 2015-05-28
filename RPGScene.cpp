@@ -78,14 +78,18 @@ namespace Osaka{
 			standby = true;
 		}
 
-		void RPGScene::Stack(std::string id){
+		void RPGScene::Add(LayerPTR layer){
+			layers[layer->id] = layer;
+		}
+		void RPGScene::Stack(std::string id, LayerArgsPTR& args){
 			if( stack_layers.size() > 0 ){
 				stack_layers.front()->StandBy();
 			}
+			layers[id]->Ready(args);
 			layers[id]->Show();
 			stack_layers.push_back(layers[id]);
 		}
-		void RPGScene::StackBefore(std::string id, std::string ref_layer){
+		void RPGScene::StackBefore(std::string id, std::string ref_layer, LayerArgsPTR& args){
 			std::vector<LayerPTR>::const_iterator it_ref;
 			for( auto it = stack_layers.begin(); it != stack_layers.end(); ++it){
 				if( (*it)->id == ref_layer ){
@@ -96,11 +100,11 @@ namespace Osaka{
 				//If it_ref doesn't point to any layer (didn't find the layer)
 				throw new std::exception("[RPGScene] Layer not found.");
 			}
-
+			layers[id]->Ready(args);
 			layers[id]->StandBy();
 			stack_layers.insert(it_ref, layers[id]);
 		}
-		void RPGScene::StackAfter(std::string id, std::string ref_layer){
+		void RPGScene::StackAfter(std::string id, std::string ref_layer, LayerArgsPTR& args){
 			std::vector<LayerPTR>::const_iterator it_ref;
 			for( auto it = stack_layers.begin(); it != stack_layers.end(); ++it){
 				if( (*it)->id == ref_layer ){
@@ -112,6 +116,7 @@ namespace Osaka{
 				throw new std::exception("[RPGScene] Layer not found.");
 			}
 
+			layers[id]->Ready(args);
 			if( it_ref == stack_layers.begin() ){ //Do not be confused with `.end()`. Begin points to the first one while end points to `past-the-end`
 				//Means we are replacing the top place.
 				(*it_ref)->StandBy(); //Loses focus.
@@ -122,9 +127,10 @@ namespace Osaka{
 			//Insert functions inserts the element BEFORE the element
 			stack_layers.insert(it_ref+1, layers[id]);
 		}
-		void RPGScene::Switch(std::string id){
+		void RPGScene::Switch(std::string id, LayerArgsPTR& args){
 			//Removes all
 			RemoveAll();
+			layers[id]->Ready(args);
 			layers[id]->Show();
 			stack_layers.push_back(layers[id]);
 		}

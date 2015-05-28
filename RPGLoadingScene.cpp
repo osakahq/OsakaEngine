@@ -3,9 +3,8 @@
 #include "EventArgs.h"
 #include "ESceneArgs.h"
 #include "LoadingArgs.h"
-#include "Canvas.h"
-#include "UserInterface.h"
-#include "Script.h"
+
+#include "LoadingFadeLayer.h"
 #include "EApplication.h"
 #include "RPGApplication.h"
 #include "RPGScene.h"
@@ -14,8 +13,8 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		RPGLoadingScene::RPGLoadingScene(std::string id, RPGApplicationPTR& app, CanvasPTR& canvas, UserInterfacePTR& ui, ScriptPTR& script, AssetManagerPTR& assetm) 
-			: RPGScene(id, app, canvas, ui, script)
+		RPGLoadingScene::RPGLoadingScene(std::string id, RPGApplicationPTR& app, AssetManagerPTR& assetm) 
+			: RPGScene(id, app)
 		{
 			loadCompleted = false;
 			this->assetm = assetm;
@@ -31,6 +30,12 @@ namespace Osaka{
 #endif	
 			RPGScene::_delete();
 			assetm = nullptr;
+			fadelayer = nullptr;
+		}
+		void RPGLoadingScene::Init(LoadingFadeLayerPTR& fadelayer){
+			this->fadelayer = fadelayer;
+			Add(fadelayer);
+			//or like this (doesn't matter): this->layers[fadelayer->id] = fadelayer;
 		}
 		void RPGLoadingScene::StartTransition(const char* name, Engine::ESceneArgsPTR& params, TransitionType::Value type){
 			
@@ -49,7 +54,7 @@ namespace Osaka{
 
 			//When calling app->Stack(this->id), EApp will call this class.
 			//Doesn't matter which type of transition because FadeStack/Switch or LoadingStack, loadingscene has to be put on top of the current scene.
-			app->Stack(this->id.c_str(), loadingparams_ptr);
+			app->Stack(this->id.c_str(), loadingparams_ptr); //This is like sending itself the params. Nothing wrong either way.
 		}
 		void RPGLoadingScene::LoadCompleted(){
 			//This funcion is called by the loading thread inside GameLoader
@@ -57,6 +62,11 @@ namespace Osaka{
 		}
 		bool RPGLoadingScene::isLoadCompleted(){
 			return loadCompleted;
+		}
+
+		void RPGLoadingScene::ReadyEx(Engine::ESceneArgsPTR& params){
+			//Params are sent from itself see `StartTransition`
+
 		}
 	}
 }

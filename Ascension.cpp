@@ -6,6 +6,8 @@
 #include "RPGScene.h"
 #include "ESceneArgs.h"
 
+#include "LayerArgs.h"
+
 #include "Debug.h"
 #include "ServerConn.h"
 
@@ -52,6 +54,7 @@ void Ascension(){
 	/* Since we added a _CHECKDELETE in EScenePassParams, we need to free it before we exit the program 
 	 * or EmptyScenePassParamsPTR will call to a disposed function (when the program exits) */
 	Engine::EmptyESceneArgsPTR = nullptr;
+	RPGLib::EmptyLayerArgsPTR = nullptr;
 
 #ifdef _DEBUG
 	_ENDCHECKDELETE();

@@ -8,11 +8,11 @@
 #include "Canvas.h"
 #include "RPGApplication.h"
 #include "Utils.h"
-#include "LoadingCanvas.h"
+#include "LoadingFadeCanvas.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		LoadingCanvas::LoadingCanvas(RPGApplicationPTR& app) : Canvas(app){
+		LoadingFadeCanvas::LoadingFadeCanvas(RPGApplicationPTR& app, TimerPTR& timer) : Canvas(app){
 			isAnimating = false;
 			skipUpdate = false;
 			beginSecondPart = false;
@@ -29,25 +29,22 @@ namespace Osaka{
 			carp.y = app->ruler->y_top_left_corner;
 			carp.w = app->ruler->max_width;
 			carp.h = app->ruler->max_height;
+
+			this->timer = timer;
 		}
-		LoadingCanvas::~LoadingCanvas(){
+		LoadingFadeCanvas::~LoadingFadeCanvas(){
 #ifdef _DEBUG
 			_CHECKDELETE("LoadingCanvas");
 #endif
 		}
-		void LoadingCanvas::_delete(){
+		void LoadingFadeCanvas::_delete(){
 			Canvas::_delete();
 			midAnimation = nullptr;
 			endAnimation = nullptr;
-			timer = nullptr;
-		}
-		void LoadingCanvas::Init(RPGScenePTR& parent, TimerPTR& timer){
-			Canvas::Init(parent);
-			//this is called in factory
-			this->timer = timer;
+			timer->_delete(); timer = nullptr;
 		}
 		
-		void LoadingCanvas::StartAnimation(TransitionType::Value type){
+		void LoadingFadeCanvas::StartAnimation(TransitionType::Value type){
 			this->type = type;
 			isAnimating = true;
 			beginSecondPart = false;
@@ -56,12 +53,12 @@ namespace Osaka{
 			color.a = 0;
 			timer->Start();
 		}
-		void LoadingCanvas::BeginEndAnimation(){
+		void LoadingFadeCanvas::BeginEndAnimation(){
 			app->debug->l("[LoadingCanvas] Begin second part of animation");
 			beginSecondPart = true;
 		}
 		
-		void LoadingCanvas::Update(){
+		void LoadingFadeCanvas::Update(){
 			if( skipUpdate )
 				return;
 			const float fadeInTime = 750;
@@ -96,7 +93,7 @@ namespace Osaka{
 				}
 			}
 		}
-		void LoadingCanvas::Draw(){
+		void LoadingFadeCanvas::Draw(){
 			if( isAnimating ){
 				//app->sdl->SetRenderColor(color);
 				SDL_SetRenderDrawColor(raw_renderer, color.r, color.g, color.b, color.a);
