@@ -52,7 +52,7 @@ namespace Osaka{
 			/* This is a temp stack, so when the loop Update is running, it doesn't mess with it. */
 			std::vector<LayerPTR> temp_stack_layers;
 			bool stackHasChanged;
-
+			
 			bool focus;
 			bool standby;
 			bool instack;

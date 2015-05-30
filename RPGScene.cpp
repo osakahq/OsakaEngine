@@ -15,6 +15,7 @@ namespace Osaka{
 			instack = false;
 			hidden = false;
 			stackHasChanged = true;
+			
 			//It is recommended to `layers.reserve(x)` to the actual max of layers.
 		}
 		RPGScene::~RPGScene(){
@@ -184,10 +185,12 @@ namespace Osaka{
 			if( hidden )
 				return;
 			mainscript->Update();
+
 			if( stackHasChanged ){
 				temp_stack_layers = stack_layers;
 				stackHasChanged = false;
 			}
+
 			for( auto it = temp_stack_layers.begin(); it != temp_stack_layers.end(); ++it){
 				(*it)->Update();
 			}
