@@ -25,10 +25,10 @@ namespace Osaka{
 	
 		}
 		void Layer::_delete(){
-			//The order in which they are deleted matters.
+			//The order in which they are deleted SHOULDN'T matter.
+			script->_delete(); script = nullptr;
 			canvas->_delete(); canvas = nullptr;
 			ui->_delete(); ui = nullptr;
-			script->_delete(); script = nullptr;
 			app = nullptr;
 		}
 

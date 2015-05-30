@@ -30,11 +30,10 @@ namespace Osaka{
 #endif
 		}
 		void LoadingFadeScript::_delete(){
-			Script::_delete();
-
 			lcanvas->endAnimation->Unhook(LOADINGSCRIPT_ENDANIMATION);
 			lcanvas->midAnimation->Unhook(LOADINGSCRIPT_MIDANIMATION);
 
+			Script::_delete();
 			scene_params = nullptr;
 			lcanvas = nullptr;
 			mainscript = nullptr;

@@ -37,11 +37,15 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("LoadingCanvas");
 #endif
+			//These should go here because it doesn't matter if LoadingFadeScript has the reference for Canvas.
+			//If _delete is called before LoadingFadeScript::_delete then it will try to unhook the event but since no one has the references
+			//the EventHandlerPTR will go away
+			midAnimation = nullptr;
+			endAnimation = nullptr;
 		}
 		void LoadingFadeCanvas::_delete(){
 			Canvas::_delete();
-			midAnimation = nullptr;
-			endAnimation = nullptr;
+			
 			timer->_delete(); timer = nullptr;
 		}
 		

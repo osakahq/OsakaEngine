@@ -14,6 +14,7 @@ namespace Osaka{
 			standby = false;
 			instack = false;
 			hidden = false;
+			stackHasChanged = true;
 			//It is recommended to `layers.reserve(x)` to the actual max of layers.
 		}
 		RPGScene::~RPGScene(){
@@ -26,6 +27,8 @@ namespace Osaka{
 			_CHECKDELETE("RPGScene_delete");
 #endif
 			mainscript->_delete(); mainscript = nullptr;
+			temp_stack_layers.clear();
+			stack_layers.clear();
 			for(auto it = layers.begin(); it != layers.end(); ++it ){
 				it->second->_delete(); 
 				//it->second = nullptr; Not needed because when destroying the list (clear), it is automatically set free.
@@ -71,6 +74,7 @@ namespace Osaka{
 			standby = false;
 
 			mainscript->Exit();
+			/* Removes only the layers that are in stack_layer */
 			RemoveAll();
 		}
 
@@ -87,6 +91,7 @@ namespace Osaka{
 
 		void RPGScene::Add(LayerPTR layer){
 			layers[layer->id] = layer;
+			stackHasChanged = true;
 		}
 		void RPGScene::Stack(std::string id, LayerArgsPTR& args){
 			if( stack_layers.size() > 0 ){
@@ -95,6 +100,7 @@ namespace Osaka{
 			layers[id]->Ready(args);
 			layers[id]->Show();
 			stack_layers.push_back(layers[id]);
+			stackHasChanged = true;
 		}
 		void RPGScene::StackBefore(std::string id, std::string ref_layer, LayerArgsPTR& args){
 			std::vector<LayerPTR>::const_iterator it_ref;
@@ -110,6 +116,7 @@ namespace Osaka{
 			layers[id]->Ready(args);
 			layers[id]->StandBy();
 			stack_layers.insert(it_ref, layers[id]);
+			stackHasChanged = true;
 		}
 		void RPGScene::StackAfter(std::string id, std::string ref_layer, LayerArgsPTR& args){
 			std::vector<LayerPTR>::const_iterator it_ref;
@@ -133,6 +140,7 @@ namespace Osaka{
 			}
 			//Insert functions inserts the element BEFORE the element
 			stack_layers.insert(it_ref+1, layers[id]);
+			stackHasChanged = true;
 		}
 		void RPGScene::Switch(std::string id, LayerArgsPTR& args){
 			//Removes all
@@ -140,6 +148,7 @@ namespace Osaka{
 			layers[id]->Ready(args);
 			layers[id]->Show();
 			stack_layers.push_back(layers[id]);
+			stackHasChanged = true;
 		}
 		void RPGScene::Remove(std::string id){
 			if( stack_layers.size() == 1 ){
@@ -161,20 +170,25 @@ namespace Osaka{
 					stack_layers.erase(it_rem);
 				}
 			}
-			
+			stackHasChanged = true;
 		}
 		void RPGScene::RemoveAll(){
 			for( auto it = stack_layers.begin(); it != stack_layers.end(); ++it){
 				(*it)->Exit();
 			}
 			stack_layers.clear();
+			stackHasChanged = true;
 		}
 
 		void RPGScene::Update(){
 			if( hidden )
 				return;
 			mainscript->Update();
-			for( auto it = stack_layers.begin(); it != stack_layers.end(); ++it){
+			if( stackHasChanged ){
+				temp_stack_layers = stack_layers;
+				stackHasChanged = false;
+			}
+			for( auto it = temp_stack_layers.begin(); it != temp_stack_layers.end(); ++it){
 				(*it)->Update();
 			}
 		}
@@ -182,7 +196,7 @@ namespace Osaka{
 			if( hidden )
 				return;
 			
-			for( auto it = stack_layers.begin(); it != stack_layers.end(); ++it){
+			for( auto it = temp_stack_layers.begin(); it != temp_stack_layers.end(); ++it){
 				(*it)->Draw();
 			}
 		}

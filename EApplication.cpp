@@ -96,6 +96,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void EApplication::RemoveAllFromStack(const char* except_scene){
+			//default parameter except_scene = NULL
 			bool gainedFocus = false;
 
 			for(int i = 0; i <= this->stackItems; i++){
@@ -190,7 +191,8 @@ namespace Osaka{
 						printf("[FPS] Last frame took longer than expected to render.\n");
 					}
 				}else{
-					if( (SDL_GetTicks() - frame_ms) > _targetTimePerFrame ){
+					//This also has +1 because it is never perfect and sometimes it does 17ms delay
+					if( (SDL_GetTicks() - frame_ms) > _targetTimePerFrame+1 ){
 						printf("[FPS] Last frame took longer than expected to render.\n");
 					}
 				}
