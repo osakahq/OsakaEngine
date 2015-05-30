@@ -28,7 +28,7 @@ namespace Osaka{
 		protected:
 			/* NOT Owner */
 			RPGApplicationPTR app;
-			/* NOT Owner */
+			/* NOT Owner. EApplication has ownership */
 			RPGScenePTR scene_parent;
 			
 		};

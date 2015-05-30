@@ -1,5 +1,6 @@
  #include "stdafx.h"
 
+#include "RPGScene.h"
 #include "RPGApplication.h"
 #include "SceneScript.h"
 #include "osaka_forward.h"
