@@ -14,7 +14,8 @@
 
 #include "FPSCounter.h"
 #include "AssetManager.h"
-#include "RPGLoadingScene.h"
+#include "RPGScene.h"
+#include "LoadingSceneScript.h"
 
 #include "GameSession.h"
 #include "Settings.h"
@@ -118,9 +119,9 @@ namespace Osaka{
 			app->AddScene(initscene->GetId(), std::static_pointer_cast<Engine::EScene>(initscene));
 			app->SetInitScene(initscene);
 
-			/* LoadingScene needs the name of the loadingscene so it can Stack/Switch itself */
-			RPGLoadingScenePTR loadingscene = factory->CreateRPGLoadingScene("rpglib_loadingscene");
-			app->SetLoadingScene(loadingscene);
+			/* RPGApplication stacks RPGScene (mainscript:LoadingSceneScript) then stacks the LoadingFade/LoadingTextLayer */
+			RPGScenePTR loadingscene = factory->CreateLoadingScene("rpglib_loadingscene");
+			app->SetLoadingScene("rpglib_loadingscene");
 			/* We need to call Load because the place to call `scene->Load()` is in AssetManager */
 			loadingscene->Load();
 			app->AddScene("rpglib_loadingscene", std::static_pointer_cast<Engine::EScene>(loadingscene));

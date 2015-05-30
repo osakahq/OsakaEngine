@@ -6,20 +6,19 @@
 #include "EventArgs.h"
 #include "EventHandler.h"
 #include "Canvas.h"
-#include "RPGApplication.h"
 #include "Utils.h"
 #include "PlaybackIntroCanvas.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		PlaybackIntroCanvas::PlaybackIntroCanvas(RPGApplicationPTR& app) : Canvas(app){
+		PlaybackIntroCanvas::PlaybackIntroCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler) : Canvas(raw_renderer, ruler){
 			
 		}
 		PlaybackIntroCanvas::~PlaybackIntroCanvas(){
 
 		}
 		void PlaybackIntroCanvas::_delete(){
-			
+			Canvas::_delete();
 		}
 		void PlaybackIntroCanvas::Update(){
 		}

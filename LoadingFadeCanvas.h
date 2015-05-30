@@ -11,7 +11,7 @@ namespace Osaka{
 		
 		class LoadingFadeCanvas : public Canvas{
 		public:
-			LoadingFadeCanvas(RPGApplicationPTR& app, TimerPTR& timer);
+			LoadingFadeCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler, TimerPTR& timer);
 			~LoadingFadeCanvas();
 			void _delete() override;
 

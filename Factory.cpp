@@ -15,19 +15,20 @@
 #include "RPGApplication.h"
 //----
 #include "RPGScene.h"
+#include "Layer.h"
 #include "Canvas.h"
 #include "Script.h"
 #include "UserInterface.h"
 
-#include "LoadingScript.h"
-#include "LoadingCanvas.h"
-#include "LoadingUI.h"
+#include "LoadingSceneScript.h"
+#include "LoadingFadeScript.h"
+#include "LoadingFadeCanvas.h"
 
+#include "PlaybackIntroSceneScript.h"
 #include "PlaybackIntroCanvas.h"
 #include "PlaybackIntroScript.h"
-#include "PlaybackIntroUI.h"
 
-#include "RPGLoadingScene.h"
+
 #include "InitScene.h"
 
 //---
@@ -84,52 +85,55 @@ namespace Osaka{
 			return std::make_shared<RPGLib::InitScene>(app);
 		}
 
-		RPGLoadingScenePTR Factory::CreateRPGLoadingScene(const char* name){
+		RPGScenePTR Factory::CreateLoadingScene(const char* name){
 #ifdef _DEBUG
 			if( assetm == nullptr )
 				throw std::exception("[Factory] assetm is nullptr");
 #endif
-			LoadingCanvasPTR canvas = std::make_shared<LoadingCanvas>(app);
-			LoadingUIPTR ui = std::make_shared<LoadingUI>(app);
-			LoadingScriptPTR script = std::make_shared<LoadingScript>(app);
+			LoadingSceneScriptPTR mainscript = std::make_shared<LoadingSceneScript>(app, assetm);
+			RPGScenePTR loadingscene = std::make_shared<RPGScene>(name, std::static_pointer_cast<SceneScript>(mainscript));
+			mainscript->Init("fadelayer", loadingscene);
+
+			LoadingFadeCanvasPTR canvas = std::make_shared<LoadingFadeCanvas>(app->sdl->GetRAWSDLRenderer(), app->ruler, CreateTimer());
+			LoadingFadeScriptPTR script = std::make_shared<LoadingFadeScript>(app, loadingscene, canvas, mainscript);
+			UserInterfacePTR ui = CreateDummyUI();
+			LayerPTR layer = std::make_shared<Layer>("fadelayer", std::static_pointer_cast<Script>(script), std::static_pointer_cast<Canvas>(canvas), ui);
+			layer->Init(app);
 			
-			//TODO: I had to use shared_ptr because make_shared does not accept more than 5 parameters...
-			RPGLoadingScenePTR loadingscene = std::shared_ptr<RPGLoadingScene>(
-				new RPGLoadingScene(name, app, 
-					std::static_pointer_cast<Canvas>(canvas), 
-					std::static_pointer_cast<UserInterface>(ui), 
-					std::static_pointer_cast<Script>(script), this->assetm)
-			);
-
-			script->Init(loadingscene, canvas, ui);
-			canvas->Init(std::static_pointer_cast<RPGScene>(loadingscene), CreateTimer());
-			ui->Init(std::static_pointer_cast<RPGScene>(loadingscene));
-
-			loadingscene->Init();
+			script->Init(layer);
+			canvas->Init(layer);
+			ui->Init(layer);
+			
+			loadingscene->Add(layer);
 
 			return loadingscene;
 		}
 
 		RPGScenePTR Factory::CreatePlaybackIntroScene(const char* name){
-			PlaybackIntroCanvasPTR canvas = std::make_shared<PlaybackIntroCanvas>(app);
-			PlaybackIntroUIPTR ui = std::make_shared<PlaybackIntroUI>(app);
-			PlaybackIntroScriptPTR script = std::make_shared<PlaybackIntroScript>(app);
 
-			RPGScenePTR scene = std::shared_ptr<RPGScene>(
-				new RPGScene(name, app, 
-					std::static_pointer_cast<Canvas>(canvas), 
-					std::static_pointer_cast<UserInterface>(ui), 
-					std::static_pointer_cast<Script>(script)
-				)
-			);
+			PlaybackIntroSceneScriptPTR mainscript = std::make_shared<PlaybackIntroSceneScript>(app);
+			RPGScenePTR scene = std::make_shared<RPGScene>(name, std::static_pointer_cast<SceneScript>(mainscript));
+			mainscript->Init("layer1", scene);
 
-			script->Init(scene, canvas, ui);
-			canvas->Init(scene);
-			ui->Init(scene);
+			PlaybackIntroCanvasPTR canvas = std::make_shared<PlaybackIntroCanvas>(app->sdl->GetRAWSDLRenderer(), app->ruler);
+			PlaybackIntroScriptPTR script = std::make_shared<PlaybackIntroScript>(app, scene, canvas, mainscript);
+			UserInterfacePTR ui = CreateDummyUI();
 
-			scene->Init();
+			LayerPTR layer = std::make_shared<Layer>("layer1", std::static_pointer_cast<Script>(script), std::static_pointer_cast<Canvas>(canvas), ui);
+			layer->Init(app);
+
+			script->Init(layer);
+			canvas->Init(layer);
+			ui->Init(layer);
+
+			scene->Add(layer);
 
 			return scene;
+		}
+
+		UserInterfacePTR Factory::CreateDummyUI(){
+			UserInterfacePTR ui = std::make_shared<UserInterface>(app->sdl->GetRAWSDLRenderer());
+			return ui;
 		}
 
 		TimerPTR Factory::CreateTimer(){

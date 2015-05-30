@@ -18,7 +18,7 @@
 #include "GameSessionManager.h"
 #include "InitScene.h"
 #include "InitSceneArgs.h"
-#include "RPGLoadingScene.h"
+#include "LoadingArgs.h"
 
 #include "IFileLoader.h"
 #include "EApplication.h"
@@ -55,7 +55,7 @@ namespace Osaka{
 			timem->_delete(); timem = nullptr;
 			counter->_delete(); counter = nullptr;
 			
-			loadingscene = nullptr;
+			//loadingscene = nullptr;
 			initscene = nullptr;
 		}
 		void RPGApplication::Init(bool vsync, int timePerFrame){
@@ -85,7 +85,7 @@ namespace Osaka{
 		}
 
 		void RPGApplication::Run(const char* scene, Engine::ESceneArgsPTR& init_params){
-			if( loadingscene == nullptr || initscene == nullptr )
+			if( loadingscene_id.empty() || initscene == nullptr )
 				throw std::exception("[RPGApplication] loadingscene is nullptr or initscene is nullptr");
 
 			counter->Start();
@@ -103,8 +103,8 @@ namespace Osaka{
 			this->sessionm = initialGSM;
 		}
 		
-		void RPGApplication::SetLoadingScene(RPGLoadingScenePTR& scene){
-			this->loadingscene = scene;
+		void RPGApplication::SetLoadingScene(std::string loadingscene_id){
+			this->loadingscene_id = loadingscene_id;
 		}
 		void RPGApplication::SetInitScene(InitScenePTR& scene){
 			this->initscene = scene;
@@ -117,13 +117,25 @@ namespace Osaka{
 		}
 
 		void RPGApplication::FadeStackTransition(const char* scene, Engine::ESceneArgsPTR& params){
-			loadingscene->StartTransition(scene, params, TransitionType::FADE_STACK);
+			LoadingArgsPTR args = std::make_shared<LoadingArgs>();
+			args->scene = scene;
+			args->send_params = params;
+			args->type = TransitionType::FADE_STACK;
+			Stack(loadingscene_id.c_str(), std::static_pointer_cast<Engine::ESceneArgs>(args));
 		}
 		void RPGApplication::FadeSwitchTransition(const char* scene, Engine::ESceneArgsPTR& params){
-			loadingscene->StartTransition(scene, params, TransitionType::FADE_SWITCH);
+			LoadingArgsPTR args = std::make_shared<LoadingArgs>();
+			args->scene = scene;
+			args->send_params = params;
+			args->type = TransitionType::FADE_SWITCH;
+			Stack(loadingscene_id.c_str(), std::static_pointer_cast<Engine::ESceneArgs>(args));
 		}
 		void RPGApplication::LoadingStackTransition(const char* scene, Engine::ESceneArgsPTR& params){
-			loadingscene->StartTransition(scene, params, TransitionType::LOADING_STACK);
+			LoadingArgsPTR args = std::make_shared<LoadingArgs>();
+			args->scene = scene;
+			args->send_params = params;
+			args->type = TransitionType::LOADING_STACK;
+			Stack(loadingscene_id.c_str(), std::static_pointer_cast<Engine::ESceneArgs>(args));
 		}
 
 		void RPGApplication::SaveGame(const char* filename){

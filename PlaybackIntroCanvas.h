@@ -2,8 +2,6 @@
 
 #ifndef RPGLIB_PLAYBACKINTROCANVAS_H
 #define RPGLIB_PLAYBACKINTROCANVAS_H
-#include "engine_include.h"
-#include "rpglib_include.h"
 #include "Canvas.h"
 #include "osaka_forward.h"
 namespace Osaka{
@@ -11,7 +9,7 @@ namespace Osaka{
 		
 		class PlaybackIntroCanvas : public Canvas{
 		public:
-			PlaybackIntroCanvas(RPGApplicationPTR& app);
+			PlaybackIntroCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler);
 			~PlaybackIntroCanvas();
 			void _delete();
 

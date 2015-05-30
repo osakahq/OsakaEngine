@@ -1,15 +1,12 @@
  #include "stdafx.h"
 #include "SDLLib.h"
-#include "RPGScene.h"
-#include "RPGApplication.h"
+#include "Layer.h"
 #include "UserInterface.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		UserInterface::UserInterface(RPGApplicationPTR& app){
-			this->app = app;
-			raw_renderer = app->sdl->GetRAWSDLRenderer();
-			parent = nullptr;
+		UserInterface::UserInterface(SDL_Renderer* raw_renderer){
+			this->raw_renderer = raw_renderer;
 		}
 		UserInterface::~UserInterface(){
 #ifdef _DEBUG
@@ -21,12 +18,11 @@ namespace Osaka{
 			_CHECKDELETE("UserInterface_delete");
 #endif
 			raw_renderer = NULL;
-			app = nullptr;
-			parent = nullptr;
+			layer_parent = nullptr;
 		}
 
-		void UserInterface::Init(RPGScenePTR& parent){
-			this->parent = parent;
+		void UserInterface::Init(LayerPTR& layer_parent){
+			this->layer_parent = layer_parent;
 		}
 
 		/* These functions are not required to be implemented in the derived classes */
@@ -38,5 +34,8 @@ namespace Osaka{
 		void UserInterface::Show(){}
 		void UserInterface::StandBy(){}
 		void UserInterface::Focus(){}
+
+		void UserInterface::Update(){}
+		void UserInterface::Draw(){}
 	}
 }

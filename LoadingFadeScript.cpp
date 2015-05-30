@@ -6,12 +6,10 @@
 #include "ESceneArgs.h"
 
 #include "RPGScene.h"
-#include "RPGLoadingScene.h"
+#include "LoadingSceneScript.h"
 #include "RPGApplication.h"
-#include "Canvas.h"
 #include "LoadingFadeCanvas.h"
-#include "Layer.h"
-#include "LoadingFadeLayer.h"
+#include "LoadingFadeScript.h"
 #include "osaka_forward.h"
 
 #define LOADINGSCRIPT_MIDANIMATION 116260
@@ -19,69 +17,72 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		LoadingFadeLayer::LoadingFadeLayer(std::string id, RPGApplicationPTR& app, RPGLoadingScenePTR& parent, LoadingFadeCanvasPTR& canvas, UserInterfacePTR& ui)
-			: Layer(id, app, std::static_pointer_cast<RPGScene>(parent), std::static_pointer_cast<Canvas>(canvas), ui){
+		LoadingFadeScript::LoadingFadeScript(RPGApplicationPTR& app, RPGScenePTR& parent, LoadingFadeCanvasPTR& canvas, LoadingSceneScriptPTR& mainscript)
+			: Script(app, parent){
 			
 			ResetVariables();
 			lcanvas = canvas;
-			lparent = parent;
+			this->mainscript = mainscript;
 		}
-		LoadingFadeLayer::~LoadingFadeLayer(){
+		LoadingFadeScript::~LoadingFadeScript(){
 #ifdef _DEBUG
-			_CHECKDELETE("LoadingFadeLayer");
+			_CHECKDELETE("LoadingFadeScript");
 #endif
 		}
-		void LoadingFadeLayer::_delete(){
-			Layer::_delete();
+		void LoadingFadeScript::_delete(){
+			Script::_delete();
 
 			lcanvas->endAnimation->Unhook(LOADINGSCRIPT_ENDANIMATION);
 			lcanvas->midAnimation->Unhook(LOADINGSCRIPT_MIDANIMATION);
 
 			scene_params = nullptr;
 			lcanvas = nullptr;
-			lparent = nullptr;
+			mainscript = nullptr;
 		}
 
-		void LoadingFadeLayer::Init(){
+		void LoadingFadeScript::Init(LayerPTR& layer_parent){
+			Script::Init(layer_parent);
 			//If transitiontype == Stack, there is no endAnimation.
-			lcanvas->endAnimation->Hook(LOADINGSCRIPT_ENDANIMATION, std::bind(&LoadingFadeLayer::OnCanvasEndAnimation, this, std::placeholders::_1));
-			lcanvas->midAnimation->Hook(LOADINGSCRIPT_MIDANIMATION, std::bind(&LoadingFadeLayer::OnCanvasMidAnimation, this, std::placeholders::_1));
+			lcanvas->endAnimation->Hook(LOADINGSCRIPT_ENDANIMATION, std::bind(&LoadingFadeScript::OnCanvasEndAnimation, this, std::placeholders::_1));
+			lcanvas->midAnimation->Hook(LOADINGSCRIPT_MIDANIMATION, std::bind(&LoadingFadeScript::OnCanvasMidAnimation, this, std::placeholders::_1));
 		}
 
-		void LoadingFadeLayer::ResetVariables(){
+		void LoadingFadeScript::ResetVariables(){
 			scene_id = "";
 			scene_params = nullptr;
 			loadCompleted = false;
 			startAnimation = false;
 		}
 
-		void LoadingFadeLayer::OnCanvasEndAnimation(Component::EventArgs& e){
+		void LoadingFadeScript::OnCanvasEndAnimation(Component::EventArgs& e){
 			app->debug->l("[LoadingFadeLayer] OnCanvasEndAnimation (Switch)");
 			//If transitiontype == Stack, there is no endAnimation.
-			app->Remove(lparent->GetId().c_str());
+			app->Remove(scene_parent->GetId().c_str());
 
 			ResetVariables();
 		}
-		void LoadingFadeLayer::OnCanvasMidAnimation(Component::EventArgs& e){
+		void LoadingFadeScript::OnCanvasMidAnimation(Component::EventArgs& e){
 			if( transition_type == TransitionType::FADE_STACK ){
 				app->debug->l("[LoadingFadeLayer] OnCanvasMidAnimation::Stack");
 				//If it is stack then, there is no fade out animation
 				app->Stack(scene_id.c_str(), scene_params);
 				/* It has to be in this order because if there is an scene below this one, it will `Focus()` then immediately `StandBy()` */
-				app->Remove(lparent->GetId().c_str());
+				app->Remove(scene_parent->GetId().c_str());
 
 				ResetVariables();
 			}else if( transition_type == TransitionType::FADE_SWITCH ){
 				app->debug->l("[LoadingFadeLayer] OnCanvasMidAnimation::Switch");
 				/* Remove all scenes except this one */
-				app->RemoveAllFromStack(lparent->GetId().c_str());
+				app->RemoveAllFromStack(scene_parent->GetId().c_str());
 				app->BottomStack(scene_id.c_str(), scene_params);
 			}else if( transition_type == TransitionType::LOADING_STACK){
 				app->debug->e("[LoadingFadeLayer] LOADING_STACK NOT IMPLEMENTED YET");
 			}
 		}
 		
-		void LoadingFadeLayer::Ready(LayerArgsPTR& args){
+		void LoadingFadeScript::Ready(LayerArgsPTR& args){
+			ResetVariables();
+
 			LoadingFadeLayerArgsPTR largs = std::dynamic_pointer_cast<LoadingFadeLayerArgs>(args);
 			this->scene_id = largs->scene_id;
 			this->scene_params = largs->scene_params;
@@ -89,11 +90,11 @@ namespace Osaka{
 			startAnimation = true;
 		}
 
-		void LoadingFadeLayer::UpdateEx(){
+		void LoadingFadeScript::Update(){
 			if( startAnimation ){
 				lcanvas->StartAnimation(transition_type);
 				startAnimation = false;
-			} else if( !loadCompleted && lparent->isLoadCompleted() ){
+			} else if( !loadCompleted && mainscript->isLoadCompleted() ){
 				loadCompleted = true;
 				lcanvas->BeginEndAnimation();
 			}

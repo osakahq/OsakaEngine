@@ -6,9 +6,10 @@
 namespace Osaka{
 	namespace RPGLib{
 		
+		/* Some functions are completely overriden in OneLayerScene.h. So for modifications, please go over there as well. */
 		class RPGScene : public Engine::EScene{
 		public:
-			RPGScene(std::string id, RPGApplicationPTR& app);
+			RPGScene(std::string id, SceneScriptPTR& mainscript);
 			virtual ~RPGScene();
 			virtual void _delete();
 			
@@ -22,8 +23,8 @@ namespace Osaka{
 			virtual void StandBy();
 			virtual void Focus();
 
-			void Update();
-			void Draw();
+			virtual void Update();
+			virtual void Draw();
 
 			//Functions for the layers
 			void Stack(std::string id, LayerArgsPTR& args);
@@ -40,14 +41,14 @@ namespace Osaka{
 		protected:
 			std::string  id;
 			
+			/* Owner of SceneScript */
+			SceneScriptPTR mainscript;
+
 			/* Owner (layers). ID of the layer. 
-			 * It is responsability of the derived class to add the layers into the vector */
+			 * It is responsability of the factory to add the layers into the vector */
 			std::unordered_map<std::string, LayerPTR> layers;
 			/* Layers are owned in the unorderedmap */
 			std::vector<LayerPTR> stack_layers;
-
-			/* NOT Owner */
-			RPGApplicationPTR app;
 
 			bool focus;
 			bool standby;
@@ -59,12 +60,8 @@ namespace Osaka{
 			 *	. Remember that each script knows what the other script does. Like I have been saying, in script code almost anything is valid 
 			 * This may only be called after calling `Stack("newscene"); this->StandByHide();` 
 			 * Just remember that EApplication will call `StandBy()` regardless. */
-			void StandByHide();
+			void StandByHide(bool val);
 
-			/* This is where the script code goes. */
-			virtual void ReadyEx(Engine::ESceneArgsPTR& params);
-			/* The reason there is a special `UpdateEx()` is to not worry about copying the code inside `Update()` */
-			virtual void UpdateEx();
 		};
 	}
 }

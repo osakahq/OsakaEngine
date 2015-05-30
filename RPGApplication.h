@@ -46,8 +46,8 @@ namespace Osaka{
 			/* Initializes the first scene and then passes it to EApplicacion (base class) */
 			virtual void Run(const char* scene, Engine::ESceneArgsPTR& init_params);
 
-			/* NOT Owner. The owner is in EApplication because the scene is inserted into the scene list */
-			void SetLoadingScene(RPGLoadingScenePTR& scene);
+			/* Only needs the id */
+			void SetLoadingScene(std::string loadingscene_id);
 			/* NOT Owner.  */
 			void SetInitScene(InitScenePTR& scene);
 
@@ -78,9 +78,8 @@ namespace Osaka{
 			/* Owner. This has to be private because scenes need to be registered in order to get it. */
 			GameSessionManagerPTR sessionm;
 
-			/* NOT Owner. The owner is in EApplication because the scene is inserted into the scene list.
-			 * Responsible of adding the loading scene (itself) and calling GameLoader */
-			RPGLoadingScenePTR loadingscene;
+			/* Scene: Responsible of adding the loading scene (itself) and calling GameLoader */
+			std::string loadingscene_id;
 
 			/* NOT Owner. 
 			 * This is the very first scene that is added and the only thing that does is to make the call to add the real first scene */

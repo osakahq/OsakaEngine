@@ -1,18 +1,19 @@
  #include "stdafx.h"
+#include "Layer.h"
 #include "Ruler.h"
 #include "SDLLib.h"
 #include "Debug.h"
 #include "Timer.h"
 #include "EventArgs.h"
 #include "EventHandler.h"
-#include "Canvas.h"
+
 #include "RPGApplication.h"
 #include "Utils.h"
 #include "LoadingFadeCanvas.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		LoadingFadeCanvas::LoadingFadeCanvas(RPGApplicationPTR& app, TimerPTR& timer) : Canvas(app){
+		LoadingFadeCanvas::LoadingFadeCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler, TimerPTR& timer) : Canvas(raw_renderer, ruler){
 			isAnimating = false;
 			skipUpdate = false;
 			beginSecondPart = false;
@@ -25,10 +26,10 @@ namespace Osaka{
 			color.b = 0;
 			color.a = 0;
 
-			carp.x = app->ruler->x_top_left_corner;
-			carp.y = app->ruler->y_top_left_corner;
-			carp.w = app->ruler->max_width;
-			carp.h = app->ruler->max_height;
+			carp.x = ruler->x_top_left_corner;
+			carp.y = ruler->y_top_left_corner;
+			carp.w = ruler->max_width;
+			carp.h = ruler->max_height;
 
 			this->timer = timer;
 		}
@@ -54,7 +55,7 @@ namespace Osaka{
 			timer->Start();
 		}
 		void LoadingFadeCanvas::BeginEndAnimation(){
-			app->debug->l("[LoadingCanvas] Begin second part of animation");
+			layer_parent->app->debug->l("[LoadingCanvas] Begin second part of animation");
 			beginSecondPart = true;
 		}
 		

@@ -8,39 +8,40 @@ namespace Osaka{
 		/* This class goes into RPGScene stack(loop). This is also the "script" of the layer. */
 		class Layer{
 		public:
-			Layer(std::string id, RPGApplicationPTR& app, RPGScenePTR& parent, CanvasPTR& canvas, UserInterfacePTR& ui);
+			Layer(std::string id, ScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui);
 			virtual ~Layer();
 			virtual void _delete();
 			
+			virtual void Init(RPGApplicationPTR& app);
 			virtual void Load();
 			virtual void Unload();
 
-			/* When entering the stack(vector) in RPGScene */
-			virtual void Ready(LayerArgsPTR& args);
+			/* When entering the stack(vector) in RPGScene
+			 * If you modify this, remember there is OneLayer that completely overrides this function (ready) */
+			void Ready(LayerArgsPTR& args);
 			/* When the layer exits the loop. This is always called if the layer was in stack when scene is exited. */
-			virtual void Exit();
+			void Exit();
 
 			/* Mainly only used to set the variables focus, standby. */
-			virtual void Show();	//When just entering the stack and has focus
-			virtual void StandBy(); //Already or just entering the stack and doesn't have focus.
-			virtual void Focus();	//When already in stack and regained focus
+			void Show();	//When just entering the stack and has focus
+			void StandBy(); //Already or just entering the stack and doesn't have focus.
+			void Focus();	//When already in stack and regained focus
 
 			void Update();
 			void Draw();
 
 			std::string id;
+
+			/* NOT Owner. The reason Layer has `app` is because Canvas/UI might need debug or other unforseen dependencies */
+			RPGApplicationPTR app;
 		/* ----------------------------------------------------------------------------------- */
 		protected:
-			/* NOT Owner */
-			RPGApplicationPTR app;
-
+			/* Owner */
+			ScriptPTR script;
 			/* Owner */
 			CanvasPTR canvas;
 			/* Owner */
 			UserInterfacePTR ui;
-
-			/* NOT Owner */
-			RPGScenePTR parent;
 
 			bool focus;
 			bool standby;
@@ -48,8 +49,6 @@ namespace Osaka{
 			bool hidden;
 
 			void StandByHide(bool val);
-			/* The reason there is a special `UpdateEx()` is to not worry about copying the code inside `Update()` */
-			virtual void UpdateEx(); //This is where the code goes (script)
 		};
 	}
 }

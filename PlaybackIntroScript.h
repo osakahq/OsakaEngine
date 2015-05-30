@@ -1,31 +1,34 @@
  #include "stdafx.h"
-
 #ifndef RPGLIB_PLAYBACKINTROSCRIPT_H
 #define RPGLIB_PLAYBACKINTROSCRIPT_H
-#include "rpglib_include.h"
+
 #include "Script.h"
+#include "LayerArgs.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
 		
 		class PlaybackIntroScript: public Script{
 		public:
-			PlaybackIntroScript(RPGApplicationPTR& app);
+			PlaybackIntroScript(RPGApplicationPTR& app, RPGScenePTR& parent, PlaybackIntroCanvasPTR& canvas, PlaybackIntroSceneScriptPTR& mainscript);
 			~PlaybackIntroScript();
 			void _delete() override;
+			void Init(LayerPTR& layer_parent) override;
 			
-			void Init(RPGScenePTR& parent, PlaybackIntroCanvasPTR& canvas, PlaybackIntroUIPTR& ui);
-			void Ready(Engine::ESceneArgsPTR& params) override;
 			void Update() override;
-			void Focus() override;
+			/* This function is called when entering the stack */
+			void Ready(LayerArgsPTR& args) override;
+		/* ----------------------------------------------------------------------------------- */
+		protected:
 			
 		private:
-			/* NOT Owner. Ownership is in RPGScene */
+			
+			/* NOT Owner. Owner is in parent class (layer). This is a cache reference. */
 			PlaybackIntroCanvasPTR canvas;
-			/* NOT Owner. Ownership is in RPGScene */
-			PlaybackIntroUIPTR ui;
+			/* NOT Owner. Owner is in RPGScene*/
+			PlaybackIntroSceneScriptPTR mainscript;
+
 		};
 	}
 }
-
 #endif

@@ -7,15 +7,17 @@ namespace Osaka{
 
 		class Canvas{
 		public:
-			Canvas(RPGApplicationPTR& app);
+			Canvas(SDL_Renderer* raw_renderer, RulerPTR& ruler);
 			virtual ~Canvas();
 			virtual void _delete();
 			
+			virtual void Init(LayerPTR& layer_parent);
 			virtual void Load();
 			virtual void Unload();
 
 			virtual void Ready();
 			virtual void Exit();
+
 			virtual void Show();
 			virtual void StandBy();
 			virtual void Focus();
@@ -25,11 +27,12 @@ namespace Osaka{
 
 		/* ----------------------------------------------------------------------------------- */
 		protected:
-			/* NOT Owner */
-			RPGApplicationPTR app;
-
 			/* NOT Owner. Raw */
 			SDL_Renderer* raw_renderer;
+			/* NOT Owner. Layer parent. */
+			LayerPTR layer_parent;
+			/* NOT Owner */
+			RulerPTR ruler;
 		};
 	}
 }

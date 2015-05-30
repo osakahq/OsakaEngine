@@ -21,7 +21,7 @@ namespace Osaka{
 			Engine::SoundPTR CreateSound(sound_dataPTR& data);
 			// Scenes
 			InitScenePTR CreateInitScene();
-			RPGLoadingScenePTR CreateRPGLoadingScene(const char* name);
+			RPGScenePTR Factory::CreateLoadingScene(const char* name);
 			RPGScenePTR CreatePlaybackIntroScene(const char* name);
 
 			TimerPTR CreateTimer();
@@ -37,6 +37,9 @@ namespace Osaka{
 		private:
 			/* NOT Owner */
 			Debug::DebugPTR debug;
+
+			/* Gives away ownership */
+			UserInterfacePTR CreateDummyUI();
 		};
 	}
 }

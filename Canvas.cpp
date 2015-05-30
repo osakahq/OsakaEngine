@@ -1,14 +1,14 @@
  #include "stdafx.h"
 #include "SDLLib.h"
-#include "RPGScene.h"
-#include "RPGApplication.h"
+#include "Ruler.h"
+#include "Layer.h"
 #include "Canvas.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		Canvas::Canvas(RPGApplicationPTR& app){
-			this->app = app;
-			raw_renderer = app->sdl->GetRAWSDLRenderer();
+		Canvas::Canvas(SDL_Renderer* raw_renderer, RulerPTR& ruler){
+			this->raw_renderer = raw_renderer;
+			this->ruler = ruler;
 		}
 		Canvas::~Canvas(){
 #ifdef _DEBUG
@@ -19,10 +19,13 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("Canvas_delete");
 #endif
+			layer_parent = nullptr;
+			ruler = nullptr;
 			raw_renderer = NULL;
-			app = nullptr;
 		}
-
+		void Canvas::Init(LayerPTR& layer_parent){
+			this->layer_parent = layer_parent;
+		}
 		/* These functions are not required to be implemented in the derived classes */
 		void Canvas::Load(){}
 		void Canvas::Unload(){}

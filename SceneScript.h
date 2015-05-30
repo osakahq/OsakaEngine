@@ -1,21 +1,21 @@
 #include "stdafx.h"
-#ifndef RPGLIB_USERINTERFACE_H
-#define RPGLIB_USERINTERFACE_H
+#ifndef RPGLIB_SCENESCRIPT_H
+#define RPGLIB_SCENESCRIPT_H
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
 		
-		class UserInterface{
+		class SceneScript{
 		public:
-			UserInterface(SDL_Renderer* raw_renderer);
-			virtual ~UserInterface();
+			SceneScript(RPGApplicationPTR& app);
+			virtual ~SceneScript();
 			virtual void _delete();
-			virtual void Init(LayerPTR& layer_parent);
-
+			
+			virtual void Init(RPGScenePTR& scene_parent);
 			virtual void Load();
 			virtual void Unload();
 
-			virtual void Ready();
+			virtual void Ready(Engine::ESceneArgsPTR& args);
 			virtual void Exit();
 
 			virtual void Show();
@@ -23,14 +23,14 @@ namespace Osaka{
 			virtual void Focus();
 
 			virtual void Update();
-			virtual void Draw();
-
+			
 		/* ----------------------------------------------------------------------------------- */
 		protected:
-			/* NOT Owner. Layer parent */
-			LayerPTR layer_parent;
-			/* NOT Owner. Raw */
-			SDL_Renderer* raw_renderer;
+			/* NOT Owner */
+			RPGApplicationPTR app;
+			/* NOT Owner */
+			RPGScenePTR scene_parent;
+			
 		};
 	}
 }

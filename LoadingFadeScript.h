@@ -1,8 +1,8 @@
  #include "stdafx.h"
-#ifndef RPGLIB_LOADINGFADELAYER_H
-#define RPGLIB_LOADINGFADELAYER_H
+#ifndef RPGLIB_LOADINGFADESCRIPT_H
+#define RPGLIB_LOADINGFADESCRIPT_H
 #include "rpglib_include.h"
-#include "Layer.h"
+#include "Script.h"
 #include "LayerArgs.h"
 #include "osaka_forward.h"
 namespace Osaka{
@@ -16,13 +16,16 @@ namespace Osaka{
 		};
 		typedef std::shared_ptr<LoadingFadeLayerArgs> LoadingFadeLayerArgsPTR;
 
-		class LoadingFadeLayer: public Layer{
+		/* ----------------------------------------------------------------------------------- */
+		class LoadingFadeScript: public Script{
 		public:
-			LoadingFadeLayer(std::string id, RPGApplicationPTR& app, RPGLoadingScenePTR& parent, LoadingFadeCanvasPTR& canvas, UserInterfacePTR& ui);
-			~LoadingFadeLayer();
+			LoadingFadeScript(RPGApplicationPTR& app, RPGScenePTR& parent, LoadingFadeCanvasPTR& canvas, LoadingSceneScriptPTR& mainscript);
+			~LoadingFadeScript();
 			void _delete() override;
-			void Init();
-			/* This function is called directly from RPGLoadingScene */
+			void Init(LayerPTR& layer_parent) override;
+			
+			void Update() override;
+			/* This function is called when entering the stack */
 			void Ready(LayerArgsPTR& args) override;
 
 			/* Called when the animation is in total black (and with loading letters) */
@@ -31,8 +34,7 @@ namespace Osaka{
 			void OnCanvasEndAnimation(Component::EventArgs& e);
 		/* ----------------------------------------------------------------------------------- */
 		protected:
-			void UpdateEx() override;
-
+			
 		private:
 			/* A temporary variable so I don't have to call parent everytime */
 			bool loadCompleted;
@@ -46,10 +48,10 @@ namespace Osaka{
 			Engine::ESceneArgsPTR scene_params;
 			TransitionType::Value transition_type;
 
-			/* NOT Owner. Owner is in base class. This is a cache reference. `parent` is in base class */
+			/* NOT Owner. Owner is in parent class (Layer). This is a cache reference. */
 			LoadingFadeCanvasPTR lcanvas;
-			/* NOT Owner. This is a cache reference. `parent` is in base class */
-			RPGLoadingScenePTR lparent;
+			/* NOT Owner. Owner is in RPGScene*/
+			LoadingSceneScriptPTR mainscript;
 
 			void ResetVariables();
 		};

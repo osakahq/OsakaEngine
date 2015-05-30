@@ -1,6 +1,7 @@
  #include "stdafx.h"
-#include "RPGScene.h"
+
 #include "RPGApplication.h"
+#include "Script.h"
 #include "Canvas.h"
 #include "UserInterface.h"
 #include "Layer.h"
@@ -8,11 +9,10 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		Layer::Layer(std::string id, RPGApplicationPTR& app, RPGScenePTR& parent, CanvasPTR& canvas, UserInterfacePTR& ui){
+		Layer::Layer(std::string id, ScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui){
 			this->id = id;
-			this->app = app;
-			this->parent = parent;
-
+			
+			this->script = script;
 			this->canvas = canvas;
 			this->ui = ui;
 
@@ -28,29 +28,36 @@ namespace Osaka{
 			//The order in which they are deleted matters.
 			canvas->_delete(); canvas = nullptr;
 			ui->_delete(); ui = nullptr;
-
+			script->_delete(); script = nullptr;
 			app = nullptr;
-			parent = nullptr;
+		}
+
+		void Layer::Init(RPGApplicationPTR& app){
+			this->app = app;
 		}
 
 		/* These functions are not required to be implemented in the derived classes */
 		void Layer::Load(){
+			script->Load();
 			canvas->Load();
 			ui->Load();
 		}
 		void Layer::Unload(){
+			script->Unload();
 			canvas->Unload();
 			ui->Unload();
 		}
-		void Layer::Ready(){
+		void Layer::Ready(LayerArgsPTR& args){
 			instack = true;
 
+			script->Ready(args);
 			canvas->Ready();
 			ui->Ready();
 		}
 		void Layer::Exit(){
 			instack = false;
 
+			script->Exit();
 			canvas->Exit();
 			ui->Exit();
 		}
@@ -60,6 +67,7 @@ namespace Osaka{
 			standby = false;
 			hidden = false;
 
+			script->Show();
 			canvas->Show();
 			ui->Show();
 		}
@@ -68,6 +76,7 @@ namespace Osaka{
 			standby = true;
 			hidden = false;
 
+			script->StandBy();
 			canvas->StandBy();
 			ui->StandBy();
 		}
@@ -75,6 +84,7 @@ namespace Osaka{
 			focus = true;
 			standby = false;
 
+			script->Focus();
 			canvas->Focus();
 			ui->Focus();
 		}
@@ -82,8 +92,8 @@ namespace Osaka{
 		void Layer::Update(){
 			if( hidden )
 				return;
-			//I had to create a separate Update so I don't have to worry about always adding `if( hidden )` in the derived class.
-			this->UpdateEx();
+			
+			script->Update();
 			canvas->Update();
 			ui->Update();
 		}
@@ -94,10 +104,7 @@ namespace Osaka{
 			canvas->Draw();
 			ui->Draw();
 		}
-		void Layer::UpdateEx(){
-			//Dummy. In case we don't need it in the derived class.
-		}
-
+		
 		void Layer::StandByHide(bool val){
 			hidden = val;
 		}

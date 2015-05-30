@@ -58,22 +58,28 @@ namespace Osaka{
 		class FPSCounter;		typedef std::shared_ptr<FPSCounter>		FPSCounterPTR;
 
 		class RPGScene;			typedef std::shared_ptr<RPGScene>		RPGScenePTR;
+		class SceneScript;		typedef std::shared_ptr<SceneScript>	SceneScriptPTR;
 		class Layer;			typedef std::shared_ptr<Layer>			LayerPTR;
 		class LayerArgs;		typedef std::shared_ptr<LayerArgs>		LayerArgsPTR;
+		class Script;			typedef std::shared_ptr<Script>			ScriptPTR;
 		class Canvas;			typedef std::shared_ptr<Canvas>			CanvasPTR;
 		class UserInterface;	typedef std::shared_ptr<UserInterface>	UserInterfacePTR;
 
-		class LoadingFadeLayer;	typedef std::shared_ptr<LoadingFadeLayer>		LoadingFadeLayerPTR;
-		class LoadingFadeCanvas;	typedef std::shared_ptr<LoadingFadeCanvas>		LoadingFadeCanvasPTR;
-		class RPGLoadingScene;	typedef std::shared_ptr<RPGLoadingScene>	RPGLoadingScenePTR;
+		class OneLayer;			typedef std::shared_ptr<OneLayer>	OneLayerPTR;
+		class OneLayerScene;	typedef std::shared_ptr<OneLayerScene>	OneLayerScenePTR;
+		class OneLayerScript;	typedef std::shared_ptr<OneLayerScript> OneLayerScriptPTR;
 
+		class LoadingSceneScript;typedef std::shared_ptr<LoadingSceneScript>	LoadingSceneScriptPTR;
+		class LoadingFadeCanvas;typedef std::shared_ptr<LoadingFadeCanvas>	LoadingFadeCanvasPTR;
+		class LoadingFadeScript;typedef std::shared_ptr<LoadingFadeScript>	LoadingFadeScriptPTR;
+		
 		class InitScene;		typedef std::shared_ptr<InitScene>	InitScenePTR;
 		class InitSceneArgs;	typedef std::shared_ptr<InitSceneArgs>	InitSceneArgsPTR;
 
 		/*** SCENES *****/
-		class PlaybackIntroCanvas;	typedef std::shared_ptr<PlaybackIntroCanvas>		PlaybackIntroCanvasPTR;
-		class PlaybackIntroScript;	typedef std::shared_ptr<PlaybackIntroScript>		PlaybackIntroScriptPTR;
-		class PlaybackIntroUI;		typedef std::shared_ptr<PlaybackIntroUI>			PlaybackIntroUIPTR;
+		class PlaybackIntroSceneScript;	typedef std::shared_ptr<PlaybackIntroSceneScript>		PlaybackIntroSceneScriptPTR;
+		class PlaybackIntroCanvas;		typedef std::shared_ptr<PlaybackIntroCanvas>		PlaybackIntroCanvasPTR;
+		class PlaybackIntroScript;		typedef std::shared_ptr<PlaybackIntroScript>		PlaybackIntroScriptPTR;
 		/*****************************/
 		
 		class Ruler;			typedef std::shared_ptr<Ruler>	RulerPTR;

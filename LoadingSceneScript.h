@@ -1,29 +1,30 @@
  #include "stdafx.h"
-#ifndef RPGLIB_RPGLOADINGSCENE_H
-#define RPGLIB_RPGLOADINGSCENE_H
+#ifndef RPGLIB_LOADINGSCENESCRIPT_H
+#define RPGLIB_LOADINGSCENESCRIPT_H
 #include "rpglib_include.h"
-#include "RPGScene.h"
+#include "SceneScript.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
 		
-		class RPGLoadingScene : public RPGScene {
+		class LoadingSceneScript : public SceneScript {
 		public:
-			RPGLoadingScene(std::string id, RPGApplicationPTR& app, AssetManagerPTR& assetm);
-			~RPGLoadingScene();
+			LoadingSceneScript(RPGApplicationPTR& app, AssetManagerPTR& assetm);
+			~LoadingSceneScript();
 			void _delete() override;
 
 			/* */
-			void Init(LoadingFadeLayerPTR& fadelayer);
+			void Init(std::string fadelayer_id, RPGScenePTR& scene_parent);
 
-			/* This function calls GameLoader function and adds itself to the loop as a normal EScene */
-			void StartTransition(const char* name, Engine::ESceneArgsPTR& params, TransitionType::Value type);
+			/* This is called from stack(from RPGApplication) */
+			void Ready(Engine::ESceneArgsPTR& params) override;
+			
 			/* This function is accesed by the other loading thread.
 			 * It is called inside the anonymous function that this class sets on GameLoader function */
 			void LoadCompleted();
 			bool isLoadCompleted();
 		protected:
-			void ReadyEx(Engine::ESceneArgsPTR& params) override;
+			
 		private:
 			/* volatile because this variable changes in 2 different threads */
 			volatile bool loadCompleted;
@@ -31,7 +32,7 @@ namespace Osaka{
 			AssetManagerPTR assetm;
 
 			/* NOT Owner. Ownership is inside base class unorderedmap */
-			LoadingFadeLayerPTR fadelayer;
+			std::string fadelayer_id;
 		};
 	}
 }

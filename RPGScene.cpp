@@ -1,14 +1,14 @@
  #include "stdafx.h"
-#include "EScene.h"
+
 #include "Layer.h"
-#include "RPGApplication.h"
+#include "SceneScript.h"
 #include "RPGScene.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		RPGScene::RPGScene(std::string id, RPGApplicationPTR& app){
+		RPGScene::RPGScene(std::string id, SceneScriptPTR& mainscript){
 			this->id = id;
-			this->app = app;
+			this->mainscript = mainscript;
 
 			focus = false;
 			standby = false;
@@ -25,23 +25,25 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("RPGScene_delete");
 #endif
+			mainscript->_delete(); mainscript = nullptr;
 			for(auto it = layers.begin(); it != layers.end(); ++it ){
 				it->second->_delete(); 
 				//it->second = nullptr; Not needed because when destroying the list (clear), it is automatically set free.
 			}
 			layers.clear();
-			app = nullptr;
 		}
 		std::string RPGScene::GetId(){
 			return this->id;
 		}
 		
 		void RPGScene::Load(){
+			mainscript->Load();
 			for( auto it = layers.begin(); it != layers.end(); ++it){
 				it->second->Load();
 			}
 		}
 		void RPGScene::Unload(){
+			mainscript->Unload();
 			for( auto it = layers.begin(); it != layers.end(); ++it){
 				it->second->Unload();
 			}
@@ -51,14 +53,16 @@ namespace Osaka{
 			focus = false;
 			standby = true;
 
-			this->ReadyEx(params);
+			mainscript->Ready(params);
+			mainscript->StandBy();
 		}
 		void RPGScene::ReadyShow(Engine::ESceneArgsPTR& params){
 			instack = true;
 			focus = true;
 			standby = false;
 
-			this->ReadyEx(params);
+			mainscript->Ready(params);
+			mainscript->Show();
 		}
 
 		void RPGScene::Exit(){
@@ -66,16 +70,19 @@ namespace Osaka{
 			focus = false;
 			standby = false;
 
+			mainscript->Exit();
 			RemoveAll();
 		}
 
 		void RPGScene::Focus(){
 			focus = true;
 			standby = false;
+			mainscript->Focus();
 		}
 		void RPGScene::StandBy(){
 			focus = false;
 			standby = true;
+			mainscript->StandBy();
 		}
 
 		void RPGScene::Add(LayerPTR layer){
@@ -166,8 +173,7 @@ namespace Osaka{
 		void RPGScene::Update(){
 			if( hidden )
 				return;
-			//I had to add this so I don't have to worry about adding `if( hidden )` to the derived class.
-			this->UpdateEx();
+			mainscript->Update();
 			for( auto it = stack_layers.begin(); it != stack_layers.end(); ++it){
 				(*it)->Update();
 			}
@@ -175,21 +181,15 @@ namespace Osaka{
 		void RPGScene::Draw(){
 			if( hidden )
 				return;
+			
 			for( auto it = stack_layers.begin(); it != stack_layers.end(); ++it){
 				(*it)->Draw();
 			}
 		}
 		
-		void RPGScene::StandByHide(){
-			//Toggle
-			hidden = (hidden) ? false : true;
+		void RPGScene::StandByHide(bool val){
+			hidden = val;
 		}
-		void RPGScene::UpdateEx(){
-			//Dummy
-		}
-		void RPGScene::ReadyEx(Engine::ESceneArgsPTR& params){
-			//Dummy
-		}
-
+		
 	}
 }
