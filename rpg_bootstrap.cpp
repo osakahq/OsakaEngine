@@ -46,7 +46,8 @@ namespace Osaka{
 			fileloader = std::make_shared<Engine::DefaultFileLoader>();
 #else
 			/* Only do this when everything is ready to go. */
-			fileloader = std::make_shared<Engine::PhysicsFSFileLoader>(debug, "tests\\tests.7z");
+			//fileloader = std::make_shared<Engine::PhysicsFSFileLoader>(debug, "tests\\tests.7z");
+			fileloader = std::make_shared<Engine::DefaultFileLoader>();
 #endif
 			Engine::SDLLibPTR lib = std::make_shared<Engine::SDLLib>(debug);
 			RPGApplicationPTR app = appcreator->CreateApp(debug, lib, fileloader);

@@ -32,7 +32,9 @@ namespace Osaka{
 				test->IndividualTest_LoadGameFileTest("tests\\IndividualTest_LoadGameFileTest\\data.xml", false);
 			}else if( resp == "s" ){
 				/* We always do want to check delete */
+#ifdef _DEBUG
 				_STARTCHECKDELETE(false);
+#endif
 
 				if( phase == "" ){
 					printf("\n[RPGLibTestSuite] Select a phase.\n");
@@ -56,7 +58,9 @@ namespace Osaka{
 			RPGLib::EmptyLayerArgsPTR = nullptr;
 
 			if( resp == "s" ){
+#ifdef _DEBUG
 				_ENDCHECKDELETE();
+#endif
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ #include "stdafx.h"
 #ifndef RPGLIB_RPGAPPLICATION_H
 #define RPGLIB_RPGAPPLICATION_H
 
