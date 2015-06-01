@@ -17,8 +17,11 @@ namespace Osaka{
 			void BeforePresent();
 
 			/* Only called when _DEBUG */
-			void AfterPresent(Uint32 frame_ms);
+			void AfterPresent(const Uint32 frame_ms);
 		private:
+			/* Prints in console if a frame(s) took longer than the rest of the frames */
+			Hiccups* hiccups; //It's okay to use raw pointer. The only class using it is this one.
+
 			/* NOT Owner */
 			Debug::DebugPTR debug;
 			/* NOT Owner */

@@ -170,7 +170,7 @@ namespace Osaka{
 				}
 				this->BeforePresent();
 				sdl->Present();
-
+				
 #ifdef OSAKA_SHOWAVERAGEFPS
 				this->RenderTime(SDL_GetTicks() - frame_ms);
 #endif
@@ -186,8 +186,8 @@ namespace Osaka{
 #ifdef _DEBUG
 				//Esto va despues para tomar en cuenta el delay, y estar seguros que aun con el delay, no pasen de 16ms
 				if( _vsync ){
-					if( (SDL_GetTicks() - frame_ms) > _targetTimePerFrame+1 ){
-						//Se pone FPS_TARGET_MS_PER_FRAME+1 porque en VSYNC siempre es 17/16ms por frame.
+					if( (SDL_GetTicks() - frame_ms) > _targetTimePerFrame+2 ){
+						//Se pone FPS_TARGET_MS_PER_FRAME+1 porque en VSYNC siempre es 17/16ms por frame. A veces hasta 18ms, pero es muy exacto para tener 60fps
 						printf("[FPS] Last frame took longer than expected to render.\n");
 					}
 				}else{

@@ -1,5 +1,6 @@
  #include "stdafx.h"
 
+#include "Hiccups.h"
 #include "StaticText.h"
 #include "engine_include.h"
 #include "Debug.h"
@@ -24,9 +25,11 @@ namespace Osaka{
 			sum_frame_ms = 0;
 			calls = 0;
 			//this->target_fps = target_fps;
+
+			hiccups = new Hiccups();
 		}
 		FPSCounter::~FPSCounter(){
-
+			delete hiccups;
 		}
 		void FPSCounter::_delete(){
 			font = nullptr;
@@ -37,9 +40,9 @@ namespace Osaka{
 		}
 		
 		void FPSCounter::Start(){
-			debug->l("[FPSCounter] The first number is the FPS.");
-			debug->l("[FPSCounter] The second number is the average time in milliseconds per frame when " + std::to_string(target_fps) + " frames have passed.");
-			debug->l("[FPSCounter] The second number INCLUDES `sdl->Present()`");
+			debug->l("[FPSCounter] Indicator FPS: How many frames have passed in 1 second.");
+			debug->l("[FPSCounter] Indicator Average: Average time in " + std::to_string(target_fps) + " frames.");
+			debug->l("[FPSCounter] Indicator Hiccups: Reports if the times of frames take longer than the mean(average) in sets of " + std::to_string(target_fps));
 			ticks = SDL_GetTicks();
 
 			stext_fps = font->CreateStaticText("fps", 5, 5, 3);
@@ -51,7 +54,9 @@ namespace Osaka{
 				//show_sum_frames is a constant
 				if( calls == target_fps ){
 					//Only when _DEBUG
-					average_frame_ms = std::to_string( static_cast<float>(sum_frame_ms) / calls );
+					float avr = static_cast<float>(sum_frame_ms) / calls;
+					average_frame_ms = std::to_string(avr);
+					hiccups->EndSet(avr);
 					sum_frame_ms = 0;
 					calls = 0;
 				}
@@ -69,7 +74,7 @@ namespace Osaka{
 				if( time > 1020 ){
 					//In a fast normal operation, the difference between time-1000 will be minimal.
 					//If the application is starting to slow, make sure to announce that BeforePresent was called late
-					debug->l("[FPS] FPSCounter was called very late: " + std::to_string(time));
+					debug->l("[FPSCounter] BeforePresent() was called very late: " + std::to_string(time));
 				}
 			}
 			stext_fps->Render();
@@ -77,9 +82,10 @@ namespace Osaka{
 		}
 
 		/* This function is only called when _DEBUG. Because it is after RenderPresent */
-		void FPSCounter::AfterPresent(Uint32 frame_ms){
+		void FPSCounter::AfterPresent(const Uint32 frame_ms){
 			sum_frame_ms += frame_ms;
 			++calls;
+			hiccups->Frame(frame_ms);
 		}
 	}
 }
