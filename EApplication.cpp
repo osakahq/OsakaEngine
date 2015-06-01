@@ -137,6 +137,7 @@ namespace Osaka{
 			const Uint32 _targetTimePerFrame = timePerFrame;
 			Uint32 frame_ms = 0;
 
+			debug->l("[EApplication] Loop begins...\n\n");
 			while(!quit){
 				frame_ms = SDL_GetTicks();
 				while( SDL_PollEvent(&e) != 0 ){
@@ -155,7 +156,7 @@ namespace Osaka{
 					for(int i = 0; i <= this->stackItems; i++){
 						tempStack[i] = stack[i];
 #ifdef _DEBUG
-						debug->l("[EApplication] \t"+std::to_string(i)+": "+stack[i]->GetId());
+						debug->l("[EApplication] \t\t"+std::to_string(i)+": "+stack[i]->GetId());
 #endif
 					}
 				}
