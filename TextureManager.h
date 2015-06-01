@@ -4,9 +4,7 @@
 #include "rpglib_include.h"
 #include "osaka_forward.h"
 namespace Osaka{
-	namespace Engine{
-		struct render_info_ex;
-	}
+	
 	namespace RPGLib{
 		
 		class TextureManager{

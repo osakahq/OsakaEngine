@@ -27,11 +27,13 @@
 		_check_delete_info["GameDataLoader"] = false;
 		_check_delete_info["GameData"] = false;
 		_check_delete_info["GameData_delete"] = false;
-		_check_delete_info["RPGLoadingScene"] = false;
-		_check_delete_info["RPGLoadingScene_delete"] = false;
-		_check_delete_info["LoadingUI"] = false;
-		_check_delete_info["LoadingScript"] = false;
-		_check_delete_info["LoadingCanvas"] = false;
+		_check_delete_info["Layer"] = true;
+		_check_delete_info["SceneScript"] = true;
+		_check_delete_info["LoadingSceneScript"] = false;
+		_check_delete_info["LoadingSceneScript_delete"] = false;
+		
+		_check_delete_info["LoadingFadeScript"] = false;
+		_check_delete_info["LoadingFadeCanvas"] = false;
 		_check_delete_info["GameSessionManager"] = false;
 		_check_delete_info["AssetManager"] = false;
 		_check_delete_info["TimeManager"] = false;
@@ -45,6 +47,7 @@
 		_check_delete_info["Script_delete"] = true;
 		_check_delete_info["UserInterface_delete"] = true;
 		
+		_check_delete_info["LayerArgs"] = true;
 		_check_delete_info["ESceneArgs"] = true;
 		_check_delete_info["LoadingArgs"] = true;
 

@@ -10,7 +10,9 @@ namespace Osaka{
 			this->app = app;
 		}
 		SceneScript::~SceneScript(){
-
+#ifdef _DEBUG
+			_CHECKDELETE("SceneScript");
+#endif	
 		}
 		void SceneScript::_delete(){
 			app = nullptr;

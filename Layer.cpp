@@ -22,7 +22,9 @@ namespace Osaka{
 			hidden = false;
 		}
 		Layer::~Layer(){
-	
+#ifdef _DEBUG
+			_CHECKDELETE("Layer");
+#endif		
 		}
 		void Layer::_delete(){
 			//The order in which they are deleted SHOULDN'T matter.

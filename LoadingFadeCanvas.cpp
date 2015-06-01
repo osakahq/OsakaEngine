@@ -35,7 +35,7 @@ namespace Osaka{
 		}
 		LoadingFadeCanvas::~LoadingFadeCanvas(){
 #ifdef _DEBUG
-			_CHECKDELETE("LoadingCanvas");
+			_CHECKDELETE("LoadingFadeCanvas");
 #endif
 			//These should go here because it doesn't matter if LoadingFadeScript has the reference for Canvas.
 			//If _delete is called before LoadingFadeScript::_delete then it will try to unhook the event but since no one has the references
