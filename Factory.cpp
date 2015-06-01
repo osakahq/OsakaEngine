@@ -132,7 +132,7 @@ namespace Osaka{
 		}
 
 		UserInterfacePTR Factory::CreateDummyUI(){
-			UserInterfacePTR ui = std::make_shared<UserInterface>(app->sdl->GetRAWSDLRenderer());
+			UserInterfacePTR ui = std::make_shared<UserInterface>(app->sdl->GetRAWSDLRenderer(), app->ruler);
 			return ui;
 		}
 

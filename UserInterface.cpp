@@ -1,12 +1,14 @@
  #include "stdafx.h"
+#include "Ruler.h"
 #include "SDLLib.h"
 #include "Layer.h"
 #include "UserInterface.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		UserInterface::UserInterface(SDL_Renderer* raw_renderer){
+		UserInterface::UserInterface(SDL_Renderer* raw_renderer, RulerPTR& ruler){
 			this->raw_renderer = raw_renderer;
+			this->ruler = ruler;
 		}
 		UserInterface::~UserInterface(){
 #ifdef _DEBUG
@@ -19,6 +21,7 @@ namespace Osaka{
 #endif
 			raw_renderer = NULL;
 			layer_parent = nullptr;
+			ruler = nullptr;
 		}
 
 		void UserInterface::Init(LayerPTR& layer_parent){
