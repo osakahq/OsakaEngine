@@ -38,7 +38,7 @@ namespace Osaka{
 
 				if( phase == "" ){
 					printf("\n[RPGLibTestSuite] Select a phase.\n");
-					printf("\t- [1] for PHASE1. Tests -> PlaybackIntro scene, RPGLoadingScene, AssetManager and StartMenu scene\n");
+					printf("\t- [1] for PHASE1. Tests -> Loading scene, AssetManager, PlaybackIntro scene and StartMenu scene\n");
 					printf("\n[RPGLibTestSuite] Phase: ");
 					std::getline(std::cin, phase);
 				}

@@ -10,7 +10,7 @@
 	<!-- Types of loadings -->
 	<!-- always-load-unload in asset property bypasses all types of loading meaning that it will ALWAYS unload/load like a heavy video -->
 	<!--  . FULL_LOAD_STARTUP: 			Loads everything from the start. No unload -->
-	<!--  . SMARTLOAD_PARCIAL_NOUNLOAD: Loads the current scene, and obeys the always-load parameter. No unload. -->
+	<!--  . SMARTLOAD_PARCIAL_NOUNLOAD: Loads the current scene, and obeys the always-load/linked parameter. No unload. -->
 	<!--  . SMARTLOAD_FULL_NOUNLOAD 	Loads the current scene, and loads all the related scenes (ignores always-load). No unload -->
 	<!--  . SMARTLOAD 					Obeys the related scene parameters and unloads according to those parameters. -->
 	<asset-map loading="SMARTLOAD_PARCIAL_NOUNLOAD">
