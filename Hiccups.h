@@ -22,7 +22,7 @@ namespace Osaka{
 			void _delete();
 
 			/* This is called after `sdl->Present()` in EApplication. */
-			void Frame(int frame_ms);
+			void Frame(Uint32 frame_ms);
 			/* This is called inside before present */
 			void EndSet(float average_ms);
 		private:

@@ -79,7 +79,7 @@ namespace Osaka{
 			counter->BeforePresent();
 		}
 
-		void RPGApplication::RenderTime(Uint32 frame_ms){
+		void RPGApplication::RenderTime(const Uint32 frame_ms){
 			//This function is only called when _DEBUG
 			counter->AfterPresent(frame_ms);
 		}
