@@ -1,0 +1,9 @@
+*
+
+!.gitignore
+!*.h
+!*.hpp
+!*.cpp
+!*.xml
+
+!*/
