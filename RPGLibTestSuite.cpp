@@ -56,7 +56,7 @@ namespace Osaka{
 				this->rpgapp = rpg_bootstrap("tests\\SceneTests_Phase1\\phase1_data.xml", "tests\\SceneTests_Phase1\\does_not_exists.xml", "tests\\SceneTests_Phase1\\does_not_exists.7z", debug, appcreator);
 				rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
 
-				rpgapp->AddScene("playbackintro_phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreatePlaybackIntroScene("playbackintro_phase1_test1")));
+				rpgapp->AddScene("playbackintro_phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreatePlaybackIntroScene_Test("playbackintro_phase1_test1")));
 				rpgapp->Run("playbackintro_phase1_test1", Engine::EmptyESceneArgsPTR);
 				break;
 			default:
@@ -81,6 +81,16 @@ namespace Osaka{
 				std::cout << Debug::white;
 			}
 			
+		}
+		void RPGLibTestSuite::MakeAsserEx(const int id, const bool test, const int cline, const char* cfile){
+			auto it = expectedTests.find(id);
+			if( it == expectedTests.end() ){
+				debug->e("[RPGLibTestSuite] Expected result not found: "+std::to_string(id));
+			}
+
+			if( it->second == ASSERTEX_RESULT_UNCALLED ){
+
+			}
 		}
 		void RPGLibTestSuite::CheckResults(){
 			if( succesfulTests == 0 && failedTests == 0 ){
