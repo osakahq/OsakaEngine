@@ -53,9 +53,10 @@
 		#define new DBG_NEW
 	#endif
 #endif
-//-----------------------------------
+
 #ifdef _DEBUG
-	#include "_testsuite_delete.h"
+	//This has to be here. There is no way I can replace all classes to their test versions.
+	#include "TestSuite\_testsuite_delete.h"
 #endif
 
 #pragma comment (lib, "Ws2_32.lib")

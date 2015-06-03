@@ -4,13 +4,6 @@
 //
 
 #pragma once
+#include "OsakaEngine\stdafx.h"
 
 #include "targetver.h"
-
-//Not needed because I added stdafx.h from OsakaEngine project
-//#include <stdio.h>
-//#include <tchar.h>
-
-
-
-// TODO: reference additional headers your program requires here
