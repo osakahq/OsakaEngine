@@ -1,5 +1,6 @@
  #include "stdafx.h"
 
+#include "SceneFactory.h"
 #include "FPSCounter.h"
 #include "ESceneArgs.h"
 #include "EScene.h"
@@ -45,6 +46,7 @@ namespace Osaka{
 			settings->_delete(); settings = nullptr;
 			gameData->_delete(); gameData = nullptr;
 			
+			scenefactory->_delete(); scenefactory = nullptr;
 			factory->_delete(); factory = nullptr;
 			rpgfactory->_delete(); rpgfactory = nullptr;
 			loader->_delete(); loader = nullptr;
@@ -60,7 +62,7 @@ namespace Osaka{
 		}
 		void RPGApplication::Init(bool vsync, int timePerFrame){
 			EApplication::Init(vsync, timePerFrame);
-			if( settings == nullptr || gameData == nullptr  || factory == nullptr || rpgfactory == nullptr || 
+			if( settings == nullptr || gameData == nullptr  || factory == nullptr || rpgfactory == nullptr || scenefactory == nullptr ||
 				loader == nullptr || assetm == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr)
 			{
 				debug->e("[RPGApplication] Init failed.");

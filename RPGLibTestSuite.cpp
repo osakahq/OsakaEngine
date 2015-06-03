@@ -8,6 +8,7 @@
 #include "Factory.h"
 #include "ServerConn.h"
 #include "GameDataLoader.h"
+#include "SceneFactory.h"
 #include "RPGFactory.h"
 #include "GameData.h"
 #include "RPGApplication.h"
@@ -55,7 +56,7 @@ namespace Osaka{
 				this->rpgapp = rpg_bootstrap("tests\\SceneTests_Phase1\\phase1_data.xml", "tests\\SceneTests_Phase1\\does_not_exists.xml", "tests\\SceneTests_Phase1\\does_not_exists.7z", debug, appcreator);
 				rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
 
-				rpgapp->AddScene("phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->factory->CreatePlaybackIntroScene("phase1_test1")));
+				rpgapp->AddScene("playbackintro_phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreatePlaybackIntroScene("playbackintro_phase1_test1")));
 				rpgapp->Run("phase1_test1", Engine::EmptyESceneArgsPTR);
 				break;
 			default:

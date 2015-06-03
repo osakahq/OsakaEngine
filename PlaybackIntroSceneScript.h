@@ -14,7 +14,7 @@ namespace Osaka{
 			void _delete() override;
 
 			/* */
-			void Init(std::string layer1, RPGScenePTR& scene_parent);
+			void SetLayers(std::string layer1);
 			void Ready(Engine::ESceneArgsPTR& params) override;
 		protected:
 			

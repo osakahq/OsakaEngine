@@ -23,11 +23,13 @@ namespace Osaka{
 			void Init(bool vsync, int timePerFrame);
 			/* Takes owner ship of the scene */
 			void AddScene(std::string id, EScenePTR& scene);
+			/* Class a scene load function. Called from AssetManager (loading thread) */
+			void CallLoad(std::string id);
 
 			/* In case the derived class wants to run some code every update */
 			virtual void Update();
 			virtual void BeforePresent();
-			virtual void RenderTime(Uint32 frame_ms) = 0;
+			virtual void RenderTime(const Uint32 frame_ms) = 0;
 
 			/* This is the main loop. */
 			virtual void Run();

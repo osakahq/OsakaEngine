@@ -20,8 +20,8 @@ namespace Osaka{
 		void PlaybackIntroSceneScript::_delete(){
 			SceneScript::_delete();
 		}
-		void PlaybackIntroSceneScript::Init(std::string layer1, RPGScenePTR& scene_parent){
-			SceneScript::Init(scene_parent);
+		void PlaybackIntroSceneScript::SetLayers(std::string layer1){
+			//Remember there is an Init function. Only set the strings here.
 			this->layer1 = layer1;
 		}
 		

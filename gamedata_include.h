@@ -43,11 +43,10 @@ namespace Osaka{
 			};
 			/* Per related scene in related-scenes node */
 			struct related_scene_data{
-				related_scene_data(): linked(false), always_load(false), when_switch_unload_self(false){}
+				related_scene_data(): linked(false), always_load(false){}
 				std::string id;
 				bool linked;
 				bool always_load;
-				bool when_switch_unload_self;
 			};
 		struct scene_data{
 			scene_data(){};

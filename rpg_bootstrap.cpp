@@ -9,6 +9,7 @@
 #include "DefaultFileLoader.h"
 #include "GameDataLoader.h"
 
+#include "SceneFactory.h"
 #include "InitScene.h"
 #include "InitSceneArgs.h"
 
@@ -107,11 +108,14 @@ namespace Osaka{
 			texturem->Init();
 			soundm->Init();
 			/* AssetManager must be after Texture/Sound because it loads the initial assets */
-			assetm->Init();
+			assetm->Init(app);
 			/* FontManager must be after AssetManager because it will call TextureManager to create sprite_data* and they have SDL_Texture* raw pointer */
 			fontm->Init(*lib->GetRAWSDLRenderer());
 
 			app->Init(data->vsync, data->time_per_frame);
+
+			/* Builders. App/Factory MUST not have unset variables */
+			app->scenefactory = std::make_shared<SceneFactory>(factory, app);
 
 			/* -------------------------------------------------------------------- */
 			/* --- After this point, everything is loaded ------------------------------------------------------------------- */
@@ -121,7 +125,7 @@ namespace Osaka{
 			app->SetInitScene(initscene);
 
 			/* RPGApplication stacks RPGScene (mainscript:LoadingSceneScript) then stacks the LoadingFade/LoadingTextLayer */
-			RPGScenePTR loadingscene = factory->CreateLoadingScene("rpglib_loadingscene");
+			RPGScenePTR loadingscene = app->scenefactory->CreateLoadingScene("rpglib_loadingscene");
 			app->SetLoadingScene("rpglib_loadingscene");
 			/* We need to call Load because the place to call `scene->Load()` is in AssetManager */
 			loadingscene->Load();

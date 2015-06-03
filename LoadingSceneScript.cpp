@@ -28,8 +28,8 @@ namespace Osaka{
 			SceneScript::_delete();
 			assetm = nullptr;
 		}
-		void LoadingSceneScript::Init(std::string fadelayer_id, RPGScenePTR& scene_parent){
-			SceneScript::Init(scene_parent);
+		void LoadingSceneScript::SetLayers(std::string fadelayer_id){
+			//Remember there is an Init function. Only set the strings here.
 			this->fadelayer_id = fadelayer_id;
 		}
 		

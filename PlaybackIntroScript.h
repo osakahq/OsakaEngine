@@ -14,7 +14,7 @@ namespace Osaka{
 			~PlaybackIntroScript();
 			void _delete() override;
 			void Init(LayerPTR& layer_parent) override;
-			
+			void Load() override;
 			void Update() override;
 			/* This function is called when entering the stack */
 			void Ready(LayerArgsPTR& args) override;

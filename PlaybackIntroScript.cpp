@@ -1,5 +1,6 @@
  #include "stdafx.h"
 
+#include "Debug.h"
 #include "RPGScene.h"
 #include "PlaybackIntroSceneScript.h"
 #include "RPGApplication.h"
@@ -28,7 +29,10 @@ namespace Osaka{
 		void PlaybackIntroScript::Init(LayerPTR& layer_parent){
 			Script::Init(layer_parent);
 		}
-
+		void PlaybackIntroScript::Load(){
+			//called from the loading thread.
+			app->debug->l("[PlaybackIntroScript] Load called.");
+		}
 		void PlaybackIntroScript::Ready(LayerArgsPTR& args){
 			
 		}

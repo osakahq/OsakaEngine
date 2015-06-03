@@ -11,7 +11,8 @@ namespace Osaka{
 		/* This is used for the loading thread to "consume" (So I can pass params to the thread)
 		 * See the thread function (ProcessLoad()) */
 		struct LoadThreadParams{
-			std::string scene;
+			/* NOT Owner */
+			scene_dataPTR scene;
 			std::function<void()> callback;
 		};
 		/* Do not be confused with GameDataLoader. This is for scene.load/unload and asset loading 
@@ -22,7 +23,7 @@ namespace Osaka{
 			~AssetManager();
 			void _delete();
 			
-			void Init();
+			void Init(RPGApplicationPTR& app);
 			void ProcessLoad();
 			void LoadScene(std::string scene, std::function<void()> callback);
 			
@@ -33,6 +34,8 @@ namespace Osaka{
 			SoundManagerPTR soundm;
 		/* ----------------------------------------------------------------------------------- */
 		private:
+			/* NOT Owner */
+			RPGApplicationPTR app;
 			/* Owner. This thread is used to do the asset loading/class load/unload */
 			HANDLE loadThread;
 			/* Owner. This is a event/lock to signal the load thread that there is a new scene to "consume" */
@@ -54,6 +57,14 @@ namespace Osaka{
 
 			/* NOT Owner */
 			Debug::DebugPTR debug;
+
+			//Variables used for the loading process...
+			std::unordered_map<std::string, bool> loadedScenes;
+			std::unordered_map<std::string, bool> loadedAssets;
+			/* This can be called in both threads (main/loading thread) */
+			void SceneIsLoaded();
+			void ProcessScene(scene_dataPTR data, bool firstlevel);
+			void ProcessRelatedScenes(std::unordered_map<std::string, related_scene_data>* related_scenes_data, bool firstlevel);
 		};
 	}
 }

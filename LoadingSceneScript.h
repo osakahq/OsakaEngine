@@ -14,7 +14,7 @@ namespace Osaka{
 			void _delete() override;
 
 			/* */
-			void Init(std::string fadelayer_id, RPGScenePTR& scene_parent);
+			void SetLayers(std::string fadelayer_id);
 
 			/* This is called from stack(from RPGApplication) */
 			void Ready(Engine::ESceneArgsPTR& params) override;

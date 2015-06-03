@@ -57,17 +57,25 @@
 					<scene id="options" linked="true" always-load="true" />
 					<scene id="credits" linked="false" always-load="true" />
 					<!-- new game -->
-					<scene id="playback_intro" linked="false" always-load="false" />
+					<scene id="playback_newgame" linked="false" always-load="false" />
 				</related-scenes>
 			</scene>
 			
 			<!-- PLAYBACKS START --------------------------------------------------------------- -->
+			<scene id="playbackintro_phase1_test1">
+				<assets>
+					<asset id="texturemap_cinematics" />
+				</assets>
+				<related-scenes>
+					<scene id="startmenu" linked="true" always-load="true" />
+				</related-scenes>
+			</scene>
 			<scene id="credits">
 				<assets>
 					<asset id="texturemap_cinematics" />
 				</assets>
 			</scene>
-			<scene id="playback_intro">
+			<scene id="playback_newgame">
 				<assets>
 					<asset id="video_intro" always-load-unload="true" />
 					<asset id="texturemap_cinematics" />

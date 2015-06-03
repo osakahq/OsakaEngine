@@ -13,10 +13,10 @@ namespace Osaka{
 			virtual void _delete() = 0;
 
 			/* Load functions server the purpose of creating the classes, everything that the scene needs.
-			 * This function is called from GameLoader */
+			 * This function is called from AssetManager (loading thread) */
 			virtual void Load() = 0;
 			/* This function is to destroy the objects created (not assets). 
-			 * Called from GameLoader */
+			 * Called from AssetManager (loading thread) */
 			virtual void Unload() = 0;
 
 			/* Called when the scene is removed from the stack */

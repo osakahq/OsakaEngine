@@ -11,6 +11,7 @@
 #include "Debug.h"
 #include "ServerConn.h"
 
+#include "SceneFactory.h"
 #include "Factory.h"
 #include "RPGFactory.h"
 #include "rpg_bootstrap.h"
@@ -44,7 +45,7 @@ void Ascension(){
 
 	app->SetGameSessionManager(app->rpgfactory->CreateGameSessionManagerFromGameData());
 	
-	app->AddScene("test1", std::static_pointer_cast<Engine::EScene>(app->factory->CreatePlaybackIntroScene("test1")));
+	app->AddScene("test1", std::static_pointer_cast<Engine::EScene>(app->scenefactory->CreatePlaybackIntroScene("test1")));
 	app->Run("test1", Engine::EmptyESceneArgsPTR);
 
 	conn = nullptr;

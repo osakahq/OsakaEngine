@@ -22,6 +22,7 @@ namespace Osaka{
 			/* Owner. RPGFactory is used for creating items, characters, npcs, etc. */
 			FactoryPTR factory;
 			RPGFactoryPTR rpgfactory;
+			SceneFactoryPTR scenefactory;
 
 			/* Owner */
 			GameDataLoaderPTR loader;

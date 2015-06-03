@@ -42,6 +42,9 @@ namespace Osaka{
 			//Takes ownership of the scene
 			scenes[id] = scene;
 		}
+		void EApplication::CallLoad(std::string id){
+			scenes[id]->Load();
+		}
 
 		void EApplication::Switch(const char* scene, ESceneArgsPTR& in_param){
 			RemoveAllFromStack();

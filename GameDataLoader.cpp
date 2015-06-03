@@ -204,9 +204,9 @@ namespace Osaka{
 			related_scene->linked		= GetTrueFalse(related_scene_node.first_attribute("linked")->value());
 			related_scene->always_load	= GetTrueFalse(related_scene_node.first_attribute("always-load")->value());
 
-			if( related_scene_node.first_attribute("when-switch-unload-self") != NULL ){
-				related_scene->when_switch_unload_self = GetTrueFalse(related_scene_node.first_attribute("when-switch-unload-self")->value());
-			}
+			//if( related_scene_node.first_attribute("when-switch-unload-self") != NULL ){
+			//	related_scene->when_switch_unload_self = GetTrueFalse(related_scene_node.first_attribute("when-switch-unload-self")->value());
+			//}
 
 			if( related_scene->linked && related_scene->always_load == false ){
 				debug->e("[GameDataLoader:SetRelatedScene] Related scene \""+related_scene->id+"\" data has contradictory settings (linked and always-load)");
