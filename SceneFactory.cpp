@@ -14,7 +14,9 @@ namespace Osaka{
 			this->app = app;
 		}
 		SceneFactory::~SceneFactory(){
-
+#ifdef _DEBUG
+			_CHECKDELETE("SceneFactory");
+#endif	
 		}
 		void SceneFactory::_delete(){
 			factory = nullptr;

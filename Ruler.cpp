@@ -14,6 +14,9 @@ namespace Osaka{
 
 		}
 		Ruler::~Ruler(){
+#ifdef _DEBUG
+			_CHECKDELETE("Ruler");
+#endif	
 		}
 		void Ruler::_delete(){
 

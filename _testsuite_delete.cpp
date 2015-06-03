@@ -23,6 +23,9 @@
 		_check_delete_info["ServerConn"] = false;
 		_check_delete_info["RPGApplication"] = false;
 		_check_delete_info["TextureManager"] = false;
+
+		_check_delete_info["Ruler"] = false;
+		_check_delete_info["SceneFactory"] = false;
 		_check_delete_info["Factory"] = false;
 		_check_delete_info["GameDataLoader"] = false;
 		_check_delete_info["GameData"] = false;
