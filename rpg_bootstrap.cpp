@@ -112,10 +112,10 @@ namespace Osaka{
 			/* FontManager must be after AssetManager because it will call TextureManager to create sprite_data* and they have SDL_Texture* raw pointer */
 			fontm->Init(*lib->GetRAWSDLRenderer());
 
-			app->Init(data->vsync, data->time_per_frame);
-
 			/* Builders. App/Factory MUST not have unset variables */
 			app->scenefactory = std::make_shared<SceneFactory>(factory, app);
+
+			app->Init(data->vsync, data->time_per_frame);
 
 			/* -------------------------------------------------------------------- */
 			/* --- After this point, everything is loaded ------------------------------------------------------------------- */

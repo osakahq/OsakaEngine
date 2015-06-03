@@ -205,6 +205,6 @@ namespace Osaka{
 		}
 		void EApplication::Update(){/* Nothing for now */}
 		void EApplication::BeforePresent(){/* Nothing for now */}
-		//void EApplication::RenderTime(Uint32 frame_ms){}
+		//void EApplication::RenderTime(const Uint32 frame_ms){}
 	}
 }
