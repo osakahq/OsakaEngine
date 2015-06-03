@@ -58,6 +58,7 @@ namespace Osaka{
 
 		LayerPTR SceneBuilder::CreateAndInitLayer(const char* name, ScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui){
 			LayerPTR layer = std::make_shared<Layer>(name, script, canvas, ui);
+			//I put Init here because it will be very uncommon to inherit the Layer class
 			layer->Init(app);
 			return layer;
 		}

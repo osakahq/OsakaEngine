@@ -5,6 +5,7 @@
 #include "Factory.h"
 #include "LoadingSceneBuilder.h"
 #include "PlaybackIntroSceneBuilder.h"
+#include "PlaybackIntroSceneTestBuilder.h"
 
 #include "SceneFactory.h"
 namespace Osaka{
@@ -32,6 +33,14 @@ namespace Osaka{
 		}
 		RPGScenePTR SceneFactory::CreatePlaybackIntroScene(const char* name){
 			PlaybackIntroSceneBuilder* builder = new PlaybackIntroSceneBuilder();
+			builder->Init(app, app->ruler, app->sdl->GetRAWSDLRenderer(), factory);
+			RPGScenePTR scene = builder->CreateScene(name);
+			delete builder;
+			return scene;
+		}
+
+		RPGScenePTR SceneFactory::CreatePlaybackIntroScene_Test(const char* name){
+			PlaybackIntroSceneTestBuilder* builder = new PlaybackIntroSceneTestBuilder();
 			builder->Init(app, app->ruler, app->sdl->GetRAWSDLRenderer(), factory);
 			RPGScenePTR scene = builder->CreateScene(name);
 			delete builder;

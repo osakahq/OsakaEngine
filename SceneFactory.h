@@ -16,6 +16,8 @@ namespace Osaka{
 
 			RPGScenePTR CreateLoadingScene(const char* name);
 			RPGScenePTR CreatePlaybackIntroScene(const char* name);
+			/* This should be not in here... (TestSuite) */
+			RPGScenePTR CreatePlaybackIntroScene_Test(const char* name);
 		protected:
 			
 		private:

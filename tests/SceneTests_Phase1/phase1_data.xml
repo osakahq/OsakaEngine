@@ -67,7 +67,7 @@
 					<asset id="texturemap_cinematics" />
 				</assets>
 				<related-scenes>
-					<scene id="startmenu" linked="true" always-load="true" />
+					<!--Testing  <scene id="startmenu" linked="true" always-load="true" /> !-->
 				</related-scenes>
 			</scene>
 			<scene id="credits">
