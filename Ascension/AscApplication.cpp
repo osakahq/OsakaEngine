@@ -1,10 +1,9 @@
  #include "stdafx.h"
 
-#include "Debug.h"
-#include "SDLLib.h"
-#include "RPGApplication.h"
+#include "OsakaEngine\Debug.h"
+#include "OsakaEngine\SDLLib.h"
+#include "OsakaEngine\RPGApplication.h"
 #include "AscApplication.h"
-#include "osaka_forward.h"
 
 namespace Osaka{
 	namespace Asc{

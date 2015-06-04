@@ -11,6 +11,6 @@
 #define SOUND_EFFECT_CURSOR_MOVE	"s_cursor_move"
 #define SOUND_EFFECT_CURSOR_CANCEL	"s_cursor_cancel"
 
-#define SPRITE_TILE_WOOD_CENTER			"wood_center"
+#define SPRITE_TILE_WOOD_CENTER		"wood_center"
 
 #endif

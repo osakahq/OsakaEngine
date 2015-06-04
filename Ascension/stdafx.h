@@ -7,4 +7,5 @@
 #include "targetver.h"
 #include "OsakaEngine\stdafx.h"
 
-//Here is where you add extra libries:
+
+// TODO: reference additional headers your program requires here
