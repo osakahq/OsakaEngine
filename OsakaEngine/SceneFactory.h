@@ -11,16 +11,13 @@ namespace Osaka{
 		class SceneFactory {
 		public:
 			SceneFactory(FactoryPTR& factory, RPGApplicationPTR& app);
-			~SceneFactory();
-			void _delete();
+			virtual ~SceneFactory();
+			virtual void _delete();
 
-			RPGScenePTR CreateLoadingScene(const char* name);
-			RPGScenePTR CreatePlaybackIntroScene(const char* name);
-			/* This should be not in here... (TestSuite) */
-			RPGScenePTR CreatePlaybackIntroScene_Test(const char* name);
-		protected:
+			virtual RPGScenePTR CreateLoadingScene(const char* name);
+			virtual RPGScenePTR CreatePlaybackIntroScene(const char* name);
 			
-		private:
+		protected:
 			/* NOT Owner */
 			FactoryPTR factory;
 			/* NOT Owner */

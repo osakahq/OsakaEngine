@@ -3,8 +3,7 @@
 #ifndef ASC_ASCAPPLICATIONCREATOR_H
 #define ASC_ASCAPPLICATIONCREATOR_H
 
-#include "OsakaEngine\RPGApplicationCreator.h"
-#include "OsakaEngine\osaka_forward.h"
+#include <RPGApplicationCreator.h>
 
 namespace Osaka{
 	namespace Asc{

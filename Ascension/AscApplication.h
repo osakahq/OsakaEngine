@@ -3,8 +3,7 @@
 #ifndef ASC_ASCAPPLICATION_H
 #define ASC_ASCAPPLICATION_H
 
-#include "OsakaEngine\RPGApplication.h"
-#include "OsakaEngine\osaka_forward.h"
+#include <RPGApplication.h>
 
 namespace Osaka{
 	namespace Asc{

@@ -3,7 +3,7 @@
 #ifndef RPGLIB_PLAYBACKINTROSCENETESTBUILDER_H
 #define RPGLIB_PLAYBACKINTROSCENETESTBUILDER_H
 
-#include "PlaybackIntroSceneBuilder.h"
+#include <PlaybackIntroSceneBuilder.h>
 
 namespace Osaka{
 	namespace RPGLib{
@@ -13,7 +13,7 @@ namespace Osaka{
 			PlaybackIntroSceneTestBuilder();
 			~PlaybackIntroSceneTestBuilder();
 		protected:
-			PlaybackIntroScriptPTR CreateLayer1Script(PlaybackIntroCanvasPTR& canvas, RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript);
+			PlaybackIntroScriptPTR CreateLayer1Script(PlaybackIntroCanvasPTR& canvas, RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript) override;
 
 		private:
 

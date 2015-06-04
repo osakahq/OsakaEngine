@@ -56,7 +56,7 @@
 
 #ifdef _DEBUG
 	//This has to be here. There is no way I can replace all classes to their test versions.
-	#include "TestSuite\_testsuite_delete.h"
+	#include "_checkdelete.h"
 #endif
 
 #pragma comment (lib, "Ws2_32.lib")

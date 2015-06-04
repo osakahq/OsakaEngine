@@ -10,6 +10,12 @@ namespace Osaka{
 		
 		class LoadingFadeLayerArgs : public LayerArgs{
 		public:
+			~LoadingFadeLayerArgs(){
+#ifdef _DEBUG
+				_CHECKDELETE("LoadingFadeLayerArgs");
+#endif
+			}
+			
 			std::string scene_id;
 			TransitionType::Value type;
 			Engine::ESceneArgsPTR scene_params;

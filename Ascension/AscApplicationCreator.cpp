@@ -1,9 +1,9 @@
  #include "stdafx.h"
 
-#include "OsakaEngine\Debug.h"
-#include "OsakaEngine\SDLLib.h"
-#include "OsakaEngine\IFileLoader.h"
-#include "OsakaEngine\RPGApplication.h"
+#include <Debug.h>
+#include <SDLLib.h>
+#include <IFileLoader.h>
+#include <RPGApplication.h>
 #include "AscApplication.h"
 
 #include "AscApplicationCreator.h"

@@ -5,7 +5,8 @@
 
 #pragma once
 #include "targetver.h"
-#include "OsakaEngine\stdafx.h"
-
+//#include "OsakaEngine\stdafx.h"
+//Este stdafx es de OsakaEngine
+#include <stdafx.h>
 
 // TODO: reference additional headers your program requires here

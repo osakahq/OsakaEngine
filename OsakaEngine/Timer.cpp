@@ -1,4 +1,5 @@
  #include "stdafx.h"
+
 #include "TimeManager.h"
 #include "Timer.h"
 namespace Osaka{

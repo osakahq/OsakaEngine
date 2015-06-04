@@ -1,6 +1,6 @@
  #include "stdafx.h"
 
-#include "PlaybackIntroScript.h"
+#include <PlaybackIntroScript.h>
 #include "PlaybackIntroSceneTestBuilder.h"
 
 namespace Osaka{
