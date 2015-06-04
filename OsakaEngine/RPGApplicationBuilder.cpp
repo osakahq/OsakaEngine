@@ -26,14 +26,17 @@
 #include "SoundManager.h"
 #include "Factory.h"
 #include "RPGFactory.h"
-#include "RPGApplicationCreator.h"
 
-#include "rpg_bootstrap.h"
+#include "RPGApplicationBuilder.h"
 
 namespace Osaka{
 	namespace RPGLib{
 		
-		RPGApplicationPTR rpg_bootstrap(const char* filedata, const char* filesettings, const char* pack_file, Debug::DebugPTR& debug, Utils::RPGApplicationCreatorPTR& appcreator){
+		RPGApplicationBuilder::RPGApplicationBuilder(){
+
+		}
+
+		RPGApplicationPTR RPGApplicationBuilder::Create(const char* filedata, const char* filesettings, const char* pack_file, Debug::DebugPTR& debug){
 			/* ----------------------------------------------------------------------- */
 			/* --- Game Data --------------------------------------------------------- */
 			GameDataPTR data = std::make_shared<GameData>();
@@ -51,7 +54,7 @@ namespace Osaka{
 			fileloader = std::make_shared<Engine::DefaultFileLoader>();
 #endif
 			Engine::SDLLibPTR lib = std::make_shared<Engine::SDLLib>(debug);
-			RPGApplicationPTR app = appcreator->CreateApp(debug, lib, fileloader);
+			RPGApplicationPTR app = this->CreateRPGApp(debug, lib, fileloader);
 			app->loader = loader;
 			app->gameData = data;
 
@@ -114,7 +117,7 @@ namespace Osaka{
 			fontm->Init(*lib->GetRAWSDLRenderer());
 
 			/* Builders. App/Factory MUST not have unset variables */
-			app->scenefactory = std::make_shared<SceneFactory>(factory, app);
+			app->scenefactory = this->CreateSceneFactory(factory, app);
 
 			app->Init(data->vsync, data->time_per_frame);
 
@@ -134,5 +137,14 @@ namespace Osaka{
 
 			return app;
 		}
+
+		RPGApplicationPTR RPGApplicationBuilder::CreateRPGApp(Debug::DebugPTR debug, Engine::SDLLibPTR sdl, Engine::IFileLoaderPTR fileloader){
+			return std::make_shared<RPGLib::RPGApplication>(debug, sdl, fileloader, true);
+		}
+
+		SceneFactoryPTR RPGApplicationBuilder::CreateSceneFactory(FactoryPTR& factory, RPGApplicationPTR& app){
+			return std::make_shared<SceneFactory>(factory, app);
+		}
+
 	}
 }

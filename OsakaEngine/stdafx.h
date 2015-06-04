@@ -6,8 +6,6 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 
-//This used in EApplication and FPSCounter. Show Average FPS
-#define OSAKA_SHOWAVERAGEFPS
 //If STL are too slow in debug mode (map, unordered_map, vector, etc.)
 //#define _HAS_ITERATOR_DEBUGGING 0
 

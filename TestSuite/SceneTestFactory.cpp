@@ -8,18 +8,18 @@
 
 #include "SceneTestFactory.h"
 namespace Osaka{
-	namespace RPGLib{
-		SceneTestFactory::SceneTestFactory(FactoryPTR& factory, RPGApplicationPTR& app) : SceneFactory(factory, app){
+	namespace TestSuite{
+		SceneTestFactory::SceneTestFactory(RPGLib::FactoryPTR& factory, RPGLib::RPGApplicationPTR& app) : SceneFactory(factory, app){
 			
 		}
 		SceneTestFactory::~SceneTestFactory(){
 
 		}
 		
-		RPGScenePTR SceneTestFactory::CreatePlaybackIntroScene(const char* name){
+		RPGLib::RPGScenePTR SceneTestFactory::CreatePlaybackIntroScene(const char* name){
 			PlaybackIntroSceneTestBuilder* builder = new PlaybackIntroSceneTestBuilder();
 			builder->Init(app, app->ruler, app->sdl->GetRAWSDLRenderer(), factory);
-			RPGScenePTR scene = builder->CreateScene(name);
+			RPGLib::RPGScenePTR scene = builder->CreateScene(name);
 			delete builder;
 			return scene;
 		}

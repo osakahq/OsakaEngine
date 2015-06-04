@@ -6,14 +6,14 @@
 #include <PlaybackIntroSceneBuilder.h>
 
 namespace Osaka{
-	namespace RPGLib{
+	namespace TestSuite{
 
-		class PlaybackIntroSceneTestBuilder : public PlaybackIntroSceneBuilder{
+		class PlaybackIntroSceneTestBuilder : public RPGLib::PlaybackIntroSceneBuilder{
 		public:
 			PlaybackIntroSceneTestBuilder();
 			~PlaybackIntroSceneTestBuilder();
 		protected:
-			PlaybackIntroScriptPTR CreateLayer1Script(PlaybackIntroCanvasPTR& canvas, RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript) override;
+			RPGLib::PlaybackIntroScriptPTR CreateLayer1Script(RPGLib::PlaybackIntroCanvasPTR& canvas, RPGLib::RPGScenePTR& scene, RPGLib::PlaybackIntroSceneScriptPTR& mainscript) override;
 
 		private:
 

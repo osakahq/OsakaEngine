@@ -4,7 +4,7 @@
 #include "PlaybackIntroSceneTestBuilder.h"
 
 namespace Osaka{
-	namespace RPGLib{
+	namespace TestSuite{
 		PlaybackIntroSceneTestBuilder::PlaybackIntroSceneTestBuilder(){
 			//There is an Init function in `SceneBuilder`. Don't forget to call it if overriden.
 		}
@@ -12,8 +12,8 @@ namespace Osaka{
 
 		}
 		
-		PlaybackIntroScriptPTR PlaybackIntroSceneTestBuilder::CreateLayer1Script(PlaybackIntroCanvasPTR& canvas, RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript){
-			return std::make_shared<PlaybackIntroScript>(app, scene, canvas, mainscript);
+		RPGLib::PlaybackIntroScriptPTR PlaybackIntroSceneTestBuilder::CreateLayer1Script(RPGLib::PlaybackIntroCanvasPTR& canvas, RPGLib::RPGScenePTR& scene, RPGLib::PlaybackIntroSceneScriptPTR& mainscript){
+			return std::make_shared<RPGLib::PlaybackIntroScript>(app, scene, canvas, mainscript);
 		}
 
 	}

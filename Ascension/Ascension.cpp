@@ -12,9 +12,8 @@
 #include <ServerConn.h>
 #include <SceneFactory.h>
 #include <RPGFactory.h>
-#include <rpg_bootstrap.h>
+#include "AscApplicationBuilder.h"
 
-#include "AscApplicationCreator.h"
 #include "AscApplication.h"
 
 #include "asc_forward.h"
@@ -37,11 +36,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	debug->init(conn);
 	debug->l("[Ascension] Start");
 	
-	Asc::AscApplicationCreatorPTR appcreator = std::make_shared<Asc::AscApplicationCreator>();
+	Asc::AscApplicationBuilder* appbuilder = new Asc::AscApplicationBuilder();
 	Asc::AscApplicationPTR app = std::static_pointer_cast<Asc::AscApplication>(
-		RPGLib::rpg_bootstrap("tests\\runall_ascension_data.xml", "tests\\runall_settings.xml", "data\\data_01.opk", debug, std::static_pointer_cast<Utils::RPGApplicationCreator>(appcreator))
+		appbuilder->Create("tests\\runall_ascension_data.xml", "tests\\runall_settings.xml", "data\\data_01.opk", debug)
 	);
-	appcreator = nullptr;
+	delete appbuilder;
 
 	app->SetGameSessionManager(app->rpgfactory->CreateGameSessionManagerFromGameData());
 	

@@ -20,7 +20,7 @@ namespace Osaka{
 		class Log;				typedef std::shared_ptr<Log>			LogPTR;
 	}
 	namespace Utils{
-		class RPGApplicationCreator; typedef std::shared_ptr<RPGApplicationCreator> RPGApplicationCreatorPTR;
+		
 	}
 	namespace Engine{
 		class IFileLoader;			typedef std::shared_ptr<IFileLoader>	IFileLoaderPTR;

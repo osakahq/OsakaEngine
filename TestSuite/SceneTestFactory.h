@@ -6,14 +6,14 @@
 #include <SceneFactory.h>
 
 namespace Osaka{
-	namespace RPGLib{
+	namespace TestSuite{
 
-		class SceneTestFactory : public SceneFactory {
+		class SceneTestFactory : public RPGLib::SceneFactory {
 		public:
-			SceneTestFactory(FactoryPTR& factory, RPGApplicationPTR& app);
+			SceneTestFactory(RPGLib::FactoryPTR& factory, RPGLib::RPGApplicationPTR& app);
 			~SceneTestFactory();
 			
-			RPGScenePTR CreatePlaybackIntroScene(const char* name) override;
+			RPGLib::RPGScenePTR CreatePlaybackIntroScene(const char* name) override;
 		
 		};
 	}

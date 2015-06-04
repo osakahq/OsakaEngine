@@ -12,8 +12,7 @@
 #include <RPGFactory.h>
 #include <GameData.h>
 #include <RPGApplication.h>
-#include <rpg_bootstrap.h>
-#include <RPGApplicationCreator.h>
+#include "TestApplicationBuilder.h"
 #include "RPGLibTestSuite.h"
 #include <ConsoleColors.h>
 #include "_testsuite_macro.h"
@@ -46,12 +45,12 @@ namespace Osaka{
 			/* This has to be the same as in Ascension.cpp */
 			debug->l("[RPGLibTestSuite] Run");
 			
-			Utils::RPGApplicationCreatorPTR appcreator = std::make_shared<Utils::RPGApplicationCreator>();
+			TestApplicationBuilder* appbuilder = new TestApplicationBuilder();
 
 			/* To know which phase does what, refer to `testsuite_run.cpp` */
 			switch(phase){
 			case TEST_PHASE::PHASE1:
-				this->rpgapp = rpg_bootstrap("tests\\SceneTests_Phase1\\phase1_data.xml", "tests\\SceneTests_Phase1\\does_not_exists.xml", "tests\\SceneTests_Phase1\\does_not_exists.7z", debug, appcreator);
+				this->rpgapp = appbuilder->Create("tests\\SceneTests_Phase1\\phase1_data.xml", "tests\\SceneTests_Phase1\\does_not_exists.xml", "tests\\SceneTests_Phase1\\does_not_exists.7z", debug);
 				rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
 
 				rpgapp->AddScene("playbackintro_phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreatePlaybackIntroScene("playbackintro_phase1_test1")));
@@ -61,7 +60,7 @@ namespace Osaka{
 				debug->l("[RPGLibTestSuite] Unkown phase.");
 				break;
 			}
-			appcreator = nullptr;
+			delete appbuilder;
 		}
 		void RPGLibTestSuite::MakeAssert(const bool test, const int cline, const char* cfile){
 			if( test ){
