@@ -5,6 +5,6 @@
 
 #pragma once
 #include "targetver.h"
-#include "OsakaEngine\stdafx.h"
+#include <stdafx.h>
 
 //Here is where you add extra libries:

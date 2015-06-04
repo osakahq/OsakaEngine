@@ -3,9 +3,9 @@
 
 #include "stdafx.h"
 
-#include "OsakaEngine\Debug.h"
-#include "OsakaEngine\ESceneArgs.h"
-#include "OsakaEngine\LayerArgs.h"
+#include <Debug.h>
+#include <ESceneArgs.h>
+#include <LayerArgs.h>
 #include "RPGLibTestSuite.h"
 #include "_testsuite_macro.h"
 
@@ -14,6 +14,9 @@ using namespace Osaka::TestSuite;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+#ifdef _CRTDBG_MAP_ALLOC
+	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+#endif
 	TestSuite::RPGLibTestSuitePTR test = std::make_shared<TestSuite::RPGLibTestSuite>();
 	/* This is for faster OSAKA_ASSERT (macro) */
 	OsakaAssertBegin(test);

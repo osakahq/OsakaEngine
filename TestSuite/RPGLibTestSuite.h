@@ -2,7 +2,7 @@
 
 #ifndef TESTSUITE_RPGLIBTESTSUITE_H
 #define TESTSUITE_RPGLIBTESTSUITE_H
-#include "osaka_forward.h"
+#include <osaka_forward.h>
 
 #define ASSERTEX_RESULT_UNCALLED 0
 #define ASSERTEX_RESULT_SUCCESS 1

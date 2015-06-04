@@ -1,8 +1,9 @@
  #include "stdafx.h"
-#include "osaka_forward.h"
 
 #ifndef TESTSUITE_TESTSUITEMACRO_H
 #define TESTSUITE_TESTSUITEMACRO_H
+
+#include <osaka_forward.h>
 
 /* If you use this global variable, make sure to call `OsakaAssertEnd` */
 extern Osaka::TestSuite::RPGLibTestSuitePTR ASSERT_RPGLibTestSuitePTR;

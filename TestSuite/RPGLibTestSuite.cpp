@@ -1,24 +1,22 @@
  #include "stdafx.h"
-#include "engine_include.h"
-#include "gamedata_include.h"
-#include "ESceneArgs.h"
-#include "EScene.h"
-#include "RPGScene.h"
-#include "Debug.h"
-#include "Factory.h"
-#include "ServerConn.h"
-#include "GameDataLoader.h"
-#include "SceneFactory.h"
-#include "RPGFactory.h"
-#include "GameData.h"
-#include "RPGApplication.h"
-#include "rpg_bootstrap.h"
-#include "RPGApplicationCreator.h"
+#include <engine_include.h>
+#include <gamedata_include.h>
+#include <ESceneArgs.h>
+#include <EScene.h>
+#include <RPGScene.h>
+#include <Debug.h>
+#include <Factory.h>
+#include <ServerConn.h>
+#include <GameDataLoader.h>
+#include <SceneFactory.h>
+#include <RPGFactory.h>
+#include <GameData.h>
+#include <RPGApplication.h>
+#include <rpg_bootstrap.h>
+#include <RPGApplicationCreator.h>
 #include "RPGLibTestSuite.h"
-#include "ConsoleColors.h"
+#include <ConsoleColors.h>
 #include "_testsuite_macro.h"
-
-#include "osaka_forward.h"
 
 namespace Osaka{
 	namespace TestSuite{
@@ -56,7 +54,7 @@ namespace Osaka{
 				this->rpgapp = rpg_bootstrap("tests\\SceneTests_Phase1\\phase1_data.xml", "tests\\SceneTests_Phase1\\does_not_exists.xml", "tests\\SceneTests_Phase1\\does_not_exists.7z", debug, appcreator);
 				rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
 
-				rpgapp->AddScene("playbackintro_phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreatePlaybackIntroScene_Test("playbackintro_phase1_test1")));
+				rpgapp->AddScene("playbackintro_phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreatePlaybackIntroScene("playbackintro_phase1_test1")));
 				rpgapp->Run("playbackintro_phase1_test1", Engine::EmptyESceneArgsPTR);
 				break;
 			default:

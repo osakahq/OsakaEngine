@@ -3,25 +3,24 @@
 
 #include "stdafx.h"
 
-#include "OsakaEngine\EScene.h"
-#include "OsakaEngine\ESceneArgs.h"
+#include <RPGScene.h>
+#include <ESceneArgs.h>
 
-#include "OsakaEngine\LayerArgs.h"
+#include <LayerArgs.h>
 
-#include "OsakaEngine\Debug.h"
-#include "OsakaEngine\ServerConn.h"
-
-#include "OsakaEngine\SceneFactory.h"
-#include "OsakaEngine\RPGFactory.h"
-#include "OsakaEngine\rpg_bootstrap.h"
+#include <Debug.h>
+#include <ServerConn.h>
+#include <SceneFactory.h>
+#include <RPGFactory.h>
+#include <rpg_bootstrap.h>
 
 #include "AscApplicationCreator.h"
 #include "AscApplication.h"
 
 #include "asc_forward.h"
 
-using namespace Osaka::RPGLib;
 using namespace Osaka;
+using namespace Osaka::RPGLib;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
