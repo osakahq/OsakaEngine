@@ -39,5 +39,7 @@ namespace Osaka{
 		void Script::Show(){}
 		void Script::StandBy(){}
 		void Script::Focus(){}
+		void Script::End(){}
+
 	}
 }

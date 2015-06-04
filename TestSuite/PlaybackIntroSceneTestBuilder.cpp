@@ -1,6 +1,6 @@
  #include "stdafx.h"
 
-#include <PlaybackIntroScript.h>
+#include "TestPlaybackIntroScript.h"
 #include "PlaybackIntroSceneTestBuilder.h"
 
 namespace Osaka{
@@ -13,7 +13,7 @@ namespace Osaka{
 		}
 		
 		RPGLib::PlaybackIntroScriptPTR PlaybackIntroSceneTestBuilder::CreateLayer1Script(RPGLib::PlaybackIntroCanvasPTR& canvas, RPGLib::RPGScenePTR& scene, RPGLib::PlaybackIntroSceneScriptPTR& mainscript){
-			return std::make_shared<RPGLib::PlaybackIntroScript>(app, scene, canvas, mainscript);
+			return std::make_shared<TestPlaybackIntroScript>(app, scene, canvas, mainscript);
 		}
 
 	}

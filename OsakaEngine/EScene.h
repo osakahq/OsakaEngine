@@ -34,6 +34,9 @@ namespace Osaka{
 			virtual void Update() = 0;
 			virtual void Draw() = 0;
 
+			/* Called when the application is closing... */
+			virtual void End() = 0;
+
 			/* This is used in EApplication */
 			virtual std::string GetId() = 0;
 		private:

@@ -207,6 +207,10 @@ namespace Osaka{
 				}
 #endif
 			}
+			//Means we are closing the application...
+			for(auto it = scenes.begin(); it != scenes.end(); ++it ){
+				it->second->End();
+			}
 		}
 		//void EApplication::Update(){/* Nothing for now */}
 		//void EApplication::BeforePresent(){/* Nothing for now */}

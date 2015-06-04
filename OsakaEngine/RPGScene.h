@@ -11,20 +11,22 @@ namespace Osaka{
 		public:
 			RPGScene(std::string id, SceneScriptPTR& mainscript);
 			virtual ~RPGScene();
-			virtual void _delete();
+			virtual void _delete() override;
 			
-			virtual void Load();
-			virtual void Unload();
+			virtual void Load() override;
+			virtual void Unload() override;
 
-			virtual void ReadyStandBy(Engine::ESceneArgsPTR& params);
-			virtual void ReadyShow(Engine::ESceneArgsPTR& params);
-			virtual void Exit();
+			virtual void ReadyStandBy(Engine::ESceneArgsPTR& params) override;
+			virtual void ReadyShow(Engine::ESceneArgsPTR& params) override;
+			virtual void Exit() override;
 
-			virtual void StandBy();
-			virtual void Focus();
+			virtual void StandBy() override;
+			virtual void Focus() override;
 
-			virtual void Update();
-			virtual void Draw();
+			virtual void Update() override;
+			virtual void Draw() override;
+
+			virtual void End() override;
 
 			//Functions for the layers
 			void Stack(std::string id, LayerArgsPTR& args);

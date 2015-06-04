@@ -26,6 +26,7 @@ namespace Osaka{
 			void StandBy() override;
 			void Focus() override;
 			void Draw() override;
+			void End() override;
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner */

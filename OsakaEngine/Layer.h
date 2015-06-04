@@ -29,7 +29,7 @@ namespace Osaka{
 
 			void Update();
 			void Draw();
-
+			void End();
 			std::string id;
 
 			/* NOT Owner. The reason Layer has `app` is because Canvas/UI might need debug or other unforseen dependencies */

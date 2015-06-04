@@ -110,5 +110,9 @@ namespace Osaka{
 		void Layer::StandByHide(bool val){
 			hidden = val;
 		}
+
+		void Layer::End(){
+			script->End();
+		}
 	}
 }
