@@ -10,7 +10,7 @@ namespace Osaka{
 		
 		class RPGApplication : public Engine::EApplication{
 		public:
-			RPGApplication(Debug::DebugPTR& d, Engine::SDLLibPTR& sdl, Engine::IFileLoaderPTR& fileloader);
+			RPGApplication(Debug::DebugPTR& d, Engine::SDLLibPTR& sdl, Engine::IFileLoaderPTR& fileloader, const bool _show_fpscounter);
 			virtual ~RPGApplication();
 			virtual void _delete();
 
@@ -38,12 +38,12 @@ namespace Osaka{
 			FPSCounterPTR counter;
 
 			/* Check that the references are set */
-			virtual void Init(bool vsync, int timePerFrame);
+			virtual void Init(bool vsync, int timePerFrame) override;
 
 			/* Runs every frame */
-			virtual void Update();
-			virtual void BeforePresent();
-			virtual void RenderTime(const Uint32 frame_ms);
+			virtual void Update() override;
+			virtual void BeforePresent() override;
+			virtual void AfterPresent(const Uint32 frame_ms) override;
 			/* Initializes the first scene and then passes it to EApplicacion (base class) */
 			virtual void Run(const char* scene, Engine::ESceneArgsPTR& init_params);
 
@@ -85,6 +85,9 @@ namespace Osaka{
 			/* NOT Owner. 
 			 * This is the very first scene that is added and the only thing that does is to make the call to add the real first scene */
 			InitScenePTR initscene;
+
+			/* Wether or not call FPSCounter (See Run/BeforePresent/AfterPresent) */
+			const bool show_fpscounter;
 		};
 	}
 }

@@ -16,7 +16,7 @@ namespace Osaka{
 
 		}
 
-		void Hiccups::Frame(const Uint32 frame_ms){
+		void Hiccups::Frame(const int frame_ms){
 			if( frame_ms >= HICCUPS_MAX_ARRAY ){
 				printf("[Hiccups] Current frame is longer than HICCUPS_MAX_ARRAY < [%d]\n", frame_ms);
 				return;

@@ -8,8 +8,9 @@ namespace Osaka{
 
 		class FPSCounter{
 		public:
-			FPSCounter(Debug::DebugPTR& debug, FontManagerPTR& font, int target_fps, int _space_x, int _space_y);
+			FPSCounter(int target_fps, int _space_x, int _space_y, const bool _show_sum_frames);
 			~FPSCounter();
+			void Init(Debug::DebugPTR& debug, FontManagerPTR& font);
 			void _delete();
 			/* This is called before EApplication::Run() (in RPGApplication, right outside the loop) */
 			void Start();
@@ -17,7 +18,7 @@ namespace Osaka{
 			void BeforePresent();
 
 			/* Only called when _DEBUG */
-			void AfterPresent(const Uint32 frame_ms);
+			void AfterPresent(Uint32 frame_ms);
 		private:
 			/* Prints in console if a frame(s) took longer than the rest of the frames */
 			Hiccups* hiccups; //It's okay to use raw pointer. The only class using it is this one.
@@ -39,7 +40,7 @@ namespace Osaka{
 			const int target_fps;
 			int frames;
 
-			/* Only when _DEBUG. Everytime the loop ends (after Present), we count the frame ms */
+			/* If true everytime the loop ends (after Present), we count the frame ms */
 			const bool show_sum_frames;
 			Uint32 sum_frame_ms;
 			std::string average_frame_ms;

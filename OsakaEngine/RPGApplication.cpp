@@ -28,7 +28,8 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		RPGApplication::RPGApplication(Debug::DebugPTR& d, Engine::SDLLibPTR& sdl, Engine::IFileLoaderPTR& fileloader) : EApplication(d, sdl, fileloader){
+		RPGApplication::RPGApplication(Debug::DebugPTR& d, Engine::SDLLibPTR& sdl, Engine::IFileLoaderPTR& fileloader, const bool _show_fpscounter) 
+			: EApplication(d, sdl, fileloader), show_fpscounter(_show_fpscounter){
 			this->sessionm = nullptr;
 			assetm = nullptr;
 			ruler = nullptr;
@@ -70,33 +71,36 @@ namespace Osaka{
 		}
 
 		void RPGApplication::Update(){
-			EApplication::Update();
-			/* Runs every update. */
+			//EApplication::Update();
 			timem->UpdateTicks();
-
-			
 		}
 		void RPGApplication::BeforePresent(){
-			EApplication::BeforePresent();
-			counter->BeforePresent();
+			//EApplication::BeforePresent();
+			if( show_fpscounter ){ //constant
+				counter->BeforePresent();
+			}
 		}
 
-		void RPGApplication::RenderTime(const Uint32 frame_ms){
-			//This function is only called when _DEBUG
-			counter->AfterPresent(frame_ms);
+		void RPGApplication::AfterPresent(const Uint32 frame_ms){
+			//This function is always called.
+			if( show_fpscounter ){ //constant
+				counter->AfterPresent(frame_ms);
+			}
 		}
 
 		void RPGApplication::Run(const char* scene, Engine::ESceneArgsPTR& init_params){
 			if( loadingscene_id.empty() || initscene == nullptr )
 				throw std::exception("[RPGApplication] loadingscene is nullptr or initscene is nullptr");
 
-			counter->Start();
-
 			//We switch the init scene with the args that has the initial real scene
 			InitSceneArgsPTR args = std::make_shared<InitSceneArgs>();
 			args->scene = scene;
 			args->init_args = init_params; //These params are passed to the real first scene
 			this->Switch(initscene->GetId().c_str(), std::static_pointer_cast<Engine::ESceneArgs>(args));
+
+			if( show_fpscounter ){ //constant
+				counter->Start();
+			}
 
 			EApplication::Run();
 		}

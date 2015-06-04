@@ -9,7 +9,7 @@ namespace Osaka{
 	namespace Utils{
 
 		RPGLib::RPGApplicationPTR RPGApplicationCreator::CreateApp(Debug::DebugPTR debug, Engine::SDLLibPTR sdl, Engine::IFileLoaderPTR fileloader){
-			return std::make_shared<RPGLib::RPGApplication>(debug, sdl, fileloader);
+			return std::make_shared<RPGLib::RPGApplication>(debug, sdl, fileloader, true);
 		}
 	}
 }

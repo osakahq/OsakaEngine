@@ -8,7 +8,7 @@
 namespace Osaka{
 	namespace Asc{
 		using namespace RPGLib;
-		AscApplication::AscApplication(Debug::DebugPTR& d, Engine::SDLLibPTR& sdl, Engine::IFileLoaderPTR& fileloader) : RPGApplication(d, sdl, fileloader){
+		AscApplication::AscApplication(Debug::DebugPTR& d, Engine::SDLLibPTR& sdl, Engine::IFileLoaderPTR& fileloader) : RPGApplication(d, sdl, fileloader, true){
 
 		}
 		AscApplication::~AscApplication(){

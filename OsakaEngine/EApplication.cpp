@@ -139,6 +139,7 @@ namespace Osaka{
 			const bool _vsync = vsync;
 			const Uint32 _targetTimePerFrame = timePerFrame;
 			Uint32 frame_ms = 0;
+			Uint32 total_frame_ms = 0; //This is used when vsync is off
 
 			debug->l("[EApplication] Loop begins...\n\n");
 			while(!quit){
@@ -175,14 +176,18 @@ namespace Osaka{
 				this->BeforePresent();
 				sdl->Present();
 				
-#ifdef OSAKA_SHOWAVERAGEFPS
-				this->RenderTime(SDL_GetTicks() - frame_ms);
-#endif
+				//You need to substract with SDL_GetTicks() in order to know how much the frame took.
+				this->AfterPresent(frame_ms);
+				
 				//_vsync is a constant = no branch problem
 				if( !_vsync ){
-					if( _targetTimePerFrame > (SDL_GetTicks() - frame_ms) ){
-						//if 16 > 10 then-> 16 - 10 = 6ms to delay
-						SDL_Delay(_targetTimePerFrame - (SDL_GetTicks() - frame_ms));
+					total_frame_ms = SDL_GetTicks() - frame_ms;
+					//if 16 > 10 then-> 16 - 10 = 6ms to delay
+					if( _targetTimePerFrame > total_frame_ms ){
+						//I modified it because I don't there there is gonna be much difference
+						//Also, SDL_Delay may return 1ms earlier
+						//SDL_Delay(_targetTimePerFrame - (SDL_GetTicks() - frame_ms));
+						SDL_Delay(_targetTimePerFrame - total_frame_ms);
 					}
 				}
 
@@ -203,8 +208,8 @@ namespace Osaka{
 #endif
 			}
 		}
-		void EApplication::Update(){/* Nothing for now */}
-		void EApplication::BeforePresent(){/* Nothing for now */}
+		//void EApplication::Update(){/* Nothing for now */}
+		//void EApplication::BeforePresent(){/* Nothing for now */}
 		//void EApplication::RenderTime(const Uint32 frame_ms){}
 	}
 }

@@ -96,7 +96,8 @@ namespace Osaka{
 			RulerPTR ruler = std::make_shared<Ruler>(data->window_width, data->window_height);
 			app->ruler = ruler;
 
-			FPSCounterPTR counter = std::make_shared<FPSCounter>(debug, fontm, data->target_fps, data->fontmap_space_x, data->fontmap_space_y);
+			FPSCounterPTR counter = std::make_shared<FPSCounter>(data->target_fps, data->fontmap_space_x, data->fontmap_space_y, true);
+			counter->Init(debug, fontm);
 			app->counter = counter;
 
 			/* -------------------------------------------------------------------- */
