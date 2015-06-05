@@ -19,11 +19,11 @@ namespace Osaka{
 		}
 		SceneScriptPTR PlaybackIntroSceneBuilder::CreateMainScript(){
 			PlaybackIntroSceneScriptPTR mainscript = std::make_shared<PlaybackIntroSceneScript>(app);
-			mainscript->SetLayers("layer1");
 			return std::static_pointer_cast<SceneScript>(mainscript);
 		}
 		void PlaybackIntroSceneBuilder::CreateLayers(RPGScenePTR& scene, SceneScriptPTR& mainscript){
 			PlaybackIntroSceneScriptPTR pmainscript = std::dynamic_pointer_cast<PlaybackIntroSceneScript>(mainscript);
+			pmainscript->SetLayers("layer1");
 			this->LayerWrapper(CreateLayer1(scene, pmainscript), scene);
 		}
 

@@ -34,5 +34,6 @@ namespace Osaka{
 		void SceneScript::Update(){
 
 		}
+		void SceneScript::End(){}
 	}
 }

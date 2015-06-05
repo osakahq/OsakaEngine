@@ -14,7 +14,7 @@ namespace Osaka{
 			~SceneTestFactory();
 			
 			RPGLib::RPGScenePTR CreatePlaybackIntroScene(const char* name) override;
-		
+			RPGLib::RPGScenePTR CreateStartMenuScene(const char* name) override;
 		};
 	}
 }

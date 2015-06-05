@@ -1,10 +1,14 @@
  #include "stdafx.h"
 
+#include "EScene.h"
+#include "DummyScene.h"
+
 #include "SDLLib.h"
 #include "RPGApplication.h"
 #include "Factory.h"
 #include "LoadingSceneBuilder.h"
 #include "PlaybackIntroSceneBuilder.h"
+#include "StartMenuSceneBuilder.h"
 
 #include "SceneFactory.h"
 namespace Osaka{
@@ -37,6 +41,17 @@ namespace Osaka{
 			delete builder;
 			return scene;
 		}
+		RPGScenePTR SceneFactory::CreateStartMenuScene(const char* name){
+			StartMenuSceneBuilder* builder = new StartMenuSceneBuilder();
+			builder->Init(app, app->ruler, app->sdl->GetRAWSDLRenderer(), factory);
+			RPGScenePTR scene = builder->CreateScene(name);
+			delete builder;
+			return scene;
+		}
 
+		std::shared_ptr<DummyScene> SceneFactory::CreateDummyScene(const char* name){
+			DummyScenePTR scene = std::make_shared<DummyScene>(name);
+			return scene;
+		}
 	}
 }

@@ -22,10 +22,10 @@ namespace Osaka{
 		}
 		SceneScriptPTR LoadingSceneBuilder::CreateMainScript(){
 			LoadingSceneScriptPTR mainscript = std::make_shared<LoadingSceneScript>(app, assetmanager);
-			mainscript->SetLayers("fadelayer");
 			return std::static_pointer_cast<SceneScript>(mainscript);
 		}
 		void LoadingSceneBuilder::CreateLayers(RPGScenePTR& scene, SceneScriptPTR& mainscript){
+			std::dynamic_pointer_cast<LoadingSceneScript>(mainscript)->SetLayers("fadelayer");
 			this->LayerWrapper(CreateFadeLayer(scene, mainscript), scene);
 		}
 

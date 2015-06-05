@@ -16,7 +16,10 @@ namespace Osaka{
 
 			virtual RPGScenePTR CreateLoadingScene(const char* name);
 			virtual RPGScenePTR CreatePlaybackIntroScene(const char* name);
+
+			virtual RPGScenePTR CreateStartMenuScene(const char* name);
 			
+			virtual DummyScenePTR CreateDummyScene(const char* name);
 		protected:
 			/* NOT Owner */
 			FactoryPTR factory;

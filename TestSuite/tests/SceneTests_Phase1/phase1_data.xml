@@ -47,7 +47,7 @@
 			<!-- MISC --------------------------------------------------------------- -->
 			<scene id="loadgame"></scene>
 			<scene id="options"></scene>
-			<scene id="startmenu">
+			<scene id="test_startmenu">
 				<assets>
 					<asset id="texturemap_cinematics" />
 					<asset id="s_startmenu" />
@@ -67,7 +67,7 @@
 					<asset id="texturemap_cinematics" />
 				</assets>
 				<related-scenes>
-					<!--Testing  <scene id="startmenu" linked="true" always-load="true" /> !-->
+					<scene id="test_startmenu" linked="true" always-load="true" />
 				</related-scenes>
 			</scene>
 			<scene id="credits">

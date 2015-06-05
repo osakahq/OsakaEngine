@@ -77,11 +77,13 @@ namespace Osaka{
 		
 		class InitScene;		typedef std::shared_ptr<InitScene>	InitScenePTR;
 		class InitSceneArgs;	typedef std::shared_ptr<InitSceneArgs>	InitSceneArgsPTR;
-
+		class DummyScene;		typedef std::shared_ptr<DummyScene>	DummyScenePTR;
 		/*** SCENES *****/
 		class PlaybackIntroSceneScript;	typedef std::shared_ptr<PlaybackIntroSceneScript>		PlaybackIntroSceneScriptPTR;
 		class PlaybackIntroCanvas;		typedef std::shared_ptr<PlaybackIntroCanvas>		PlaybackIntroCanvasPTR;
 		class PlaybackIntroScript;		typedef std::shared_ptr<PlaybackIntroScript>		PlaybackIntroScriptPTR;
+
+		class StartMenuSceneScript;	typedef std::shared_ptr<StartMenuSceneScript>		StartMenuSceneScriptPTR;
 		/*****************************/
 		
 		class Ruler;			typedef std::shared_ptr<Ruler>	RulerPTR;

@@ -23,6 +23,7 @@ namespace Osaka{
 			virtual void Focus();
 
 			virtual void Update();
+			virtual void End();
 			
 		/* ----------------------------------------------------------------------------------- */
 		protected:

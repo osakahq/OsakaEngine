@@ -212,6 +212,7 @@ namespace Osaka{
 			for(auto it = layers.begin(); it != layers.end(); ++it ){
 				it->second->End(); 
 			}
+			mainscript->End();
 		}
 	}
 }
