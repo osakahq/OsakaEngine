@@ -12,7 +12,9 @@ void OsakaAssertBegin(Osaka::TestSuite::RPGLibTestSuitePTR& ptr){
 void OsakaAssert(const bool test, const int cline, const char* cfile){
 	ASSERT_RPGLibTestSuitePTR->MakeAssert(test, cline, cfile);
 }
-
+void OsakaAssertEx(const int id, const bool test, const int cline, const char* cfile){
+	ASSERT_RPGLibTestSuitePTR->MakeAssertEx(id, test, cline, cfile);
+}
 void OsakaAssertEnd(){
 	//Since we are not the owner, we only set it to `nullptr`
 	ASSERT_RPGLibTestSuitePTR = nullptr;

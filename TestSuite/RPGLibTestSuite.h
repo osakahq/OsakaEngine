@@ -2,11 +2,12 @@
 
 #ifndef TESTSUITE_RPGLIBTESTSUITE_H
 #define TESTSUITE_RPGLIBTESTSUITE_H
-#include <osaka_forward.h>
 
-#define ASSERTEX_RESULT_UNCALLED 0
-#define ASSERTEX_RESULT_SUCCESS 1
-#define ASSERTEX_RESULT_FAIL 2
+#define ASSERTEX_NOTCALLED 0
+#define ASSERTEX_FAIL 1
+#define ASSERTEX_SUCCESS 2
+
+#include <osaka_forward.h>
 
 namespace Osaka{
 	namespace TestSuite{
@@ -19,12 +20,6 @@ namespace Osaka{
 			};
 		};
 
-		struct AssertEx_Result{
-			AssertEx_Result(){}
-			int result;
-
-		};
-
 		class RPGLibTestSuite{
 		public:
 			RPGLibTestSuite();
@@ -35,7 +30,7 @@ namespace Osaka{
 			void Run(TEST_PHASE::Value phase);
 			/* This function must be called in order to show fail/success */
 			void MakeAssert(const bool test, const int cline, const char* cfile);
-			void MakeAsserEx(const int id, const bool test, const int cline, const char* cfile);
+			void MakeAssertEx(const int id, const bool test, const int cline, const char* cfile);
 			/* Check if test any has failed. `MakeAssert` must be called */
 			void CheckResults();
 
@@ -50,8 +45,9 @@ namespace Osaka{
 			int succesfulTests;
 
 			/* This is a list of the expected tests. (with OSAKA_ASSERT_EX(...)) 
-			 * int = id of test, bool = result */
+			 * int = id of test, int = result */
 			std::unordered_map<int, int> expectedTests;
+			void AddExpectedTests(int size, int* array_ids);
 
 			/* Owner */
 			RPGApplicationPTR	rpgapp;

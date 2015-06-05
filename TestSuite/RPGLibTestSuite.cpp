@@ -48,18 +48,18 @@ namespace Osaka{
 			TestApplicationBuilder* appbuilder = new TestApplicationBuilder();
 
 			/* To know which phase does what, refer to `testsuite_run.cpp` */
-			switch(phase){
-			case TEST_PHASE::PHASE1:
+			if( phase == TEST_PHASE::PHASE1 ){
 				this->rpgapp = appbuilder->Create("tests\\SceneTests_Phase1\\phase1_data.xml", "tests\\SceneTests_Phase1\\does_not_exists.xml", "tests\\SceneTests_Phase1\\does_not_exists.7z", debug);
 				rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
 
+				int tests[] = {TESTID_PHASE1_PLAYBACKLOAD, TESTID_PHASE1_PLAYBACKLOAD_LINKED};
+				AddExpectedTests(sizeof(tests)/sizeof(*tests), tests);
 				rpgapp->AddScene("playbackintro_phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreatePlaybackIntroScene("playbackintro_phase1_test1")));
 				rpgapp->Run("playbackintro_phase1_test1", Engine::EmptyESceneArgsPTR);
-				break;
-			default:
+			}else{
 				debug->l("[RPGLibTestSuite] Unkown phase.");
-				break;
 			}
+			
 			delete appbuilder;
 		}
 		void RPGLibTestSuite::MakeAssert(const bool test, const int cline, const char* cfile){
@@ -79,17 +79,63 @@ namespace Osaka{
 			}
 			
 		}
-		void RPGLibTestSuite::MakeAsserEx(const int id, const bool test, const int cline, const char* cfile){
+		void RPGLibTestSuite::MakeAssertEx(const int id, const bool test, const int cline, const char* cfile){
 			auto it = expectedTests.find(id);
 			if( it == expectedTests.end() ){
 				debug->e("[RPGLibTestSuite] Expected result not found: "+std::to_string(id));
 			}
 
-			if( it->second == ASSERTEX_RESULT_UNCALLED ){
-
+			//For now, we can't call it more than once per ID. But if the result doesn't change, then it should be okay
+			if( (it->second == ASSERTEX_SUCCESS && test == false) || (it->second == ASSERTEX_FAIL && test == true) ){
+				debug->e("[RPGLibTestSuite] Test called more than once, but their results differ: "+std::to_string(id));
 			}
+
+			it->second = (test) ? ASSERTEX_SUCCESS : ASSERTEX_FAIL;
 		}
 		void RPGLibTestSuite::CheckResults(){
+			if( expectedTests.size() > 0 ){
+				int notcalled = 0;
+				int success = 0;
+				int fail = 0;
+				debug->l("[RPGLibTestSuite] Results (expected): ");
+				printf("[RPGLibTestSuite] [F]ailed/[N]ot called tests: ");
+				for( auto it = expectedTests.begin(); it != expectedTests.end(); ++it ){
+					switch(it->second){
+					case ASSERTEX_NOTCALLED:
+						printf("%d[n], ", it->first);
+						++notcalled;
+						break;
+					case ASSERTEX_FAIL:
+						printf("%d[f], ", it->first);
+						++fail;
+						break;
+					case ASSERTEX_SUCCESS:
+						++success;
+						break;
+					default:
+						debug->e("[RPGLibTestSuite] Unkown result...? What happened?");
+						break;
+					}
+				}
+				printf("\n");
+				debug->l(std::string("\t") + std::to_string(notcalled)+" not called tests.");
+				debug->l(std::string("\t") + std::to_string(success)+" succesful tests.");
+				debug->l(std::string("\t") + std::to_string(fail)+" failed tests.");
+				if( fail == 0 && notcalled == 0 ){
+					std::cout << Debug::green;
+					debug->l("[RPGLibTestSuite] Veredict (expected): PASSED");
+				}else{
+					std::cout << Debug::red;
+					debug->l("[RPGLibTestSuite] Veredict (expected): FAILED");
+				}
+				std::cout << Debug::white;
+
+				//Not be confused with the expected results
+				if( succesfulTests == 0 && failedTests == 0 ){
+					//If there are no normal tests, and there are expected tests, then its fine to exit function.
+					return;
+				}
+			}
 			if( succesfulTests == 0 && failedTests == 0 ){
 				std::cout << Debug::yellow;
 				debug->l("[RPGLibTestSuite] 0 tests were conducted.");
@@ -107,9 +153,16 @@ namespace Osaka{
 				debug->l("[RPGLibTestSuite] Veredict: FAILED");
 			}
 			std::cout << Debug::white;
-			debug->l("[RPGLibTestSuite] End TestSuite.");
 		}
-		
+		void RPGLibTestSuite::AddExpectedTests(int size, int* array_ids){
+			if( expectedTests.size() > 0 ){
+				debug->e("[RPGLibTestSuite] You can only call AddExpectedTests per execution.");
+			}
+			for( int i = 0; i < size; ++i ){
+				expectedTests[array_ids[i]] = ASSERTEX_NOTCALLED;
+			}
+		}
+
 		void RPGLibTestSuite::IndividualTest_LoadGameFileTest(const char* filedata, bool verbose){
 			/* Make sure to call `_delete()` and set them `nullptr` when done (data, loader) */
 			GameDataPTR data = std::make_shared<GameData>();

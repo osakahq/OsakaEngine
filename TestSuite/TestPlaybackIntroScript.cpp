@@ -21,7 +21,7 @@ namespace Osaka{
 		void TestPlaybackIntroScript::End(){
 			PlaybackIntroScript::End();
 
-			OSAKA_ASSERT(_is_loaded);
+			OSAKA_ASSERTEX(TESTID_PHASE1_PLAYBACKLOAD, _is_loaded);
 		}
 	}
 }
