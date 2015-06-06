@@ -152,6 +152,9 @@ namespace Osaka{
 				}
 				app->CallLoad(data->id);
 				loadedScenes[data->id] = true;
+#ifdef _DEBUG
+				debug->l("[AssetManager] Loading scene: " + data->id);
+#endif
 			}
 			
 			ProcessRelatedScenes(&data->related_scenes_data, firstlevel);

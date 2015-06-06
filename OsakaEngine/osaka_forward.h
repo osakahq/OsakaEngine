@@ -67,9 +67,17 @@ namespace Osaka{
 		class Canvas;			typedef std::shared_ptr<Canvas>			CanvasPTR;
 		class UserInterface;	typedef std::shared_ptr<UserInterface>	UserInterfacePTR;
 
+		class Drawable;	typedef std::shared_ptr<Drawable>	DrawablePTR;
+		class Square;	typedef std::shared_ptr<Square>	SquarePTR;
+		class Effect;	typedef std::shared_ptr<Effect>	EffectPTR;
+		class FadeInFadeOutEffect;	typedef std::shared_ptr<FadeInFadeOutEffect>	FadeInFadeOutEffectPTR;
+
 		class OneLayer;			typedef std::shared_ptr<OneLayer>	OneLayerPTR;
 		class OneLayerScene;	typedef std::shared_ptr<OneLayerScene>	OneLayerScenePTR;
 		class OneLayerScript;	typedef std::shared_ptr<OneLayerScript> OneLayerScriptPTR;
+
+		class FadeInOutScript;	typedef std::shared_ptr<FadeInOutScript> FadeInOutScriptPTR;
+		class FadeInOutCanvas;	typedef std::shared_ptr<FadeInOutCanvas> FadeInOutCanvasPTR;
 
 		class LoadingSceneScript;typedef std::shared_ptr<LoadingSceneScript>	LoadingSceneScriptPTR;
 		class LoadingFadeCanvas;typedef std::shared_ptr<LoadingFadeCanvas>	LoadingFadeCanvasPTR;
