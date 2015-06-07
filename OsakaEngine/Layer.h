@@ -16,6 +16,7 @@ namespace Osaka{
 			virtual void Load();
 			virtual void Unload();
 
+			void Enter();
 			/* When entering the stack(vector) in RPGScene
 			 * If you modify this, remember there is OneLayer that completely overrides this function (ready) */
 			void Ready(LayerArgsPTR& args);

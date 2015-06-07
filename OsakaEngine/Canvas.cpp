@@ -27,6 +27,7 @@ namespace Osaka{
 			this->layer_parent = layer_parent;
 		}
 		/* These functions are not required to be implemented in the derived classes */
+		void Canvas::Enter(){}
 		void Canvas::Load(){}
 		void Canvas::Unload(){}
 		void Canvas::Ready(){}

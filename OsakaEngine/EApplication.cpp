@@ -14,6 +14,7 @@ namespace Osaka{
 			this->debug = d;
 			
 			stackItems = -1;
+			enteringItems = -1;
 			stackHasChanged = true;
 			this->fileloader = fileloader;
 
@@ -26,6 +27,9 @@ namespace Osaka{
 		void EApplication::_delete(){
 			for(int i = 0; i < EAPP_MAXSTACK; ++i){
 				stack[i] = nullptr;
+			}
+			for(int i = 0; i < EAPP_MAXSTACK; ++i){
+				entering[i] = nullptr;
 			}
 			for(auto it = scenes.begin(); it != scenes.end(); ++it )
 				it->second->_delete();
@@ -49,8 +53,8 @@ namespace Osaka{
 		void EApplication::Switch(const char* scene, ESceneArgsPTR& in_param){
 			RemoveAllFromStack();
 			stackItems++;
-			stack[stackItems] = scenes[scene];
-			scenes[scene]->ReadyShow(in_param);
+			entering[++enteringItems] = stack[stackItems] = scenes[scene];
+			scenes[scene]->ReadyShow(in_param); 
 			stackHasChanged = true;
 		}
 		void EApplication::Stack(const char* scene, ESceneArgsPTR& in_param){
@@ -58,7 +62,7 @@ namespace Osaka{
 			stack[this->stackItems]->StandBy();
 
 			stackItems++;
-			stack[stackItems] = scenes[scene];
+			entering[++enteringItems] = stack[stackItems] = scenes[scene];
 			scenes[scene]->ReadyShow(in_param);
 			stackHasChanged = true;
 		}
@@ -69,7 +73,7 @@ namespace Osaka{
 			}
 			
 			stackItems++;
-			stack[0] = scenes[scene];
+			entering[++enteringItems] = stack[0] = scenes[scene];
 			scenes[scene]->ReadyStandBy(in_param);	
 			stackHasChanged = true;
 		}
@@ -149,6 +153,16 @@ namespace Osaka{
 						quit = true;
 					}
 				}
+
+				if( enteringItems >= 0 ){
+					//We don't need a temp entering stack because its not allowed to stack/etc outside of Update
+					for(int i = 0; i < enteringItems; ++i){
+						entering[i]->Enter();
+					}
+					//There is no need to set `nullptr`
+					enteringItems = -1;
+				}
+
 				/* We need to copy it because a scene in `Update()` can mess the stack/loop 
 				 * The changes are not "seen" until the next update. */
 				if( stackHasChanged ){

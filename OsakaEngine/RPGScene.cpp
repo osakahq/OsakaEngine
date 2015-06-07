@@ -208,6 +208,12 @@ namespace Osaka{
 			hidden = val;
 		}
 		
+		void RPGScene::Enter(){
+			mainscript->Enter();
+			for(auto it = layers.begin(); it != layers.end(); ++it ){
+				it->second->Enter(); 
+			}
+		}
 		void RPGScene::End(){
 			for(auto it = layers.begin(); it != layers.end(); ++it ){
 				it->second->End(); 

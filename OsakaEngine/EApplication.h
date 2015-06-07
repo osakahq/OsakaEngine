@@ -61,6 +61,10 @@ namespace Osaka{
 			/* This is used to not copy the stack every loop */
 			bool stackHasChanged;
 
+			/* This is a list of the scenes that are just entering the stack */
+			EScenePTR entering[EAPP_MAXSTACK];
+			int enteringItems;
+
 			/* If vsync is off then we cap the framerate */
 			bool vsync;
 			/* If vsync is true, fps is ignored. */

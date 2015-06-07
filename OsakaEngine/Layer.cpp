@@ -111,6 +111,11 @@ namespace Osaka{
 			hidden = val;
 		}
 
+		void Layer::Enter(){
+			script->Enter();
+			canvas->Enter();
+			ui->Enter();
+		}
 		void Layer::End(){
 			script->End();
 		}

@@ -15,6 +15,7 @@ namespace Osaka{
 			virtual void Load();
 			virtual void Unload();
 
+			virtual void Enter();
 			virtual void Ready(LayerArgsPTR& args);
 			virtual void Exit();
 

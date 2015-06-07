@@ -23,6 +23,7 @@ namespace Osaka{
 			
 		}
 		
+		void DummyScene::Enter(){};
 		void DummyScene::Load(){};
 		void DummyScene::Unload() {};
 		void DummyScene::Exit() {};

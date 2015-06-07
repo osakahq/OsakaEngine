@@ -16,6 +16,7 @@ namespace Osaka{
 			virtual void Load() override;
 			virtual void Unload() override;
 
+			virtual void Enter() override;
 			virtual void ReadyStandBy(Engine::ESceneArgsPTR& params) override;
 			virtual void ReadyShow(Engine::ESceneArgsPTR& params) override;
 			virtual void Exit() override;

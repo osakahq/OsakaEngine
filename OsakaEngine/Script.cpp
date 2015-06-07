@@ -31,6 +31,7 @@ namespace Osaka{
 		}
 
 		/* These functions are not required to be implemented in the derived classes */
+		void Script::Enter(){}
 		void Script::Ready(LayerArgsPTR& args){}
 		void Script::Load(){}
 		void Script::Unload(){}

@@ -29,6 +29,7 @@ namespace Osaka{
 		}
 
 		/* These functions are not required to be implemented in the derived classes */
+		void UserInterface::Enter(){}
 		void UserInterface::Load(){}
 		void UserInterface::Unload(){}
 		void UserInterface::Ready(){}

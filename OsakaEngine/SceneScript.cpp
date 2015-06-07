@@ -22,6 +22,7 @@ namespace Osaka{
 			this->scene_parent = scene_parent;
 		}
 		/* These functions are not required to be implemented in the derived classes */
+		void SceneScript::Enter(){}
 		void SceneScript::Ready(Engine::ESceneArgsPTR& args){}
 		void SceneScript::Load(){}
 		void SceneScript::Unload(){}

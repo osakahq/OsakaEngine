@@ -22,6 +22,8 @@ namespace Osaka{
 			/* Called when the scene is removed from the stack */
 			virtual void Exit() = 0;
 
+			/* Entering the loop (FirstUpdate) */
+			virtual void Enter() = 0;
 			/* Called when the scene is added to the stack and when the scene has just been stacked but doesn't have initial focus */
 			virtual void ReadyStandBy(ESceneArgsPTR& params) = 0;
 			/* Called when the scene is added to the stack and when the scene has just been stacked and is on top of the stack (has focus) */

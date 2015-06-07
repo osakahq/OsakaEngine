@@ -42,6 +42,7 @@ namespace Osaka{
 			}
 		}
 		
+		void InitScene::Enter(){};
 		void InitScene::Load(){};
 		void InitScene::Unload() {};
 		void InitScene::Exit() {};

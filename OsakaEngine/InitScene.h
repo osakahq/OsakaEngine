@@ -19,6 +19,7 @@ namespace Osaka{
 			std::string GetId() override;
 
 			/* I need to implement these methods because I'm inheriting from EScene and not RPGScene */
+			void Enter() override;
 			void Load() override;
 			void Unload() override;
 			void Exit() override;
