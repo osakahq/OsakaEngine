@@ -13,6 +13,7 @@ namespace Osaka{
 			times_repeat = 1;
 			current_loop = 0;
 			deattach = false;
+			isActive = true;
 		}
 		Effect::~Effect(){
 #ifdef _DEBUG
@@ -32,6 +33,7 @@ namespace Osaka{
 		}
 			
 		void Effect::Reset(){
+			isActive = true;
 			current_loop = 0;
 		}
 		void Effect::OneLoopDone(){

@@ -12,9 +12,9 @@ namespace Osaka{
 
 		class Drawable{
 		public:
-			Drawable();
+			Drawable(SDL_Renderer* raw_renderer);
 			virtual ~Drawable();
-			/* Raw pointer */
+			/* OWNER. Raw pointer */
 			sprite_info* info;
 
 			Engine::RGBA_HEX rgba;
@@ -36,10 +36,12 @@ namespace Osaka{
 		protected:
 			/* NOT Owner. There are no owners for EffectPTR (hence no `_delete`) */
 			std::vector<EffectPTR> effects;
-			/* Because vector invalidates the iterator, we need a temp list */
+			/* NOT Owner. Because vector invalidates the iterator, we need a temp list */
 			std::vector<EffectPTR> temp_list;
 			bool has_list_changed;
 
+			/* NOT Owner. Raw pointer (raw_pointer) */
+			SDL_Renderer* raw_renderer;
 		private:
 		};
 	}

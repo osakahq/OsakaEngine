@@ -5,7 +5,8 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		Drawable::Drawable(){
+		Drawable::Drawable(SDL_Renderer* raw_renderer){
+			this->raw_renderer = raw_renderer;
 			info = NULL;
 			rgba.r = 255;
 			rgba.g = 0;
@@ -19,6 +20,7 @@ namespace Osaka{
 			has_list_changed = true;
 		}
 		Drawable::~Drawable(){
+			raw_renderer = NULL;
 			if( info != NULL )
 				delete info;
 
@@ -30,7 +32,10 @@ namespace Osaka{
 			this->ResetAllEffects();
 		}
 		void Drawable::Update(){
-			for( auto it = effects.begin(); it != effects.end(); ++it ){
+			if( has_list_changed ){
+				temp_list = effects;
+			}
+			for( auto it = temp_list.begin(); it != temp_list.end(); ++it ){
 				(*it)->Update();
 			}
 		}
@@ -53,7 +58,6 @@ namespace Osaka{
 		}
 		void Drawable::AddEffect(EffectPTR& effect){
 			effects.push_back(effect);
-			effect->Reset();
 			has_list_changed = true;
 		}
 		
