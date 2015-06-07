@@ -91,7 +91,9 @@ namespace Osaka{
 		class PlaybackIntroCanvas;		typedef std::shared_ptr<PlaybackIntroCanvas>		PlaybackIntroCanvasPTR;
 		class PlaybackIntroScript;		typedef std::shared_ptr<PlaybackIntroScript>		PlaybackIntroScriptPTR;
 
-		class StartMenuSceneScript;	typedef std::shared_ptr<StartMenuSceneScript>		StartMenuSceneScriptPTR;
+		class StartMenuSceneScript;	typedef std::shared_ptr<StartMenuSceneScript>	StartMenuSceneScriptPTR;
+		class StartMenuScript;		typedef std::shared_ptr<StartMenuScript>		StartMenuScriptPTR;
+		class StartMenuCanvas;		typedef std::shared_ptr<StartMenuCanvas>		StartMenuCanvasPTR;
 		/*****************************/
 		
 		class Ruler;			typedef std::shared_ptr<Ruler>	RulerPTR;
