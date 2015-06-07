@@ -1,5 +1,6 @@
  #include "stdafx.h"
 
+#include "Ruler.h"
 #include "EventArgs.h"
 #include "EventHandler.h"
 #include "FadeInFadeOutEffect.h"
@@ -19,6 +20,10 @@ namespace Osaka{
 			this->effect = effect;
 			
 			square->AddEffect(std::static_pointer_cast<Effect>(effect));
+			square->square.x = ruler->x_top_left_corner;
+			square->square.y = ruler->y_top_left_corner;
+			square->square.h = ruler->max_height;
+			square->square.w = ruler->max_width;
 
 			midAnimation = std::make_shared<Component::EventHandler>();
 			endAnimation = std::make_shared<Component::EventHandler>();

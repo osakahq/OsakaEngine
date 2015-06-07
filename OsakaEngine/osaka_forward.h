@@ -69,6 +69,7 @@ namespace Osaka{
 
 		class Drawable;	typedef std::shared_ptr<Drawable>	DrawablePTR;
 		class Square;	typedef std::shared_ptr<Square>	SquarePTR;
+		class Image;	typedef std::shared_ptr<Image>	ImagePTR;
 		class Effect;	typedef std::shared_ptr<Effect>	EffectPTR;
 		class FadeInFadeOutEffect;	typedef std::shared_ptr<FadeInFadeOutEffect>	FadeInFadeOutEffectPTR;
 

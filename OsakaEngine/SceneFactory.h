@@ -10,7 +10,7 @@ namespace Osaka{
 
 		class SceneFactory {
 		public:
-			SceneFactory(FactoryPTR& factory, RPGApplicationPTR& app);
+			SceneFactory(FactoryPTR& factory, RPGApplicationPTR& app, TextureManagerPTR& texturem);
 			virtual ~SceneFactory();
 			virtual void _delete();
 
@@ -25,6 +25,8 @@ namespace Osaka{
 			FactoryPTR factory;
 			/* NOT Owner */
 			RPGApplicationPTR app;
+			/* NOT Owner */
+			TextureManagerPTR texturem;
 		};
 	}
 }

@@ -10,7 +10,7 @@ namespace Osaka{
 
 		class SceneTestFactory : public RPGLib::SceneFactory {
 		public:
-			SceneTestFactory(RPGLib::FactoryPTR& factory, RPGLib::RPGApplicationPTR& app);
+			SceneTestFactory(RPGLib::FactoryPTR& factory, RPGLib::RPGApplicationPTR& app, RPGLib::TextureManagerPTR& texturem);
 			~SceneTestFactory();
 			
 			RPGLib::RPGScenePTR CreatePlaybackIntroScene(const char* name) override;

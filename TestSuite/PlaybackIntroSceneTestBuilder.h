@@ -12,11 +12,13 @@ namespace Osaka{
 		public:
 			PlaybackIntroSceneTestBuilder();
 			~PlaybackIntroSceneTestBuilder();
+
 		protected:
 			RPGLib::PlaybackIntroScriptPTR CreateLayer1Script(RPGLib::PlaybackIntroCanvasPTR& canvas, RPGLib::RPGScenePTR& scene, RPGLib::PlaybackIntroSceneScriptPTR& mainscript) override;
 
+			RPGLib::PlaybackIntroCanvasPTR CreateLayer1Canvas() override;
 		private:
-
+			
 		};
 	}
 }

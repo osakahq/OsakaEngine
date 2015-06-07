@@ -117,7 +117,7 @@ namespace Osaka{
 			fontm->Init(*lib->GetRAWSDLRenderer());
 
 			/* Builders. App/Factory MUST not have unset variables */
-			app->scenefactory = this->CreateSceneFactory(factory, app);
+			app->scenefactory = this->CreateSceneFactory(factory, app, texturem);
 
 			app->Init(data->vsync, data->time_per_frame);
 
@@ -142,8 +142,8 @@ namespace Osaka{
 			return std::make_shared<RPGLib::RPGApplication>(debug, sdl, fileloader, true);
 		}
 
-		SceneFactoryPTR RPGApplicationBuilder::CreateSceneFactory(FactoryPTR& factory, RPGApplicationPTR& app){
-			return std::make_shared<SceneFactory>(factory, app);
+		SceneFactoryPTR RPGApplicationBuilder::CreateSceneFactory(FactoryPTR& factory, RPGApplicationPTR& app, TextureManagerPTR& texturem){
+			return std::make_shared<SceneFactory>(factory, app, texturem);
 		}
 
 	}

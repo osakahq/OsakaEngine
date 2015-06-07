@@ -11,6 +11,7 @@
 #include "RPGApplication.h"
 #include "RPGScene.h"
 #include "UserInterface.h"
+#include "TextureManager.h"
 #include "SceneBuilder.h"
 
 namespace Osaka{
@@ -20,19 +21,26 @@ namespace Osaka{
 			this->ruler = nullptr;
 			this->raw_renderer = NULL;
 			this->factory = nullptr;
+			this->texturem = nullptr;
 		}
 		SceneBuilder::~SceneBuilder(){
 			this->app = nullptr;
 			this->ruler = nullptr;
 			this->raw_renderer = NULL;
 			this->factory = nullptr;
+			this->texturem = nullptr;
 		}
 		
-		void SceneBuilder::Init(RPGApplicationPTR& app, RulerPTR& ruler, SDL_Renderer* raw_renderer, FactoryPTR& factory){
+		void SceneBuilder::Init(RPGApplicationPTR& app, RulerPTR& ruler, SDL_Renderer* raw_renderer, FactoryPTR& factory, TextureManagerPTR& texturem){
 			this->app = app;
 			this->ruler = ruler;
 			this->raw_renderer = raw_renderer;
 			this->factory = factory;
+			this->texturem = texturem;
+
+			if( this->app == nullptr || this->ruler == nullptr || this->raw_renderer == nullptr || this->factory == nullptr || this->texturem == nullptr ){
+				throw std::exception("[SceneBuilder] Init failed.");
+			}
 		}
 		RPGScenePTR SceneBuilder::CreateScene(const char* name){
 			//Basically, this is the `Director`

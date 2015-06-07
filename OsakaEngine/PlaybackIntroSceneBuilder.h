@@ -16,9 +16,11 @@ namespace Osaka{
 			
 			virtual SceneScriptPTR CreateMainScript() override;
 			virtual void CreateLayers(RPGScenePTR& scene, SceneScriptPTR& mainscript) override;
-			virtual LayerDataPTR CreateLayer1(RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript);
+			virtual LayerDataPTR CreateMainLayer(RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript);
+			virtual LayerDataPTR CreateFadeLayer(RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript);
 			virtual PlaybackIntroScriptPTR CreateLayer1Script(PlaybackIntroCanvasPTR& canvas, RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript);
 
+			virtual PlaybackIntroCanvasPTR CreateLayer1Canvas();
 		private:
 
 		};

@@ -28,7 +28,7 @@ namespace Osaka{
 			virtual ~SceneBuilder();
 			//There is no `_delete()` because there is not PTR (See in SceneFactory, it is created then deleted right away)
 
-			virtual void Init(RPGApplicationPTR& app, RulerPTR& ruler, SDL_Renderer* raw_renderer, FactoryPTR& factory);
+			virtual void Init(RPGApplicationPTR& app, RulerPTR& ruler, SDL_Renderer* raw_renderer, FactoryPTR& factory, TextureManagerPTR& texturem);
 
 			/* Gives away ownership */
 			RPGScenePTR CreateScene(const char* name);
@@ -55,6 +55,8 @@ namespace Osaka{
 			SDL_Renderer* raw_renderer;
 			/* NOT Owner */
 			FactoryPTR factory;
+			/* NOT Owner */
+			TextureManagerPTR texturem;
 		private:
 
 		};

@@ -6,5 +6,6 @@
 #pragma once
 #include "targetver.h"
 #include <stdafx.h>
+#include "test_assets.h"
 
 //Here is where you add extra libries:

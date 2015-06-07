@@ -1,5 +1,7 @@
  #include "stdafx.h"
 
+#include "StartMenuSceneScript.h"
+#include "StartMenuCanvas.h"
 #include "StartMenuScript.h"
 
 namespace Osaka{

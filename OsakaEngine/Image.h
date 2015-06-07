@@ -1,21 +1,19 @@
  #include "stdafx.h"
 
-#ifndef RPGLIB_SQUARE_H
-#define RPGLIB_SQUARE_H
+#ifndef RPGLIB_IMAGE_H
+#define RPGLIB_IMAGE_H
 
 #include "Drawable.h"
 
 namespace Osaka{
 	namespace RPGLib{
 
-		class Square : public Drawable{
+		class Image : public Drawable{
 		public:
-			Square(SDL_Renderer* raw_renderer);
-			~Square();
+			Image(SDL_Renderer* raw_renderer, sprite_info& info);
+			~Image();
 			
 			void Draw() override;
-
-			SDL_Rect square;
 		protected:
 			
 		private:
