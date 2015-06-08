@@ -7,7 +7,6 @@ namespace Osaka{
 	namespace RPGLib{
 		Drawable::Drawable(SDL_Renderer* raw_renderer){
 			this->raw_renderer = raw_renderer;
-			info = NULL;
 			rgba.r = 255;
 			rgba.g = 0;
 			rgba.b = 169;
@@ -21,9 +20,7 @@ namespace Osaka{
 		}
 		Drawable::~Drawable(){
 			raw_renderer = NULL;
-			if( info != NULL )
-				delete info;
-
+			
 			//I don't need to manually clear the vectors.
 		}
 

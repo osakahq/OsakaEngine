@@ -14,9 +14,7 @@ namespace Osaka{
 		public:
 			Drawable(SDL_Renderer* raw_renderer);
 			virtual ~Drawable();
-			/* OWNER. Raw pointer */
-			sprite_info* info;
-
+			
 			Engine::RGBA_HEX rgba;
 			double angle;
 			SDL_Point point;

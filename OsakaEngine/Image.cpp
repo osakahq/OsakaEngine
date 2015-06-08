@@ -4,8 +4,8 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		Image::Image(SDL_Renderer* raw_renderer, sprite_info& info) : Drawable(raw_renderer){
-			this->info = &info;
+		Image::Image(SDL_Renderer* raw_renderer, sprite_info* info) : DrawableTexture(raw_renderer, info){
+			
 		}
 		Image::~Image(){
 
