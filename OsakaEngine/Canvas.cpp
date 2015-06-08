@@ -26,9 +26,10 @@ namespace Osaka{
 		void Canvas::Init(LayerPTR& layer_parent){
 			this->layer_parent = layer_parent;
 		}
+
 		/* These functions are not required to be implemented in the derived classes */
 		void Canvas::Enter(){}
-		void Canvas::Load(){}
+		void Canvas::Load(RPGFactoryPTR& factory){}
 		void Canvas::Unload(){}
 		void Canvas::Ready(){}
 		void Canvas::Exit(){}
@@ -36,5 +37,6 @@ namespace Osaka{
 		void Canvas::Show(){}
 		void Canvas::StandBy(){}
 		void Canvas::Focus(){}
+
 	}
 }

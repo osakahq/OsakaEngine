@@ -63,9 +63,7 @@ namespace Osaka{
 		}
 
 		RPGLib::PlaybackIntroCanvasPTR PlaybackIntroSceneBuilder::CreateLayer1Canvas(){
-			RPGLib::ImagePTR engine_logo = std::make_shared<RPGLib::Image>(raw_renderer, *texturem->CreateSpriteRAWPointer(DEFAULT_TEXTURE_ENGINELOGO));
-			RPGLib::ImagePTR gamestudio_logo = std::make_shared<RPGLib::Image>(raw_renderer, *texturem->CreateSpriteRAWPointer(DEFAULT_TEXTURE_GAMESTUDIOLOGO));
-			RPGLib::PlaybackIntroCanvasPTR canvas = std::make_shared<RPGLib::PlaybackIntroCanvas>(this->raw_renderer, this->ruler, engine_logo, gamestudio_logo);
+			RPGLib::PlaybackIntroCanvasPTR canvas = std::make_shared<RPGLib::PlaybackIntroCanvas>(this->raw_renderer, this->ruler, DEFAULT_TEXTURE_ENGINELOGO, DEFAULT_TEXTURE_GAMESTUDIOLOGO);
 			return canvas;
 		}
 	}

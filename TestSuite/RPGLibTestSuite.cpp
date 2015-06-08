@@ -10,6 +10,7 @@
 #include <ServerConn.h>
 #include <GameDataLoader.h>
 #include <SceneFactory.h>
+#include <GameSessionManager.h>
 #include <RPGFactory.h>
 #include <GameData.h>
 #include <RPGApplication.h>
@@ -51,8 +52,7 @@ namespace Osaka{
 			/* To know which phase does what, refer to `testsuite_run.cpp` */
 			if( phase == TEST_PHASE::PHASE1 ){
 				this->rpgapp = appbuilder->Create("tests\\SceneTests_Phase1\\phase1_data.xml", "tests\\SceneTests_Phase1\\does_not_exists.xml", "tests\\SceneTests_Phase1\\does_not_exists.7z", debug);
-				rpgapp->SetGameSessionManager(rpgapp->rpgfactory->CreateGameSessionManagerFromGameData());
-
+				
 				int tests[] = {TESTID_PHASE1_PLAYBACKLOAD, TESTID_PHASE1_PLAYBACKLOAD_LINKED};
 				AddExpectedTests(sizeof(tests)/sizeof(*tests), tests);
 				rpgapp->AddScene("playbackintro_phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreatePlaybackIntroScene("playbackintro_phase1_test1")));

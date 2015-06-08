@@ -40,10 +40,11 @@ namespace Osaka{
 			return this->id;
 		}
 		
-		void RPGScene::Load(){
-			mainscript->Load();
+		void RPGScene::Load(){}
+		void RPGScene::Load(RPGFactoryPTR& factory){
+			mainscript->Load(factory);
 			for( auto it = layers.begin(); it != layers.end(); ++it){
-				it->second->Load();
+				it->second->Load(factory);
 			}
 		}
 		void RPGScene::Unload(){

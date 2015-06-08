@@ -18,6 +18,7 @@
 #include "RPGScene.h"
 #include "LoadingSceneScript.h"
 
+#include "GameSessionManager.h"
 #include "GameSession.h"
 #include "Settings.h"
 #include "GameData.h"
@@ -66,7 +67,7 @@ namespace Osaka{
 			factory->app = app;
 			app->factory = factory;
 
-			RPGFactoryPTR rpgfactory = std::make_shared<RPGFactory>(debug, data);
+			RPGFactoryPTR rpgfactory = std::make_shared<RPGFactory>(debug, data, factory);
 			app->rpgfactory = rpgfactory;
 			
 			/* ------------------------------------------------------------------------ */
@@ -119,7 +120,7 @@ namespace Osaka{
 			/* Builders. App/Factory MUST not have unset variables */
 			app->scenefactory = this->CreateSceneFactory(factory, app, texturem);
 
-			app->Init(data->vsync, data->time_per_frame);
+			app->Init(data->vsync, data->time_per_frame, std::make_shared<GameSessionManager>(data));
 
 			/* -------------------------------------------------------------------- */
 			/* --- After this point, everything is loaded ------------------------------------------------------------------- */

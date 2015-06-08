@@ -12,7 +12,7 @@ namespace Osaka{
 			virtual void _delete();
 			
 			virtual void Init(RPGScenePTR& scene_parent);
-			virtual void Load();
+			virtual void Load(RPGFactoryPTR& factory);
 			virtual void Unload();
 
 			virtual void Enter();

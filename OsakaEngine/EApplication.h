@@ -24,7 +24,7 @@ namespace Osaka{
 			/* Takes owner ship of the scene */
 			void AddScene(std::string id, EScenePTR& scene);
 			/* Class a scene load function. Called from AssetManager (loading thread) */
-			void CallLoad(std::string id);
+			virtual void CallLoad(std::string id);
 
 			/* In case the derived class wants to run some code every update */
 			virtual void Update() = 0;
@@ -48,7 +48,7 @@ namespace Osaka{
 			void RemoveAllFromStack(const char* except_scene = NULL);
 
 		/* ----------------------------------------------------------------------------------- */
-		private:
+		protected:
 			/* Owner. This class is the owner of the scenes. So, it is its responsability to delete them */
 			std::unordered_map<std::string, EScenePTR> scenes;
 

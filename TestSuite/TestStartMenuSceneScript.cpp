@@ -19,8 +19,8 @@ namespace Osaka{
 
 		}
 		
-		void TestStartMenuSceneScript::Load(){
-			StartMenuSceneScript::Load();
+		void TestStartMenuSceneScript::Load(RPGLib::RPGFactoryPTR& factory){
+			StartMenuSceneScript::Load(factory);
 			is_loaded = true;
 		}
 

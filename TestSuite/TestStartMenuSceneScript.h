@@ -12,7 +12,7 @@ namespace Osaka{
 			TestStartMenuSceneScript(RPGLib::RPGApplicationPTR& app);
 			~TestStartMenuSceneScript();
 			
-			void Load() override;
+			void Load(RPGLib::RPGFactoryPTR& factory) override;
 			void End() override;
 		protected:
 			

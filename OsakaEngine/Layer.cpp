@@ -39,10 +39,10 @@ namespace Osaka{
 		}
 
 		/* These functions are not required to be implemented in the derived classes */
-		void Layer::Load(){
-			script->Load();
-			canvas->Load();
-			ui->Load();
+		void Layer::Load(RPGFactoryPTR& factory){
+			script->Load(factory);
+			canvas->Load(factory);
+			ui->Load(factory);
 		}
 		void Layer::Unload(){
 			script->Unload();

@@ -34,15 +34,19 @@ namespace Osaka{
 			return gs;
 		}
 		GameSessionManagerPTR GameSessionManager::CreateGameSessionManagerFromGameData(){
-			GameSessionManagerPTR gsm = std::make_shared<GameSessionManager>();
+			/* TODO: Creo que necesito crear SessionManager, GameSessionManager maneja SessionManager el cual tiene las sesiones del juego.
+			 * Las sesiones sirve por ejemplo: FF8, cuando esta en la historia principal pero esta la historia de Lagoon. */
+
+			//--GameSessionManagerPTR gsm = std::make_shared<GameSessionManager>();
 			
 			//For each gamesession in the XML data file (game-sessions node)
-			for( auto it = data->gamesessions->begin(); it != data->gamesessions->end(); ++it ){
+			//--for( auto it = data->gamesessions->begin(); it != data->gamesessions->end(); ++it ){
 				//We have the struct data so we only need to create the GameSession class from it
-				gsm->InsertSession(it->first, this->CreateGameSession(it->second));
-			}
+			//--	gsm->InsertSession(it->first, this->CreateGameSession(it->second));
+			//--}
 			
-			return gsm;
+			//--return gsm;
+			return nullptr;
 		}
 	}
 }

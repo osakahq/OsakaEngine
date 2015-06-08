@@ -12,7 +12,8 @@ namespace Osaka{
 			virtual void _delete();
 			
 			virtual void Init(LayerPTR& layer_parent);
-			virtual void Load();
+			
+			virtual void Load(RPGFactoryPTR& factory);
 			virtual void Unload();
 
 			virtual void Enter();

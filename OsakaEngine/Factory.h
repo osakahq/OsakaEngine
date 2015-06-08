@@ -31,6 +31,7 @@ namespace Osaka{
 			Engine::IFileLoaderPTR fileloader;
 			AssetManagerPTR assetm;
 			TimeManagerPTR timem;
+			TextureManagerPTR texturem;
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			/* NOT Owner */

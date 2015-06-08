@@ -24,7 +24,7 @@ namespace Osaka{
 		/* These functions are not required to be implemented in the derived classes */
 		void SceneScript::Enter(){}
 		void SceneScript::Ready(Engine::ESceneArgsPTR& args){}
-		void SceneScript::Load(){}
+		void SceneScript::Load(RPGFactoryPTR& factory){}
 		void SceneScript::Unload(){}
 		void SceneScript::Exit(){}
 

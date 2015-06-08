@@ -16,8 +16,8 @@ namespace Osaka{
 			onelayer->_delete(); onelayer = nullptr;
 		}
 		
-		void OneLayerScene::Load(){
-			onelayer->Load();
+		void OneLayerScene::Load(RPGFactoryPTR& factory){
+			onelayer->Load(factory);
 		}
 		void OneLayerScene::Unload(){
 			onelayer->Unload();

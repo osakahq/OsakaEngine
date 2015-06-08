@@ -29,7 +29,7 @@ namespace Osaka{
 		void PlaybackIntroScript::Init(LayerPTR& layer_parent){
 			Script::Init(layer_parent);
 		}
-		void PlaybackIntroScript::Load(){
+		void PlaybackIntroScript::Load(RPGFactoryPTR& factory){
 			//called from the loading thread.
 			app->debug->l("[PlaybackIntroScript] Load called.");
 		}

@@ -30,7 +30,7 @@ namespace Osaka{
 	namespace RPGLib{
 		RPGApplication::RPGApplication(Debug::DebugPTR& d, Engine::SDLLibPTR& sdl, Engine::IFileLoaderPTR& fileloader, const bool _show_fpscounter) 
 			: EApplication(d, sdl, fileloader), show_fpscounter(_show_fpscounter){
-			this->sessionm = nullptr;
+			gsm = nullptr;
 			assetm = nullptr;
 			ruler = nullptr;
 			counter = nullptr;
@@ -52,7 +52,7 @@ namespace Osaka{
 			rpgfactory->_delete(); rpgfactory = nullptr;
 			loader->_delete(); loader = nullptr;
 			assetm->_delete(); assetm = nullptr;
-			sessionm->_delete(); sessionm = nullptr;
+			gsm->_delete(); gsm = nullptr;
 
 			ruler->_delete(); ruler = nullptr;
 			timem->_delete(); timem = nullptr;
@@ -61,13 +61,18 @@ namespace Osaka{
 			//loadingscene = nullptr;
 			initscene = nullptr;
 		}
-		void RPGApplication::Init(bool vsync, int timePerFrame){
+		void RPGApplication::Init(bool vsync, int timePerFrame, GameSessionManagerPTR& gsm){
 			EApplication::Init(vsync, timePerFrame);
+			this->gsm = gsm;
 			if( settings == nullptr || gameData == nullptr  || factory == nullptr || rpgfactory == nullptr || scenefactory == nullptr ||
-				loader == nullptr || assetm == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr)
+				loader == nullptr || assetm == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr || this->gsm == nullptr)
 			{
 				debug->e("[RPGApplication] Init failed.");
 			}
+		}
+
+		void RPGApplication::CallLoad(std::string id){
+			std::dynamic_pointer_cast<RPGScene>(scenes[id])->Load(rpgfactory);
 		}
 
 		void RPGApplication::Update(){
@@ -105,23 +110,6 @@ namespace Osaka{
 			EApplication::Run();
 		}
 
-		void RPGApplication::SetGameSessionManager(GameSessionManagerPTR initialGSM){
-			this->sessionm = initialGSM;
-		}
-		
-		void RPGApplication::SetLoadingScene(std::string loadingscene_id){
-			this->loadingscene_id = loadingscene_id;
-		}
-		void RPGApplication::SetInitScene(InitScenePTR& scene){
-			this->initscene = scene;
-		}
-
-		GameSessionManagerPTR RPGApplication::GetGameSessionManager(){
-			//See RPGScene:Reset() function
-			//resetScenes.push_back(scene.id);
-			return sessionm;
-		}
-
 		void RPGApplication::FadeStackTransition(const char* scene, Engine::ESceneArgsPTR& params){
 			LoadingArgsPTR args = std::make_shared<LoadingArgs>();
 			args->scene = scene;
@@ -144,6 +132,18 @@ namespace Osaka{
 			Stack(loadingscene_id.c_str(), std::static_pointer_cast<Engine::ESceneArgs>(args));
 		}
 
+		void RPGApplication::SetLoadingScene(std::string loadingscene_id){
+			this->loadingscene_id = loadingscene_id;
+		}
+		void RPGApplication::SetInitScene(InitScenePTR& scene){
+			this->initscene = scene;
+		}
+		
+		GameSessionManagerPTR RPGApplication::GetGameSessionManager(){
+			//See RPGScene:Reset() function
+			//resetScenes.push_back(scene.id);
+			return gsm;
+		}
 		void RPGApplication::SaveGame(const char* filename){
 
 		}

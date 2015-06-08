@@ -13,7 +13,8 @@ namespace Osaka{
 			virtual ~RPGScene();
 			virtual void _delete() override;
 			
-			virtual void Load() override;
+			virtual void Load() override; //Not used.
+			virtual void Load(RPGFactoryPTR& factory);
 			virtual void Unload() override;
 
 			virtual void Enter() override;

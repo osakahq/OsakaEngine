@@ -38,7 +38,10 @@ namespace Osaka{
 			FPSCounterPTR counter;
 
 			/* Check that the references are set */
-			virtual void Init(bool vsync, int timePerFrame) override;
+			virtual void Init(bool vsync, int timePerFrame, GameSessionManagerPTR& gsm);
+
+			/* Overrides so that it can send RPGFactory */
+			virtual void CallLoad(std::string id) override;
 
 			/* Runs every frame */
 			virtual void Update() override;
@@ -52,8 +55,6 @@ namespace Osaka{
 			/* NOT Owner.  */
 			void SetInitScene(InitScenePTR& scene);
 
-			/* Owner of GameSession. */
-			void SetGameSessionManager(GameSessionManagerPTR initialGSM);
 			/* Doesn't give away ownership. */
 			GameSessionManagerPTR GetGameSessionManager();
 
@@ -77,7 +78,7 @@ namespace Osaka{
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			/* Owner. This has to be private because scenes need to be registered in order to get it. */
-			GameSessionManagerPTR sessionm;
+			GameSessionManagerPTR gsm;
 
 			/* Scene: Responsible of adding the loading scene (itself) and calling GameLoader */
 			std::string loadingscene_id;

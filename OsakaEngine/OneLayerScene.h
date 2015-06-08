@@ -14,7 +14,7 @@ namespace Osaka{
 			~OneLayerScene();
 			void _delete() override;
 			
-			void Load() override;
+			void Load(RPGFactoryPTR& factory) override;
 			void Unload() override;
 
 			void ReadyStandBy(Engine::ESceneArgsPTR& params) override;

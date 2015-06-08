@@ -8,6 +8,7 @@
 #include "Music.h"
 #include "SoundEffect.h"
 #include "Texture.h"
+#include "TextureManager.h"
 #include "AssetManager.h"
 #include "GameData.h"
 #include "GameDataLoader.h"
@@ -37,9 +38,10 @@ namespace Osaka{
 			fileloader = nullptr;
 			app = nullptr;
 			timem = nullptr;
+			texturem = nullptr;
 		}
 		void Factory::Check(){
-			if( app == nullptr || sdl == nullptr || fileloader == nullptr || assetm == nullptr || timem == nullptr ){
+			if( app == nullptr || sdl == nullptr || fileloader == nullptr || assetm == nullptr || timem == nullptr || texturem == nullptr ){
 				debug->e("[Factory] Init failed.");
 			}
 		}

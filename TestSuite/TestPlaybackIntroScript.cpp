@@ -13,8 +13,8 @@ namespace Osaka{
 
 		}
 		
-		void TestPlaybackIntroScript::Load(){
-			PlaybackIntroScript::Load();
+		void TestPlaybackIntroScript::Load(RPGLib::RPGFactoryPTR& factory){
+			PlaybackIntroScript::Load(factory);
 			_is_loaded = true;
 		}
 		
