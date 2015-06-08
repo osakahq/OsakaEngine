@@ -1,5 +1,8 @@
  #include "stdafx.h"
 
+#ifdef _DEBUG
+	#include <Psapi.h>
+#endif
 #include "Hiccups.h"
 #include "StaticText.h"
 #include "engine_include.h"
@@ -21,6 +24,9 @@ namespace Osaka{
 			calls = 0;
 			//this->target_fps = target_fps;
 
+			seconds = FPSCOUNTER_SECONDS_RAM;
+			usedMB = "";
+
 			hiccups = new Hiccups();
 		}
 		FPSCounter::~FPSCounter(){
@@ -29,7 +35,7 @@ namespace Osaka{
 		void FPSCounter::_delete(){
 			font = nullptr;
 			debug = nullptr;
-
+			stext_ram->_delete(); stext_ram = nullptr;
 			stext_fps->_delete(); stext_fps = nullptr;
 			stext_avg->_delete(); stext_avg = nullptr;
 		}
@@ -45,6 +51,7 @@ namespace Osaka{
 
 			stext_fps = font->CreateStaticText("fps", 5, 5, 3);
 			stext_avg = font->CreateStaticText("avg", 5, space_y + 5, 3);
+			stext_ram = font->CreateStaticText("ram", 5, space_y + 20, 3);
 		}
 		
 		void FPSCounter::BeforePresent(){
@@ -72,10 +79,35 @@ namespace Osaka{
 					//If the application is starting to slow, make sure to announce that BeforePresent was called late
 					debug->l("[FPSCounter] BeforePresent() was called very late: " + std::to_string(time));
 				}
+
+				++seconds;
+				if( seconds >= FPSCOUNTER_SECONDS_RAM ){
+					PROCESS_MEMORY_COUNTERS_EX pmc;
+					if( GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc)) ){
+						char buff[6] = "";
+						sprintf_s(buff, "%.2f", (static_cast<float>(pmc.PrivateUsage)/1024)/1024);
+						usedMB = buff;
+						usedMB += "|";
+						sprintf_s(buff, "%.2f", (static_cast<float>(pmc.WorkingSetSize)/1024)/1024);
+						usedMB += buff;
+					}else{
+						usedMB = "error";
+						debug->l("[FPSCounter] ERROR! GetProcessMemoryInfo returned false.");
+					}
+					seconds = 0;
+				}
+				if( seconds > 0 && seconds % 3 == 0 ){
+					usedMB += ".";
+				}
 #endif
 			}
 			stext_fps->Render();
 			font->RenderTextLine(current_fps, space_x, 5);
+
+#ifdef _DEBUG
+			stext_ram->Render();
+			font->RenderTextLine(usedMB, space_x,space_y+20);
+#endif
 		}
 
 		/* This is only called if `show_fpscounter` (in RPGApplication) is true */

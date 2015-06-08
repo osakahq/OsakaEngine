@@ -2,6 +2,9 @@
 
 #ifndef RPGLIB_FPSCOUNTER_H
 #define RPGLIB_FPSCOUNTER_H
+
+#define FPSCOUNTER_SECONDS_RAM 12
+
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
@@ -52,6 +55,12 @@ namespace Osaka{
 			StaticTextPTR stext_fps;
 			/* Owner */
 			StaticTextPTR stext_avg;
+
+			/* Owner */
+			StaticTextPTR stext_ram;
+			std::string usedMB;
+			/* Every FPSCOUNTER_SECONDS_RAM seconds it will update */
+			int seconds;
 		};
 	}
 }
