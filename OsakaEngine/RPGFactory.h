@@ -14,22 +14,10 @@ namespace Osaka{
 			void _delete();
 			//void Init();
 
-			/* Gives away ownership. 
-			 * It creates the sample gamesessions for newgame (acquired from the data game file) */
-			GameSessionManagerPTR CreateGameSessionManagerFromGameData();
-			/* Gives away ownership. 
-			 * This functions is to load games. */
-			GameSessionManagerPTR CreateGameSessionManager(unorderedmap_gamesession_dataPTR& gamesessions);
-			/* Gives away onwership.
-			 * This is used to save games */
-			unorderedmap_gamesession_dataPTR CreateGameSessionStructs(GameSessionManagerPTR& gsm);
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			/* NOT Owner. GameData ownership is in RPGApplication */
 			GameDataPTR data;
-
-			/* Gives away ownership. */
-			GameSessionPTR CreateGameSession(gamesession_dataPTR& session);
 
 			/* NOT Owner. */
 			Debug::DebugPTR debug;
