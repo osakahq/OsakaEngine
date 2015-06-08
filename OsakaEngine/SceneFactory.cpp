@@ -3,6 +3,7 @@
 #include "EScene.h"
 #include "DummyScene.h"
 
+#include "SceneScript.h"
 #include "SDLLib.h"
 #include "RPGApplication.h"
 #include "Factory.h"
@@ -56,7 +57,10 @@ namespace Osaka{
 		}
 
 		std::shared_ptr<DummyScene> SceneFactory::CreateDummyScene(const char* name){
-			DummyScenePTR scene = std::make_shared<DummyScene>(name);
+			SceneScriptPTR& mainscript = std::make_shared<SceneScript>(app);
+			DummyScenePTR scene = std::make_shared<DummyScene>(name, mainscript);
+			/* Not really needed, but just in case. */
+			mainscript->Init(std::static_pointer_cast<RPGScene>(scene));
 			return scene;
 		}
 	}

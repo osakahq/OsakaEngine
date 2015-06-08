@@ -74,7 +74,8 @@ namespace Osaka{
 			/* --- Managers ----------------------------------------------------------- */
 			TextureManagerPTR texturem = std::make_shared<TextureManager>(factory);
 			texturem->SetSpritemaps(data->spritemaps, data->sprite_ids);
-			
+			factory->texturem = texturem;
+
 			FontManagerPTR fontm = std::make_shared<FontManager>(texturem, data->fontmap_error, data->fontmap_space_x, data->fontmap_space_y);
 			fontm->SetFontmap(data->fontmap);
 			

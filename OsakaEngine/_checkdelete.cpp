@@ -28,6 +28,7 @@ void _STARTCHECKDELETE(bool ascension){
 	_check_delete_info["GameDataLoader"] = false;
 	_check_delete_info["GameData"] = false;
 	_check_delete_info["GameData_delete"] = false;
+	_check_delete_info["Effect"] = true;
 	_check_delete_info["Layer"] = true;
 	_check_delete_info["SceneScript"] = true;
 	_check_delete_info["LoadingSceneScript"] = false;

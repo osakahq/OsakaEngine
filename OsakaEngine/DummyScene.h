@@ -1,15 +1,15 @@
  #include "stdafx.h"
 #ifndef RPGLIB_DUMMYSCENE_H
 #define RPGLIB_DUMMYSCENE_H
-#include "EScene.h"
+#include "RPGScene.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
 		
 		/*  */
-		class DummyScene : public Engine::EScene{
+		class DummyScene : public RPGScene{
 		public:
-			DummyScene(std::string id);
+			DummyScene(std::string id, SceneScriptPTR& mainscript);
 			~DummyScene();
 			void _delete() override;
 			
@@ -21,6 +21,7 @@ namespace Osaka{
 			/* I need to implement these methods because I'm inheriting from EScene and not RPGScene */
 			void Enter() override;
 			void Load() override;
+			void Load(RPGFactoryPTR& factory) override;
 			void Unload() override;
 			void Exit() override;
 			void ReadyStandBy(Engine::ESceneArgsPTR& params) override;

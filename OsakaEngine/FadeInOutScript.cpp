@@ -11,20 +11,21 @@
 namespace Osaka{
 	namespace RPGLib{
 		FadeInOutScript::FadeInOutScript(RPGApplicationPTR& app, RPGScenePTR& parent, FadeInOutCanvasPTR& canvas) : Script(app, parent){
-			canvas->endAnimation->Hook(FADEINOUTSCRIPT_MIDANIMATION, std::bind(&FadeInOutScript::OnCanvasEndAnimation, this, std::placeholders::_1));
-			canvas->midAnimation->Hook(FADEINOUTSCRIPT_ENDANIMATION, std::bind(&FadeInOutScript::OnCanvasMidAnimation, this, std::placeholders::_1));
+			this->canvas = canvas;
+			canvas->endAnimation->Hook(FADEINOUTSCRIPT_ENDANIMATION, std::bind(&FadeInOutScript::OnCanvasEndAnimation, this, std::placeholders::_1));
+			canvas->midAnimation->Hook(FADEINOUTSCRIPT_MIDANIMATION, std::bind(&FadeInOutScript::OnCanvasMidAnimation, this, std::placeholders::_1));
 		}
 		FadeInOutScript::~FadeInOutScript(){
 
 		}
 		void FadeInOutScript::_delete(){
-			Script::_delete();
-			canvas->endAnimation->Unhook(FADEINOUTSCRIPT_MIDANIMATION);
-			canvas->midAnimation->Unhook(FADEINOUTSCRIPT_ENDANIMATION);
+			canvas->endAnimation->Unhook(FADEINOUTSCRIPT_ENDANIMATION);
+			canvas->midAnimation->Unhook(FADEINOUTSCRIPT_MIDANIMATION);
 
 			callbackOnMidAnimation = nullptr;
 			callbackOnEndAnimation = nullptr;
 			canvas = nullptr;
+			Script::_delete();
 		}
 			
 		/* This function is called when entering the stack */

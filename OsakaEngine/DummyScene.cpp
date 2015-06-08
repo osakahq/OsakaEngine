@@ -2,14 +2,14 @@
 #include "DummyScene.h"
 namespace Osaka{
 	namespace RPGLib{
-		DummyScene::DummyScene(std::string id){
-			this->id = id;
+		DummyScene::DummyScene(std::string id, SceneScriptPTR& mainscript) : RPGScene(id, mainscript){
+			
 		}
 		DummyScene::~DummyScene(){
 		
 		}
 		void DummyScene::_delete(){
-
+			RPGScene::_delete();
 		}
 		std::string DummyScene::GetId(){
 			return id;
@@ -24,6 +24,7 @@ namespace Osaka{
 		}
 		
 		void DummyScene::Enter(){};
+		void DummyScene::Load(RPGFactoryPTR& factory){}
 		void DummyScene::Load(){};
 		void DummyScene::Unload() {};
 		void DummyScene::Exit() {};
