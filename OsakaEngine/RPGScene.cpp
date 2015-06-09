@@ -92,8 +92,12 @@ namespace Osaka{
 		}
 
 		void RPGScene::Add(LayerPTR layer){
+			if( layers.find(layer->id) != layers.end() ){
+				throw std::exception("[RPGScene] Duplicated layer id.");
+			}
+			/* This function can only be called inside a SceneBuilder */
 			layers[layer->id] = layer;
-			stackHasChanged = true;
+			//You can't add layers inside the loop. stackHasChanged = true;
 		}
 		void RPGScene::Stack(std::string id, LayerArgsPTR& args){
 			if( stack_layers.size() > 0 ){

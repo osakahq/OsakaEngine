@@ -7,6 +7,7 @@
 #include "Debug.h"
 #include "Settings.h"
 #include "GameData.h"
+#include "GameDataParams.h"
 #include "Ruler.h"
 #include "TextureManager.h"
 #include "SoundManager.h"
@@ -34,7 +35,7 @@ namespace Osaka{
 			assetm = nullptr;
 			ruler = nullptr;
 			counter = nullptr;
-
+			gameDataParams = nullptr;
 		}
 
 		RPGApplication::~RPGApplication(){
@@ -46,6 +47,7 @@ namespace Osaka{
 			EApplication::_delete();
 			settings->_delete(); settings = nullptr;
 			gameData->_delete(); gameData = nullptr;
+			gameDataParams->_delete(); gameDataParams = nullptr;
 			
 			scenefactory->_delete(); scenefactory = nullptr;
 			factory->_delete(); factory = nullptr;
@@ -65,7 +67,7 @@ namespace Osaka{
 			EApplication::Init(vsync, timePerFrame);
 			this->gsm = gsm;
 			if( settings == nullptr || gameData == nullptr  || factory == nullptr || rpgfactory == nullptr || scenefactory == nullptr ||
-				loader == nullptr || assetm == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr || this->gsm == nullptr)
+				loader == nullptr || assetm == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr || this->gsm == nullptr || gameDataParams == nullptr)
 			{
 				debug->e("[RPGApplication] Init failed.");
 			}

@@ -15,6 +15,8 @@ namespace Osaka{
 		{
 			loadCompleted = false;
 			this->assetm = assetm;
+
+			fadelayer_id = "_fadelayer";
 		}
 		LoadingSceneScript::~LoadingSceneScript(){
 #ifdef _DEBUG
@@ -27,10 +29,6 @@ namespace Osaka{
 #endif	
 			SceneScript::_delete();
 			assetm = nullptr;
-		}
-		void LoadingSceneScript::SetLayers(std::string fadelayer_id){
-			//Remember there is an Init function. Only set the strings here.
-			this->fadelayer_id = fadelayer_id;
 		}
 		
 		void LoadingSceneScript::LoadCompleted(){

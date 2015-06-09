@@ -13,15 +13,13 @@ namespace Osaka{
 			virtual ~StartMenuSceneScript();
 			void _delete() override;
 
-			/* */
-			void SetLayers(std::string enginelogo_layer);
 			void Ready(Engine::ESceneArgsPTR& params) override;
+
+			std::string mainlayer_id;
 		protected:
 			
 		private:
 			
-			/*  */
-			std::string enginelogo_layer;
 		};
 	}
 }

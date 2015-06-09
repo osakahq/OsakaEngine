@@ -22,6 +22,7 @@
 #include "GameSession.h"
 #include "Settings.h"
 #include "GameData.h"
+#include "GameDataParams.h"
 #include "TextureManager.h"
 #include "FontManager.h"
 #include "SoundManager.h"
@@ -59,6 +60,8 @@ namespace Osaka{
 			app->loader = loader;
 			app->gameData = data;
 
+			GameDataParamsPTR dataparams = this->CreateGameDataParams(data);
+			app->gameDataParams = dataparams;
 			/* ----------------------------------------------------------------------- */
 			/* --- Factory ----------------------------------------------------------- */
 			FactoryPTR factory = std::make_shared<Factory>(debug);
@@ -67,7 +70,7 @@ namespace Osaka{
 			factory->app = app;
 			app->factory = factory;
 
-			RPGFactoryPTR rpgfactory = std::make_shared<RPGFactory>(debug, data, factory);
+			RPGFactoryPTR rpgfactory = std::make_shared<RPGFactory>(debug, data, dataparams, factory);
 			app->rpgfactory = rpgfactory;
 			
 			/* ------------------------------------------------------------------------ */
@@ -122,7 +125,7 @@ namespace Osaka{
 			app->scenefactory = this->CreateSceneFactory(factory, app, texturem);
 
 			app->Init(data->vsync, data->time_per_frame, std::make_shared<GameSessionManager>(data));
-
+			dataparams->SetParams();
 			/* -------------------------------------------------------------------- */
 			/* --- After this point, everything is loaded ------------------------------------------------------------------- */
 
@@ -148,5 +151,8 @@ namespace Osaka{
 			return std::make_shared<SceneFactory>(factory, app, texturem);
 		}
 
+		GameDataParamsPTR RPGApplicationBuilder::CreateGameDataParams(GameDataPTR& data){
+			return std::make_shared<GameDataParams>(data);
+		}
 	}
 }

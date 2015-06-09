@@ -1,4 +1,5 @@
  #include "stdafx.h"
+#include "GameDataParams.h"
 #include "Ruler.h"
 #include "SDLLib.h"
 #include "Debug.h"
@@ -13,9 +14,7 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		PlaybackIntroCanvas::PlaybackIntroCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler, std::string id_engine_logo, std::string id_gamestudio_logo) : Canvas(raw_renderer, ruler){
-			this->id_engine_logo = id_engine_logo;
-			this->id_gamestudio_logo = id_gamestudio_logo;
+		PlaybackIntroCanvas::PlaybackIntroCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler) : Canvas(raw_renderer, ruler){
 			this->engine_logo = nullptr;
 			this->gamestudio_logo = nullptr;
 		}
@@ -24,8 +23,8 @@ namespace Osaka{
 		}
 		void PlaybackIntroCanvas::Load(RPGFactoryPTR& factory){
 			//This will only called once because of the asset_loading_type (and the fact that there is no implementation of unload)
-			engine_logo = factory->CreateImage(id_engine_logo);
-			gamestudio_logo = factory->CreateImage(id_gamestudio_logo);
+			engine_logo = factory->CreateImage(factory->gamedataparams->engine_logo);
+			gamestudio_logo = factory->CreateImage(factory->gamedataparams->gamestudio_logo);
 		}
 		void PlaybackIntroCanvas::Unload(){
 			//Just an example. This function will never be called (for now)

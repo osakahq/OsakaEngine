@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "GameData.h"
+#include "GameDataParams.h"
 #include "GameSession.h"
 #include "GameSessionManager.h"
 #include "RPGApplication.h"
@@ -13,10 +14,11 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		RPGFactory::RPGFactory(Debug::DebugPTR& debug, GameDataPTR& data, FactoryPTR& factory){
+		RPGFactory::RPGFactory(Debug::DebugPTR& debug, GameDataPTR& data, GameDataParamsPTR& gdp, FactoryPTR& factory){
 			this->debug = debug;
 			this->data = data;
 			this->factory = factory;
+			this->gamedataparams = gdp;
 		}
 		RPGFactory::~RPGFactory(){
 			
@@ -25,6 +27,7 @@ namespace Osaka{
 			debug = nullptr;
 			data = nullptr;
 			factory = nullptr;
+			gamedataparams = nullptr;
 		}
 		
 		ImagePTR RPGFactory::CreateImage(std::string id_sprite){

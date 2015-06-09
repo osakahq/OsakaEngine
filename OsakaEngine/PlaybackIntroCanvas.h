@@ -9,7 +9,7 @@ namespace Osaka{
 		
 		class PlaybackIntroCanvas : public Canvas{
 		public:
-			PlaybackIntroCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler, std::string id_engine_logo, std::string id_gamestudio_logo);
+			PlaybackIntroCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler);
 			~PlaybackIntroCanvas();
 			void _delete();
 
@@ -19,8 +19,8 @@ namespace Osaka{
 			void Draw() override;
 		private:
 			//There are no owners for Drawable objects.
-			std::string id_engine_logo; ImagePTR engine_logo; 
-			std::string id_gamestudio_logo; ImagePTR gamestudio_logo;
+			ImagePTR engine_logo; 
+			ImagePTR gamestudio_logo;
 		};
 	}
 }

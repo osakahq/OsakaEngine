@@ -31,9 +31,10 @@ namespace Osaka{
 		}
 		void PlaybackIntroSceneBuilder::CreateLayers(RPGScenePTR& scene, SceneScriptPTR& mainscript){
 			PlaybackIntroSceneScriptPTR pmainscript = std::dynamic_pointer_cast<PlaybackIntroSceneScript>(mainscript);
-			pmainscript->SetLayers("mainlayer");
-			this->LayerWrapper(CreateMainLayer(scene, pmainscript), scene);
-			this->LayerWrapper(CreateFadeLayer(scene, pmainscript), scene);
+			
+			/* The reason LayerWrapper has id_layer is that it can be safely overriden (`CreateMainLayer`, etc. functions) */
+			this->LayerWrapper(pmainscript->mainlayer_id, CreateMainLayer(scene, pmainscript), scene);
+			this->LayerWrapper(pmainscript->fadelayer_id, CreateFadeLayer(scene, pmainscript), scene);
 		}
 
 		LayerDataPTR PlaybackIntroSceneBuilder::CreateMainLayer(RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript){
@@ -45,7 +46,7 @@ namespace Osaka{
 			//LayerPTR layer = CreateAndInitLayer(...);
 			//InitLayer1(); -> So that it can be overriden in child class.
 
-			LayerDataPTR data = std::make_shared<LayerData>("mainlayer", std::static_pointer_cast<Script>(script), std::static_pointer_cast<Canvas>(canvas), ui);
+			LayerDataPTR data = std::make_shared<LayerData>(std::static_pointer_cast<Script>(script), std::static_pointer_cast<Canvas>(canvas), ui);
 			return data;
 		}
 		LayerDataPTR PlaybackIntroSceneBuilder::CreateFadeLayer(RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript){
@@ -55,7 +56,7 @@ namespace Osaka{
 			FadeInOutScriptPTR script = std::make_shared<FadeInOutScript>(app, scene, canvas);
 			UserInterfacePTR ui = CreateDummyUI();
 
-			LayerDataPTR data = std::make_shared<LayerData>("fadelayer", std::static_pointer_cast<Script>(script), std::static_pointer_cast<Canvas>(canvas), ui);
+			LayerDataPTR data = std::make_shared<LayerData>(std::static_pointer_cast<Script>(script), std::static_pointer_cast<Canvas>(canvas), ui);
 			return data;
 		}
 		PlaybackIntroScriptPTR PlaybackIntroSceneBuilder::CreateLayer1Script(PlaybackIntroCanvasPTR& canvas, RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript){
@@ -63,7 +64,7 @@ namespace Osaka{
 		}
 
 		RPGLib::PlaybackIntroCanvasPTR PlaybackIntroSceneBuilder::CreateLayer1Canvas(){
-			RPGLib::PlaybackIntroCanvasPTR canvas = std::make_shared<RPGLib::PlaybackIntroCanvas>(this->raw_renderer, this->ruler, DEFAULT_TEXTURE_ENGINELOGO, DEFAULT_TEXTURE_GAMESTUDIOLOGO);
+			RPGLib::PlaybackIntroCanvasPTR canvas = std::make_shared<RPGLib::PlaybackIntroCanvas>(this->raw_renderer, this->ruler);
 			return canvas;
 		}
 	}

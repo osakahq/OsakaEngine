@@ -25,8 +25,8 @@ namespace Osaka{
 			return std::static_pointer_cast<SceneScript>(mainscript);
 		}
 		void LoadingSceneBuilder::CreateLayers(RPGScenePTR& scene, SceneScriptPTR& mainscript){
-			std::dynamic_pointer_cast<LoadingSceneScript>(mainscript)->SetLayers("fadelayer");
-			this->LayerWrapper(CreateFadeLayer(scene, mainscript), scene);
+			LoadingSceneScriptPTR lmainscript = std::dynamic_pointer_cast<LoadingSceneScript>(mainscript);
+			this->LayerWrapper(lmainscript->fadelayer_id, CreateFadeLayer(scene, mainscript), scene);
 		}
 
 		LayerDataPTR LoadingSceneBuilder::CreateFadeLayer(RPGScenePTR& scene, SceneScriptPTR& mainscript){
@@ -38,7 +38,7 @@ namespace Osaka{
 			//LayerPTR layer = CreateAndInitLayer(...);
 			//InitLayer1(); -> So that it can be overriden in child class.
 
-			LayerDataPTR data = std::make_shared<LayerData>("fadelayer", std::static_pointer_cast<Script>(script), std::static_pointer_cast<Canvas>(canvas), ui);
+			LayerDataPTR data = std::make_shared<LayerData>(std::static_pointer_cast<Script>(script), std::static_pointer_cast<Canvas>(canvas), ui);
 			return data;
 		}
 		

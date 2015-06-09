@@ -18,6 +18,8 @@ namespace Osaka{
 			SettingsPTR settings;
 			/* Owner. Holds all the data taken from the data game file */
 			GameDataPTR gameData;
+			/* Owner. Holds the params. ID's, etc. This is used in Scene:Load(rpgfactory) */
+			GameDataParamsPTR gameDataParams;
 
 			/* Owner. RPGFactory is used for creating items, characters, npcs, etc. */
 			FactoryPTR factory;

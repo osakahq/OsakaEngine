@@ -16,6 +16,7 @@ namespace Osaka{
 			//You have to store the references in here if for example, RPGApp needs something else in constructor
 			virtual RPGApplicationPTR CreateRPGApp(Debug::DebugPTR debug, Engine::SDLLibPTR sdl, Engine::IFileLoaderPTR fileloader);
 			virtual SceneFactoryPTR CreateSceneFactory(FactoryPTR& factory, RPGApplicationPTR& app, TextureManagerPTR& texturem);
+			virtual GameDataParamsPTR CreateGameDataParams(GameDataPTR& data);
 		};
 		
 	}

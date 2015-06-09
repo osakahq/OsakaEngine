@@ -42,6 +42,7 @@ namespace Osaka{
 		class SceneFactory;		typedef std::shared_ptr<SceneFactory>	SceneFactoryPTR;
 		class GameDataLoader;	typedef std::shared_ptr<GameDataLoader> GameDataLoaderPTR;
 		class GameData;			typedef std::shared_ptr<GameData>		GameDataPTR;
+		class GameDataParams;	typedef std::shared_ptr<GameDataParams>	GameDataParamsPTR;
 		class RPGApplication;	typedef std::shared_ptr<RPGApplication> RPGApplicationPTR;
 		class RPGFactory;		typedef std::shared_ptr<RPGFactory>		RPGFactoryPTR;
 		class Settings;			typedef std::shared_ptr<Settings>		SettingsPTR;

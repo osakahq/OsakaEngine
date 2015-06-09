@@ -12,17 +12,13 @@ namespace Osaka{
 		StartMenuSceneScript::StartMenuSceneScript(RPGApplicationPTR& app) 
 			: SceneScript(app)
 		{
-			
+			mainlayer_id = "_mainlayer";
 		}
 		StartMenuSceneScript::~StartMenuSceneScript(){
 
 		}
 		void StartMenuSceneScript::_delete(){
 			SceneScript::_delete();
-		}
-		void StartMenuSceneScript::SetLayers(std::string enginelogo_layer){
-			//Remember there is an Init function. Only set the strings here.
-			this->enginelogo_layer = enginelogo_layer;
 		}
 		
 		void StartMenuSceneScript::Ready(Engine::ESceneArgsPTR& params){

@@ -13,15 +13,16 @@ namespace Osaka{
 			~PlaybackIntroSceneScript();
 			void _delete() override;
 
-			/* */
-			void SetLayers(std::string layer1);
+			void Enter() override;
 			void Ready(Engine::ESceneArgsPTR& params) override;
+
+			/* These are set inside the constructor */
+			std::string mainlayer_id;
+			std::string fadelayer_id;
 		protected:
 			
 		private:
 			
-			/*  */
-			std::string layer1;
 		};
 	}
 }

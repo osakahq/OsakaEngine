@@ -9,19 +9,21 @@ namespace Osaka{
 		/* This class only creates RPG related classes (Items, Characters, Party) */
 		class RPGFactory{
 		public:
-			RPGFactory(Debug::DebugPTR& debug, GameDataPTR& data, FactoryPTR& factory);
+			RPGFactory(Debug::DebugPTR& debug, GameDataPTR& data, GameDataParamsPTR& gdp, FactoryPTR& factory);
 			~RPGFactory();
 			void _delete();
 			//void Init();
 
 			/* Gives away ownership */
 			ImagePTR CreateImage(std::string id_sprite);
-		/* ----------------------------------------------------------------------------------- */
-		private:
+
 			/* NOT Owner. GameData ownership is in RPGApplication */
 			GameDataPTR data;
+			/* NOT Owner. Ownership is in RPGApplication */
+			GameDataParamsPTR gamedataparams;
 			/* NOT Owner */
 			FactoryPTR factory;
+		private:
 			/* NOT Owner. */
 			Debug::DebugPTR debug;
 		};

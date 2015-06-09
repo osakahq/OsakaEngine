@@ -12,7 +12,8 @@ namespace Osaka{
 		PlaybackIntroSceneScript::PlaybackIntroSceneScript(RPGApplicationPTR& app) 
 			: SceneScript(app)
 		{
-			
+			mainlayer_id = "_mainlayer";
+			fadelayer_id = "_fadelayer";
 		}
 		PlaybackIntroSceneScript::~PlaybackIntroSceneScript(){
 
@@ -20,13 +21,12 @@ namespace Osaka{
 		void PlaybackIntroSceneScript::_delete(){
 			SceneScript::_delete();
 		}
-		void PlaybackIntroSceneScript::SetLayers(std::string layer1){
-			//Remember there is an Init function. Only set the strings here.
-			this->layer1 = layer1;
-		}
 		
+		void PlaybackIntroSceneScript::Enter(){
+			
+		}
 		void PlaybackIntroSceneScript::Ready(Engine::ESceneArgsPTR& params){
-			scene_parent->Stack(layer1, EmptyLayerArgsPTR);
+			scene_parent->Stack(mainlayer_id, EmptyLayerArgsPTR);
 		}
 	}
 }

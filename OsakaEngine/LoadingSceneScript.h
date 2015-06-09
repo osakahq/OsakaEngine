@@ -13,9 +13,6 @@ namespace Osaka{
 			~LoadingSceneScript();
 			void _delete() override;
 
-			/* */
-			void SetLayers(std::string fadelayer_id);
-
 			/* This is called from stack(from RPGApplication) */
 			void Ready(Engine::ESceneArgsPTR& params) override;
 			
@@ -23,6 +20,8 @@ namespace Osaka{
 			 * It is called inside the anonymous function that this class sets on GameLoader function */
 			void LoadCompleted();
 			bool isLoadCompleted();
+
+			std::string fadelayer_id;
 		protected:
 			
 		private:
@@ -31,8 +30,6 @@ namespace Osaka{
 			/* NOT Owner */
 			AssetManagerPTR assetm;
 
-			/* NOT Owner. Ownership is inside base class unorderedmap */
-			std::string fadelayer_id;
 		};
 	}
 }

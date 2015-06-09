@@ -71,8 +71,11 @@ namespace Osaka{
 			return layer;
 		}
 		
-		void SceneBuilder::LayerWrapper(LayerDataPTR data, RPGScenePTR& scene){
-			LayerPTR layer = CreateAndInitLayer(data->layer_id.c_str(), data->script, data->canvas, data->ui);
+		void SceneBuilder::LayerWrapper(std::string layer_id, LayerDataPTR data, RPGScenePTR& scene){
+			if( layer_id.empty() ){
+				throw std::exception("[SceneBuilder] LayerWrapper: layer_id is empty");
+			}
+			LayerPTR layer = CreateAndInitLayer(layer_id.c_str(), data->script, data->canvas, data->ui);
 			data->script->Init(layer);
 			data->canvas->Init(layer);
 			data->ui->Init(layer);

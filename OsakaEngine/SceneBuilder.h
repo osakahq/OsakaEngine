@@ -9,13 +9,11 @@ namespace Osaka{
 	namespace RPGLib{
 
 		struct LayerData{
-			LayerData(std::string l, ScriptPTR& s, CanvasPTR& c, UserInterfacePTR& u){
-				layer_id = l;
+			LayerData(ScriptPTR& s, CanvasPTR& c, UserInterfacePTR& u){
 				script = s;
 				canvas = c;
 				ui = u;
 			}
-			std::string layer_id;
 			ScriptPTR script;
 			CanvasPTR canvas;
 			UserInterfacePTR ui;
@@ -45,7 +43,7 @@ namespace Osaka{
 			/* This is a helper function that creates and inits the layer */
 			LayerPTR CreateAndInitLayer(const char* name, ScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui);
 			/* This is a helper function and not required. If you need custom inits, then you have to call the inits in a function like `InitLayer1` */
-			void LayerWrapper(LayerDataPTR data, RPGScenePTR& scene);
+			void LayerWrapper(std::string layer_id, LayerDataPTR data, RPGScenePTR& scene);
 			
 			/* NOT owner */
 			RPGApplicationPTR app;
