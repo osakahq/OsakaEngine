@@ -17,7 +17,7 @@ namespace Osaka{
 
 			this->timer = timer;
 
-			pause_on_midanim = false;
+			pause_on_midanim = true;
 			alpha = 0;
 			beginSecondPart = false;
 			onMidAnimation = false;

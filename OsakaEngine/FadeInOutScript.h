@@ -11,11 +11,17 @@ namespace Osaka{
 		
 		class FadeInOutLayerArgs : public LayerArgs{
 		public:
-			//float fadeInTime;
-			//float fadeOutTime;
+			FadeInOutLayerArgs(){
+				removeItselfWhenFinished = true;
+			}
+			float fadeInTime;
+			float fadeOutTime;
 
 			std::function<void()> callbackOnMidAnimation;
 			std::function<void()> callbackOnEndAnimation;
+			
+			/* If true it will remove itself from the stack (layer stack) */
+			bool removeItselfWhenFinished;
 		};
 		typedef std::shared_ptr<FadeInOutLayerArgs> FadeInOutLayerArgsPTR;
 
@@ -44,6 +50,8 @@ namespace Osaka{
 			/* I'm not really sure if I need this but, instead of Starting the end animation right away (in the same Update from Canvas)
 			 * With this variable we wait, for the next update (this script Update) */
 			bool midAnimationEnded;
+
+			bool removeItselfWhenFinished;
 		};
 	}
 }

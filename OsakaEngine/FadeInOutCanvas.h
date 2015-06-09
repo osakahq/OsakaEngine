@@ -27,6 +27,9 @@ namespace Osaka{
 			/* TODO: Feels like a lot of work...
 			 * Called from Script */
 			void BeginEndAnimation();
+
+			/* Called from script */
+			void SetFadeTimes(float fadein, float fadeout);
 		protected:
 			/* Owner */
 			SquarePTR square;

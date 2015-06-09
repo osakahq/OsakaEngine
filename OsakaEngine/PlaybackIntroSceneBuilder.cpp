@@ -33,8 +33,8 @@ namespace Osaka{
 			PlaybackIntroSceneScriptPTR pmainscript = std::dynamic_pointer_cast<PlaybackIntroSceneScript>(mainscript);
 			
 			/* The reason LayerWrapper has id_layer is that it can be safely overriden (`CreateMainLayer`, etc. functions) */
-			this->LayerWrapper(pmainscript->mainlayer_id, CreateMainLayer(scene, pmainscript), scene);
-			this->LayerWrapper(pmainscript->fadelayer_id, CreateFadeLayer(scene, pmainscript), scene);
+			this->LayerWrapper(pmainscript->mainlayer_id, CreateMainLayer(scene, pmainscript), scene, mainscript);
+			this->LayerWrapper(pmainscript->fadelayer_id, CreateFadeLayer(scene, pmainscript), scene, mainscript);
 		}
 
 		LayerDataPTR PlaybackIntroSceneBuilder::CreateMainLayer(RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript){

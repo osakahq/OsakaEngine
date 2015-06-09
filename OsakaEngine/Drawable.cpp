@@ -53,8 +53,10 @@ namespace Osaka{
 				(*it)->Reset();
 			}
 		}
-		void Drawable::AddEffect(EffectPTR& effect){
+		void Drawable::AddEffect(EffectPTR& effect, DrawablePTR& this_ref){
 			effects.push_back(effect);
+			//Fuck it. Send the reference to itself.
+			effect->Attach(this_ref);
 			has_list_changed = true;
 		}
 		

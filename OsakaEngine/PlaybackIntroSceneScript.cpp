@@ -3,6 +3,9 @@
 #include "ESceneArgs.h"
 #include "LayerArgs.h"
 
+#include "AssetManager.h"
+#include "SoundManager.h"
+#include "GameDataParams.h"
 #include "RPGApplication.h"
 #include "RPGScene.h"
 #include "PlaybackIntroSceneScript.h"
@@ -23,7 +26,7 @@ namespace Osaka{
 		}
 		
 		void PlaybackIntroSceneScript::Enter(){
-			
+			app->soundm->PlayMusic(app->gameDataParams->intro_song);
 		}
 		void PlaybackIntroSceneScript::Ready(Engine::ESceneArgsPTR& params){
 			scene_parent->Stack(mainlayer_id, EmptyLayerArgsPTR);

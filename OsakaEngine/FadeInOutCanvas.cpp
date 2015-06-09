@@ -19,7 +19,7 @@ namespace Osaka{
 			this->square = square;
 			this->effect = effect;
 			
-			square->AddEffect(std::static_pointer_cast<Effect>(effect));
+			square->AddEffect(std::static_pointer_cast<Effect>(effect), std::static_pointer_cast<Drawable>(square));
 			square->square.x = ruler->x_top_left_corner;
 			square->square.y = ruler->y_top_left_corner;
 			square->square.h = ruler->max_height;
@@ -49,6 +49,11 @@ namespace Osaka{
 		}
 		void FadeInOutCanvas::BeginEndAnimation(){
 			effect->BeginEndAnimation();
+		}
+		void FadeInOutCanvas::SetFadeTimes(float fadein, float fadeout){
+			//This is called when you call the Layer Ready (coming from Script)
+			effect->fadeInTime = fadein;
+			effect->fadeOutTime = fadeout;
 		}
 		void FadeInOutCanvas::Ready(){
 			

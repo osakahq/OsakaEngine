@@ -1,5 +1,7 @@
  #include "stdafx.h"
 
+#include "Layer.h"
+#include "RPGScene.h"
 #include "EventHandler.h"
 #include "EventArgs.h"
 #include "FadeInOutCanvas.h"
@@ -34,16 +36,23 @@ namespace Osaka{
 			FadeInOutLayerArgsPTR fargs = std::dynamic_pointer_cast<FadeInOutLayerArgs>(args);
 			callbackOnEndAnimation = fargs->callbackOnEndAnimation;
 			callbackOnMidAnimation = fargs->callbackOnMidAnimation;
+			canvas->SetFadeTimes(fargs->fadeInTime, fargs->fadeOutTime);
+			removeItselfWhenFinished = fargs->removeItselfWhenFinished;
 		}
 
 		void FadeInOutScript::OnCanvasMidAnimation(Component::EventArgs& e){
 			midAnimationEnded = true;
-			if( callbackOnEndAnimation != nullptr )
-				callbackOnEndAnimation();
-		}
-		void FadeInOutScript::OnCanvasEndAnimation(Component::EventArgs& e){
 			if( callbackOnMidAnimation != nullptr )
 				callbackOnMidAnimation();
+		}
+		void FadeInOutScript::OnCanvasEndAnimation(Component::EventArgs& e){
+			if( callbackOnEndAnimation != nullptr )
+				callbackOnEndAnimation();
+
+			if( removeItselfWhenFinished ){
+				//Safe to remove, because this event fires up inside Update
+				scene_parent->Remove(this->layer_parent->id);
+			}
 		}
 		void FadeInOutScript::Update(){
 			if( midAnimationEnded ){

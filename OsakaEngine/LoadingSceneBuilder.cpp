@@ -26,7 +26,7 @@ namespace Osaka{
 		}
 		void LoadingSceneBuilder::CreateLayers(RPGScenePTR& scene, SceneScriptPTR& mainscript){
 			LoadingSceneScriptPTR lmainscript = std::dynamic_pointer_cast<LoadingSceneScript>(mainscript);
-			this->LayerWrapper(lmainscript->fadelayer_id, CreateFadeLayer(scene, mainscript), scene);
+			this->LayerWrapper(lmainscript->fadelayer_id, CreateFadeLayer(scene, mainscript), scene, mainscript);
 		}
 
 		LayerDataPTR LoadingSceneBuilder::CreateFadeLayer(RPGScenePTR& scene, SceneScriptPTR& mainscript){

@@ -22,6 +22,9 @@ namespace Osaka{
 			Component::EventHandlerPTR endAnimation;
 
 			void BeginEndAnimation();
+
+			float fadeInTime;
+			float fadeOutTime;
 		protected:
 			/* In case you don't need to wait for something. */
 			bool pause_on_midanim;
@@ -33,8 +36,6 @@ namespace Osaka{
 			/* So we can know we finished, the first animation */
 			bool onMidAnimation;
 
-			float fadeInTime;
-			float fadeOutTime;
 		private:
 		};
 	}
