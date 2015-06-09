@@ -47,9 +47,9 @@ namespace Osaka{
 			signalStopLoadThread = true;
 			SetEvent(sceneToLoadEvent);
 
-			texturem->_delete(); texturem = nullptr;
-			fontm->_delete(); fontm = nullptr;
-			soundm->_delete(); soundm = nullptr;
+			texturem = nullptr;
+			fontm = nullptr;
+			soundm = nullptr;
 
 			assets_type = nullptr;
 			assets_initload = nullptr;

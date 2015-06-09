@@ -40,7 +40,7 @@ namespace Osaka{
 		}
 		SDL_Renderer* SDLLib::GetRAWSDLRenderer(){
 			if( renderer == NULL ){
-				throw std::exception("[SDLLib] GetRAWSDLRenderer > texture is NULL");
+				debug->e("[SDLLib] GetRAWSDLRenderer > texture is NULL");
 			}
 			//Doesn't give away ownership
 			return renderer;

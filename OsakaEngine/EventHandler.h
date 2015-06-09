@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ #include "stdafx.h"
 
 #ifndef COMPONENT_EVENTHANDLER_H
 #define COMPONENT_EVENTHANDLER_H

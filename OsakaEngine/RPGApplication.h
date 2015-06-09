@@ -31,6 +31,12 @@ namespace Osaka{
 
 			/* Owner. Class for the asset loading. Most of the functionality is done in the loadThread */
 			AssetManagerPTR assetm;
+			/* Owner */
+			TextureManagerPTR texturem;
+			/* Owner */
+			FontManagerPTR fontm;
+			/* Owner */
+			SoundManagerPTR soundm;
 
 			/* Owner. Ruler */
 			RulerPTR ruler;

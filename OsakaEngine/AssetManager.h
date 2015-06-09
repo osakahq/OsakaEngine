@@ -27,10 +27,11 @@ namespace Osaka{
 			void ProcessLoad();
 			void LoadScene(std::string scene, std::function<void()> callback);
 			
-
-			/* Owner. Managers */
+			/* NOT Owner. Owner is in RPGApplication */
 			TextureManagerPTR texturem;
+			/* NOT Owner. Owner is in RPGApplication */
 			FontManagerPTR fontm;
+			/* NOT Owner. Owner is in RPGApplication */
 			SoundManagerPTR soundm;
 		/* ----------------------------------------------------------------------------------- */
 		private:

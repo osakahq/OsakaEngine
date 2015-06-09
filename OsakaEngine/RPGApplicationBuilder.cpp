@@ -78,13 +78,16 @@ namespace Osaka{
 			TextureManagerPTR texturem = std::make_shared<TextureManager>(factory);
 			texturem->SetSpritemaps(data->spritemaps, data->sprite_ids);
 			factory->texturem = texturem;
+			app->texturem = texturem;
 
 			FontManagerPTR fontm = std::make_shared<FontManager>(texturem, data->fontmap_error, data->fontmap_space_x, data->fontmap_space_y);
 			fontm->SetFontmap(data->fontmap);
-			
+			app->fontm = fontm;
+
 			SoundManagerPTR soundm = std::make_shared<SoundManager>(factory, lib);
 			soundm->SetSounds(data->sounds);
-			
+			app->soundm = soundm;
+
 			AssetManagerPTR assetm = std::make_shared<AssetManager>(debug, data->assets_type, data->assets_initload, data->assets_scenes);
 			assetm->texturem = texturem;
 			assetm->fontm = fontm;
@@ -114,6 +117,7 @@ namespace Osaka{
 			lib->Start(); //Creates Hidden Window
 
 			factory->Check();
+			rpgfactory->Init();
 			texturem->Init();
 			soundm->Init();
 			/* AssetManager must be after Texture/Sound because it loads the initial assets */

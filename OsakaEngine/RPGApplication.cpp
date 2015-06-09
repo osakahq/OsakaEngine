@@ -53,7 +53,12 @@ namespace Osaka{
 			factory->_delete(); factory = nullptr;
 			rpgfactory->_delete(); rpgfactory = nullptr;
 			loader->_delete(); loader = nullptr;
+			//Managers
 			assetm->_delete(); assetm = nullptr;
+			texturem->_delete(); texturem = nullptr;
+			fontm->_delete(); fontm = nullptr;
+			soundm->_delete(); soundm = nullptr;
+
 			gsm->_delete(); gsm = nullptr;
 
 			ruler->_delete(); ruler = nullptr;
@@ -67,7 +72,8 @@ namespace Osaka{
 			EApplication::Init(vsync, timePerFrame);
 			this->gsm = gsm;
 			if( settings == nullptr || gameData == nullptr  || factory == nullptr || rpgfactory == nullptr || scenefactory == nullptr ||
-				loader == nullptr || assetm == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr || this->gsm == nullptr || gameDataParams == nullptr)
+				loader == nullptr || assetm == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr || this->gsm == nullptr || gameDataParams == nullptr ||
+				texturem == nullptr || fontm == nullptr || soundm == nullptr )
 			{
 				debug->e("[RPGApplication] Init failed.");
 			}
