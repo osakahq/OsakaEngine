@@ -31,6 +31,9 @@ namespace Osaka{
 				return;
 			}
 			music = fileloader->LoadMusic(filename);
+			if( music == NULL ){
+				throw std::exception("[Music] Load: music is NULL");
+			}
 		}
 		
 	}

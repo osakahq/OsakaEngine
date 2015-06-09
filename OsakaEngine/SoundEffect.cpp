@@ -24,13 +24,16 @@ namespace Osaka{
 				return;
 			}
 			effect = fileloader->LoadWAV(filename);
+			if( effect == NULL ){
+				throw std::exception("[SoundEffect] Load: effect is NULL");
+			}
 		}
 		void SoundEffect::Play(int times){
 #ifdef _DEBUG
 			if( effect == NULL )
 				throw std::exception("[SoundEffect] effect is NULL");
 #endif
-			Mix_PlayChannel(-1, effect, 0);
+			Mix_PlayChannel(-1, effect, times);
 		}
 	}
 }

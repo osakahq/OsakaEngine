@@ -38,7 +38,6 @@ namespace Osaka{
 			int h;
 		};
 
-		//typedef std::shared_ptr<sprite_info> sprite_infoPTR;
 	}
 }
 

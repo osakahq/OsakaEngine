@@ -138,8 +138,11 @@ namespace Osaka{
 			SDL_Event e;
 
 			EScenePTR tempStack[EAPP_MAXSTACK];
-			int tempStackItems = 0;
+			int tempStackItems = -1;
 			
+			EScenePTR tempEntering[EAPP_MAXSTACK];
+			int tempEnteringItems = -1;
+
 			const bool _vsync = vsync;
 			const Uint32 _targetTimePerFrame = timePerFrame;
 			Uint32 frame_ms = 0;
@@ -154,28 +157,23 @@ namespace Osaka{
 					}
 				}
 
-				if( enteringItems >= 0 ){
-					//We don't need a temp entering stack because its not allowed to stack/etc outside of Update
-					for(int i = 0; i < enteringItems; ++i){
-						entering[i]->Enter();
-					}
-					//There is no need to set `nullptr`
-					enteringItems = -1;
-				}
-
 				/* We need to copy it because a scene in `Update()` can mess the stack/loop 
 				 * The changes are not "seen" until the next update. */
 				if( stackHasChanged ){
 					stackHasChanged = false;
 					tempStackItems = this->stackItems;
-#ifdef _DEBUG
-					debug->l("[EApplication] Current scenes in stack: (order from bottom to top)");
-#endif
-					for(int i = 0; i <= this->stackItems; i++){
-						tempStack[i] = stack[i];
-#ifdef _DEBUG
-						debug->l("[EApplication] \t\t"+std::to_string(i)+": "+stack[i]->GetId());
-#endif
+					std::copy(&stack[0], &stack[tempStackItems+1], tempStack);
+				}
+
+				/* The reason this is after tempStack is because if Enter stacks a scene, it will "queue" the enter function but call Update first.
+				 * In this order, first copies the tempStack then Enter and Update function will be called in the correct order. */
+				if( enteringItems >= 0 ){
+					tempEnteringItems = enteringItems;
+					enteringItems = -1; //There is no need to set `nullptr`
+					//Basically, Enter() is like an early Update. I have decided it's okay to stack inside Enter as well (only Update and Enter)
+					std::copy(&entering[0], &entering[tempEnteringItems+1], tempEntering);
+					for(int i = 0; i <= tempEnteringItems; ++i){
+						tempEntering[i]->Enter();
 					}
 				}
 
