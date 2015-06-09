@@ -44,7 +44,6 @@
 #include <SDL_mixer.h>
 #include <physfs.h>
 
-#include "default_assets.h"
 // Memory leak detection
 #ifdef _CRTDBG_MAP_ALLOC
 	#ifndef DBG_NEW
