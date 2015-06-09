@@ -22,17 +22,17 @@ namespace Osaka{
 		}
 		Mix_Music* Music::GetRAWMixMusic(){
 			if( music == NULL )
-				throw std::exception("[Music] music is NULL");
+				debug->e("[Music] music is NULL");
 			return music;
 		}
 		void Music::Load(const char* filename){
 			if( music != NULL ){
-				debug->l("[Music] WARNING! Sound is already loaded: " + std::string(filename));
+				debug->e("[Music] WARNING! Sound is already loaded: " + std::string(filename));
 				return;
 			}
 			music = fileloader->LoadMusic(filename);
 			if( music == NULL ){
-				throw std::exception("[Music] Load: music is NULL");
+				debug->e("[Music] Load: music is NULL");
 			}
 		}
 		

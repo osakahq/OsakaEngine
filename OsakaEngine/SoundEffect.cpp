@@ -20,18 +20,18 @@ namespace Osaka{
 		}
 		void SoundEffect::Load(const char* filename){
 			if( effect != NULL ){
-				debug->l("[SoundEffect] WARNING! Sound is already loaded: " + std::string(filename));
+				debug->e("[SoundEffect] WARNING! Sound is already loaded: " + std::string(filename));
 				return;
 			}
 			effect = fileloader->LoadWAV(filename);
 			if( effect == NULL ){
-				throw std::exception("[SoundEffect] Load: effect is NULL");
+				debug->e("[SoundEffect] Load: effect is NULL");
 			}
 		}
 		void SoundEffect::Play(int times){
 #ifdef _DEBUG
 			if( effect == NULL )
-				throw std::exception("[SoundEffect] effect is NULL");
+				debug->e("[SoundEffect] effect is NULL");
 #endif
 			Mix_PlayChannel(-1, effect, times);
 		}
