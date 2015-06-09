@@ -20,11 +20,18 @@ namespace Osaka{
 			_CHECKDELETE("Canvas_delete");
 #endif
 			layer_parent = nullptr;
+			scene_parent = nullptr;
 			ruler = nullptr;
 			raw_renderer = NULL;
 		}
-		void Canvas::Init(LayerPTR& layer_parent){
+		void Canvas::Init(LayerPTR& layer_parent, RPGScenePTR& scene_parent, ScriptPTR& script, SceneScriptPTR& mainscript){
 			this->layer_parent = layer_parent;
+			this->scene_parent = scene_parent;
+		}
+		void Canvas::Init(LayerPTR& layer_parent, RPGScenePTR& scene_parent){
+			//This is the function the derived class will call if it overrides the INit(layer,scene,script,mainscript) function
+			this->layer_parent = layer_parent;
+			this->scene_parent = scene_parent;
 		}
 
 		/* These functions are not required to be implemented in the derived classes */

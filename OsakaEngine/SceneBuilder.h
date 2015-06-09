@@ -43,7 +43,7 @@ namespace Osaka{
 			/* This is a helper function that creates and inits the layer */
 			LayerPTR CreateAndInitLayer(const char* name, ScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui);
 			/* This is a helper function and not required. If you need custom inits, then you have to call the inits in a function like `InitLayer1` */
-			void LayerWrapper(std::string layer_id, LayerDataPTR data, RPGScenePTR& scene);
+			void LayerWrapper(std::string layer_id, LayerDataPTR data, RPGScenePTR& scene, SceneScriptPTR& mainscript);
 			
 			/* NOT owner */
 			RPGApplicationPTR app;
