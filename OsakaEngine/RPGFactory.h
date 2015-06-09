@@ -12,10 +12,12 @@ namespace Osaka{
 			RPGFactory(Debug::DebugPTR& debug, GameDataPTR& data, GameDataParamsPTR& gdp, FactoryPTR& factory);
 			~RPGFactory();
 			void _delete();
-			//void Init();
+			void Init();
 
 			/* Gives away ownership */
 			ImagePTR CreateImage(std::string id_sprite);
+			SquarePTR CreateSquare(int x, int y, int h, int w);
+			SquarePTR CreateSquare();
 
 			/* NOT Owner. GameData ownership is in RPGApplication */
 			GameDataPTR data;
@@ -26,6 +28,9 @@ namespace Osaka{
 		private:
 			/* NOT Owner. */
 			Debug::DebugPTR debug;
+
+			/* NOT Owner */
+			SDL_Renderer* raw_renderer;
 		};
 	}
 }

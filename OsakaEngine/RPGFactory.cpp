@@ -11,6 +11,7 @@
 #include "Factory.h"
 #include "RPGFactory.h"
 #include "Image.h"
+#include "Square.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
@@ -19,19 +20,35 @@ namespace Osaka{
 			this->data = data;
 			this->factory = factory;
 			this->gamedataparams = gdp;
+
 		}
 		RPGFactory::~RPGFactory(){
 			
 		}
 		void RPGFactory::_delete(){
+			raw_renderer = NULL;
 			debug = nullptr;
 			data = nullptr;
 			factory = nullptr;
 			gamedataparams = nullptr;
 		}
-		
+		void RPGFactory::Init(){
+			//Be careful. This function is called BEFORE `app->Init()`
+			raw_renderer = factory->app->sdl->GetRAWSDLRenderer();
+		}
 		ImagePTR RPGFactory::CreateImage(std::string id_sprite){
-			return std::make_shared<Image>(factory->app->sdl->GetRAWSDLRenderer(), factory->texturem->CreateSpriteRAWPointer(id_sprite));
+			return std::make_shared<Image>(raw_renderer, factory->texturem->CreateSpriteRAWPointer(id_sprite));
+		}
+		SquarePTR RPGFactory::CreateSquare(int x, int y, int h, int w){
+			SquarePTR square = std::make_shared<Square>(raw_renderer);
+			square->square.x = x;
+			square->square.y = y;
+			square->square.h = h;
+			square->square.w = w;
+			return square;
+		}
+		SquarePTR RPGFactory::CreateSquare(){
+			return std::make_shared<Square>(raw_renderer);
 		}
 	}
 }
