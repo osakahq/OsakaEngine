@@ -7,7 +7,6 @@
 #include "StaticText.h"
 #include "engine_include.h"
 #include "Debug.h"
-#include "Timer.h"
 #include "FontManager.h"
 #include "FPSCounter.h"
 
