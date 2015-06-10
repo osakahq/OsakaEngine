@@ -51,8 +51,14 @@ namespace Osaka{
 			/* Overrides so that it can send RPGFactory */
 			virtual void CallLoad(std::string id) override;
 
+#ifdef _DEBUG
+			/* This is needed so that TimeManager substracts the paused time. Because all timers consults TimeManager's time, we can make it
+			 * look like there wasnt a paused time. */
+			virtual void Update(Uint32 pausedtime) override;
+#else
 			/* Runs every frame */
 			virtual void Update() override;
+#endif
 			virtual void BeforePresent() override;
 			virtual void AfterPresent(const Uint32 frame_ms) override;
 			/* Initializes the first scene and then passes it to EApplicacion (base class) */

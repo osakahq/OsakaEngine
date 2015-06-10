@@ -148,15 +148,45 @@ namespace Osaka{
 			Uint32 frame_ms = 0;
 			Uint32 total_frame_ms = 0; //This is used when vsync is off
 
+#ifdef _DEBUG
+			bool pauseFrame = false;
+			int framesPerKey = 1;
+			int _currentFrame = 0;
+			Uint32 paused_time = 0;
+#endif
+
 			debug->l("[EApplication] Loop begins...\n\n");
 			while(!quit){
 				frame_ms = SDL_GetTicks();
 				while( SDL_PollEvent(&e) != 0 ){
 					if( e.type == SDL_QUIT ){
 						quit = true;
+					}else if( e.type == SDL_KEYDOWN ){
+						switch(e.key.keysym.sym){
+#ifdef _DEBUG
+						case SDLK_F1:
+							pauseFrame = (pauseFrame)?false:true;
+							framesPerKey = 3;
+							_currentFrame = 0;
+							break;
+#endif
+						}
 					}
 				}
 
+#ifdef _DEBUG
+				paused_time = 0;
+				if( pauseFrame ){
+					//First grabs value then increments, so... we actually wait the for the actual frame to complete.
+					if( _currentFrame++ >= framesPerKey ){
+						_currentFrame = 0;
+						printf("-- Frame is paused, please press enter to continue...");
+						paused_time = SDL_GetTicks();
+						getchar();
+						paused_time = SDL_GetTicks() - paused_time;
+					}
+				}
+#endif
 				/* We need to copy it because a scene in `Update()` can mess the stack/loop 
 				 * The changes are not "seen" until the next update. */
 				if( stackHasChanged ){
@@ -176,8 +206,11 @@ namespace Osaka{
 						tempEntering[i]->Enter();
 					}
 				}
-
+#ifdef _DEBUG
+				this->Update(paused_time);
+#else
 				this->Update();
+#endif
 				for(int i = 0; i <= tempStackItems; i++){
 					tempStack[i]->Update();
 				}
@@ -218,7 +251,7 @@ namespace Osaka{
 					}
 				}
 #endif
-			}
+			} //while(!quit)
 			//Means we are closing the application...
 			for(auto it = scenes.begin(); it != scenes.end(); ++it ){
 				it->second->End();
