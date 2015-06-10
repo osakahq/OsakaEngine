@@ -19,7 +19,7 @@ namespace Osaka{
 			this->square = square;
 			this->effect = effect;
 			
-			square->AddEffect(std::static_pointer_cast<Effect>(effect), std::static_pointer_cast<Drawable>(square));
+			square->AddEffect(std::static_pointer_cast<Effect>(effect));
 			square->square.x = ruler->x_top_left_corner;
 			square->square.y = ruler->y_top_left_corner;
 			square->square.h = ruler->max_height;
@@ -33,13 +33,15 @@ namespace Osaka{
 			//effect->midAnimation/endAnimation Hook events.
 		}
 		FadeInOutCanvas::~FadeInOutCanvas(){
-			//No need to `square = nullptr` or `effect = nullptr`
 			//No need for nullptr on the eventhandlers
 		}
 		void FadeInOutCanvas::_delete(){
 			Canvas::_delete();
 			effect->endAnimation->Unhook(FADEINOUTCANVAS_MIDANIMATION);
 			effect->midAnimation->Unhook(FADEINOUTCANVAS_ENDANIMATION);
+			/* Not really necessary. */
+			effect = nullptr;
+			square = nullptr;
 		}
 		void FadeInOutCanvas::OnEffectEndAnimation(Component::EventArgs& e){
 			endAnimation->Raise(Component::EmptyEventArgs);
@@ -56,7 +58,7 @@ namespace Osaka{
 			effect->fadeOutTime = fadeout;
 		}
 		void FadeInOutCanvas::Ready(){
-			
+			square->Reset();
 		}
 		void FadeInOutCanvas::Enter(){
 			square->Reset();

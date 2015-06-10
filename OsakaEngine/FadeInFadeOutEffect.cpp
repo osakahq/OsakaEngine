@@ -41,7 +41,7 @@ namespace Osaka{
 				//This means we are animating, but we are in the fade in part
 				//Alpha is related to how much time has passed. The animation must be finished in 1 second (fade in)
 				alpha = static_cast<Uint8>(Utils::Clamp( std::ceil((timer->GetTicks() / fadeInTime)*255.f), 0.f, 255.f));
-				obj->rgba.a = alpha;
+				raw_obj->rgba.a = alpha;
 				if( timer->GetTicks() >= fadeInTime ){
 					timer->Stop();
 					onMidAnimation = true;
@@ -60,7 +60,7 @@ namespace Osaka{
 					}else{
 						//This means we are ready to go fade out and the fade in animation ended
 						alpha = static_cast<Uint8>( 255.f - Utils::Clamp( std::ceil((timer->GetTicks() / fadeOutTime)*255.f), 0.f, 255.f) );
-						obj->rgba.a = alpha;
+						raw_obj->rgba.a = alpha;
 						if( timer->GetTicks() >= fadeOutTime ){
 							timer->Stop();
 							endAnimation->Raise(Component::EmptyEventArgs);
@@ -81,6 +81,7 @@ namespace Osaka{
 			beginSecondPart = false;
 			onMidAnimation = false;
 			alpha = 0;
+			raw_obj->rgba.a = 0;
 			timer->Start();
 			//Remember that this is also called from Drawable:AddEffect.
 		}

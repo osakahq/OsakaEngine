@@ -23,6 +23,11 @@ namespace Osaka{
 			this->engine_logo = nullptr;
 			this->gamestudio_logo = nullptr;
 			phase = 0;
+
+			args = std::make_shared<FadeInOutLayerArgs>();
+			args->callbackOnMidAnimation = std::bind(&PlaybackIntroCanvas::CallbackLayerMidAnimation, this);
+			args->callbackOnEndAnimation = std::bind(&PlaybackIntroCanvas::CallbackLayerEndAnimation, this);
+			args->removeItselfWhenFinished = true;
 		}
 		PlaybackIntroCanvas::~PlaybackIntroCanvas(){
 
@@ -49,7 +54,10 @@ namespace Osaka{
 			this->gamestudio_logo = nullptr;
 		}
 		void PlaybackIntroCanvas::_delete(){
-			timer = nullptr;
+			args->callbackOnEndAnimation = nullptr;
+			args->callbackOnMidAnimation = nullptr;
+			args = nullptr;
+			timer->_delete(); timer = nullptr;
 			mainscript = nullptr;
 			background = nullptr;
 			engine_logo = nullptr;
@@ -69,6 +77,7 @@ namespace Osaka{
 				//FadeInOutLayer automatically starts the end animation.
 				break;
 			case 1:
+				movePhaseUp = true;
 				break;
 			case 2:
 				break;
@@ -100,24 +109,30 @@ namespace Osaka{
 			//See in header why, this is needed.
 			if( movePhaseUp ){
 				++phase;
+				if( phase == 1 ){
+					timer->Start();
+				}
 				movePhaseUp = false;
 			}
 			switch(phase){
 			case 0:
 				if( timer->GetTicks() >= 2000 ){
-					FadeInOutLayerArgsPTR args = std::make_shared<FadeInOutLayerArgs>();
 					args->fadeInTime = args->fadeOutTime = 1000;
-					args->callbackOnMidAnimation = std::bind(&PlaybackIntroCanvas::CallbackLayerMidAnimation, this);
-					args->callbackOnEndAnimation = std::bind(&PlaybackIntroCanvas::CallbackLayerEndAnimation, this);
-					args->removeItselfWhenFinished = true;
 					scene_parent->Stack(mainscript->fadelayer_id, std::static_pointer_cast<LayerArgs>(args));
+					timer->Stop();
 				}
 				background->Update();
 				break;
 			case 1:
+				if( timer->GetTicks() >= 3500 ){
+					args->fadeInTime = args->fadeOutTime = 2500;
+					scene_parent->Stack(mainscript->fadelayer_id, std::static_pointer_cast<LayerArgs>(args));
+					timer->Stop();
+				}
 				engine_logo->Update();
 				break;
 			case 2:
+				gamestudio_logo->Update();
 				break;
 			case 3:
 				break;
@@ -138,6 +153,7 @@ namespace Osaka{
 				engine_logo->Draw();
 				break;
 			case 2:
+				gamestudio_logo->Draw();
 				break;
 			case 3:
 				break;

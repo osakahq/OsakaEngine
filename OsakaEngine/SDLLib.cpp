@@ -91,7 +91,12 @@ namespace Osaka{
 				debug->l("[SDLLib] Warning: Linear texture filtering not enabled.");
 			}
 
-			window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, window_width, window_height, SDL_WINDOW_HIDDEN );
+#ifdef _DEBUG
+			//So i can have the console and press f1 and see the whole window.
+			window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, 530, window_width, window_height, SDL_WINDOW_HIDDEN );
+#else
+			window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_width, window_height, SDL_WINDOW_HIDDEN );
+#endif
 			if( window == NULL ){
 				debug->l(std::string("[SDLLib] Window could not be created! SDL_Error: ")+SDL_GetError());
 				return false;

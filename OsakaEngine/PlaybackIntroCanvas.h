@@ -6,7 +6,9 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		
+		//Forward
+		class FadeInOutLayerArgs;
+
 		class PlaybackIntroCanvas : public Canvas{
 		public:
 			PlaybackIntroCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler);
@@ -41,8 +43,11 @@ namespace Osaka{
 			ImagePTR engine_logo; 
 			ImagePTR gamestudio_logo;
 
-			/* This is used to time when to switch the images. */
+			/* Owner. This is used to time when to switch the images. */
 			TimerPTR timer;
+
+			/* This is like a cache. So I don't have to create the object every time */
+			std::shared_ptr<FadeInOutLayerArgs> args;
 		};
 	}
 }
