@@ -14,16 +14,20 @@ namespace Osaka{
 			current_loop = 0;
 			deattach = false;
 			isActive = true;
+			raw_obj = NULL;
 		}
 		Effect::~Effect(){
 #ifdef _DEBUG
 			_CHECKDELETE("Effect");
 #endif
-			//there is no need for `obj = nullptr;`
+			//there is no need for `raw_obj = NULL;`
 		}
 
-		void Effect::Attach(DrawablePTR& obj){
-			this->obj = obj;
+		void Effect::Attach(Drawable* obj){
+			this->raw_obj = obj;
+		}
+		void Effect::Deattach(){
+			raw_obj = NULL;
 		}
 		void Effect::Update(){
 
@@ -43,7 +47,7 @@ namespace Osaka{
 			if( current_loop >= times_repeat ){
 				isActive = false;
 				if( deattach )
-					obj->RemoveEffect(this->id);
+					raw_obj->RemoveEffect(this->id);
 			}
 		}
 	}

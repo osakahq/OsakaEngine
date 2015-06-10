@@ -14,7 +14,9 @@ namespace Osaka{
 			virtual ~Effect();
 
 			/* Called from Drawable:AddEffect */
-			virtual void Attach(DrawablePTR& obj);
+			virtual void Attach(Drawable* raw_obj);
+			/* Called when the effect is removed from the object (Called from Drawable: remove functions) */
+			void Deattach();
 			virtual void Update();
 			//Effect doesn't have Draw because it shouldn't draw anything.
 
@@ -38,7 +40,8 @@ namespace Osaka{
 			/* Derived class must consult the value. */
 			bool isActive;
 
-			DrawablePTR obj;
+			/* Not owner. Raw pointer (raw_pointer) */
+			Drawable* raw_obj;
 		private:
 		};
 	}
