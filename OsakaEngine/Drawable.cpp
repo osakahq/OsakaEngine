@@ -19,6 +19,8 @@ namespace Osaka{
 			has_list_changed = true;
 		}
 		Drawable::~Drawable(){
+			//It has to announce so the effect deattach themselves.
+			RemoveAllEffects();
 			raw_renderer = NULL;
 			
 			//I don't need to manually clear the vectors.
@@ -53,10 +55,10 @@ namespace Osaka{
 				(*it)->Reset();
 			}
 		}
-		void Drawable::AddEffect(EffectPTR& effect, DrawablePTR& this_ref){
+		void Drawable::AddEffect(EffectPTR& effect){
 			effects.push_back(effect);
-			//Fuck it. Send the reference to itself.
-			effect->Attach(this_ref);
+			/* Raw pointer (raw_pointer) It's okay. When the object is destroyed, it notifies the effect. */
+			effect->Attach(this);
 			has_list_changed = true;
 		}
 		
@@ -64,6 +66,7 @@ namespace Osaka{
 			std::vector<EffectPTR>::iterator it;
 			for( it = effects.begin(); it != effects.end(); ++it ){
 				if( (*it)->id == id ){
+					(*it)->Deattach();
 					break;
 				}
 			}
@@ -71,6 +74,9 @@ namespace Osaka{
 			has_list_changed = true;
 		}
 		void Drawable::RemoveAllEffects(){
+			for( auto it = effects.begin(); it != effects.end(); ++it ){
+				(*it)->Deattach();
+			}
 			effects.clear();
 		}
 	}

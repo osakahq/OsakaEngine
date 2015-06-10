@@ -28,7 +28,7 @@ namespace Osaka{
 			void ResetEffect(std::string id);
 			void ResetAllEffects();
 			/* I don't want to use a raw pointer and fuck it. Send itself so I can call effect->Attach */
-			void AddEffect(EffectPTR& effect, DrawablePTR& this_ref);
+			void AddEffect(EffectPTR& effect);
 			/* Normally, the effects should deattach themselves, so this function is "if you need to remove one effect manually" */
 			void RemoveEffect(std::string id);
 			void RemoveAllEffects();
