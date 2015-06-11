@@ -145,6 +145,8 @@ namespace Osaka{
 
 			const bool _vsync = vsync;
 			const Uint32 _targetTimePerFrame = timePerFrame;
+			/* This is only used for debug purposed (Show hiccups, vsync on delay, etc.) 
+			 * This is NOT used for game logic. For game logic go to TimeManager.h */
 			Uint32 frame_ms = 0;
 			Uint32 total_frame_ms = 0; //This is used when vsync is off
 
@@ -157,7 +159,7 @@ namespace Osaka{
 
 			debug->l("[EApplication] Loop begins...\n\n");
 			while(!quit){
-				frame_ms = SDL_GetTicks();
+				frame_ms = SDL_GetTicks(); //only used for debugging
 				while( SDL_PollEvent(&e) != 0 ){
 					if( e.type == SDL_QUIT ){
 						quit = true;

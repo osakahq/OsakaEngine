@@ -54,6 +54,8 @@ namespace Osaka{
 			this->gamestudio_logo = nullptr;
 		}
 		void PlaybackIntroCanvas::_delete(){
+			/* There is not needed to set them nullptr, except Timer (for now), because when deleted, GC will set them free.
+			 * You have to *always* call base::_delete though. */
 			args->callbackOnEndAnimation = nullptr;
 			args->callbackOnMidAnimation = nullptr;
 			args = nullptr;
