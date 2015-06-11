@@ -22,8 +22,19 @@ namespace Osaka{
 #endif
 			//Get the ticks for the timer
 			Uint32 GetTicks();
+
+			//See variable comment for more info.
+			Uint32 GetDelta();
 		private:
+			/* If the call of UpdateTicks took longer than maxElapsedTime, it will cheat and make it look like it only passed `maxElapsedTime` time */
+			const Uint32 maxElapsedTime;
 			Uint32 ticks;
+
+			/* This is the interval between frames. (Interval since the last Update). 
+			 * This will include the delay time, so it will be always around 15ms/16ms when 60fps (vsync off) 
+			 * If vsync is on, it will be almost every time 16ms */
+			Uint32 delta;
+			Uint32 oldTicks; //A helper var
 		};
 	}
 }

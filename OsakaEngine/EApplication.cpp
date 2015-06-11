@@ -197,6 +197,12 @@ namespace Osaka{
 					std::copy(&stack[0], &stack[tempStackItems+1], tempStack);
 				}
 
+#ifdef _DEBUG
+				//Remeber to call update before these functions (Enter, Update, Draw) (updates TimeManager)
+				this->Update(paused_time);
+#else
+				this->Update();
+#endif
 				/* The reason this is after tempStack is because if Enter stacks a scene, it will "queue" the enter function but call Update first.
 				 * In this order, first copies the tempStack then Enter and Update function will be called in the correct order. */
 				if( enteringItems >= 0 ){
@@ -208,11 +214,6 @@ namespace Osaka{
 						tempEntering[i]->Enter();
 					}
 				}
-#ifdef _DEBUG
-				this->Update(paused_time);
-#else
-				this->Update();
-#endif
 				for(int i = 0; i <= tempStackItems; i++){
 					tempStack[i]->Update();
 				}
