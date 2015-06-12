@@ -46,7 +46,7 @@ namespace Osaka{
 			FPSCounterPTR counter;
 
 			/* Check that the references are set */
-			virtual void Init(bool vsync, int timePerFrame, GameSessionManagerPTR& gsm);
+			virtual void Init(bool vsync, int timePerFrame, int maxUpdatesToCatchUp, GameSessionManagerPTR& gsm);
 
 			/* Overrides so that it can send RPGFactory */
 			virtual void CallLoad(std::string id) override;

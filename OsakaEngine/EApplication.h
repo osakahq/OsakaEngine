@@ -20,7 +20,7 @@ namespace Osaka{
 			SDLLibPTR sdl;
 
 			/* */
-			virtual void Init(bool vsync, int timePerFrame);
+			virtual void Init(bool vsync, int timePerFrame, int maxUpdatesToCatchUp);
 			/* Takes owner ship of the scene */
 			void AddScene(std::string id, EScenePTR& scene);
 			/* Class a scene load function. Called from AssetManager (loading thread) */
@@ -69,6 +69,8 @@ namespace Osaka{
 			bool vsync;
 			/* If vsync is true, fps is ignored. */
 			int timePerFrame;
+			/* This number is multiplied with timePerFrame. That number will be the maximum time for delta  */
+			int maxUpdatesToCatchUp;
 		};
 	}
 }

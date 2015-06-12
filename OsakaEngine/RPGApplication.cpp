@@ -68,8 +68,8 @@ namespace Osaka{
 			//loadingscene = nullptr;
 			initscene = nullptr;
 		}
-		void RPGApplication::Init(bool vsync, int timePerFrame, GameSessionManagerPTR& gsm){
-			EApplication::Init(vsync, timePerFrame);
+		void RPGApplication::Init(bool vsync, int timePerFrame, int maxUpdatesToCatchUp, GameSessionManagerPTR& gsm){
+			EApplication::Init(vsync, timePerFrame, maxUpdatesToCatchUp);
 			this->gsm = gsm;
 			if( settings == nullptr || gameData == nullptr  || factory == nullptr || rpgfactory == nullptr || scenefactory == nullptr ||
 				loader == nullptr || assetm == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr || this->gsm == nullptr || gameDataParams == nullptr ||

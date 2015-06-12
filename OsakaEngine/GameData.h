@@ -22,6 +22,7 @@ namespace Osaka{
 			bool vsync;
 			int time_per_frame; //in ms
 			int target_fps;
+			int max_updates_catch_up;
 			//OWNER of all below
 			//These screens are created in Ascension.cpp
 			//startmenu_data*		startmenu;

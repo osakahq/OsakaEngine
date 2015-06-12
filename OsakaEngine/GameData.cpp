@@ -7,6 +7,7 @@ namespace Osaka{
 			vsync = true;
 			time_per_frame = 16; //60 fps
 			target_fps = 60;
+			max_updates_catch_up = 10; //160ms max time for delta
 			asset_loading_type = AssetLoadingType::NOT_SET;
 			sounds = std::make_shared<std::unordered_map<std::string, sound_dataPTR>>();
 			spritemaps = std::make_shared<std::unordered_map<std::string, spritemap_dataPTR>>();

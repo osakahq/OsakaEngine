@@ -39,9 +39,10 @@ namespace Osaka{
 			fileloader->_delete(); fileloader = nullptr;
 			debug = nullptr;
 		}
-		void EApplication::Init(bool vsync, int timePerFrame){
+		void EApplication::Init(bool vsync, int timePerFrame, int maxUpdatesToCatchUp){
 			this->vsync = vsync;
 			this->timePerFrame = timePerFrame;
+			this->maxUpdatesToCatchUp = maxUpdatesToCatchUp;
 		}
 		void EApplication::AddScene(std::string id, EScenePTR& scene){
 			//Takes ownership of the scene
@@ -153,7 +154,8 @@ namespace Osaka{
 			Uint32 old_start = 0;
 			
 			//160ms which equals to roughly 10 updates max.
-			const Uint32 max_delta = 160;
+			const Uint32 max_delta = maxUpdatesToCatchUp * _targetTimePerFrame;
+			printf("[EApplication] max_delta = %d\n", max_delta);
 			//Delta is the elapsed time since the last => (SDL_GetTicks())
 			Uint32 delta = 0;
 			Uint32 accumulated_delta = 0;

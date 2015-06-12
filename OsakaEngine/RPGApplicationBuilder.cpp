@@ -128,7 +128,7 @@ namespace Osaka{
 			/* Builders. App/Factory MUST not have unset variables */
 			app->scenefactory = this->CreateSceneFactory(factory, app, texturem);
 
-			app->Init(data->vsync, data->time_per_frame, std::make_shared<GameSessionManager>(data));
+			app->Init(data->vsync, data->time_per_frame, data->max_updates_catch_up, std::make_shared<GameSessionManager>(data));
 			dataparams->SetParams();
 			/* -------------------------------------------------------------------- */
 			/* --- After this point, everything is loaded ------------------------------------------------------------------- */

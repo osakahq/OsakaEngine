@@ -92,20 +92,7 @@ namespace Osaka{
 			}
 		}
 		void PlaybackIntroCanvas::CallbackLayerEndAnimation(){
-			switch(phase){
-			case 0:
-				break;
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-			case 4:
-				break;
-			case 5:
-				break;
-			}
+			
 		}
 		void PlaybackIntroCanvas::Update(){
 			//See in header why, this is needed.
@@ -116,6 +103,7 @@ namespace Osaka{
 				}
 				movePhaseUp = false;
 			}
+			background->Update();
 			switch(phase){
 			case 0:
 				if( timer->GetTicks() >= 2000 ){
@@ -123,7 +111,6 @@ namespace Osaka{
 					scene_parent->Stack(mainscript->fadelayer_id, std::static_pointer_cast<LayerArgs>(args));
 					timer->Stop();
 				}
-				background->Update();
 				break;
 			case 1:
 				if( timer->GetTicks() >= 3500 ){
@@ -147,24 +134,15 @@ namespace Osaka{
 			//engine_logo->Update();
 		}
 		void PlaybackIntroCanvas::Draw(){
+			background->Draw();
 			switch(phase){
-			case 0:
-				background->Draw();
-				break;
 			case 1:
 				engine_logo->Draw();
 				break;
 			case 2:
 				gamestudio_logo->Draw();
 				break;
-			case 3:
-				break;
-			case 4:
-				break;
-			case 5:
-				break;
 			}
-			//engine_logo->Draw();
 		}
 	}
 }

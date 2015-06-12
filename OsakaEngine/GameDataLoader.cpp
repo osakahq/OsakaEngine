@@ -41,6 +41,8 @@ namespace Osaka{
 			data->time_per_frame = std::stoi(std::string(root->first_attribute("time-per-frame")->value()));
 			data->target_fps = std::stoi(std::string(root->first_attribute("target-fps")->value()));
 
+			data->max_updates_catch_up = std::stoi(std::string(root->first_attribute("max-updates-catch-up")->value()));
+
 			std::string linefeed;
 			/* This is needed because SplitString doesn't behave as a normal split function. "\r\n" is taking as 2 separate tokens
 			 * For some reason if the file has \r\n and linefeed='\n', it bugs out. */
