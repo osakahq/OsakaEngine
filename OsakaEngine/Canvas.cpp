@@ -2,6 +2,7 @@
 #include "SDLLib.h"
 #include "Ruler.h"
 #include "Layer.h"
+#include "RPGScene.h"
 #include "Canvas.h"
 #include "osaka_forward.h"
 namespace Osaka{

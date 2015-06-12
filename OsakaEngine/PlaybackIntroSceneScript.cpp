@@ -10,6 +10,7 @@
 #include "RPGScene.h"
 #include "PlaybackIntroSceneScript.h"
 #include "osaka_forward.h"
+
 namespace Osaka{
 	namespace RPGLib{
 		PlaybackIntroSceneScript::PlaybackIntroSceneScript(RPGApplicationPTR& app) 

@@ -17,6 +17,12 @@ namespace Osaka{
 		inline int Clamp(int n, int lower, int upper){
 			return std::max(lower, std::min(n, upper));
 		}
+		inline float Round(float n){
+			return n < 0.0 ? (float)std::ceil(n - 0.5) : (float)std::floor(n + 0.5);
+		}
+		inline double Round(double n){
+			return n < 0.0 ? std::ceil(n - 0.5) : std::floor(n + 0.5);
+		}
 	}
 }
 

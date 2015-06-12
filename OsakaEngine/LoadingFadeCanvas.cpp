@@ -50,6 +50,7 @@ namespace Osaka{
 		}
 		
 		void LoadingFadeCanvas::StartAnimation(TransitionType::Value type){
+			printf("[LoadingFadeCanvas] StartAnimation\n");
 			this->type = type;
 			isAnimating = true;
 			beginSecondPart = false;
@@ -76,6 +77,7 @@ namespace Osaka{
 					if( timer->GetTicks() >= fadeInTime ){
 						timer->Stop();
 						onMidAnimation = true;
+						printf("[LoadingFadeCanvas] Raising midAnimation Event\n");
 						midAnimation->Raise(Component::EmptyEventArgs);
 					}
 				}else{
@@ -83,6 +85,7 @@ namespace Osaka{
 						if( color.a == 255 && timer->IsStarted() == false ){
 							//With this `if` we make sure that the animation (fade in) ends before we start the fade out animation
 							//Doesn't matter if script called `BeginEndAnimation()` earlier than expected
+							printf("[LoadingFadeCanvas] Starting end animation.\n");
 							timer->Start();
 						}else{
 							//This means we are ready to go fade out and the fade in animation ended

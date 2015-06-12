@@ -7,6 +7,7 @@
 #include "Factory.h"
 #include "SoundManager.h"
 #include "osaka_forward.h"
+
 namespace Osaka{
 	namespace RPGLib{
 		SoundManager::SoundManager(FactoryPTR& factory, Engine::SDLLibPTR& sdl){
