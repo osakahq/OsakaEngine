@@ -245,7 +245,7 @@
 	</ui-sprites>
 
 	<sounds>
-		<sound type="bgm" id="s_startmenu" filename="data\title.mid" />
+		<sound type="bgm" id="s_startmenu" filename="data\title.mp3" />
 		<sound type="effect" id="s_cursor_move" filename="data\cursor_move.wav" />
 		<sound type="effect" id="s_cursor_cancel" filename="data\cursor_cancel.wav" />
 	</sounds>

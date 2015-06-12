@@ -136,6 +136,7 @@ namespace Osaka{
 				}
 			}*/
 
+			//chunk size is 1024 because there is only 1ms of lag when playing a song
 			if( Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0 ){
 				debug->l(std::string("[SDLLib] SDL_mixer could not initialize. SDL_mixer error: ") + Mix_GetError());
 				//return false;
