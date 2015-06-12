@@ -26,16 +26,10 @@ namespace Osaka{
 			/* Class a scene load function. Called from AssetManager (loading thread) */
 			virtual void CallLoad(std::string id);
 
-#ifdef _DEBUG
-			/* This is only called when _DEBUG and when you pause (a frame), it gives you the elapsed time while paused.
-			 * So that in TimeManager can substract the amount and return the elapsed time like if it hadnt been paused. */
-			virtual void Update(Uint32 pausedtime) = 0;
-#else
-			/* In case the derived class wants to run some code every update */
-			virtual void Update() = 0;
-#endif
+			virtual void Update(const Uint32 delta) = 0;
+			
 			virtual void BeforePresent() = 0;
-			virtual void AfterPresent(const Uint32 frame_ms) = 0;
+			virtual void AfterPresent(const Uint32 started) = 0;
 
 			/* This is the main loop. */
 			virtual void Run();

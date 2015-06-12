@@ -83,16 +83,10 @@ namespace Osaka{
 			std::dynamic_pointer_cast<RPGScene>(scenes[id])->Load(rpgfactory);
 		}
 
-#ifdef _DEBUG
-		void RPGApplication::Update(Uint32 pausedtime){
-			timem->UpdateTicks(pausedtime);
+		void RPGApplication::Update(const Uint32 delta){
+			timem->Update(delta);
 		}
-#else
-		void RPGApplication::Update(){
-			//EApplication::Update();
-			timem->UpdateTicks();
-		}
-#endif
+	
 		void RPGApplication::BeforePresent(){
 			//EApplication::BeforePresent();
 			if( show_fpscounter ){ //constant
@@ -100,10 +94,10 @@ namespace Osaka{
 			}
 		}
 
-		void RPGApplication::AfterPresent(const Uint32 frame_ms){
+		void RPGApplication::AfterPresent(const Uint32 started){
 			//This function is always called.
 			if( show_fpscounter ){ //constant
-				counter->AfterPresent(frame_ms);
+				counter->AfterPresent(started);
 			}
 		}
 

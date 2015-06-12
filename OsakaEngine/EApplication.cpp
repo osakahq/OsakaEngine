@@ -1,6 +1,7 @@
  #include "stdafx.h"
 #include "SDLLib.h"
 #include "Debug.h"
+#include "ConsoleColors.h"
 #include "ESceneArgs.h"
 #include "EScene.h"
 #include "IFileLoader.h"
@@ -144,79 +145,117 @@ namespace Osaka{
 			int tempEnteringItems = -1;
 
 			const bool _vsync = vsync;
-			const Uint32 _targetTimePerFrame = timePerFrame;
-			/* This is only used for debug purposed (Show hiccups, vsync on delay, etc.) 
-			 * This is NOT used for game logic. For game logic go to TimeManager.h */
-			Uint32 frame_ms = 0;
 			Uint32 total_frame_ms = 0; //This is used when vsync is off
-
+			const Uint32 _targetTimePerFrame = timePerFrame; //16 for 60fps
+			
+			/* start is also used to cap the framerate when vsync is off */
+			Uint32 start = 0;
+			Uint32 old_start = 0;
+			
+			//160ms which equals to roughly 10 updates max.
+			const Uint32 max_delta = 160;
+			//Delta is the elapsed time since the last => (SDL_GetTicks())
+			Uint32 delta = 0;
+			Uint32 accumulated_delta = 0;
+			
 #ifdef _DEBUG
-			bool pauseFrame = false;
-			int framesPerKey = 1;
-			int _currentFrame = 0;
-			Uint32 paused_time = 0;
+			bool pause_frame = false;
+			const int frames_per_key = 3;
+			int current_frame = 0;
+			Uint32 total_paused_time = 0;
 #endif
 
 			debug->l("[EApplication] Loop begins...\n\n");
+			old_start = SDL_GetTicks();
 			while(!quit){
-				frame_ms = SDL_GetTicks(); //only used for debugging
-				while( SDL_PollEvent(&e) != 0 ){
-					if( e.type == SDL_QUIT ){
-						quit = true;
-					}else if( e.type == SDL_KEYDOWN ){
-						switch(e.key.keysym.sym){
 #ifdef _DEBUG
-						case SDLK_F1:
-							pauseFrame = (pauseFrame)?false:true;
-							framesPerKey = 3;
-							_currentFrame = 0;
-							break;
+				//We need to make sure "start" is not modified so that there isn't a delay in vsync if we are behind.
+				start = SDL_GetTicks() - total_paused_time;
+				if( pause_frame ){
+					//First grabs value then increments, so... we actually wait the for the actual frame to complete.
+					if( current_frame++ >= frames_per_key ){
+						current_frame = 0;
+						printf("-- Frame is paused, please press enter to continue...");
+						Uint32 paused_time = SDL_GetTicks();
+						getchar();
+						total_paused_time += SDL_GetTicks() - paused_time;
+						start -= paused_time;
+					}
+				}
+#else
+				start = SDL_GetTicks();
+#endif
+				delta = start - old_start;
+				//Cap delta time and make the overflowed elapsed time go away
+				if( delta > max_delta ){
+					/* I'm not sure how to explain why we don't need to modify start 
+					 *  . The next delta will the correct time (how long it took to go through the whole loop) */
+					delta = max_delta;
+				}
+				old_start = start;
+
+				accumulated_delta += delta;
+				/* If delta is lower than 16ms, that's fine. But it won't process `accumulated_delta` lower than 16ms */
+				if( delta > _targetTimePerFrame ){
+					std::cout << Debug::yellow;
+					printf("[EApplication] Delta is higher than target ms = %d\n", delta);
+					std::cout << Debug::white;
+					delta = _targetTimePerFrame;
+				}
+				
+				bool first_loop = true;
+				do{ //while(accumulated_delta >= _targetTimePerFrame);
+					if( first_loop ){
+						//We have to do this because sometimes SDL_Delay returns 1ms earler, making delta 15ms sometimes.
+						accumulated_delta -= delta;
+						first_loop = false;
+					}else{
+						//We are setting delta a value of 16ms then substracting that to accumulated_delta
+						accumulated_delta -= delta = _targetTimePerFrame;
+						printf("[EApplication] Catching up...\n");
+					}
+
+					while( SDL_PollEvent(&e) != 0 ){
+						if( e.type == SDL_QUIT ){
+							quit = true;
+						}else if( e.type == SDL_KEYDOWN ){
+#ifdef _DEBUG
+							switch(e.key.keysym.sym){
+							case SDLK_F1:
+								pause_frame = (pause_frame) ? false : true;
+								current_frame = 0;
+								break;
+							}
 #endif
 						}
 					}
-				}
 
-#ifdef _DEBUG
-				paused_time = 0;
-				if( pauseFrame ){
-					//First grabs value then increments, so... we actually wait the for the actual frame to complete.
-					if( _currentFrame++ >= framesPerKey ){
-						_currentFrame = 0;
-						printf("-- Frame is paused, please press enter to continue...");
-						paused_time = SDL_GetTicks();
-						getchar();
-						paused_time = SDL_GetTicks() - paused_time;
+					/* We need to copy it because a scene in `Update()` can mess the stack/loop 
+					 * The changes are not "seen" until the next update. */
+					if( stackHasChanged ){
+						stackHasChanged = false;
+						tempStackItems = this->stackItems;
+						std::copy(&stack[0], &stack[tempStackItems+1], tempStack);
 					}
-				}
-#endif
-				/* We need to copy it because a scene in `Update()` can mess the stack/loop 
-				 * The changes are not "seen" until the next update. */
-				if( stackHasChanged ){
-					stackHasChanged = false;
-					tempStackItems = this->stackItems;
-					std::copy(&stack[0], &stack[tempStackItems+1], tempStack);
-				}
+					/* This has to be before any scene function because it updates TimeManager */
+					this->Update(delta);
+					/* The reason this is after tempStack is because if Enter stacks a scene, it will "queue" the enter function but call Update first.
+					 * In this order, first copies the tempStack then Enter and Update function will be called in the correct order. */
+					if( enteringItems >= 0 ){
+						tempEnteringItems = enteringItems;
+						enteringItems = -1; //There is no need to set `nullptr`
+						//Basically, Enter() is like an early Update. I have decided it's okay to stack inside Enter as well (only Update and Enter)
+						std::copy(&entering[0], &entering[tempEnteringItems+1], tempEntering);
+						for(int i = 0; i <= tempEnteringItems; ++i){
+							tempEntering[i]->Enter();
+						}
+					}
+					for(int i = 0; i <= tempStackItems; i++){
+						tempStack[i]->Update();
+					}
 
-#ifdef _DEBUG
-				//Remeber to call update before these functions (Enter, Update, Draw) (updates TimeManager)
-				this->Update(paused_time);
-#else
-				this->Update();
-#endif
-				/* The reason this is after tempStack is because if Enter stacks a scene, it will "queue" the enter function but call Update first.
-				 * In this order, first copies the tempStack then Enter and Update function will be called in the correct order. */
-				if( enteringItems >= 0 ){
-					tempEnteringItems = enteringItems;
-					enteringItems = -1; //There is no need to set `nullptr`
-					//Basically, Enter() is like an early Update. I have decided it's okay to stack inside Enter as well (only Update and Enter)
-					std::copy(&entering[0], &entering[tempEnteringItems+1], tempEntering);
-					for(int i = 0; i <= tempEnteringItems; ++i){
-						tempEntering[i]->Enter();
-					}
-				}
-				for(int i = 0; i <= tempStackItems; i++){
-					tempStack[i]->Update();
-				}
+				}while(accumulated_delta >= _targetTimePerFrame);
+
 				sdl->Clear();
 				for(int i = 0; i <= tempStackItems; i++){
 					tempStack[i]->Draw();
@@ -225,43 +264,24 @@ namespace Osaka{
 				sdl->Present();
 				
 				//You need to substract with SDL_GetTicks() in order to know how much the frame took.
-				this->AfterPresent(frame_ms);
+				this->AfterPresent(start);
 				
-				//_vsync is a constant = no branch problem
+				//This has to be at the end so it's easier to considerate the delay as part of the frame.
 				if( !_vsync ){
-					total_frame_ms = SDL_GetTicks() - frame_ms;
+					total_frame_ms = SDL_GetTicks() - start;
 					//if 16 > 10 then-> 16 - 10 = 6ms to delay
 					if( _targetTimePerFrame > total_frame_ms ){
-						//I modified it because I don't there there is gonna be much difference
-						//Also, SDL_Delay may return 1ms earlier
-						//SDL_Delay(_targetTimePerFrame - (SDL_GetTicks() - frame_ms));
+						/* SDL_Delay may return 1ms earlier
+						 * Old: SDL_Delay(_targetTimePerFrame - (SDL_GetTicks() - frame_ms)); */
 						SDL_Delay(_targetTimePerFrame - total_frame_ms);
 					}
 				}
-
-				//Para revisar el FPS cuando NO es debug, es en FPSCounter
-#ifdef _DEBUG
-				//Esto va despues para tomar en cuenta el delay, y estar seguros que aun con el delay, no pasen de 16ms
-				if( _vsync ){
-					if( (SDL_GetTicks() - frame_ms) > _targetTimePerFrame+2 ){
-						//Se pone FPS_TARGET_MS_PER_FRAME+1 porque en VSYNC siempre es 17/16ms por frame. A veces hasta 18ms, pero es muy exacto para tener 60fps
-						printf("[FPS] Last frame took longer than expected to render.\n");
-					}
-				}else{
-					//This also has +1 because it is never perfect and sometimes it does 17ms delay
-					if( (SDL_GetTicks() - frame_ms) > _targetTimePerFrame+1 ){
-						printf("[FPS] Last frame took longer than expected to render.\n");
-					}
-				}
-#endif
 			} //while(!quit)
 			//Means we are closing the application...
 			for(auto it = scenes.begin(); it != scenes.end(); ++it ){
 				it->second->End();
 			}
 		}
-		//void EApplication::Update(){/* Nothing for now */}
-		//void EApplication::BeforePresent(){/* Nothing for now */}
-		//void EApplication::RenderTime(const Uint32 frame_ms){}
+
 	}
 }
