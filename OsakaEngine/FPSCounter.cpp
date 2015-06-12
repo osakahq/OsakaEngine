@@ -79,8 +79,8 @@ namespace Osaka{
 					debug->l("[FPSCounter] BeforePresent() was called very late: " + std::to_string(time));
 				}
 
-				++seconds;
-				if( seconds >= FPSCOUNTER_SECONDS_RAM ){
+				//First increments then grabs value.
+				if( ++seconds >= FPSCOUNTER_SECONDS_RAM ){
 					PROCESS_MEMORY_COUNTERS_EX pmc;
 					if( GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc)) ){
 						char buff[6] = "";
@@ -110,13 +110,13 @@ namespace Osaka{
 		}
 
 		/* This is only called if `show_fpscounter` (in RPGApplication) is true */
-		void FPSCounter::AfterPresent(Uint32 frame_ms){
+		void FPSCounter::AfterPresent(Uint32 started){
 			++frames;
 			if( show_sum_frames ){
-				frame_ms = SDL_GetTicks() - frame_ms;
-				sum_frame_ms += frame_ms;
+				started = SDL_GetTicks() - started;
+				sum_frame_ms += started;
 				++calls;
-				hiccups->Frame(frame_ms);
+				hiccups->Frame(started);
 			}
 		}
 	}

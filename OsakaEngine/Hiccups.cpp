@@ -17,6 +17,11 @@ namespace Osaka{
 		}
 
 		void Hiccups::Frame(const int frame_ms){
+#ifdef _DEBUG
+			if( frame_ms < 0 ){
+				throw std::exception("[Hiccups] frame_ms cannot be lesser than 0.");
+			}
+#endif
 			if( frame_ms >= HICCUPS_MAX_ARRAY ){
 				printf("[Hiccups] Current frame is longer than HICCUPS_MAX_ARRAY < [%d]\n", frame_ms);
 				return;
