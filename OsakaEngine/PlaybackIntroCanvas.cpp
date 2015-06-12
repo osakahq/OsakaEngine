@@ -119,7 +119,7 @@ namespace Osaka{
 			switch(phase){
 			case 0:
 				if( timer->GetTicks() >= 2000 ){
-					args->fadeInTime = args->fadeOutTime = 1000;
+					args->fadeInTime = args->fadeOutTime = 2500;
 					scene_parent->Stack(mainscript->fadelayer_id, std::static_pointer_cast<LayerArgs>(args));
 					timer->Stop();
 				}

@@ -162,38 +162,43 @@ namespace Osaka{
 			bool pause_frame = false;
 			const int frames_per_key = 3;
 			int current_frame = 0;
-			Uint32 total_paused_time = 0;
+			Uint32 paused_time = 0;
 #endif
 
 			debug->l("[EApplication] Loop begins...\n\n");
 			old_start = SDL_GetTicks();
 			while(!quit){
 #ifdef _DEBUG
-				//We need to make sure "start" is not modified so that there isn't a delay in vsync if we are behind.
-				start = SDL_GetTicks() - total_paused_time;
+				paused_time = 0;
 				if( pause_frame ){
 					//First grabs value then increments, so... we actually wait the for the actual frame to complete.
 					if( current_frame++ >= frames_per_key ){
 						current_frame = 0;
 						printf("-- Frame is paused, please press enter to continue...");
-						Uint32 paused_time = SDL_GetTicks();
+						paused_time = SDL_GetTicks();
 						getchar();
-						total_paused_time += SDL_GetTicks() - paused_time;
-						start -= paused_time;
+						paused_time = SDL_GetTicks() - paused_time;
 					}
 				}
-#else
-				start = SDL_GetTicks();
 #endif
+				//We need to make sure "start" is not modified after this so that there isn't a delay in vsync if we are behind.
+				/* The reason this is after `pause_frame` is because, it is easier to deal with the paused time at the start of the frame rather then
+				 *  . on the next frame. Because sure, if start is first, delta will have 16ms but the next frame will have the paused time so would have to substract on the next frame */
+				start = SDL_GetTicks();
+#ifdef _DEBUG
+				/* Instead of substracting on `start`, we substract it in delta, making delta value the correct one. */
+				delta = (start - old_start) - paused_time;
+#else
 				delta = start - old_start;
-				//Cap delta time and make the overflowed elapsed time go away
+#endif
+				old_start = start;
+				//Cap delta time
 				if( delta > max_delta ){
 					/* I'm not sure how to explain why we don't need to modify start 
 					 *  . The next delta will the correct time (how long it took to go through the whole loop) */
 					delta = max_delta;
 				}
-				old_start = start;
-
+				
 				accumulated_delta += delta;
 				/* If delta is lower than 16ms, that's fine. But it won't process `accumulated_delta` lower than 16ms */
 				if( delta > _targetTimePerFrame ){
