@@ -14,8 +14,8 @@ namespace Osaka{
 			this->sdl = sdl;
 			this->debug = d;
 			
-			stackItems = -1;
-			enteringItems = -1;
+			stack.reserve(EAPP_MAXSTACK);
+			entering.reserve(EAPP_MAXSTACK);
 			stackHasChanged = true;
 			this->fileloader = fileloader;
 
@@ -26,12 +26,9 @@ namespace Osaka{
 #endif			
 		}
 		void EApplication::_delete(){
-			for(int i = 0; i < EAPP_MAXSTACK; ++i){
-				stack[i] = nullptr;
-			}
-			for(int i = 0; i < EAPP_MAXSTACK; ++i){
-				entering[i] = nullptr;
-			}
+			stack.clear();
+			entering.clear();
+			
 			for(auto it = scenes.begin(); it != scenes.end(); ++it )
 				it->second->_delete();
 			scenes.clear();
@@ -52,84 +49,81 @@ namespace Osaka{
 			scenes[id]->Load();
 		}
 
-		void EApplication::Switch(const char* scene, ESceneArgsPTR& in_param){
+		void EApplication::Switch(std::string scene, ESceneArgsPTR& in_param){
 			RemoveAllFromStack();
-			stackItems++;
-			entering[++enteringItems] = stack[stackItems] = scenes[scene];
-			scenes[scene]->ReadyShow(in_param); 
+			EScenePTR sceneptr = scenes[scene];
+			stack.push_back(sceneptr);
+			entering.push_back(sceneptr);
+			sceneptr->ReadyShow(in_param);
 			stackHasChanged = true;
 		}
-		void EApplication::Stack(const char* scene, ESceneArgsPTR& in_param){
-			//We only need to call StandBy on current top scene because the others are already in standby
-			stack[this->stackItems]->StandBy();
+		void EApplication::Stack(std::string scene, ESceneArgsPTR& in_param){
+			if( stack.size() > 0 ){
+				//We only need to call StandBy on current top scene because the others are already in standby
+				stack[0]->StandBy();
+			}
+			EScenePTR sceneptr = scenes[scene];
 
-			stackItems++;
-			entering[++enteringItems] = stack[stackItems] = scenes[scene];
-			scenes[scene]->ReadyShow(in_param);
+			stack.insert(stack.begin(), sceneptr);
+			entering.push_back(sceneptr);
+
+			sceneptr->ReadyShow(in_param);
 			stackHasChanged = true;
 		}
-		void EApplication::BottomStack(const char* scene, ESceneArgsPTR& in_param){
-			//We push the array 1 position so we leave 0 free
-			for(int i = this->stackItems; i >= 0; i--){
-				stack[i+1] = stack[i];
-			}
-			
-			stackItems++;
-			entering[++enteringItems] = stack[0] = scenes[scene];
-			scenes[scene]->ReadyStandBy(in_param);	
+		void EApplication::BottomStack(std::string scene, ESceneArgsPTR& in_param){
+			EScenePTR sceneptr = scenes[scene];
+
+			stack.push_back(sceneptr);
+			entering.push_back(sceneptr);
+
+			sceneptr->ReadyStandBy(in_param);
 			stackHasChanged = true;
 		}
-		void EApplication::Remove(const char* scene){
-			int position = -1;
-			for(int i = 0; i <= this->stackItems; i++){
-				if( strcmp(stack[i]->GetId().c_str(), scene) == 0 ){
-					position = i;
-					break;
-				}
-			}
-			if( position == -1 ){
+		void EApplication::Remove(std::string scene){
+			auto it = std::find(stack.begin(), stack.end(), scenes[scene]);
+			if( it == stack.end() ){
 				debug->e("[EApplication] Unkown scene (Remove function).");
 			}
-			
-			if( position == stackItems && stackItems > 0 ){
+			if( it == stack.begin() && stack.size() > 0 ){
 				//If the scene to remove is top and there is more than 1, then we have to let the next one(-1 from position) scene know it is its turn
-				stack[position-1]->Focus();
+				(*(it+1))->Focus();
 			}
-
-			stack[position]->Exit();
-			//We move the array backwards, effectively replacing the scene to remove
-			for(int i = position; i <= this->stackItems; i++){
-				stack[i] = stack[i+1];
-			}
-			stackItems--;
+			(*it)->Exit();
+			stack.erase(it);
 			stackHasChanged = true;
 		}
-		void EApplication::RemoveAllFromStack(const char* except_scene){
-			//default parameter except_scene = NULL
-			bool gainedFocus = false;
-
-			for(int i = 0; i <= this->stackItems; i++){
-				if( except_scene != NULL && strcmp(stack[i]->GetId().c_str(), except_scene) == 0 ){
-					if( i != this->stackItems ){
-						/* This means the scene (except scene) wasn't at top and Focus() needs to be called */
-						gainedFocus = true;
-					}
-					//We just don't call Hide();
-					continue;
-
+		void EApplication::RemoveAllFromStack(std::string except_scene){
+			//default parameter except_scene = ""
+			if( except_scene.empty() == false ){
+				auto it = std::find(stack.begin(), stack.end(), scenes[except_scene]);
+				if( it == stack.end() ){
+					debug->e("[EApplication] except_scene was not found.");
 				}
-				stack[i]->Exit();
+				//int pos = it - stack.begin();
+				if( it != stack.begin() ){
+					/* This means the scene (except scene) wasn't at top and Focus() needs to be called */
+					(*it)->Focus();
+				}
+				//The reason we use iterator is that if Exit modifies the vector, it will be invalid, which is good.
+				for(auto it2 = stack.begin(); it2 != stack.end(); ++it2){
+					if( it2 == it ){
+						//Don't call exit on the except scene.
+						continue;
+					}
+					(*it2)->Exit();
+				}
+			}else{
+				//The reason we use iterator is that if Exit modifies the vector, it will be invalid, which is good.
+				for(auto it = stack.begin(); it != stack.end(); ++it){
+					(*it)->Exit();
+				}
 			}
-			this->stackItems = -1;
-			stackHasChanged = true;
-
-			if( except_scene != NULL ){
-				stackItems++;
-				stack[stackItems] = scenes[except_scene];
-				/* If the except_scene wasn't at the top, then it Focus() needs to be called */
-				if( gainedFocus )
-					stack[stackItems]->Focus();
+			
+			stack.clear();
+			if( except_scene.empty() == false ){
+				stack.push_back(scenes[except_scene]);
 			}
+			stackHasChanged = true;			
 		}
 
 		void EApplication::Run(){
@@ -139,12 +133,12 @@ namespace Osaka{
 			bool quit = false;
 			SDL_Event e;
 
-			EScenePTR tempStack[EAPP_MAXSTACK];
-			int tempStackItems = -1;
+			std::vector<EScenePTR> tempStack;
+			tempStack.reserve(EAPP_MAXSTACK);
 			
-			EScenePTR tempEntering[EAPP_MAXSTACK];
-			int tempEnteringItems = -1;
-
+			std::vector<EScenePTR> tempEntering;
+			tempEntering.reserve(EAPP_MAXSTACK);
+			
 			const bool _vsync = vsync;
 			Uint32 total_frame_ms = 0; //This is used when vsync is off
 			const Uint32 _targetTimePerFrame = timePerFrame; //16 for 60fps
@@ -242,30 +236,28 @@ namespace Osaka{
 					 * The changes are not "seen" until the next update. */
 					if( stackHasChanged ){
 						stackHasChanged = false;
-						tempStackItems = this->stackItems;
-						std::copy(&stack[0], &stack[tempStackItems+1], tempStack);
+						tempStack = stack;
 					}
 					/* This has to be before any scene function because it updates TimeManager */
 					this->Update(delta);
 					/* The reason this is after tempStack is because if Enter stacks a scene, it will "queue" the enter function but call Update first.
 					 * In this order, first copies the tempStack then Enter and Update function will be called in the correct order. */
-					if( enteringItems >= 0 ){
-						tempEnteringItems = enteringItems;
-						enteringItems = -1; //There is no need to set `nullptr`
+					if( entering.size() > 0 ){
 						//Basically, Enter() is like an early Update. I have decided it's okay to stack inside Enter as well (only Update and Enter)
-						std::copy(&entering[0], &entering[tempEnteringItems+1], tempEntering);
-						for(int i = 0; i <= tempEnteringItems; ++i){
+						tempEntering.swap(entering); //`entering` will be empty.
+						for(unsigned int i = 0; i < tempEntering.size(); ++i){
 							tempEntering[i]->Enter();
 						}
+						tempEntering.clear();
 					}
-					for(int i = 0; i <= tempStackItems; i++){
+					for(unsigned int i = 0; i < tempStack.size(); i++){
 						tempStack[i]->Update();
 					}
 
 				}while(accumulated_delta >= _targetTimePerFrame);
 
 				sdl->Clear();
-				for(int i = 0; i <= tempStackItems; i++){
+				for(unsigned int i = 0; i < tempStack.size(); i++){
 					tempStack[i]->Draw();
 				}
 				this->BeforePresent();
