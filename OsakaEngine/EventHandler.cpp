@@ -33,8 +33,9 @@ namespace Osaka{
 		
 		void EventHandler::Unhook(int id){
 			EnterCriticalSection(&this->criticalSection);
-			if( map.find(id) != map.end()) {
-				map.erase(id);
+			auto it = map.find(id);
+			if( it != map.end()) {
+				map.erase(it);
 			}else{
 				throw std::exception("[EventHandler] Unhook -> Caller is not registered");
 			}

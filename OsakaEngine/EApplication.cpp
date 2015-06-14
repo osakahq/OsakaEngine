@@ -222,6 +222,7 @@ namespace Osaka{
 						printf("[EApplication] Catching up...\n");
 					}
 
+					/* We consult the input every catch up, in order to be more responsive when lagging */
 					while( SDL_PollEvent(&e) != 0 ){
 						if( e.type == SDL_QUIT ){
 							quit = true;
