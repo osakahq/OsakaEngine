@@ -48,14 +48,17 @@ namespace Osaka{
 			
 			/* Owner of SceneScript */
 			SceneScriptPTR mainscript;
-
+			
 			/* Owner (layers). ID of the layer. 
 			 * It is responsability of the factory to add the layers into the vector */
 			std::unordered_map<std::string, LayerPTR> layers;
+			
 			/* Layers are owned in the unorderedmap */
 			std::vector<LayerPTR> stack_layers;
+			
 			/* This is a temp stack, so when the loop Update is running, it doesn't mess with it. */
 			std::vector<LayerPTR> temp_stack_layers;
+			
 			bool stackHasChanged;
 			
 			bool focus;

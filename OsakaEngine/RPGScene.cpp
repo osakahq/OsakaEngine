@@ -9,7 +9,7 @@ namespace Osaka{
 		RPGScene::RPGScene(std::string id, SceneScriptPTR& mainscript){
 			this->id = id;
 			this->mainscript = mainscript;
-
+			
 			focus = false;
 			standby = false;
 			instack = false;

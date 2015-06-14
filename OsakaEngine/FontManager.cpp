@@ -40,7 +40,7 @@ namespace Osaka{
 				//it->first = char
 				if( (int)it->first >= FONTMANAGER_MAX_CHAR )
 					throw std::exception("[FontManager] Outside of limit > FONTMANAGER_MAX_CHAR");
-				sprites[(int)it->first] = texture->CreateSpriteRAWPointer(it->second->sprite.c_str());
+				sprites[(int)it->first] = texture->CreateSpriteRAWPointer(it->second->sprite);
 			}
 		}
 

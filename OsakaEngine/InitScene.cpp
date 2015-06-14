@@ -37,7 +37,7 @@ namespace Osaka{
 		void InitScene::Update(){
 			if( callTransition ){
 				//Switch will make this scene go out of the loop.
-				app->FadeSwitchTransition(scene.c_str(), init_args);
+				app->FadeSwitchTransition(scene, init_args);
 				callTransition = false;
 			}
 		}

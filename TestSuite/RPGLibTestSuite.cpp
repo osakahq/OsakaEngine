@@ -57,7 +57,7 @@ namespace Osaka{
 				AddExpectedTests(sizeof(tests)/sizeof(*tests), tests);
 				rpgapp->AddScene("playbackintro_phase1_test1", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreatePlaybackIntroScene("playbackintro_phase1_test1")));
 				rpgapp->AddScene("test_startmenu", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreateStartMenuScene("test_startmenu")));
-
+				
 				rpgapp->AddScene("loadgame", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreateDummyScene("loadgame")));
 				rpgapp->AddScene("options", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreateDummyScene("options")));
 				rpgapp->AddScene("credits", std::static_pointer_cast<Engine::EScene>(rpgapp->scenefactory->CreateDummyScene("credits")));

@@ -64,7 +64,7 @@ namespace Osaka{
 			return std::make_shared<UserInterface>(raw_renderer, ruler);
 		}
 
-		LayerPTR SceneBuilder::CreateAndInitLayer(const char* name, ScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui){
+		LayerPTR SceneBuilder::CreateAndInitLayer(const std::string name, ScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui){
 			LayerPTR layer = std::make_shared<Layer>(name, script, canvas, ui);
 			//I put Init here because it will be very uncommon to inherit the Layer class
 			layer->Init(app);
@@ -75,7 +75,7 @@ namespace Osaka{
 			if( layer_id.empty() ){
 				throw std::exception("[SceneBuilder] LayerWrapper: layer_id is empty");
 			}
-			LayerPTR layer = CreateAndInitLayer(layer_id.c_str(), data->script, data->canvas, data->ui);
+			LayerPTR layer = CreateAndInitLayer(layer_id, data->script, data->canvas, data->ui);
 			data->script->Init(layer);
 			data->canvas->Init(layer, scene, data->script, mainscript);
 			data->ui->Init(layer);

@@ -56,7 +56,7 @@ namespace Osaka{
 			virtual void BeforePresent() override;
 			virtual void AfterPresent(const Uint32 started) override;
 			/* Initializes the first scene and then passes it to EApplicacion (base class) */
-			virtual void Run(const char* scene, Engine::ESceneArgsPTR& init_params);
+			virtual void Run(const std::string scene, Engine::ESceneArgsPTR& init_params);
 
 			/* Only needs the id */
 			void SetLoadingScene(std::string loadingscene_id);
@@ -67,9 +67,9 @@ namespace Osaka{
 			GameSessionManagerPTR GetGameSessionManager();
 
 			//Function wrappers for RPGLoadingScene
-			void FadeStackTransition(const char* scene, Engine::ESceneArgsPTR& params);
-			void FadeSwitchTransition(const char* scene, Engine::ESceneArgsPTR& params);
-			void LoadingStackTransition(const char* scene, Engine::ESceneArgsPTR& params);
+			void FadeStackTransition(const std::string scene, Engine::ESceneArgsPTR& params);
+			void FadeSwitchTransition(const std::string scene, Engine::ESceneArgsPTR& params);
+			void LoadingStackTransition(const std::string scene, Engine::ESceneArgsPTR& params);
 
 			/* - gamesessionm_struct = rpgfactory->CreateGameSessionStructs(this.sessionm);
 			 * - gameloader->savegame(gamesessionm_struct, filename); */

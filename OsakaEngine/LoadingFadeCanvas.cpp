@@ -92,6 +92,7 @@ namespace Osaka{
 							color.a = static_cast<Uint8>( 255.f - Utils::Clamp( std::ceil((timer->GetTicks() / fadeOutTime)*255.f), 0.f, 255.f) );
 							if( timer->GetTicks() >= fadeOutTime ){
 								timer->Stop();
+								printf("[LoadingFadeCanvas] Raising end animation.\n");
 								endAnimation->Raise(Component::EmptyEventArgs);
 								skipUpdate = true;
 							}

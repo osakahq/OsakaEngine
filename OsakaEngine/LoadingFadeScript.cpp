@@ -56,7 +56,7 @@ namespace Osaka{
 		void LoadingFadeScript::OnCanvasEndAnimation(Component::EventArgs& e){
 			app->debug->l("[LoadingFadeLayer] OnCanvasEndAnimation (Switch)");
 			//If transitiontype == Stack, there is no endAnimation.
-			app->Remove(scene_parent->GetId().c_str());
+			app->Remove(scene_parent->GetId());
 
 			ResetVariables();
 		}
@@ -64,16 +64,16 @@ namespace Osaka{
 			if( transition_type == TransitionType::FADE_STACK ){
 				app->debug->l("[LoadingFadeLayer] OnCanvasMidAnimation::Stack");
 				//If it is stack then, there is no fade out animation
-				app->Stack(scene_id.c_str(), scene_params);
+				app->Stack(scene_id, scene_params);
 				/* It has to be in this order because if there is an scene below this one, it will `Focus()` then immediately `StandBy()` */
-				app->Remove(scene_parent->GetId().c_str());
+				app->Remove(scene_parent->GetId());
 
 				ResetVariables();
 			}else if( transition_type == TransitionType::FADE_SWITCH ){
 				app->debug->l("[LoadingFadeLayer] OnCanvasMidAnimation::Switch");
 				/* Remove all scenes except this one */
-				app->RemoveAllFromStack(scene_parent->GetId().c_str());
-				app->BottomStack(scene_id.c_str(), scene_params);
+				app->RemoveAllFromStack(scene_parent->GetId());
+				app->BottomStack(scene_id, scene_params);
 			}else if( transition_type == TransitionType::LOADING_STACK){
 				app->debug->e("[LoadingFadeLayer] LOADING_STACK NOT IMPLEMENTED YET");
 			}
