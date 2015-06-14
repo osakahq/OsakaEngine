@@ -119,6 +119,7 @@ namespace Osaka{
 		}
 
 		void RPGApplication::FadeStackTransition(const std::string scene, Engine::ESceneArgsPTR& params){
+			printf("[RPGApplication] FadeStackTransition\n");
 			LoadingArgsPTR args = std::make_shared<LoadingArgs>();
 			args->scene = scene;
 			args->send_params = params;
@@ -126,6 +127,7 @@ namespace Osaka{
 			Stack(loadingscene_id, std::static_pointer_cast<Engine::ESceneArgs>(args));
 		}
 		void RPGApplication::FadeSwitchTransition(const std::string scene, Engine::ESceneArgsPTR& params){
+			printf("[RPGApplication] FadeSwitchTransition\n");
 			LoadingArgsPTR args = std::make_shared<LoadingArgs>();
 			args->scene = scene;
 			args->send_params = params;
@@ -133,6 +135,7 @@ namespace Osaka{
 			Stack(loadingscene_id, std::static_pointer_cast<Engine::ESceneArgs>(args));
 		}
 		void RPGApplication::LoadingStackTransition(const std::string scene, Engine::ESceneArgsPTR& params){
+			printf("[RPGApplication] LoadingStackTransition\n");
 			LoadingArgsPTR args = std::make_shared<LoadingArgs>();
 			args->scene = scene;
 			args->send_params = params;

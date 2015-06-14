@@ -8,6 +8,10 @@
 #include "EApplication.h"
 #include "osaka_forward.h"
 
+#ifdef _DEBUG
+#define EAPPLICATION_PAUSEFRAME
+#endif
+
 namespace Osaka{
 	namespace Engine{
 		EApplication::EApplication(Debug::DebugPTR& d, SDLLibPTR& sdl, IFileLoaderPTR& fileloader){
@@ -51,6 +55,7 @@ namespace Osaka{
 
 		void EApplication::Switch(std::string scene, ESceneArgsPTR& in_param){
 			RemoveAllFromStack();
+			printf("[EApplication] Switch\n");
 			EScenePTR sceneptr = scenes[scene];
 			stack.push_back(sceneptr);
 			entering.push_back(sceneptr);
@@ -58,6 +63,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void EApplication::Stack(std::string scene, ESceneArgsPTR& in_param){
+			printf("[EApplication] Stack\n");
 			if( stack.size() > 0 ){
 				//We only need to call StandBy on current top scene because the others are already in standby
 				stack[0]->StandBy();
@@ -71,6 +77,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void EApplication::BottomStack(std::string scene, ESceneArgsPTR& in_param){
+			printf("[EApplication] BottomStack\n");
 			EScenePTR sceneptr = scenes[scene];
 
 			stack.push_back(sceneptr);
@@ -80,6 +87,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void EApplication::Remove(std::string scene){
+			printf("[EApplication] Remove\n");
 			auto it = std::find(stack.begin(), stack.end(), scenes[scene]);
 			if( it == stack.end() ){
 				debug->e("[EApplication] Unkown scene (Remove function).");
@@ -93,6 +101,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void EApplication::RemoveAllFromStack(std::string except_scene){
+			printf("[EApplication] RemoveAllFromStack\n");
 			//default parameter except_scene = ""
 			if( except_scene.empty() == false ){
 				auto it = std::find(stack.begin(), stack.end(), scenes[except_scene]);
@@ -154,7 +163,7 @@ namespace Osaka{
 			Uint32 delta = 0;
 			Uint32 accumulated_delta = 0;
 			
-#ifdef _DEBUG
+#ifdef EAPPLICATION_PAUSEFRAME
 			bool pause_frame = false;
 			const int frames_per_key = 3;
 			int current_frame = 0;
@@ -164,12 +173,12 @@ namespace Osaka{
 			debug->l("[EApplication] Loop begins...\n\n");
 			old_start = SDL_GetTicks();
 			while(!quit){
-#ifdef _DEBUG
+#ifdef EAPPLICATION_PAUSEFRAME
 				paused_time = 0;
 				if( pause_frame ){
 					//First grabs value then increments, so... we actually wait the for the actual frame to complete.
 					if( current_frame++ >= frames_per_key ){
-						current_frame = 0;
+						current_frame = 1;
 						printf("-- Frame is paused, please press enter to continue...");
 						paused_time = SDL_GetTicks();
 						getchar();
@@ -181,7 +190,7 @@ namespace Osaka{
 				/* The reason this is after `pause_frame` is because, it is easier to deal with the paused time at the start of the frame rather then
 				 *  . on the next frame. Because sure, if start is first, delta will have 16ms but the next frame will have the paused time so would have to substract on the next frame */
 				start = SDL_GetTicks();
-#ifdef _DEBUG
+#ifdef EAPPLICATION_PAUSEFRAME
 				/* Instead of substracting on `start`, we substract it in delta, making delta value the correct one. */
 				delta = (start - old_start) - paused_time;
 #else
@@ -215,13 +224,13 @@ namespace Osaka{
 						accumulated_delta -= delta = _targetTimePerFrame;
 						printf("[EApplication] Catching up...\n");
 					}
-
+					
 					/* We consult the input every catch up, in order to be more responsive when lagging */
 					while( SDL_PollEvent(&e) != 0 ){
 						if( e.type == SDL_QUIT ){
 							quit = true;
 						}else if( e.type == SDL_KEYDOWN ){
-#ifdef _DEBUG
+#ifdef EAPPLICATION_PAUSEFRAME
 							switch(e.key.keysym.sym){
 							case SDLK_F1:
 								pause_frame = (pause_frame) ? false : true;
@@ -231,7 +240,7 @@ namespace Osaka{
 #endif
 						}
 					}
-
+					
 					/* We need to copy it because a scene in `Update()` can mess the stack/loop 
 					 * The changes are not "seen" until the next update. */
 					if( stackHasChanged ){
@@ -243,6 +252,7 @@ namespace Osaka{
 					/* The reason this is after tempStack is because if Enter stacks a scene, it will "queue" the enter function but call Update first.
 					 * In this order, first copies the tempStack then Enter and Update function will be called in the correct order. */
 					if( entering.size() > 0 ){
+						printf("[EApplication] Enter\n");
 						//Basically, Enter() is like an early Update. I have decided it's okay to stack inside Enter as well (only Update and Enter)
 						tempEntering.swap(entering); //`entering` will be empty.
 						for(unsigned int i = 0; i < tempEntering.size(); ++i){
@@ -255,14 +265,13 @@ namespace Osaka{
 					}
 
 				}while(accumulated_delta >= _targetTimePerFrame);
-
+				
 				sdl->Clear();
 				for(unsigned int i = 0; i < tempStack.size(); i++){
 					tempStack[i]->Draw();
 				}
 				this->BeforePresent();
 				sdl->Present();
-				
 				//You need to substract with SDL_GetTicks() in order to know how much the frame took.
 				this->AfterPresent(start);
 				

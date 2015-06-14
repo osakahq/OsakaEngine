@@ -100,6 +100,7 @@ namespace Osaka{
 			//You can't add layers inside the loop. stackHasChanged = true;
 		}
 		void RPGScene::Stack(std::string id, LayerArgsPTR& args){
+			printf("[RPGScene] Stack\n");
 			if( stack_layers.size() > 0 ){
 				stack_layers.front()->StandBy();
 			}
@@ -109,6 +110,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void RPGScene::StackBefore(std::string id, std::string ref_layer, LayerArgsPTR& args){
+			printf("[RPGScene] StackBefore\n");
 			std::vector<LayerPTR>::const_iterator it_ref;
 			for( auto it = stack_layers.begin(); it != stack_layers.end(); ++it){
 				if( (*it)->id == ref_layer ){
@@ -125,6 +127,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void RPGScene::StackAfter(std::string id, std::string ref_layer, LayerArgsPTR& args){
+			printf("[RPGScene] StackAfter\n");
 			std::vector<LayerPTR>::const_iterator it_ref;
 			for( auto it = stack_layers.begin(); it != stack_layers.end(); ++it){
 				if( (*it)->id == ref_layer ){
@@ -149,6 +152,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void RPGScene::Switch(std::string id, LayerArgsPTR& args){
+			printf("[RPGScene] Switch\n");
 			//Removes all
 			RemoveAll();
 			layers[id]->Ready(args);
@@ -157,6 +161,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void RPGScene::Remove(std::string id){
+			printf("[RPGScene] Remove\n");
 			if( stack_layers.size() == 1 ){
 				layers[id]->Exit();
 				stack_layers.clear();
@@ -179,6 +184,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void RPGScene::RemoveAll(){
+			printf("[RPGScene] RemoveAll\n");
 			for( auto it = stack_layers.begin(); it != stack_layers.end(); ++it){
 				(*it)->Exit();
 			}
@@ -192,6 +198,7 @@ namespace Osaka{
 			mainscript->Update();
 
 			if( stackHasChanged ){
+				printf("[RPGScene] Update -> stackHasChanged\n");
 				temp_stack_layers = stack_layers;
 				stackHasChanged = false;
 			}
@@ -214,6 +221,7 @@ namespace Osaka{
 		}
 		
 		void RPGScene::Enter(){
+			printf("[RPGScene] Enter\n");
 			mainscript->Enter();
 			for(auto it = layers.begin(); it != layers.end(); ++it ){
 				it->second->Enter(); 
