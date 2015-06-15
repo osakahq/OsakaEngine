@@ -23,6 +23,7 @@ namespace Osaka{
 			
 		}
 		
+		void DummyScene::Start(){};
 		void DummyScene::Enter(){};
 		void DummyScene::Load(RPGFactoryPTR& factory){}
 		void DummyScene::Load(){};

@@ -12,6 +12,8 @@ namespace Osaka{
 			virtual ~EScene(){};
 			virtual void _delete() = 0;
 
+			/* This is to announce the loop is about to start. */
+			virtual void Start() = 0;
 			/* Load functions server the purpose of creating the classes, everything that the scene needs.
 			 * This function is called from AssetManager (loading thread) */
 			virtual void Load() = 0;

@@ -34,8 +34,9 @@ namespace Osaka{
 			entering.clear();
 			raw_scenes.clear();
 
-			for(auto it = scenes.begin(); it != scenes.end(); ++it )
+			for(auto it = scenes.begin(); it != scenes.end(); ++it ){
 				it->second->_delete();
+			}
 			scenes.clear();
 			sdl->_delete(); sdl = nullptr;
 			fileloader->_delete(); fileloader = nullptr;
@@ -109,7 +110,8 @@ namespace Osaka{
 			}
 			//default parameter except_scene = ""
 			if( except_scene.empty() == false ){
-				auto it = std::find(stack.begin(), stack.end(), raw_scenes[except_scene]);
+				EScene* escene = raw_scenes[except_scene];
+				auto it = std::find(stack.begin(), stack.end(), escene);
 				if( it == stack.end() ){
 					debug->e("[EApplication] except_scene was not found.");
 				}
@@ -127,7 +129,7 @@ namespace Osaka{
 				int except_pos = it - stack.begin();
 				std::copy(stack.begin(), stack.end(), copy_stack);
 				stack.clear();
-				stack.push_back(raw_scenes[except_scene]);
+				stack.push_back(escene);
 
 				/* It is safe to call this function again in an Exit scene function. */
 				for(int i = 0; i < quantity; ++i){
@@ -183,6 +185,10 @@ namespace Osaka{
 #endif
 
 			debug->l("[EApplication] Loop begins...\n\n");
+			for(auto it = raw_scenes.begin(); it != raw_scenes.end(); ++it ){
+				//Announce the loop is about to begin.
+				it->second->Start();
+			}
 			old_start = SDL_GetTicks();
 			while(!quit){
 #ifdef EAPPLICATION_PAUSEFRAME
@@ -302,7 +308,7 @@ namespace Osaka{
 				}
 			} //while(!quit)
 			//Means we are closing the application...
-			for(auto it = scenes.begin(); it != scenes.end(); ++it ){
+			for(auto it = raw_scenes.begin(); it != raw_scenes.end(); ++it ){
 				it->second->End();
 			}
 		}
