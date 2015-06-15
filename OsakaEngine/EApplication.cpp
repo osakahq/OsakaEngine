@@ -60,8 +60,10 @@ namespace Osaka{
 			RemoveAllFromStack();
 			printf("[EApplication] Switch\n");
 			EScene* sceneptr = raw_scenes[scene];
+
 			stack.push_back(sceneptr);
 			entering.push_back(sceneptr);
+
 			sceneptr->ReadyShow(in_param);
 			stackHasChanged = true;
 		}
@@ -69,7 +71,8 @@ namespace Osaka{
 			printf("[EApplication] Stack\n");
 			if( stack.size() > 0 ){
 				//We only need to call StandBy on current top scene because the others are already in standby
-				stack[0]->StandBy();
+				//Remember than the last one is the last one to be drawn, making it the top one.
+				stack.back()->StandBy();
 			}
 			EScene* sceneptr = raw_scenes[scene];
 
@@ -97,17 +100,32 @@ namespace Osaka{
 			if( it == stack.end() ){
 				debug->e("[EApplication] Unkown scene (Remove function).");
 			}
-			if( it == stack.begin() && stack.size() > 0 ){
+			//We cache the reference because if an Exit/Focus function modifies the stack, the `iterator` will be invalid
+			EScene* sceneptr = (*it);
+			//If stack is empty, it will throw an exception.
+			if( stack.size() <= 1 ){
+				//If there is only 1 scene, is the scene we are going to remove.
+				stack.clear();
+				sceneptr->Exit();
+			}else if( ++it == stack.end() ){//Means iterator points at the last element
+				//We don't need to check if `it != stack.end()` here, because I already do that.
 				//If the scene to remove is top and there is more than 1, then we have to let the next one(-1 from position) scene know it is its turn
-				(*(it+1))->Focus();
+				EScene* sceneptr_focus = (*(it-1));
+				stack.erase(it);
+				sceneptr_focus->Focus();
+				sceneptr->Exit();
+			}else{
+				stack.erase(it);
+				sceneptr->Exit();
 			}
-			(*it)->Exit();
-			stack.erase(it);
 			stackHasChanged = true;
 		}
 		void EApplication::RemoveAllFromStack(std::string except_scene){
 			printf("[EApplication] RemoveAllFromStack\n");
 			if( stack.size() == 0 ){
+				if( !except_scene.empty() ){
+					debug->e("[EApplication] stack is empty but `except_scene` is not empty.");
+				}
 				return;
 			}
 			//default parameter except_scene = ""
@@ -121,10 +139,12 @@ namespace Osaka{
 					//If the except scene is the only one in the stack, there is nothing to do.
 					return;
 				}
-				//int pos = it - stack.begin();
-				if( it != stack.begin() ){
+				/* The reason we can't call Focus right away is because we need to first be done with the iterator. */
+				bool gained_focus = false;
+				if( ++it != stack.end() ){
+					//I already check if `it != stack.end()`
 					/* This means the scene (except scene) wasn't at top and Focus() needs to be called */
-					(*it)->Focus();
+					gained_focus = true; //except scene gains Focus()
 				}
 
 				int quantity = stack.size();
@@ -133,6 +153,10 @@ namespace Osaka{
 				stack.clear();
 				stack.push_back(escene);
 
+				if( gained_focus ){
+					//Scene functions must be done AFTER the stack modifications.
+					escene->Focus();
+				}
 				/* It is safe to call this function again in an Exit scene function. */
 				for(int i = 0; i < quantity; ++i){
 					if( i == except_pos ){
