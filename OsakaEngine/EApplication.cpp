@@ -107,7 +107,7 @@ namespace Osaka{
 				//If there is only 1 scene, is the scene we are going to remove.
 				stack.clear();
 				sceneptr->Exit();
-			}else if( ++it == stack.end() ){//Means iterator points at the last element
+			}else if( it+1 == stack.end() ){//Means iterator points at the last element
 				//We don't need to check if `it != stack.end()` here, because I already do that.
 				//If the scene to remove is top and there is more than 1, then we have to let the next one(-1 from position) scene know it is its turn
 				stack.erase(it);
@@ -140,7 +140,7 @@ namespace Osaka{
 				}
 				/* The reason we can't call Focus right away is because we need to first be done with the iterator. */
 				bool gained_focus = false;
-				if( ++it != stack.end() ){
+				if( it+1 != stack.end() ){
 					//I already check if `it != stack.end()`
 					/* This means the scene (except scene) wasn't at top and Focus() needs to be called */
 					gained_focus = true; //except scene gains Focus()

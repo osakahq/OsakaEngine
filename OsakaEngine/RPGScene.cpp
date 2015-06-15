@@ -153,7 +153,7 @@ namespace Osaka{
 				layer_ref->StandBy(); //Loses focus.
 				layer_stack->Show(); //Gains focus.
 
-			}else if( ++it_ref == stack_layers.end() ){ //Do not be confused with `.end()`. Begin points to the first one while end points to `past-the-end`
+			}else if( it_ref+1 == stack_layers.end() ){ //Do not be confused with `.end()`. Begin points to the first one while end points to `past-the-end`
 				stack_layers.push_back(layer_stack);
 
 				//Means we are replacing the top place.
@@ -188,7 +188,7 @@ namespace Osaka{
 				if( it == stack_layers.end() ){
 					throw new std::exception("[RPGScene] Layer not found.");
 				}
-				if( ++it == stack_layers.end() ){
+				if( it+1 == stack_layers.end() ){
 					//If position of the elemnt to remove is top(begin) then the soon to be first, needs to have Focus function called.
 					stack_layers.erase(it);
 					stack_layers.back()->Focus();
