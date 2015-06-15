@@ -3,6 +3,9 @@
 #define RPGLIB_RPGSCENE_H
 #include "EScene.h"
 #include "osaka_forward.h"
+
+#define RPGSCENE_MAX_LAYERS 20
+
 namespace Osaka{
 	namespace RPGLib{
 		
@@ -13,6 +16,8 @@ namespace Osaka{
 			virtual ~RPGScene();
 			virtual void _delete() override;
 			
+			virtual void Start() override;
+
 			/* Do not override this. Not used. */
 			void Load() override;
 			virtual void Load(RPGFactoryPTR& factory);
@@ -43,22 +48,37 @@ namespace Osaka{
 
 			std::string GetId();
 		/* ----------------------------------------------------------------------------------- */
+		private:
+			/* This is a helper var so that it can't add layers once the loop starts */
+			bool started;
 		protected:
 			std::string  id;
 			
 			/* Owner of SceneScript */
 			SceneScriptPTR mainscript;
+			/* The cache version. */
+			SceneScript* raw_mainscript;
 			
 			/* Owner (layers). ID of the layer. 
 			 * It is responsability of the factory to add the layers into the vector */
 			std::unordered_map<std::string, LayerPTR> layers;
-			
+			/* This is the one we use to search the layers. */
+			std::unordered_map<std::string, Layer*> raw_layers;
+			/* Because map iterator is too slow, we need either vector[] or array. Array because we don't remove or add constantly at all.
+			 * This array holds ALL the layers too. This array is used to call ALL the layers. For example, End(), Enter(). */
+			Layer* array_raw_layers[RPGSCENE_MAX_LAYERS];
+			/* Holds the size of raw_layers which is identical of layers but with raw pointers */
+			int map_size;
+
 			/* Layers are owned in the unorderedmap */
-			std::vector<LayerPTR> stack_layers;
-			
+			std::vector<Layer*> stack_layers;
+			/* Helper copy var. This is used to loop through stack_layers. (RemoveAll for example) */
+			Layer* copy_stack_layers[RPGSCENE_MAX_LAYERS];
+
 			/* This is a temp stack, so when the loop Update is running, it doesn't mess with it. */
-			std::vector<LayerPTR> temp_stack_layers;
-			
+			Layer* temp_stack_layers[RPGSCENE_MAX_LAYERS];
+			int temp_stack_layers_items;
+
 			bool stackHasChanged;
 			
 			bool focus;

@@ -110,9 +110,8 @@ namespace Osaka{
 			}else if( ++it == stack.end() ){//Means iterator points at the last element
 				//We don't need to check if `it != stack.end()` here, because I already do that.
 				//If the scene to remove is top and there is more than 1, then we have to let the next one(-1 from position) scene know it is its turn
-				EScene* sceneptr_focus = (*(it-1));
 				stack.erase(it);
-				sceneptr_focus->Focus();
+				stack.back()->Focus();
 				sceneptr->Exit();
 			}else{
 				stack.erase(it);
