@@ -43,6 +43,7 @@ namespace Osaka{
 				alpha = static_cast<Uint8>(Utils::Clamp( std::ceil((timer->GetTicks() / fadeInTime)*255.f), 0.f, 255.f));
 				raw_obj->rgba.a = alpha;
 				if( timer->GetTicks() >= fadeInTime ){
+					printf("[FadeInFadeOutEffect] Update -> !onMidAnimation [mid]\n");
 					timer->Stop();
 					onMidAnimation = true;
 					midAnimation->Raise(Component::EmptyEventArgs);
@@ -62,6 +63,7 @@ namespace Osaka{
 						alpha = static_cast<Uint8>( 255.f - Utils::Clamp( std::ceil((timer->GetTicks() / fadeOutTime)*255.f), 0.f, 255.f) );
 						raw_obj->rgba.a = alpha;
 						if( timer->GetTicks() >= fadeOutTime ){
+							printf("[FadeInFadeOutEffect] Update -> beginSecondPart [end]\n");
 							timer->Stop();
 							endAnimation->Raise(Component::EmptyEventArgs);
 							//This is when the effect completes the process.

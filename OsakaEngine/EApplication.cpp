@@ -73,7 +73,8 @@ namespace Osaka{
 			}
 			EScene* sceneptr = raw_scenes[scene];
 
-			stack.insert(stack.begin(), sceneptr);
+			//We add it to bottom, when going through the loop, it will be last to be called.
+			stack.push_back(sceneptr);
 			entering.push_back(sceneptr);
 
 			sceneptr->ReadyShow(in_param);
@@ -83,7 +84,8 @@ namespace Osaka{
 			printf("[EApplication] BottomStack\n");
 			EScene* sceneptr = raw_scenes[scene];
 
-			stack.push_back(sceneptr);
+			//When groing through the loop, 0 is first drawn, making it the bottom one.
+			stack.insert(stack.begin(), sceneptr);
 			entering.push_back(sceneptr);
 
 			sceneptr->ReadyStandBy(in_param);
