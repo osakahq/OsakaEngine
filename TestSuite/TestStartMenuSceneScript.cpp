@@ -10,7 +10,7 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace TestSuite{
-		TestStartMenuSceneScript::TestStartMenuSceneScript(RPGLib::RPGApplicationPTR& app) 
+		TestStartMenuSceneScript::TestStartMenuSceneScript(RPGLib::RPGApplication* app) 
 			: StartMenuSceneScript(app)
 		{
 			is_loaded = false;
@@ -19,7 +19,7 @@ namespace Osaka{
 
 		}
 		
-		void TestStartMenuSceneScript::Load(RPGLib::RPGFactoryPTR& factory){
+		void TestStartMenuSceneScript::Load(RPGLib::RPGFactory& factory){
 			StartMenuSceneScript::Load(factory);
 			is_loaded = true;
 		}

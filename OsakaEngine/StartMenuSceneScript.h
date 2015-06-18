@@ -9,13 +9,12 @@ namespace Osaka{
 		
 		class StartMenuSceneScript : public SceneScript {
 		public:
-			StartMenuSceneScript(RPGApplicationPTR& app);
+			StartMenuSceneScript(RPGApplication* app);
 			virtual ~StartMenuSceneScript();
-			void _delete() override;
+			
+			void Ready(Engine::ESceneArgs& params) override;
 
-			void Ready(Engine::ESceneArgsPTR& params) override;
-
-			std::string mainlayer_id;
+			const std::string mainlayer_id;
 		protected:
 			
 		private:

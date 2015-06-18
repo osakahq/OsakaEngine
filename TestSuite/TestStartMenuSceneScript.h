@@ -9,10 +9,10 @@ namespace Osaka{
 		
 		class TestStartMenuSceneScript : public RPGLib::StartMenuSceneScript {
 		public:
-			TestStartMenuSceneScript(RPGLib::RPGApplicationPTR& app);
+			TestStartMenuSceneScript(RPGLib::RPGApplication* app);
 			~TestStartMenuSceneScript();
 			
-			void Load(RPGLib::RPGFactoryPTR& factory) override;
+			void Load(RPGLib::RPGFactory& factory) override;
 			void End() override;
 		protected:
 			

@@ -15,8 +15,8 @@ namespace Osaka{
 			
 		}
 		
-		RPGLib::PlaybackIntroScriptPTR PlaybackIntroSceneTestBuilder::CreateLayer1Script(RPGLib::PlaybackIntroCanvasPTR& canvas, RPGLib::RPGScenePTR& scene, RPGLib::PlaybackIntroSceneScriptPTR& mainscript){
-			return std::make_shared<TestPlaybackIntroScript>(app, scene, canvas, mainscript);
+		RPGLib::PlaybackIntroScript* PlaybackIntroSceneTestBuilder::CreateLayer1Script(RPGLib::PlaybackIntroCanvas& canvas, RPGLib::RPGScene& scene, RPGLib::PlaybackIntroSceneScript& mainscript){
+			return new TestPlaybackIntroScript(app, &scene, &canvas, &mainscript);
 		}
 
 	}

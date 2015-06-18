@@ -19,53 +19,49 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		PlaybackIntroCanvas::PlaybackIntroCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler) : Canvas(raw_renderer, ruler){
-			this->engine_logo = nullptr;
-			this->gamestudio_logo = nullptr;
+		PlaybackIntroCanvas::PlaybackIntroCanvas(SDL_Renderer* raw_renderer, Ruler* ruler) : Canvas(raw_renderer, ruler){
+			this->engine_logo = NULL;
+			this->gamestudio_logo = NULL;
+			background = NULL;
 			phase = 0;
 
-			args = std::make_shared<FadeInOutLayerArgs>();
+			args = new FadeInOutLayerArgs();
 			args->callbackOnMidAnimation = std::bind(&PlaybackIntroCanvas::CallbackLayerMidAnimation, this);
 			args->callbackOnEndAnimation = std::bind(&PlaybackIntroCanvas::CallbackLayerEndAnimation, this);
 			args->removeItselfWhenFinished = true;
 		}
 		PlaybackIntroCanvas::~PlaybackIntroCanvas(){
-
+			args->callbackOnEndAnimation = nullptr;
+			args->callbackOnMidAnimation = nullptr;
+			delete args; args = NULL;
+			
+			mainscript = NULL;
+			//timer, background, engine_logo, gamestudio_logo are deleted in Unload. 
+			//And unload will be always be called when exiting the application
 		}
-		void PlaybackIntroCanvas::Init(LayerPTR& layer_parent, RPGScenePTR& scene_parent, ScriptPTR& script, SceneScriptPTR& mainscript){
+		void PlaybackIntroCanvas::Init(Layer* layer_parent, RPGScene* scene_parent, Script* script, SceneScript* mainscript){
 			Canvas::Init(layer_parent, scene_parent);
 			//For now we don't need script, so we ignore it.
-			this->mainscript = std::dynamic_pointer_cast<PlaybackIntroSceneScript>(mainscript);
+			this->mainscript = dynamic_cast<PlaybackIntroSceneScript*>(mainscript);
 		}
-		void PlaybackIntroCanvas::Load(RPGFactoryPTR& factory){
-			timer = factory->factory->CreateTimer();
+		void PlaybackIntroCanvas::Load(RPGFactory& factory){
+			timer = factory.factory->CreateTimer();
 			//This will only called once because of the asset_loading_type (and the fact that there is no implementation of unload)
-			background = factory->CreateSquare(ruler->x_top_left_corner, ruler->y_top_left_corner, ruler->max_height, ruler->max_width);
+			background = factory.CreateSquare(ruler->x_top_left_corner, ruler->y_top_left_corner, ruler->max_height, ruler->max_width);
 			background->rgba.r = background->rgba.g = background->rgba.b = 0;
 
-			engine_logo = factory->CreateImage(factory->gamedataparams->engine_logo);
-			gamestudio_logo = factory->CreateImage(factory->gamedataparams->gamestudio_logo);
+			engine_logo = factory.CreateImage(factory.gamedataparams->engine_logo);
+			gamestudio_logo = factory.CreateImage(factory.gamedataparams->gamestudio_logo);
 		}
 		void PlaybackIntroCanvas::Unload(){
 			//Just an example. This function will never be called inside the loop (for now)
 			//But it will be called when exiting the application (if the scene was loaded)
-			background = nullptr;
-			this->engine_logo = nullptr;
-			this->gamestudio_logo = nullptr;
+			delete background; background = NULL;
+			delete engine_logo; engine_logo = NULL;
+			delete gamestudio_logo; gamestudio_logo = NULL;
+			delete timer; timer = NULL;
 		}
-		void PlaybackIntroCanvas::_delete(){
-			/* There is not needed to set them nullptr, except Timer (for now), because when deleted, GC will set them free.
-			 * You have to *always* call base::_delete though. */
-			args->callbackOnEndAnimation = nullptr;
-			args->callbackOnMidAnimation = nullptr;
-			args = nullptr;
-			timer->_delete(); timer = nullptr;
-			mainscript = nullptr;
-			background = nullptr;
-			engine_logo = nullptr;
-			gamestudio_logo = nullptr;
-			Canvas::_delete();
-		}
+
 		void PlaybackIntroCanvas::Enter(){
 			phase = 0;
 			movePhaseUp = false;
@@ -108,14 +104,14 @@ namespace Osaka{
 			case 0:
 				if( timer->GetTicks() >= 2000 ){
 					args->fadeInTime = args->fadeOutTime = 2500;
-					scene_parent->Stack(mainscript->fadelayer_id, std::static_pointer_cast<LayerArgs>(args));
+					scene_parent->Stack(mainscript->fadelayer_id, *args);
 					timer->Stop();
 				}
 				break;
 			case 1:
 				if( timer->GetTicks() >= 3500 ){
 					args->fadeInTime = args->fadeOutTime = 2500;
-					scene_parent->Stack(mainscript->fadelayer_id, std::static_pointer_cast<LayerArgs>(args));
+					scene_parent->Stack(mainscript->fadelayer_id, *args);
 					timer->Stop();
 				}
 				engine_logo->Update();

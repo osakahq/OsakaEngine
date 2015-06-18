@@ -15,7 +15,6 @@ namespace Osaka{
 		public:
 			GameData();
 			~GameData();
-			void _delete();
 			std::string name;
 			int window_width;
 			int window_height;
@@ -35,9 +34,9 @@ namespace Osaka{
 			/* loadingType = Enum: AssetLoadingType */
 			unsigned int asset_loading_type;
 			/* Global asset list with type. This holds all the assets (sounds, textures, video and with their corresponding type) */
-			std::shared_ptr<std::unordered_map<std::string, unsigned int>>				assets_type;
-			std::shared_ptr<std::unordered_map<std::string, asset_initload_dataPTR>>	assets_initload;
-			std::shared_ptr<std::unordered_map<std::string, scene_dataPTR>>				assets_scenes;
+			std::unordered_map<std::string, unsigned int>				assets_type;
+			std::unordered_map<std::string, asset_initload_data*>	assets_initload;
+			std::unordered_map<std::string, scene_data*>				assets_scenes;
 
 			std::unordered_map<std::string, battle_data*>		battles;
 			std::unordered_map<std::string, character_data*>	characters;
@@ -55,16 +54,16 @@ namespace Osaka{
 			int fontmap_space_x;
 			int fontmap_space_y;
 			/* Because the function we use to read the xml file is only char, we can only accept char */
-			std::shared_ptr<std::unordered_map<char, fontcharacter_dataPTR>>	fontmap;
+			std::unordered_map<char, fontcharacter_data*>	fontmap;
 
-			std::shared_ptr<std::unordered_map<std::string, sound_dataPTR>>		sounds;
-			std::shared_ptr<std::unordered_map<std::string, spritemap_dataPTR>>	spritemaps;
+			std::unordered_map<std::string, sound_data*>		sounds;
+			std::unordered_map<std::string, spritemap_data*>	spritemaps;
 				/* This one contains id of the sprite and id of the spritemap(texture).
 				 * So I can search for it easily in `spritemaps` */
-				std::shared_ptr<std::unordered_map<std::string, sprite_dataPTR>> sprite_ids;
+				std::unordered_map<std::string, sprite_data*> sprite_ids;
 
 			/* Sample gamesessions. */
-			std::shared_ptr<std::unordered_map<std::string, gamesession_dataPTR>>	gamesessions;
+			std::unordered_map<std::string, gamesession_data*>	gamesessions;
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			

@@ -6,7 +6,7 @@
 
 namespace Osaka{
 	namespace Engine{
-		Music::Music(Debug::DebugPTR& debug, IFileLoaderPTR& fileloader) : Sound(debug, fileloader){
+		Music::Music(Debug::Debug* debug, IFileLoader* fileloader) : Sound(debug, fileloader){
 			music = NULL;
 		}
 		Music::~Music(){
@@ -17,9 +17,7 @@ namespace Osaka{
 				Mix_FreeMusic(music);
 			music = NULL;
 		}
-		void Music::_delete(){
-			Sound::_delete();
-		}
+		
 		Mix_Music* Music::GetRAWMixMusic(){
 			if( music == NULL )
 				debug->e("[Music] music is NULL");

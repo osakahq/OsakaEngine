@@ -4,30 +4,29 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		struct gamesession_data;
-
+		
 		/* This class only creates RPG related classes (Items, Characters, Party) */
 		class RPGFactory{
 		public:
-			RPGFactory(Debug::DebugPTR& debug, GameDataPTR& data, GameDataParamsPTR& gdp, FactoryPTR& factory);
+			RPGFactory(Debug::Debug* debug, GameData* data, GameDataParams* gdp, Factory* factory);
 			~RPGFactory();
-			void _delete();
 			void Init();
 
 			/* Gives away ownership */
-			ImagePTR CreateImage(std::string id_sprite);
-			SquarePTR CreateSquare(int x, int y, int h, int w);
-			SquarePTR CreateSquare();
+			Image* CreateImage(const std::string& id_sprite);
+			Square* CreateSquare(int x, int y, int h, int w);
+			Square* CreateSquare();
+			FadeInFadeOutEffect* CreateFadeInFadeOutEffect();
 
 			/* NOT Owner. GameData ownership is in RPGApplication */
-			GameDataPTR data;
+			GameData* data;
 			/* NOT Owner. Ownership is in RPGApplication */
-			GameDataParamsPTR gamedataparams;
+			GameDataParams* gamedataparams;
 			/* NOT Owner */
-			FactoryPTR factory;
+			Factory* factory;
 		private:
 			/* NOT Owner. */
-			Debug::DebugPTR debug;
+			Debug::Debug* debug;
 
 			/* NOT Owner */
 			SDL_Renderer* raw_renderer;

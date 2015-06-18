@@ -9,10 +9,9 @@ namespace Osaka{
 		
 		class StaticText{
 		public:
-			StaticText(SDL_Renderer& _renderer, std::vector<sprite_info*>& sprites, int max_slots, int space_x, int space_y);
+			StaticText(SDL_Renderer* _renderer, std::vector<sprite_info*>& sprites, int max_slots, int space_x, int space_y);
 			~StaticText();
-			void _delete();
-
+			
 			/* sprite_info has a x and y (quad) when created, they have the initial coordinates */
 			void Render();
 			/* If you want to render in a different position, t */
@@ -20,11 +19,12 @@ namespace Osaka{
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			/* NOT Owner */
-			SDL_Renderer& raw_renderer;
+			SDL_Renderer* raw_renderer;
 
 			/* Owner of all sprite_info*. This is an array of sprite_info* */
 			std::vector<sprite_info*> sprites;
-			/* We need this value because when it is required to change x,y we need to count so we know when to change y */
+
+			/* This is the maximum slots on x axis. */
 			int max_slots;
 
 			/* These are the size of each char in the fontmap */

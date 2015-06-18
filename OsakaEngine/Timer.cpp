@@ -5,7 +5,7 @@
 namespace Osaka{
 	namespace RPGLib{
 
-		Timer::Timer(TimeManagerPTR& timem){
+		Timer::Timer(TimeManager* timem){
 			this->timem = timem;
 
 			mStartTicks = 0;
@@ -18,11 +18,9 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("Timer");
 #endif
+			timem= NULL;
 		}
-		void Timer::_delete(){
-			timem = nullptr;
-		}
-
+		
 		void Timer::Start(){
 			mStarted = true;
 			mPaused = false;

@@ -9,10 +9,10 @@ namespace Osaka{
 		
 		class TestPlaybackIntroScript: public RPGLib::PlaybackIntroScript{
 		public:
-			TestPlaybackIntroScript(RPGLib::RPGApplicationPTR& app, RPGLib::RPGScenePTR& parent, RPGLib::PlaybackIntroCanvasPTR& canvas, RPGLib::PlaybackIntroSceneScriptPTR& mainscript);
+			TestPlaybackIntroScript(RPGLib::RPGApplication* app, RPGLib::RPGScene* parent, RPGLib::PlaybackIntroCanvas* canvas, RPGLib::PlaybackIntroSceneScript* mainscript);
 			~TestPlaybackIntroScript();
 			
-			void Load(RPGLib::RPGFactoryPTR& factory) override;
+			void Load(RPGLib::RPGFactory& factory) override;
 			void End() override;
 		protected:
 			

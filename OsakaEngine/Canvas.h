@@ -7,18 +7,18 @@ namespace Osaka{
 
 		class Canvas{
 		public:
-			Canvas(SDL_Renderer* raw_renderer, RulerPTR& ruler);
+			Canvas(SDL_Renderer* raw_renderer, Ruler* ruler);
 			virtual ~Canvas();
-			virtual void _delete();
+
 			/* I decided that it just easier to let Canvas have these references. Canvas shouldn't have responsability other than its objective.
 			 * This `Init` function is optional. Base function will only set layer_parent and scene_parent. It will do nothing for script and mainscript, thats up to the
 			 * . derived class to override and std::dynamic_cast them.
 			 * script = script brother. mainscript = scene script (parent script) */
-			virtual void Init(LayerPTR& layer_parent, RPGScenePTR& scene_parent, ScriptPTR& script, SceneScriptPTR& mainscript);
+			virtual void Init(Layer* layer_parent, RPGScene* scene_parent, Script* script, SceneScript* mainscript);
 			/* This is so that in the derived class doesn't have to call Init(layer, scene, script, mainscript) */
-			virtual void Init(LayerPTR& layer_parent, RPGScenePTR& scene_parent);
+			virtual void Init(Layer* layer_parent, RPGScene* scene_parent);
 
-			virtual void Load(RPGFactoryPTR& factory);
+			virtual void Load(RPGFactory& factory);
 			virtual void Unload();
 
 			virtual void Enter();
@@ -37,11 +37,11 @@ namespace Osaka{
 			/* NOT Owner. Raw */
 			SDL_Renderer* raw_renderer;
 			/* NOT Owner. Layer parent. */
-			LayerPTR layer_parent;
+			Layer* layer_parent;
 			/* NOT Owner. Scene parent. */
-			RPGScenePTR scene_parent;
+			RPGScene* scene_parent;
 			/* NOT Owner */
-			RulerPTR ruler;
+			Ruler* ruler;
 		};
 	}
 }

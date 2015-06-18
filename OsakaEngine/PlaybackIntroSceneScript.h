@@ -9,16 +9,15 @@ namespace Osaka{
 		
 		class PlaybackIntroSceneScript : public SceneScript {
 		public:
-			PlaybackIntroSceneScript(RPGApplicationPTR& app);
+			PlaybackIntroSceneScript(RPGApplication* app);
 			~PlaybackIntroSceneScript();
-			void _delete() override;
-
+			
 			void Enter() override;
-			void Ready(Engine::ESceneArgsPTR& params) override;
+			void Ready(Engine::ESceneArgs& params) override;
 
 			/* These are set inside the constructor */
-			std::string mainlayer_id;
-			std::string fadelayer_id;
+			const std::string mainlayer_id;
+			const std::string fadelayer_id;
 		protected:
 			
 		private:

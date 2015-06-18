@@ -8,18 +8,19 @@ namespace Osaka{
 		/* This class goes into RPGScene stack(loop). This is also the "script" of the layer. */
 		class Layer{
 		public:
-			Layer(std::string id, ScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui);
+			/* They are pointers because this class is the Owner of them. */
+			Layer(const std::string& _id, Script* script, Canvas* canvas, UserInterface* ui);
 			virtual ~Layer();
-			virtual void _delete();
 			
-			virtual void Init(RPGApplicationPTR& app);
-			virtual void Load(RPGFactoryPTR& factory);
+			virtual void Init(RPGApplication* app);
+			virtual void Load(RPGFactory& factory);
 			virtual void Unload();
 
 			void Enter();
 			/* When entering the stack(vector) in RPGScene
-			 * If you modify this, remember there is OneLayer that completely overrides this function (ready) */
-			void Ready(LayerArgsPTR& args);
+			 * If you modify this, remember there is OneLayer that completely overrides this function (ready)
+			 * args is deleted by the callee.*/
+			void Ready(LayerArgs& args);
 			/* When the layer exits the loop. This is always called if the layer was in stack when scene is exited. */
 			void Exit();
 
@@ -31,18 +32,20 @@ namespace Osaka{
 			void Update();
 			void Draw();
 			void End();
-			std::string id;
+			const std::string id;
 
 			/* NOT Owner. The reason Layer has `app` is because Canvas/UI might need debug or other unforseen dependencies */
-			RPGApplicationPTR app;
+			RPGApplication* raw_app;
+
+			bool isCanvasValid();
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* Owner */
-			ScriptPTR script;
+			Script* raw_script;
 			/* Owner */
-			CanvasPTR canvas;
+			Canvas* raw_canvas;
 			/* Owner */
-			UserInterfacePTR ui;
+			UserInterface* raw_ui;
 
 			bool focus;
 			bool standby;

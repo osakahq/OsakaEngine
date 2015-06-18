@@ -10,25 +10,18 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		LoadingSceneScript::LoadingSceneScript(RPGApplicationPTR& app, AssetManagerPTR& assetm) 
-			: SceneScript(app)
+		LoadingSceneScript::LoadingSceneScript(RPGApplication* app, AssetManager* assetm) 
+			: SceneScript(app), fadelayer_id("_fadelayer")
 		{
 			loadCompleted = false;
 			this->assetm = assetm;
 
-			fadelayer_id = "_fadelayer";
 		}
 		LoadingSceneScript::~LoadingSceneScript(){
 #ifdef _DEBUG
 			_CHECKDELETE("LoadingSceneScript");
 #endif			
-		}
-		void LoadingSceneScript::_delete(){
-#ifdef _DEBUG
-			_CHECKDELETE("LoadingSceneScript_delete");
-#endif	
-			SceneScript::_delete();
-			assetm = nullptr;
+			assetm = NULL;
 		}
 		
 		void LoadingSceneScript::LoadCompleted(){
@@ -39,9 +32,9 @@ namespace Osaka{
 			return loadCompleted;
 		}
 
-		void LoadingSceneScript::Ready(Engine::ESceneArgsPTR& params){
+		void LoadingSceneScript::Ready(Engine::ESceneArgs& params){
 			loadCompleted = false;
-			LoadingArgsPTR largs = std::dynamic_pointer_cast<LoadingArgs>(params);
+			LoadingArgs* largs = dynamic_cast<LoadingArgs*>(&params);
 			
 			/* Using a raw pointer. There is no problem because the only way the anonymous function will be called is when this class calls `assetm->LoadScene(...)` */
 			LoadingSceneScript* raw_loadingscene = this;
@@ -50,12 +43,13 @@ namespace Osaka{
 				raw_loadingscene->LoadCompleted();
 			});
 
-			LoadingFadeLayerArgsPTR args = std::make_shared<LoadingFadeLayerArgs>();
+			LoadingFadeLayerArgs* args = new LoadingFadeLayerArgs();
 			args->scene_id = largs->scene;
 			args->scene_params = largs->send_params;
 			args->type = largs->type;
 			
-			scene_parent->Stack(fadelayer_id, std::static_pointer_cast<LayerArgs>(args));
+			scene_parent->Stack(fadelayer_id, *args);
+			delete args;
 		}
 	}
 }

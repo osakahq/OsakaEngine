@@ -7,9 +7,7 @@ namespace Osaka{
 			_CHECKDELETE("DefaultFileLoader");
 #endif
 		}
-		void DefaultFileLoader::_delete(){
-
-		}
+		
 		Mix_Music* DefaultFileLoader::LoadMusic(const char* path){
 			return Mix_LoadMUS(path);
 		}

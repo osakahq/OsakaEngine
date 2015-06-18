@@ -23,16 +23,14 @@ namespace Osaka{
 			/* If true it will remove itself from the stack (layer stack) */
 			bool removeItselfWhenFinished;
 		};
-		typedef std::shared_ptr<FadeInOutLayerArgs> FadeInOutLayerArgsPTR;
-
+		
 		class FadeInOutScript: public Script{
 		public:
-			FadeInOutScript(RPGApplicationPTR& app, RPGScenePTR& parent, FadeInOutCanvasPTR& canvas);
+			FadeInOutScript(RPGApplication* app, RPGScene* parent, FadeInOutCanvas* canvas);
 			~FadeInOutScript();
-			void _delete() override;
 			
 			/* This function is called when entering the stack */
-			void Ready(LayerArgsPTR& args) override;
+			void Ready(LayerArgs& args) override;
 			void Update() override;
 			void Exit() override;
 			/* This is called from Canvas EventHandler */
@@ -46,7 +44,7 @@ namespace Osaka{
 
 		private:
 			/* NOT Owner */
-			FadeInOutCanvasPTR canvas;
+			FadeInOutCanvas* canvas;
 			/* I'm not really sure if I need this but, instead of Starting the end animation right away (in the same Update from Canvas)
 			 * With this variable we wait, for the next update (this script Update) */
 			bool midAnimationEnded;

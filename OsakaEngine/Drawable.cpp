@@ -17,6 +17,7 @@ namespace Osaka{
 			point.y = 0;
 			flip = SDL_FLIP_NONE;
 			has_list_changed = true;
+			temp_stack_items = 0;
 		}
 		Drawable::~Drawable(){
 			//It has to announce so the effect deattach themselves.
@@ -32,52 +33,50 @@ namespace Osaka{
 		}
 		void Drawable::Update(){
 			if( has_list_changed ){
-				temp_list = effects;
+				temp_stack_items = stack_effects.size();
+				std::copy(stack_effects.begin(), stack_effects.end(), temp_stack);
 			}
-			for( auto it = temp_list.begin(); it != temp_list.end(); ++it ){
-				(*it)->Update();
+			for(int i = 0; i < temp_stack_items; ++i){
+				temp_stack[i]->Update();
 			}
 		}
 		void Drawable::Draw(){
 
 		}
 
-		void Drawable::ResetEffect(std::string id){
-			for( auto it = effects.begin(); it != effects.end(); ++it ){
-				if( (*it)->id == id ){
-					(*it)->Reset();
-					return;
-				}
-			}
-		}
 		void Drawable::ResetAllEffects(){
-			for( auto it = effects.begin(); it != effects.end(); ++it ){
-				(*it)->Reset();
+			//We don't need to copy the stack because the effects dont remove themselves in Reset
+			for(unsigned int i = 0; i < stack_effects.size(); ++i){
+				stack_effects[i]->Reset();
 			}
 		}
-		void Drawable::AddEffect(EffectPTR& effect){
-			effects.push_back(effect);
+		void Drawable::AddEffect(Effect* effect){
+			if( effects.find(effect->id) != effects.end() ){
+				throw std::exception("[Drawable] Effect id already exists.");
+			}
+			effects[effect->id] = effect;
+			stack_effects.push_back(effect);
 			/* Raw pointer (raw_pointer) It's okay. When the object is destroyed, it notifies the effect. */
 			effect->Attach(this);
 			has_list_changed = true;
 		}
 		
-		void Drawable::RemoveEffect(std::string id){
-			std::vector<EffectPTR>::iterator it;
-			for( it = effects.begin(); it != effects.end(); ++it ){
-				if( (*it)->id == id ){
-					(*it)->Deattach();
-					break;
-				}
-			}
-			effects.erase(it);
+		void Drawable::RemoveEffect(const std::string& id){
+			auto it = std::find(stack_effects.begin(), stack_effects.end(), effects[id]);
+			(*it)->Deattach();
+
+			stack_effects.erase(it);
+			effects.erase(id);
 			has_list_changed = true;
 		}
 		void Drawable::RemoveAllEffects(){
-			for( auto it = effects.begin(); it != effects.end(); ++it ){
-				(*it)->Deattach();
+			//vector has the same items as `effects`(map)
+			for(unsigned int i = 0; i < stack_effects.size(); ++i){
+				stack_effects[i]->Deattach();
 			}
 			effects.clear();
+			stack_effects.clear();
+			has_list_changed = true;
 		}
 	}
 }

@@ -10,8 +10,7 @@ namespace Osaka{
 
 			/* This is so that the derived class deconstructor is called. */
 			virtual ~EScene(){};
-			virtual void _delete() = 0;
-
+			
 			/* This is to announce the loop is about to start. */
 			virtual void Start() = 0;
 			/* Load functions server the purpose of creating the classes, everything that the scene needs.
@@ -26,10 +25,12 @@ namespace Osaka{
 
 			/* Entering the loop (FirstUpdate) */
 			virtual void Enter() = 0;
-			/* Called when the scene is added to the stack and when the scene has just been stacked but doesn't have initial focus */
-			virtual void ReadyStandBy(ESceneArgsPTR& params) = 0;
-			/* Called when the scene is added to the stack and when the scene has just been stacked and is on top of the stack (has focus) */
-			virtual void ReadyShow(ESceneArgsPTR& params) = 0;
+			/* Called when the scene is added to the stack and when the scene has just been stacked but doesn't have initial focus
+			 * params is deleted by the callee. */
+			virtual void ReadyStandBy(ESceneArgs& params) = 0;
+			/* Called when the scene is added to the stack and when the scene has just been stacked and is on top of the stack (has focus)
+			 * params is deleted by the callee */
+			virtual void ReadyShow(ESceneArgs& params) = 0;
 			/* Called when the scene is *no longer* on top of the stack (already in stack) */
 			virtual void StandBy() = 0;
 			/* Called when the scene is BACK on top of the stack (already in stack) */

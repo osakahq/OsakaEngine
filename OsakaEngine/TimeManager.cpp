@@ -13,9 +13,6 @@ namespace Osaka{
 			_CHECKDELETE("TimeManager");
 #endif
 		}
-		void TimeManager::_delete(){
-
-		}
 		
 		void TimeManager::Update(const Uint32 delta){
 			ticks += delta;

@@ -9,12 +9,12 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		Layer::Layer(std::string id, ScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui){
-			this->id = id;
-			
-			this->script = script;
-			this->canvas = canvas;
-			this->ui = ui;
+		Layer::Layer(const std::string& _id, Script* script, Canvas* canvas, UserInterface* ui) 
+			: id(_id)
+		{
+			raw_script = script;
+			raw_canvas = canvas;
+			raw_ui = ui;
 
 			focus = false;
 			instack = false;
@@ -25,43 +25,46 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("Layer");
 #endif		
-		}
-		void Layer::_delete(){
-			//The order in which they are deleted SHOULDN'T matter.
-			script->_delete(); script = nullptr;
-			canvas->_delete(); canvas = nullptr;
-			ui->_delete(); ui = nullptr;
-			app = nullptr;
-		}
+			/* You must *NOT* use external pointers. */
+			delete raw_ui;		raw_ui = NULL;
+			delete raw_canvas;	raw_canvas = NULL;
+			delete raw_script;	raw_script = NULL;
 
-		void Layer::Init(RPGApplicationPTR& app){
-			this->app = app;
+			raw_app = NULL;
+		}
+		bool Layer::isCanvasValid(){
+			//Layer is the owner of raw_canvas so it's fine.
+			return !(raw_canvas == NULL);
+		}
+		void Layer::Init(RPGApplication* app){
+			this->raw_app = app;
 		}
 
 		/* These functions are not required to be implemented in the derived classes */
-		void Layer::Load(RPGFactoryPTR& factory){
-			script->Load(factory);
-			canvas->Load(factory);
-			ui->Load(factory);
+		void Layer::Load(RPGFactory& factory){
+			raw_script->Load(factory);
+			raw_canvas->Load(factory);
+			raw_ui->Load(factory);
 		}
 		void Layer::Unload(){
-			script->Unload();
-			canvas->Unload();
-			ui->Unload();
+			raw_script->Unload();
+			raw_canvas->Unload();
+			raw_ui->Unload();
 		}
-		void Layer::Ready(LayerArgsPTR& args){
+		void Layer::Ready(LayerArgs& args){
+			//args is deleted by the callee.
 			instack = true;
 
-			script->Ready(args);
-			canvas->Ready();
-			ui->Ready();
+			raw_script->Ready(args);
+			raw_canvas->Ready();
+			raw_ui->Ready();
 		}
 		void Layer::Exit(){
 			instack = false;
 
-			script->Exit();
-			canvas->Exit();
-			ui->Exit();
+			raw_script->Exit();
+			raw_canvas->Exit();
+			raw_ui->Exit();
 		}
 
 		void Layer::Show(){
@@ -69,42 +72,42 @@ namespace Osaka{
 			standby = false;
 			hidden = false;
 
-			script->Show();
-			canvas->Show();
-			ui->Show();
+			raw_script->Show();
+			raw_canvas->Show();
+			raw_ui->Show();
 		}
 		void Layer::StandBy(){
 			focus = false;
 			standby = true;
 			hidden = false;
 
-			script->StandBy();
-			canvas->StandBy();
-			ui->StandBy();
+			raw_script->StandBy();
+			raw_canvas->StandBy();
+			raw_ui->StandBy();
 		}
 		void Layer::Focus(){
 			focus = true;
 			standby = false;
 
-			script->Focus();
-			canvas->Focus();
-			ui->Focus();
+			raw_script->Focus();
+			raw_canvas->Focus();
+			raw_ui->Focus();
 		}
 
 		void Layer::Update(){
 			if( hidden )
 				return;
 			
-			script->Update();
-			canvas->Update();
-			ui->Update();
+			raw_script->Update();
+			raw_canvas->Update();
+			raw_ui->Update();
 		}
 		void Layer::Draw(){
 			if( hidden )
 				return;
 			
-			canvas->Draw();
-			ui->Draw();
+			raw_canvas->Draw();
+			raw_ui->Draw();
 		}
 		
 		void Layer::StandByHide(bool val){
@@ -112,12 +115,12 @@ namespace Osaka{
 		}
 
 		void Layer::Enter(){
-			script->Enter();
-			canvas->Enter();
-			ui->Enter();
+			raw_script->Enter();
+			raw_canvas->Enter();
+			raw_ui->Enter();
 		}
 		void Layer::End(){
-			script->End();
+			raw_script->End();
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace Osaka{
 
 		class Effect{
 		public:
-			Effect();
+			Effect(const std::string& _id);
 			virtual ~Effect();
 
 			/* Called from Drawable:AddEffect */
@@ -20,9 +20,8 @@ namespace Osaka{
 			virtual void Update();
 			//Effect doesn't have Draw because it shouldn't draw anything.
 
-			/* In case you want to have a duplicated effect in a drawable object */
-			void ChangeId(std::string id);
-			std::string id;	
+			/* Because the id matters inside Drawable, if you change the id while the effect is inside the loop = undefined behaivor */
+			const std::string id;	
 
 			/* Called from: Drawable(AddEffect, When the object is resetted, etc.) Resets so that it starts fresh. */
 			virtual void Reset();

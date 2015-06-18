@@ -15,12 +15,12 @@ namespace Osaka{
 		StartMenuSceneBuilder::~StartMenuSceneBuilder(){
 
 		}
-		SceneScriptPTR StartMenuSceneBuilder::CreateMainScript(){
-			StartMenuSceneScriptPTR mainscript = std::make_shared<StartMenuSceneScript>(app);
-			return std::static_pointer_cast<SceneScript>(mainscript);
+		SceneScript* StartMenuSceneBuilder::CreateMainScript(){
+			StartMenuSceneScript* mainscript = new StartMenuSceneScript(app);
+			return mainscript;
 		}
-		void StartMenuSceneBuilder::CreateLayers(RPGScenePTR& scene, SceneScriptPTR& mainscript){
-			StartMenuSceneScriptPTR smainscript = std::dynamic_pointer_cast<StartMenuSceneScript>(mainscript);
+		void StartMenuSceneBuilder::CreateLayers(RPGScene& scene, SceneScript& mainscript){
+			StartMenuSceneScript* smainscript = dynamic_cast<StartMenuSceneScript*>(&mainscript);
 			//this->LayerWrapper(smainscript->mainlayer_id, CreateLayer1(scene, pmainscript), scene);
 		}
 

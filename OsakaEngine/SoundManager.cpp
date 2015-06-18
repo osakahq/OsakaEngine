@@ -10,34 +10,29 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		SoundManager::SoundManager(FactoryPTR& factory, Engine::SDLLibPTR& sdl){
+		SoundManager::SoundManager(Factory* factory, Engine::SDLLib* sdl){
 			this->factory = factory;
 			this->sdl = sdl;
 		}
 		SoundManager::~SoundManager(){
-			
-		}
-		void SoundManager::_delete(){
 			for(auto it = esounds.begin(); it != esounds.end(); ++it )
-				it->second->_delete();
+				delete it->second;
 			esounds.clear();
-			sounds = nullptr;
-			sdl = nullptr;
-			factory = nullptr;
+			sounds.clear();
+			sdl = NULL;
+			factory = NULL;
 		}
-		void SoundManager::SetSounds(unorderedmap_sound_dataPTR& sounds){
+		
+		void SoundManager::SetSounds(unorderedmap_sound_data& sounds){
 			this->sounds = sounds;
 		}
 		void SoundManager::Init(){
-			Engine::SoundPTR sound;
-			for( auto it = sounds->begin(); it!= sounds->end(); ++it ){
-				sound = factory->CreateSound(it->second);
-				//sound->Load((*it->second).filename.c_str());
-				this->esounds[it->first] = sound;
+			for( auto it = sounds.begin(); it!= sounds.end(); ++it ){
+				this->esounds[it->first] = factory->CreateSound(*it->second);
 			}
 		}
-		void SoundManager::LoadSound(const std::string id){
-			esounds.at(id)->Load(sounds->at(id)->filename.c_str());
+		void SoundManager::LoadSound(const std::string& id){
+			esounds.at(id)->Load(sounds.at(id)->filename.c_str());
 		}
 
 		void SoundManager::SetVolume(int volume){
@@ -48,15 +43,15 @@ namespace Osaka{
 		}
 
 
-		void SoundManager::PlaySoundEffect(std::string id, int times){
-			Engine::SoundPTR sound = this->esounds[std::string(id)];
-			Engine::SoundEffect* effect = (Engine::SoundEffect*)sound.get();
+		void SoundManager::PlaySoundEffect(const std::string& id, int times){
+			Engine::Sound* sound = this->esounds[std::string(id)];
+			Engine::SoundEffect* effect = dynamic_cast<Engine::SoundEffect*>(sound);
 			effect->Play(times);
 		}
 
-		void SoundManager::PlayMusic(std::string id){
-			Engine::SoundPTR sound = this->esounds[std::string(id)];
-			Engine::Music* music = (Engine::Music*)sound.get();
+		void SoundManager::PlayMusic(const std::string& id){
+			Engine::Sound* sound = this->esounds[std::string(id)];
+			Engine::Music* music = dynamic_cast<Engine::Music*>(sound);
 			sdl->PlayMusic(*music->GetRAWMixMusic());
 		}
 		void SoundManager::PauseMusic(){

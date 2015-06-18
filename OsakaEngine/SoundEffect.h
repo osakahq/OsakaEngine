@@ -8,10 +8,10 @@ namespace Osaka{
 		
 		class SoundEffect : public Sound {
 		public:
-			SoundEffect(Debug::DebugPTR& debug, IFileLoaderPTR& fileloader);
+			SoundEffect(Debug::Debug* debug, IFileLoader* fileloader);
 			~SoundEffect();
-			void _delete();
-			void Load(const char* filename);
+			
+			void Load(const char* filename) override;
 			void Play(int times);
 		/* ----------------------------------------------------------------------------------- */
 		private:

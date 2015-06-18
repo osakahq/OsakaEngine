@@ -10,16 +10,17 @@ namespace Osaka{
 
 		class FadeInFadeOutEffect : public Effect{
 		public:
-			FadeInFadeOutEffect(TimerPTR& timer);
+			FadeInFadeOutEffect(const std::string& id, Timer* timer);
+			FadeInFadeOutEffect(Timer* timer);
 			~FadeInFadeOutEffect();
 
 			void Update() override;
 			void Reset() override;
 
 			/* Owner. Mid animation is when the animation is in total back */
-			Component::EventHandlerPTR midAnimation;
+			Component::EventHandler* midAnimation;
 			/* Owner. End animation is when the animation is done and scene is ready to take itself out */
-			Component::EventHandlerPTR endAnimation;
+			Component::EventHandler* endAnimation;
 
 			void BeginEndAnimation();
 
@@ -28,7 +29,8 @@ namespace Osaka{
 		protected:
 			/* In case you don't need to wait for something. */
 			bool pause_on_midanim;
-			TimerPTR timer;
+			/* Owner */
+			Timer* timer;
 			Uint8 alpha;
 
 			/* TODO: update description: When the animation starts, it has to stop in black (and letters "loading"), we need script to let us know when to being the end animation */
@@ -37,6 +39,7 @@ namespace Osaka{
 			bool onMidAnimation;
 
 		private:
+			void _Construct();
 		};
 	}
 }

@@ -9,10 +9,9 @@ namespace Osaka{
 		
 		class StartMenuCanvas : public Canvas{
 		public:
-			StartMenuCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler);
+			StartMenuCanvas(SDL_Renderer* raw_renderer, Ruler* ruler);
 			~StartMenuCanvas();
-			void _delete();
-
+			
 			void Update() override;
 			void Draw() override;
 		private:

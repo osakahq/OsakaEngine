@@ -9,11 +9,10 @@ namespace Osaka{
 		class DefaultFileLoader : public IFileLoader{
 		public:
 			~DefaultFileLoader();
-			void _delete();
 			//All functions give away ownership
-			Mix_Music* LoadMusic(const char* path);
-			Mix_Chunk* LoadWAV(const char* path);
-			SDL_Surface* LoadImageSurface(const char* path);
+			Mix_Music* LoadMusic(const char* path) override;
+			Mix_Chunk* LoadWAV(const char* path) override;
+			SDL_Surface* LoadImageSurface(const char* path) override;
 		private:
 		};
 	}

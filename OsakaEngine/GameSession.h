@@ -9,7 +9,7 @@ namespace Osaka{
 		public:
 			GameSession();
 			~GameSession();
-			void _delete();
+			
 			//Owner
 			//Character* character;
 			//Party* party;

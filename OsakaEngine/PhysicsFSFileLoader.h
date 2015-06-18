@@ -11,18 +11,18 @@ namespace Osaka{
 		/* This is an interface */
 		class PhysicsFSFileLoader : public IFileLoader{
 		public:
-			PhysicsFSFileLoader(Debug::DebugPTR& debug, const char* filename);
+			PhysicsFSFileLoader(Debug::Debug* debug, const char* filename);
 			~PhysicsFSFileLoader();
-			void _delete();
+			
 			void AddFile(const char* filename);
 
 			//All functions give away ownership
-			Mix_Music* LoadMusic(const char* path);
-			Mix_Chunk* LoadWAV(const char* path);
-			SDL_Surface* LoadImageSurface(const char* path);
+			Mix_Music* LoadMusic(const char* path) override;
+			Mix_Chunk* LoadWAV(const char* path) override;
+			SDL_Surface* LoadImageSurface(const char* path) override;
 		private:
 			/* NOT Owner */
-			Debug::DebugPTR debug;
+			Debug::Debug* debug;
 		};
 	}
 }

@@ -7,19 +7,19 @@ namespace Osaka{
 		
 		class SoundManager{
 		public:
-			SoundManager(FactoryPTR& factory, Engine::SDLLibPTR& sdl);
+			SoundManager(Factory* factory, Engine::SDLLib* sdl);
 			~SoundManager();
-			void _delete();
+			
 			void Init();
-			void SetSounds(unorderedmap_sound_dataPTR& sounds);
-			void LoadSound(const std::string id);
+			void SetSounds(unorderedmap_sound_data& sounds);
+			void LoadSound(const std::string& id);
 
 			void SetVolume(int volume);
 			void SetMusicVolume(int volume);
 
-			void PlaySoundEffect(std::string id, int times);
+			void PlaySoundEffect(const std::string& id, int times);
 
-			void PlayMusic(std::string id);
+			void PlayMusic(const std::string& id);
 			void PauseMusic();
 			void ResumeMusic();
 			void StopMusic();
@@ -27,13 +27,13 @@ namespace Osaka{
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			/* NOT Owner */
-			FactoryPTR factory;
+			Factory* factory;
 			/* NOT Owner */
-			Engine::SDLLibPTR sdl;
+			Engine::SDLLib* sdl;
 			/* NOT Owner. Unorderedmap */
-			unorderedmap_sound_dataPTR sounds;
+			unorderedmap_sound_data sounds;
 			/* Owner of all Sounds* */
-			std::unordered_map<std::string, Engine::SoundPTR> esounds;
+			std::unordered_map<std::string, Engine::Sound*> esounds;
 		};
 	}
 }

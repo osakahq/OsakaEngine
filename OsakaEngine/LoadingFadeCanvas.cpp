@@ -13,13 +13,13 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		LoadingFadeCanvas::LoadingFadeCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler, TimerPTR& timer) : Canvas(raw_renderer, ruler){
+		LoadingFadeCanvas::LoadingFadeCanvas(SDL_Renderer* raw_renderer, Ruler* ruler, Timer* timer) : Canvas(raw_renderer, ruler){
 			isAnimating = false;
 			skipUpdate = false;
 			beginSecondPart = false;
 			onMidAnimation = false;
-			midAnimation = std::make_shared<Component::EventHandler>();
-			endAnimation = std::make_shared<Component::EventHandler>();
+			midAnimation = new Component::EventHandler();
+			endAnimation = new Component::EventHandler();
 
 			color.r = 0;
 			color.g = 0;
@@ -37,16 +37,12 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("LoadingFadeCanvas");
 #endif
-			//These should go here because it doesn't matter if LoadingFadeScript has the reference for Canvas.
-			//If _delete is called before LoadingFadeScript::_delete then it will try to unhook the event but since no one has the references
-			//the EventHandlerPTR will go away
-			midAnimation = nullptr;
-			endAnimation = nullptr;
-		}
-		void LoadingFadeCanvas::_delete(){
-			Canvas::_delete();
-			
-			timer->_delete(); timer = nullptr;
+			/* LoadingFadeScript subscribes to these events. Script needs to check if canvas(this)
+			 * is still valid */
+			delete midAnimation; midAnimation = NULL;
+			delete endAnimation; endAnimation = NULL;
+
+			delete timer; timer = NULL;
 		}
 		
 		void LoadingFadeCanvas::StartAnimation(TransitionType::Value type){
@@ -60,7 +56,7 @@ namespace Osaka{
 			timer->Start();
 		}
 		void LoadingFadeCanvas::BeginEndAnimation(){
-			layer_parent->app->debug->l("[LoadingCanvas] Begin second part of animation");
+			layer_parent->raw_app->debug->l("[LoadingCanvas] Begin second part of animation");
 			beginSecondPart = true;
 		}
 		

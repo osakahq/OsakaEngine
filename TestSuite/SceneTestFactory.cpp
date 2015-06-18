@@ -11,24 +11,24 @@
 #include "SceneTestFactory.h"
 namespace Osaka{
 	namespace TestSuite{
-		SceneTestFactory::SceneTestFactory(RPGLib::FactoryPTR& factory, RPGLib::RPGApplicationPTR& app, RPGLib::TextureManagerPTR& texturem) : SceneFactory(factory, app, texturem){
+		SceneTestFactory::SceneTestFactory(RPGLib::Factory* factory, RPGLib::RPGApplication* app, RPGLib::TextureManager* texturem) : SceneFactory(factory, app, texturem){
 			
 		}
 		SceneTestFactory::~SceneTestFactory(){
 
 		}
 		
-		RPGLib::RPGScenePTR SceneTestFactory::CreatePlaybackIntroScene(const char* name){
+		RPGLib::RPGScene* SceneTestFactory::CreatePlaybackIntroScene(const char* name){
 			PlaybackIntroSceneTestBuilder* builder = new PlaybackIntroSceneTestBuilder();
 			builder->Init(app, app->ruler, app->sdl->GetRAWSDLRenderer(), factory, texturem);
-			RPGLib::RPGScenePTR scene = builder->CreateScene(name);
+			RPGLib::RPGScene* scene = builder->CreateScene(name);
 			delete builder;
 			return scene;
 		}
-		RPGLib::RPGScenePTR SceneTestFactory::CreateStartMenuScene(const char* name){
+		RPGLib::RPGScene* SceneTestFactory::CreateStartMenuScene(const char* name){
 			StartMenuSceneTestBuilder* builder = new StartMenuSceneTestBuilder();
 			builder->Init(app, app->ruler, app->sdl->GetRAWSDLRenderer(), factory, texturem);
-			RPGLib::RPGScenePTR scene = builder->CreateScene(name);
+			RPGLib::RPGScene* scene = builder->CreateScene(name);
 			delete builder;
 			return scene;
 		}

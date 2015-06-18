@@ -2,20 +2,14 @@
 #include "DummyScene.h"
 namespace Osaka{
 	namespace RPGLib{
-		DummyScene::DummyScene(std::string id, SceneScriptPTR& mainscript) : RPGScene(id, mainscript){
+		DummyScene::DummyScene(const std::string& id, SceneScript* mainscript) : RPGScene(id, mainscript){
 			
 		}
 		DummyScene::~DummyScene(){
 		
 		}
-		void DummyScene::_delete(){
-			RPGScene::_delete();
-		}
-		std::string DummyScene::GetId(){
-			return id;
-		}
 		
-		void DummyScene::ReadyShow(Engine::ESceneArgsPTR& params){
+		void DummyScene::ReadyShow(Engine::ESceneArgs& params){
 			
 		}
 		
@@ -25,11 +19,11 @@ namespace Osaka{
 		
 		void DummyScene::Start(){};
 		void DummyScene::Enter(){};
-		void DummyScene::Load(RPGFactoryPTR& factory){}
+		void DummyScene::Load(RPGFactory& factory){}
 		void DummyScene::Load(){};
 		void DummyScene::Unload() {};
 		void DummyScene::Exit() {};
-		void DummyScene::ReadyStandBy(Engine::ESceneArgsPTR& params) {};
+		void DummyScene::ReadyStandBy(Engine::ESceneArgs& params) {};
 		void DummyScene::StandBy() {};
 		void DummyScene::Focus() {};
 		void DummyScene::Draw() {};

@@ -10,11 +10,11 @@ namespace Osaka{
 
 		class SceneTestFactory : public RPGLib::SceneFactory {
 		public:
-			SceneTestFactory(RPGLib::FactoryPTR& factory, RPGLib::RPGApplicationPTR& app, RPGLib::TextureManagerPTR& texturem);
+			SceneTestFactory(RPGLib::Factory* factory, RPGLib::RPGApplication* app, RPGLib::TextureManager* texturem);
 			~SceneTestFactory();
 			
-			RPGLib::RPGScenePTR CreatePlaybackIntroScene(const char* name) override;
-			RPGLib::RPGScenePTR CreateStartMenuScene(const char* name) override;
+			RPGLib::RPGScene* CreatePlaybackIntroScene(const char* name) override;
+			RPGLib::RPGScene* CreateStartMenuScene(const char* name) override;
 		};
 	}
 }

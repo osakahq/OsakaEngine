@@ -7,16 +7,15 @@ namespace Osaka{
 		
 		class Script{
 		public:
-			Script(RPGApplicationPTR& app, RPGScenePTR& scene_parent);
+			Script(RPGApplication* app, RPGScene* scene_parent);
 			virtual ~Script();
-			virtual void _delete();
 			
-			virtual void Init(LayerPTR& layer_parent);
-			virtual void Load(RPGFactoryPTR& factory);
+			virtual void Init(Layer* layer_parent);
+			virtual void Load(RPGFactory& factory);
 			virtual void Unload();
 
 			virtual void Enter();
-			virtual void Ready(LayerArgsPTR& args);
+			virtual void Ready(LayerArgs& args);
 			virtual void Exit();
 
 			virtual void Show();
@@ -30,11 +29,11 @@ namespace Osaka{
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner */
-			RPGApplicationPTR app;
+			RPGApplication* app;
 			/* NOT Owner */
-			RPGScenePTR scene_parent;
+			RPGScene* scene_parent;
 			/* NOT Owner */
-			LayerPTR layer_parent;
+			Layer* layer_parent;
 			
 		};
 	}

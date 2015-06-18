@@ -20,7 +20,7 @@ namespace Osaka{
 		private:
 			
 		};
-		typedef std::shared_ptr<LoadingArgs> LoadingArgsPTR;
+		
 	}
 }
 #endif

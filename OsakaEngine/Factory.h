@@ -10,32 +10,31 @@ namespace Osaka{
 		
 		class Factory{
 		public:
-			Factory(Debug::DebugPTR& debug);
+			Factory(Debug::Debug* debug);
 			~Factory();
-			void _delete();
 			/* Check that the references are set */
 			void Check();
 
 			// Gives away ownership.
-			Engine::TexturePTR CreateTexture();
-			Engine::SoundPTR CreateSound(sound_dataPTR& data);
+			Engine::Texture* CreateTexture();
+			Engine::Sound* CreateSound(sound_data& data);
 			// Scenes
-			InitScenePTR CreateInitScene();
+			InitScene* CreateInitScene();
 			
-			TimerPTR CreateTimer();
+			Timer* CreateTimer();
 
 			/* NOT Owner. */
-			Engine::SDLLibPTR sdl;
+			Engine::SDLLib* sdl;
 			// NOT Owner
-			RPGApplicationPTR app;
-			Engine::IFileLoaderPTR fileloader;
-			AssetManagerPTR assetm;
-			TimeManagerPTR timem;
-			TextureManagerPTR texturem;
+			RPGApplication* app;
+			Engine::IFileLoader* fileloader;
+			AssetManager* assetm;
+			TimeManager* timem;
+			TextureManager* texturem;
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			/* NOT Owner */
-			Debug::DebugPTR debug;
+			Debug::Debug* debug;
 
 		};
 	}

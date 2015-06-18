@@ -9,7 +9,6 @@ namespace Osaka{
 		class IFileLoader{
 		public:
 			virtual ~IFileLoader(){}
-			virtual void _delete() = 0;
 			//All functions give away ownership
 			virtual Mix_Music* LoadMusic(const char* path)=0;
 			virtual Mix_Chunk* LoadWAV(const char* path)=0;

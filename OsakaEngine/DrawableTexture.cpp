@@ -14,8 +14,7 @@ namespace Osaka{
 		DrawableTexture::~DrawableTexture(){
 			if( info != NULL )
 				delete info;
-
-			//I don't need to manually clear the vectors.
+			info = NULL;
 		}
 
 	}

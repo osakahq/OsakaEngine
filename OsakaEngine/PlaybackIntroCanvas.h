@@ -11,12 +11,11 @@ namespace Osaka{
 
 		class PlaybackIntroCanvas : public Canvas{
 		public:
-			PlaybackIntroCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler);
+			PlaybackIntroCanvas(SDL_Renderer* raw_renderer, Ruler* ruler);
 			~PlaybackIntroCanvas();
-			void _delete();
-
-			void Init(LayerPTR& layer_parent, RPGScenePTR& scene_parent, ScriptPTR& script, SceneScriptPTR& mainscript) override;
-			void Load(RPGFactoryPTR& factory) override;
+			
+			void Init(Layer* layer_parent, RPGScene* scene_parent, Script* script, SceneScript* mainscript) override;
+			void Load(RPGFactory& factory) override;
 			void Unload() override;
 			void Enter() override;
 			void Update() override;
@@ -37,17 +36,18 @@ namespace Osaka{
 			 * . it will skip the engine_logo update but will call draw on engine_logo */
 			bool movePhaseUp;
 
-			PlaybackIntroSceneScriptPTR mainscript;
-			//There are no owners for Drawable objects.
-			SquarePTR background;
-			ImagePTR engine_logo; 
-			ImagePTR gamestudio_logo;
+			/* NOT Owner */
+			PlaybackIntroSceneScript* mainscript;
+			//Owner
+			Square* background;
+			Image* engine_logo; 
+			Image* gamestudio_logo;
 
 			/* Owner. This is used to time when to switch the images. */
-			TimerPTR timer;
+			Timer* timer;
 
 			/* This is like a cache. So I don't have to create the object every time */
-			std::shared_ptr<FadeInOutLayerArgs> args;
+			FadeInOutLayerArgs* args;
 		};
 	}
 }

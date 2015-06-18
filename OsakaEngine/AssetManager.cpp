@@ -15,7 +15,7 @@ namespace Osaka{
 			static_cast<AssetManager*>(ptr)->ProcessLoad();
 			return 0;
 		}
-		AssetManager::AssetManager(Debug::DebugPTR& debug, unorderedmap_assets_typePTR& assets_type, unorderedmap_asset_initload_dataPTR& assets_initload, unorderedmap_scene_dataPTR& scenes){
+		AssetManager::AssetManager(Debug::Debug* debug, unorderedmap_assets_type& assets_type, unorderedmap_asset_initload_data& assets_initload, unorderedmap_scene_data& scenes){
 			loadThread = NULL;
 			sceneToLoadEvent = NULL;
 			signalStopLoadThread = false;
@@ -25,6 +25,11 @@ namespace Osaka{
 			this->scenes = scenes;
 
 			this->debug = debug;
+
+			texturem = NULL;
+			fontm = NULL;
+			soundm = NULL;
+			app = NULL;
 		}
 		AssetManager::~AssetManager(){
 #ifdef _DEBUG
@@ -33,6 +38,7 @@ namespace Osaka{
 			signalStopLoadThread = true;
 			/* We need to make sure to signal the event or it will be forever waiting */
 			SetEvent(sceneToLoadEvent);
+
 			if( loadThread != NULL ){
 				WaitForSingleObject(loadThread, 200);
 				CloseHandle(loadThread);
@@ -42,31 +48,26 @@ namespace Osaka{
 				CloseHandle(sceneToLoadEvent);
 				sceneToLoadEvent = NULL;
 			}
-		}
-		void AssetManager::_delete(){
-			signalStopLoadThread = true;
-			SetEvent(sceneToLoadEvent);
-
-			texturem = nullptr;
-			fontm = nullptr;
-			soundm = nullptr;
-
-			assets_type = nullptr;
-			assets_initload = nullptr;
-			scenes = nullptr;
-
-			debug = nullptr;
+			texturem = NULL;
+			fontm = NULL;
+			soundm = NULL;
+			debug = NULL;
 
 			/* If we don't do this, the copied variables will never be freed */
 			threadParams.callback = nullptr;
-			threadParams.scene = nullptr;
-			app = nullptr;
+			threadParams.scene = NULL;
+			app = NULL;
+			assets_type.clear();
+			assets_initload.clear();
+			scenes.clear();
+			loadedScenes.clear();
+			loadedAssets.clear();
 		}
-
-		void AssetManager::Init(RPGApplicationPTR& app){
+		
+		void AssetManager::Init(RPGApplication* app){
 			debug->l("[AssetManager] Init");
 			this->app = app;
-			for( auto it = assets_initload->begin(); it != assets_initload->end(); ++it ){
+			for( auto it = assets_initload.begin(); it != assets_initload.end(); ++it ){
 				LoadAsset((*it->second).id);
 			}
 			//Initial state = false
@@ -74,15 +75,15 @@ namespace Osaka{
 			loadThread = CreateThread(NULL, 0, &AssetManager_ProcessLoad, this, 0, NULL);
 		}
 
-		void AssetManager::LoadScene(std::string scene, std::function<void()> callback){
+		void AssetManager::LoadScene(const std::string& scene, std::function<void()> callback){
 			/* If signaled to stop or if the event hasn't resetted yet */
 			if( signalStopLoadThread || (DWORD)WaitForSingleObject(sceneToLoadEvent, 0) == WAIT_OBJECT_0 ){
 				debug->e("[AssetManager] Can't load another scene when a scene is already being loaded.");
 				return;
 			}
 
-			auto it_scene = scenes->find(scene);
-			if( it_scene == scenes->end() ){
+			auto it_scene = scenes.find(scene);
+			if( it_scene == scenes.end() ){
 				debug->e("[AssetManager] Scene does not exists: " + scene);
 			}
 
@@ -98,7 +99,7 @@ namespace Osaka{
 			threadParams.callback();
 			/* If we don't do this, the copied variables will never be freed */
 			threadParams.callback = nullptr;
-			threadParams.scene = nullptr;
+			threadParams.scene = NULL;
 		}
 
 		void AssetManager::ProcessLoad(){
@@ -107,21 +108,30 @@ namespace Osaka{
 				if( signalStopLoadThread )
 					break;
 
-				ProcessScene(threadParams.scene, true);
+				ProcessScene(*threadParams.scene, true);
 				ResetEvent(sceneToLoadEvent);
 				SceneIsLoaded();
 			}
 			debug->l("[AssetManager] ProcessLoad thread ended gracefully.");
 		}
 
+		void AssetManager::End(){
+			for(auto it = loadedScenes.begin(); it != loadedScenes.end(); ++it){
+				if( it->second ){ //value is boolean
+					app->CallUnload(it->first);
+					it->second = false;
+				}
+			}
+		}
+
 		/* Helper function */
-		void AssetManager::LoadAsset(const std::string id){
+		void AssetManager::LoadAsset(const std::string& id){
 			if( loadedAssets.find(id) != loadedAssets.end() ){
 				//Asset is already loaded.
 				return;
 			}
-			auto it = assets_type->find(id);
-			if( it == assets_type->end() ){
+			auto it = assets_type.find(id);
+			if( it == assets_type.end() ){
 				debug->e("[AssetManager] Asset was not defined. (asset_types:id="+id+")");
 			}
 
@@ -144,33 +154,33 @@ namespace Osaka{
 		}
 
 		/* I'm just processing the data. */
-		void AssetManager::ProcessScene(scene_dataPTR data, bool firstlevel){
-			if( loadedScenes.find(data->id) == loadedScenes.end() ){
+		void AssetManager::ProcessScene(const scene_data& data, bool firstlevel){
+			if( loadedScenes.find(data.id) == loadedScenes.end() ){
 				//If the scene is not loaded...
-				for( auto it = data->assets.begin(); it != data->assets.end(); ++it ){
+				for( auto it = data.assets.begin(); it != data.assets.end(); ++it ){
 					LoadAsset(it->second.id);
 				}
-				app->CallLoad(data->id);
-				loadedScenes[data->id] = true;
+				app->CallLoad(data.id);
+				loadedScenes[data.id] = true;
 #ifdef _DEBUG
-				debug->l("[AssetManager] Loading scene: " + data->id);
+				debug->l("[AssetManager] Loading scene: " + data.id);
 #endif
 			}
 			
-			ProcessRelatedScenes(&data->related_scenes_data, firstlevel);
+			ProcessRelatedScenes(data.related_scenes_data, firstlevel);
 		}
 
 		/* I'm just processing the list. It's fine to use raw pointer (raw_pointer)
 		 * ! If `firstlevel` is true it means that these related scenes are from the primary scene to be loaded
 		 *		. Because a scene that is not linked and is not the primary scene to be loaded, there is no more recursion*/
-		void AssetManager::ProcessRelatedScenes(std::unordered_map<std::string, related_scene_data>* related_scenes_data, bool firstlevel){
-			for( auto it = related_scenes_data->begin(); it != related_scenes_data->end(); ++it ){
+		void AssetManager::ProcessRelatedScenes(const std::unordered_map<std::string, related_scene_data>& related_scenes_data, bool firstlevel){
+			for( auto it = related_scenes_data.begin(); it != related_scenes_data.end(); ++it ){
 				if( it->second.linked ){
 					//Scenes are always loaded when linked (remember, there is no unload atm)
-					ProcessScene(scenes->at(it->second.id), false); //firstlevel is no longer.
+					ProcessScene(*scenes.at(it->second.id), false); //firstlevel is no longer.
 				}else if( firstlevel && it->second.always_load ){
 					//only load through always-load if its firstlevel (main scene to load)
-					ProcessScene(scenes->at(it->second.id), false);
+					ProcessScene(*scenes.at(it->second.id), false);
 				}
 			}
 		}

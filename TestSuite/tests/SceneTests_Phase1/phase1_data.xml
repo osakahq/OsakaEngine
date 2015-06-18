@@ -143,8 +143,9 @@
 		<character sprite="font_%" id="%" />
 		<character sprite="font__amp" id="&amp;" />
 		<character sprite="font__squote" id="'" />
+		<!-- You can't have duplicated id's
 		<character sprite="font__(" id="(" />
-		<character sprite="font__)" id=")" />
+		<character sprite="font__)" id=")" /> -->
 		<character sprite="font__ast" id="*" />
 		<character sprite="font_+" id="+" />
 		<character sprite="font_," id="," />

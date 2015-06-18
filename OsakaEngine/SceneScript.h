@@ -7,16 +7,15 @@ namespace Osaka{
 		
 		class SceneScript{
 		public:
-			SceneScript(RPGApplicationPTR& app);
+			SceneScript(RPGApplication* app);
 			virtual ~SceneScript();
-			virtual void _delete();
 			
-			virtual void Init(RPGScenePTR& scene_parent);
-			virtual void Load(RPGFactoryPTR& factory);
+			virtual void Init(RPGScene* scene_parent);
+			virtual void Load(RPGFactory& factory);
 			virtual void Unload();
 
 			virtual void Enter();
-			virtual void Ready(Engine::ESceneArgsPTR& args);
+			virtual void Ready(Engine::ESceneArgs& args);
 			virtual void Exit();
 
 			virtual void Show();
@@ -29,9 +28,9 @@ namespace Osaka{
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner */
-			RPGApplicationPTR app;
+			RPGApplication* app;
 			/* NOT Owner. EApplication has ownership */
-			RPGScenePTR scene_parent;
+			RPGScene* scene_parent;
 			
 		};
 	}

@@ -24,8 +24,7 @@ namespace Osaka{
 		public:
 			RPGLibTestSuite();
 			~RPGLibTestSuite();
-			void _delete();
-
+			
 			/* This funcion calls all the tests */
 			void Run(TEST_PHASE::Value phase);
 			/* This function must be called in order to show fail/success */
@@ -38,7 +37,7 @@ namespace Osaka{
 			void IndividualTest_LoadGameFileTest(const char* filedata, bool verbose);
 
 			/* Owner */
-			Debug::DebugPTR	debug;
+			Debug::Debug*	debug;
 		private:
 			//Count. You must have `MakeAssert`
 			int failedTests;
@@ -50,7 +49,7 @@ namespace Osaka{
 			void AddExpectedTests(int size, int* array_ids);
 
 			/* Owner */
-			RPGApplicationPTR	rpgapp;
+			RPGApplication*	rpgapp;
 		};
 	}
 }

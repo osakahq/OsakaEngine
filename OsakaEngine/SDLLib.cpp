@@ -9,7 +9,7 @@ void _SDLLib_Log(void* userdata, int category, SDL_LogPriority priority, const c
 namespace Osaka{
 	namespace Engine{
 
-		SDLLib::SDLLib(Debug::DebugPTR& debug){
+		SDLLib::SDLLib(Debug::Debug* debug){
 			this->debug = debug;
 			window = NULL;
 			renderer = NULL;
@@ -20,6 +20,7 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("SDLLib");
 #endif
+			debug = NULL;
 			Mix_HaltMusic();
 			Mix_HaltChannel(-1); //-1 for all channels
 
@@ -35,9 +36,7 @@ namespace Osaka{
 			IMG_Quit();
 			SDL_Quit();
 		}
-		void SDLLib::_delete(){
-			debug = nullptr;
-		}
+		
 		SDL_Renderer* SDLLib::GetRAWSDLRenderer(){
 			if( renderer == NULL ){
 				debug->e("[SDLLib] GetRAWSDLRenderer > texture is NULL");

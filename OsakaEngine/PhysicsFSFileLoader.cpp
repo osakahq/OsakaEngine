@@ -7,18 +7,17 @@
 
 namespace Osaka{
 	namespace Engine{
-		PhysicsFSFileLoader::PhysicsFSFileLoader(Debug::DebugPTR& debug, const char* filename){
+		PhysicsFSFileLoader::PhysicsFSFileLoader(Debug::Debug* debug, const char* filename){
 			this->debug = debug;
 
 			PHYSFS_init(NULL);
 			AddFile(filename);
 		}
 		PhysicsFSFileLoader::~PhysicsFSFileLoader(){
+			debug = NULL;
 			PHYSFS_deinit();
 		}
-		void PhysicsFSFileLoader::_delete(){
-			debug = nullptr;
-		}
+		
 		void PhysicsFSFileLoader::AddFile(const char* filename){
 			if( !Utils::FileExists(filename) )
 				debug->e("[PhysicsFSFileLoader] Package does not exists:"+std::string(filename));

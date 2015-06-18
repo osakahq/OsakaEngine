@@ -8,8 +8,15 @@ namespace Osaka{
 	namespace RPGLib{
 		class InitSceneArgs : public Engine::ESceneArgs{
 		public:
-			InitSceneArgs();
-			~InitSceneArgs();
+			InitSceneArgs() : Engine::ESceneArgs(){
+				init_args = nullptr;
+			};
+			~InitSceneArgs(){
+#ifdef _DEBUG
+				_CHECKDELETE("InitSceneArgs");
+#endif				
+				init_args = nullptr;
+			};
 
 			/* Scene to init. */
 			std::string scene;

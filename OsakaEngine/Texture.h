@@ -10,10 +10,9 @@ namespace Osaka{
 		/* This class is technically a spritemap */
 		class Texture {
 		public:
-			Texture(SDL_Renderer& renderer, Debug::DebugPTR& d, IFileLoaderPTR& fileloader);
+			Texture(SDL_Renderer* renderer, Debug::Debug* d, IFileLoader* fileloader);
 			~Texture();
-			void _delete();
-
+			
 			void Load(const char* path, RGB_HEX& colorkey);
 			void SetColor(Uint8 r, Uint8 g, Uint8 b);
 			void SetAlpha(Uint8 a);
@@ -21,12 +20,6 @@ namespace Osaka{
 
 			int GetWeight();
 			int GetHeight();
-
-			/* This is the one you should call normally */
-			void Render(const int x, const int y, const SDL_Rect& clip);
-
-			//RenderCopyEx = expensive
-			void RenderEx(const SDL_Rect& clip, const render_info_ex& info);
 
 			/* Doesn't give away ownership */
 			SDL_Texture* GetRAWSDLTexture();
@@ -40,9 +33,9 @@ namespace Osaka{
 			/* NOT Owner */
 			SDL_Renderer* renderer;
 			/* NOT Owner */
-			IFileLoaderPTR fileloader;
+			IFileLoader* fileloader;
 			/* NOT Owner */
-			Debug::DebugPTR debug;
+			Debug::Debug* debug;
 		};
 	}
 }

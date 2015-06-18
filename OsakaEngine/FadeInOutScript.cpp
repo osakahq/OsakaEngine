@@ -12,28 +12,29 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		FadeInOutScript::FadeInOutScript(RPGApplicationPTR& app, RPGScenePTR& parent, FadeInOutCanvasPTR& canvas) : Script(app, parent){
+		FadeInOutScript::FadeInOutScript(RPGApplication* app, RPGScene* parent, FadeInOutCanvas* canvas) : Script(app, parent){
 			this->canvas = canvas;
+
 			canvas->endAnimation->Hook(FADEINOUTSCRIPT_ENDANIMATION, std::bind(&FadeInOutScript::OnCanvasEndAnimation, this, std::placeholders::_1));
 			canvas->midAnimation->Hook(FADEINOUTSCRIPT_MIDANIMATION, std::bind(&FadeInOutScript::OnCanvasMidAnimation, this, std::placeholders::_1));
 		}
 		FadeInOutScript::~FadeInOutScript(){
-
-		}
-		void FadeInOutScript::_delete(){
-			canvas->endAnimation->Unhook(FADEINOUTSCRIPT_ENDANIMATION);
-			canvas->midAnimation->Unhook(FADEINOUTSCRIPT_MIDANIMATION);
+			if( layer_parent->isCanvasValid() ){
+				//The owner of script is layer, so layer will always outlive 
+				//The owner of canvas is layer. If canvas has been deleted, then there is no reason to Unhook.
+				canvas->endAnimation->Unhook(FADEINOUTSCRIPT_ENDANIMATION);
+				canvas->midAnimation->Unhook(FADEINOUTSCRIPT_MIDANIMATION);
+			}
 
 			callbackOnMidAnimation = nullptr;
 			callbackOnEndAnimation = nullptr;
-			canvas = nullptr;
-			Script::_delete();
+			canvas = NULL;
 		}
 			
 		/* This function is called when entering the stack */
-		void FadeInOutScript::Ready(LayerArgsPTR& args){
+		void FadeInOutScript::Ready(LayerArgs& args){
 			midAnimationEnded = false;
-			FadeInOutLayerArgsPTR fargs = std::dynamic_pointer_cast<FadeInOutLayerArgs>(args);
+			FadeInOutLayerArgs* fargs = dynamic_cast<FadeInOutLayerArgs*>(&args);
 			callbackOnEndAnimation = fargs->callbackOnEndAnimation;
 			callbackOnMidAnimation = fargs->callbackOnMidAnimation;
 			canvas->SetFadeTimes(fargs->fadeInTime, fargs->fadeOutTime);
@@ -52,6 +53,8 @@ namespace Osaka{
 			if( removeItselfWhenFinished ){
 				//Safe to remove, because this event fires up inside Update
 				scene_parent->Remove(this->layer_parent->id);
+				callbackOnMidAnimation = nullptr;
+				callbackOnEndAnimation = nullptr;
 			}
 		}
 		void FadeInOutScript::Update(){

@@ -10,12 +10,17 @@
 namespace Osaka{
 	namespace RPGLib{
 
-		FadeInFadeOutEffect::FadeInFadeOutEffect(TimerPTR& timer){
-			id = "_fadeinfadeout";
-			midAnimation = std::make_shared<Component::EventHandler>();
-			endAnimation = std::make_shared<Component::EventHandler>();
-
+		FadeInFadeOutEffect::FadeInFadeOutEffect(Timer* timer) : Effect("_fadeinfadeout"){
 			this->timer = timer;
+			_Construct();
+		}
+		FadeInFadeOutEffect::FadeInFadeOutEffect(const std::string& id, Timer* timer) : Effect(id){
+			this->timer = timer;
+			_Construct();
+		}
+		void FadeInFadeOutEffect::_Construct(){
+			midAnimation = new Component::EventHandler();
+			endAnimation = new Component::EventHandler();
 
 			pause_on_midanim = true;
 			alpha = 0;
@@ -26,11 +31,9 @@ namespace Osaka{
 			fadeOutTime = 750;
 		}
 		FadeInFadeOutEffect::~FadeInFadeOutEffect(){
-			//There are no owners and so, there is no `_delete()`
-			//There is no need for nullptr for the EventHandlers
-
-			//No need for timer = nullptr either.
-			timer->_delete();
+			delete midAnimation; midAnimation = NULL;
+			delete endAnimation; endAnimation = NULL;
+			delete timer; timer = NULL;
 		}
 
 		void FadeInFadeOutEffect::Update(){

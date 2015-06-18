@@ -6,15 +6,13 @@
 namespace Osaka{
 	namespace RPGLib{
 
-		GameDataParams::GameDataParams(GameDataPTR& data){
+		GameDataParams::GameDataParams(GameData* data){
 			this->data = data;
 		}
 		GameDataParams::~GameDataParams(){
+			data = NULL;
 		}
-		void GameDataParams::_delete(){
-			data = nullptr;
-		}
-
+		
 		void GameDataParams::SetParams(){
 			//default values
 			engine_logo = "engine_logo";
@@ -22,7 +20,7 @@ namespace Osaka{
 			intro_song = "s_startmenu";
 		}
 
-		void GameDataParams::GetMapData(std::string map_id){
+		void GameDataParams::GetMapData(const std::string& map_id){
 			//TODO
 		}
 	}

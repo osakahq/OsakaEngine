@@ -5,6 +5,7 @@
 #include "EventHandler.h"
 #include "FadeInFadeOutEffect.h"
 #include "Square.h"
+#include "RPGFactory.h"
 #include "FadeInOutCanvas.h"
 
 #define FADEINOUTCANVAS_MIDANIMATION 428046
@@ -13,36 +14,38 @@
 namespace Osaka{
 	namespace RPGLib{
 
-		FadeInOutCanvas::FadeInOutCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler, SquarePTR& square, FadeInFadeOutEffectPTR& effect) : Canvas(raw_renderer, ruler){
-			Engine::RGBA_HEX hex(0,0,0,0);
-			square->rgba = hex;
-			this->square = square;
-			this->effect = effect;
+		FadeInOutCanvas::FadeInOutCanvas(SDL_Renderer* raw_renderer, Ruler* ruler) : Canvas(raw_renderer, ruler){
+			this->square = NULL;
+			this->effect = NULL;
 			
-			square->AddEffect(std::static_pointer_cast<Effect>(effect));
-			square->square.x = ruler->x_top_left_corner;
-			square->square.y = ruler->y_top_left_corner;
-			square->square.h = ruler->max_height;
-			square->square.w = ruler->max_width;
+			midAnimation = new Component::EventHandler();
+			endAnimation = new Component::EventHandler();
 
-			midAnimation = std::make_shared<Component::EventHandler>();
-			endAnimation = std::make_shared<Component::EventHandler>();
-
-			effect->endAnimation->Hook(FADEINOUTCANVAS_MIDANIMATION, std::bind(&FadeInOutCanvas::OnEffectEndAnimation, this, std::placeholders::_1));
-			effect->midAnimation->Hook(FADEINOUTCANVAS_ENDANIMATION, std::bind(&FadeInOutCanvas::OnEffectMidAnimation, this, std::placeholders::_1));
+			
 			//effect->midAnimation/endAnimation Hook events.
 		}
 		FadeInOutCanvas::~FadeInOutCanvas(){
-			//No need for nullptr on the eventhandlers
+			delete midAnimation; midAnimation = NULL;
+			delete endAnimation; endAnimation = NULL;
+			//square, effect are deleted in Unload. Unload will be always be called when quitting.
 		}
-		void FadeInOutCanvas::_delete(){
-			Canvas::_delete();
+		void FadeInOutCanvas::Load(RPGFactory& factory){
+			Engine::RGBA_HEX hex(0,0,0,0);
+			square = factory.CreateSquare(ruler->x_top_left_corner, ruler->y_top_left_corner, ruler->max_height, ruler->max_width);
+			square->rgba = hex;
+			effect = factory.CreateFadeInFadeOutEffect();
+			square->AddEffect(effect);
+			effect->endAnimation->Hook(FADEINOUTCANVAS_MIDANIMATION, std::bind(&FadeInOutCanvas::OnEffectEndAnimation, this, std::placeholders::_1));
+			effect->midAnimation->Hook(FADEINOUTCANVAS_ENDANIMATION, std::bind(&FadeInOutCanvas::OnEffectMidAnimation, this, std::placeholders::_1));
+		}
+		void FadeInOutCanvas::Unload(){
+			//This is the owner of effect.
 			effect->endAnimation->Unhook(FADEINOUTCANVAS_MIDANIMATION);
 			effect->midAnimation->Unhook(FADEINOUTCANVAS_ENDANIMATION);
-			/* Not really necessary. */
-			effect = nullptr;
-			square = nullptr;
+			delete effect; effect = NULL;
+			delete square; square = NULL;
 		}
+		
 		void FadeInOutCanvas::OnEffectEndAnimation(Component::EventArgs& e){
 			endAnimation->Raise(Component::EmptyEventArgs);
 		}

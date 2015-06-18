@@ -9,52 +9,51 @@ namespace Osaka{
 	namespace RPGLib{
 
 		struct LayerData{
-			LayerData(ScriptPTR& s, CanvasPTR& c, UserInterfacePTR& u){
+			LayerData(Script* s, Canvas* c, UserInterface* u){
 				script = s;
 				canvas = c;
 				ui = u;
 			}
-			ScriptPTR script;
-			CanvasPTR canvas;
-			UserInterfacePTR ui;
+			Script* script;
+			Canvas* canvas;
+			UserInterface* ui;
 		};
-		typedef std::shared_ptr<LayerData> LayerDataPTR;
-
+		
 		class SceneBuilder{
 		public:
 			SceneBuilder();
 			virtual ~SceneBuilder();
 			//There is no `_delete()` because there is not PTR (See in SceneFactory, it is created then deleted right away)
 
-			virtual void Init(RPGApplicationPTR& app, RulerPTR& ruler, SDL_Renderer* raw_renderer, FactoryPTR& factory, TextureManagerPTR& texturem);
+			virtual void Init(RPGApplication* app, Ruler* ruler, SDL_Renderer* raw_renderer, Factory* factory, TextureManager* texturem);
 
 			/* Gives away ownership */
-			RPGScenePTR CreateScene(const char* name);
+			RPGScene* CreateScene(const char* name);
 		protected:
 			/* In this order. See game-engine.scene-builder.xml diagram for more info. */
-			virtual SceneScriptPTR CreateMainScript() = 0;
-			virtual RPGScenePTR CreateRPGScene(const char* name, SceneScriptPTR& mainscript);
-			virtual void CreateLayers(RPGScenePTR& scene, SceneScriptPTR& mainscript) = 0;
+			virtual SceneScript* CreateMainScript() = 0;
+			virtual RPGScene* CreateRPGScene(const char* name, SceneScript& mainscript);
+			virtual void CreateLayers(RPGScene& scene, SceneScript& mainscript) = 0;
 
-			virtual void MainscriptInit(SceneScriptPTR& mainscript, RPGScenePTR& scene);
+			virtual void MainscriptInit(SceneScript& mainscript, RPGScene& scene);
 
 			/* Helper functions. Gives away ownership. */
-			UserInterfacePTR CreateDummyUI();
+			UserInterface* CreateDummyUI();
 			/* This is a helper function that creates and inits the layer */
-			LayerPTR CreateAndInitLayer(const std::string name, ScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui);
+			Layer* CreateAndInitLayer(const std::string& name, Script& script, Canvas& canvas, UserInterface& ui);
 			/* This is a helper function and not required. If you need custom inits, then you have to call the inits in a function like `InitLayer1` */
-			void LayerWrapper(std::string layer_id, LayerDataPTR data, RPGScenePTR& scene, SceneScriptPTR& mainscript);
+			void LayerWrapper(const std::string& layer_id, LayerData& data, RPGScene& scene, SceneScript& mainscript);
 			
 			/* NOT owner */
-			RPGApplicationPTR app;
+			RPGApplication* app;
 			/* NOT owner */
-			RulerPTR ruler;
+			Ruler* ruler;
 			/* Raw pointer (raw_pointer) */
 			SDL_Renderer* raw_renderer;
 			/* NOT Owner */
-			FactoryPTR factory;
+			Factory* factory;
 			/* NOT Owner */
-			TextureManagerPTR texturem;
+			TextureManager* texturem;
 		private:
 
 		};

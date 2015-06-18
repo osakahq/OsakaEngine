@@ -6,8 +6,8 @@
 namespace Osaka{
 	namespace TestSuite{
 		
-		RPGLib::SceneFactoryPTR TestApplicationBuilder::CreateSceneFactory(RPGLib::FactoryPTR& factory, RPGLib::RPGApplicationPTR& app, RPGLib::TextureManagerPTR& texturem){
-			return std::make_shared<SceneTestFactory>(factory, app, texturem);
+		RPGLib::SceneFactory* TestApplicationBuilder::CreateSceneFactory(RPGLib::Factory& factory, RPGLib::RPGApplication& app, RPGLib::TextureManager& texturem){
+			return new SceneTestFactory(&factory, &app, &texturem);
 		}
 
 	}

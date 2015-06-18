@@ -8,11 +8,10 @@ namespace Osaka{
 		
 		class Music : public Sound {
 		public:
-			Music(Debug::DebugPTR& debug, IFileLoaderPTR & fileloader);
+			Music(Debug::Debug* debug, IFileLoader* fileloader);
 			~Music();
-			void _delete();
 			
-			void Load(const char* filename);
+			void Load(const char* filename) override;
 
 			Mix_Music* GetRAWMixMusic();
 		/* ----------------------------------------------------------------------------------- */

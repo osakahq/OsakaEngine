@@ -7,14 +7,15 @@ namespace Osaka{
 
 		class LayerArgs{
 		public:
-			LayerArgs();
-			virtual ~LayerArgs();
+			LayerArgs(){
+				
+			}
+			virtual ~LayerArgs(){
+
+			}
 		private:
 			
 		};
-
-		extern std::shared_ptr<LayerArgs> EmptyLayerArgsPTR;
-
 	}
 }
 #endif

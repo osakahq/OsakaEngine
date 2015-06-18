@@ -28,7 +28,7 @@ namespace Osaka{
 					throw std::exception("[sprite_info] Constructor > Raw texture is NULL");
 				}
 			}
-			SDL_Texture* raw_texture;
+			SDL_Texture* const raw_texture;
 			const SDL_Rect clip;
 			/* `quad` may be ignored or used to save the coordinates of `this` sprite */
 			SDL_Rect quad;

@@ -19,8 +19,6 @@ namespace Osaka{
 			Hiccups();
 			~Hiccups();
 
-			void _delete();
-
 			/* This is called after `sdl->Present()` in EApplication. */
 			void Frame(const int frame_ms);
 			/* This is called inside before present */

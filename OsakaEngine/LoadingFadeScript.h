@@ -20,19 +20,18 @@ namespace Osaka{
 			TransitionType::Value type;
 			Engine::ESceneArgsPTR scene_params;
 		};
-		typedef std::shared_ptr<LoadingFadeLayerArgs> LoadingFadeLayerArgsPTR;
-
+		
 		/* ----------------------------------------------------------------------------------- */
 		class LoadingFadeScript: public Script{
 		public:
-			LoadingFadeScript(RPGApplicationPTR& app, RPGScenePTR& parent, LoadingFadeCanvasPTR& canvas, LoadingSceneScriptPTR& mainscript);
+			LoadingFadeScript(RPGApplication* app, RPGScene* parent, LoadingFadeCanvas* canvas, LoadingSceneScript* mainscript);
 			~LoadingFadeScript();
-			void _delete() override;
-			void Init(LayerPTR& layer_parent) override;
+
+			void Init(Layer* layer_parent) override;
 			
 			void Update() override;
 			/* This function is called when entering the stack */
-			void Ready(LayerArgsPTR& args) override;
+			void Ready(LayerArgs& args) override;
 
 			/* Called when the animation is in total black (and with loading letters) */
 			void OnCanvasMidAnimation(Component::EventArgs& e);
@@ -55,9 +54,9 @@ namespace Osaka{
 			TransitionType::Value transition_type;
 
 			/* NOT Owner. Owner is in parent class (Layer). This is a cache reference. */
-			LoadingFadeCanvasPTR lcanvas;
+			LoadingFadeCanvas* lcanvas;
 			/* NOT Owner. Owner is in RPGScene*/
-			LoadingSceneScriptPTR mainscript;
+			LoadingSceneScript* mainscript;
 
 			void ResetVariables();
 		};

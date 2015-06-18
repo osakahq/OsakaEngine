@@ -13,24 +13,20 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		PlaybackIntroSceneScript::PlaybackIntroSceneScript(RPGApplicationPTR& app) 
-			: SceneScript(app)
+		PlaybackIntroSceneScript::PlaybackIntroSceneScript(RPGApplication* app) 
+			: SceneScript(app), mainlayer_id("_mainlayer"), fadelayer_id("_fadelayer")
 		{
-			mainlayer_id = "_mainlayer";
-			fadelayer_id = "_fadelayer";
+			
 		}
 		PlaybackIntroSceneScript::~PlaybackIntroSceneScript(){
 
-		}
-		void PlaybackIntroSceneScript::_delete(){
-			SceneScript::_delete();
 		}
 		
 		void PlaybackIntroSceneScript::Enter(){
 			app->soundm->PlayMusic(app->gameDataParams->intro_song);
 		}
-		void PlaybackIntroSceneScript::Ready(Engine::ESceneArgsPTR& params){
-			scene_parent->Stack(mainlayer_id, EmptyLayerArgsPTR);
+		void PlaybackIntroSceneScript::Ready(Engine::ESceneArgs& params){
+			scene_parent->Stack(mainlayer_id, EmptyLayerArgs);
 		}
 	}
 }

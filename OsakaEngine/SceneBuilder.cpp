@@ -17,69 +17,69 @@
 namespace Osaka{
 	namespace RPGLib{
 		SceneBuilder::SceneBuilder(){
-			this->app = nullptr;
-			this->ruler = nullptr;
+			this->app = NULL;
+			this->ruler = NULL;
 			this->raw_renderer = NULL;
-			this->factory = nullptr;
-			this->texturem = nullptr;
+			this->factory = NULL;
+			this->texturem = NULL;
 		}
 		SceneBuilder::~SceneBuilder(){
-			this->app = nullptr;
-			this->ruler = nullptr;
+			this->app = NULL;
+			this->ruler = NULL;
 			this->raw_renderer = NULL;
-			this->factory = nullptr;
-			this->texturem = nullptr;
+			this->factory = NULL;
+			this->texturem = NULL;
 		}
 		
-		void SceneBuilder::Init(RPGApplicationPTR& app, RulerPTR& ruler, SDL_Renderer* raw_renderer, FactoryPTR& factory, TextureManagerPTR& texturem){
+		void SceneBuilder::Init(RPGApplication* app, Ruler* ruler, SDL_Renderer* raw_renderer, Factory* factory, TextureManager* texturem){
 			this->app = app;
 			this->ruler = ruler;
 			this->raw_renderer = raw_renderer;
 			this->factory = factory;
 			this->texturem = texturem;
 
-			if( this->app == nullptr || this->ruler == nullptr || this->raw_renderer == nullptr || this->factory == nullptr || this->texturem == nullptr ){
+			if( this->app == NULL || this->ruler == NULL || this->raw_renderer == NULL || this->factory == NULL || this->texturem == NULL ){
 				throw std::exception("[SceneBuilder] Init failed.");
 			}
 		}
-		RPGScenePTR SceneBuilder::CreateScene(const char* name){
+		RPGScene* SceneBuilder::CreateScene(const char* name){
 			//Basically, this is the `Director`
-			SceneScriptPTR mainscript = this->CreateMainScript();
-			RPGScenePTR scene = this->CreateRPGScene(name, mainscript);
-			this->CreateLayers(scene, mainscript);
-			this->MainscriptInit(mainscript, scene);
+			SceneScript* mainscript = this->CreateMainScript();
+			RPGScene* scene = this->CreateRPGScene(name, *mainscript);
+			this->CreateLayers(*scene, *mainscript);
+			this->MainscriptInit(*mainscript, *scene);
 			return scene;
 		}
 
-		void SceneBuilder::MainscriptInit(SceneScriptPTR& mainscript, RPGScenePTR& scene){
-			mainscript->Init(scene);
+		void SceneBuilder::MainscriptInit(SceneScript& mainscript, RPGScene& scene){
+			mainscript.Init(&scene);
 		}
 
-		RPGScenePTR SceneBuilder::CreateRPGScene(const char* name, SceneScriptPTR& mainscript){
-			RPGScenePTR scene = std::make_shared<RPGScene>(name, mainscript);
+		RPGScene* SceneBuilder::CreateRPGScene(const char* name, SceneScript& mainscript){
+			RPGScene* scene = new RPGScene(name, &mainscript);
 			return scene;
 		}
 
-		UserInterfacePTR SceneBuilder::CreateDummyUI(){
-			return std::make_shared<UserInterface>(raw_renderer, ruler);
+		UserInterface* SceneBuilder::CreateDummyUI(){
+			return new UserInterface(raw_renderer, ruler);
 		}
 
-		LayerPTR SceneBuilder::CreateAndInitLayer(const std::string name, ScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui){
-			LayerPTR layer = std::make_shared<Layer>(name, script, canvas, ui);
+		Layer* SceneBuilder::CreateAndInitLayer(const std::string& name, Script& script, Canvas& canvas, UserInterface& ui){
+			Layer* layer = new Layer(name, &script, &canvas, &ui);
 			//I put Init here because it will be very uncommon to inherit the Layer class
 			layer->Init(app);
 			return layer;
 		}
 		
-		void SceneBuilder::LayerWrapper(std::string layer_id, LayerDataPTR data, RPGScenePTR& scene, SceneScriptPTR& mainscript){
+		void SceneBuilder::LayerWrapper(const std::string& layer_id, LayerData& data, RPGScene& scene, SceneScript& mainscript){
 			if( layer_id.empty() ){
 				throw std::exception("[SceneBuilder] LayerWrapper: layer_id is empty");
 			}
-			LayerPTR layer = CreateAndInitLayer(layer_id, data->script, data->canvas, data->ui);
-			data->script->Init(layer);
-			data->canvas->Init(layer, scene, data->script, mainscript);
-			data->ui->Init(layer);
-			scene->Add(layer);
+			Layer* layer = CreateAndInitLayer(layer_id, *data.script, *data.canvas, *data.ui);
+			data.script->Init(layer);
+			data.canvas->Init(layer, &scene, data.script, &mainscript);
+			data.ui->Init(layer);
+			scene.Add(layer);
 		}
 	}
 }

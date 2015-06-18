@@ -13,12 +13,11 @@ namespace Osaka{
 		
 		class FontManager{
 		public:
-			FontManager(TextureManagerPTR& texture, std::string _fontmap_error, int _space_x, int _space_y);
+			FontManager(TextureManager* texturem, const std::string& _fontmap_error, int _space_x, int _space_y);
 			~FontManager();
-			void _delete();
-
-			void SetFontmap(unorderedmap_fontcharacter_dataPTR& fontmap);
-			void Init(SDL_Renderer& _renderer);
+			
+			void SetFontmap(unorderedmap_fontcharacter_data& fontmap);
+			void Init(SDL_Renderer* _renderer);
 			
 			void RenderTextLine(const char* text, const int x, const int y);
 			void RenderTextLine(const std::string text, const int x, const int y);
@@ -27,16 +26,16 @@ namespace Osaka{
 			void RenderTextMultiple(const std::string& str, const int x, const int y, const int max_slots);
 
 			/* Gives away ownership. */
-			StaticTextPTR CreateStaticText(const char* text, const int x, const int y, const int max_slots);
+			StaticText* CreateStaticText(const char* text, const int x, const int y, const int max_slots);
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			const std::string fontmap_error;
 			const int fontmap_char_space_x;
 			const int fontmap_char_space_y;
 			/* NOT Owner. */
-			unorderedmap_fontcharacter_dataPTR fontmap;
+			unorderedmap_fontcharacter_data fontmap;
 			/* NOT Owner */
-			TextureManagerPTR texture;
+			TextureManager* texturem;
 
 			/* Owner of all sprite_into*. This is the cache to draw faster. The index number is actually the letter (char to int) */
 			sprite_info* sprites[FONTMANAGER_MAX_CHAR];

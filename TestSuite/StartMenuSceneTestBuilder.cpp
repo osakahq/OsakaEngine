@@ -15,10 +15,10 @@ namespace Osaka{
 		StartMenuSceneTestBuilder::~StartMenuSceneTestBuilder(){
 
 		}
-		RPGLib::SceneScriptPTR StartMenuSceneTestBuilder::CreateMainScript(){
+		RPGLib::SceneScript* StartMenuSceneTestBuilder::CreateMainScript(){
 			//StartMenuSceneScriptPTR mainscript = std::make_shared<TestStartMenuSceneScript>(app);
-			std::shared_ptr<TestStartMenuSceneScript> mainscript = std::make_shared<TestStartMenuSceneScript>(app);
-			return std::static_pointer_cast<RPGLib::SceneScript>(mainscript);
+			TestStartMenuSceneScript* mainscript = new TestStartMenuSceneScript(app);
+			return mainscript;
 		}
 		
 	}

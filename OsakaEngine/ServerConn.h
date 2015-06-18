@@ -15,12 +15,12 @@
 //Forward declarations. Unfortunately, it's easier to make them pointers
 namespace Osaka{
 	namespace Component{
-		class EventHandler; typedef std::shared_ptr<EventHandler> EventHandlerPTR;
+		class EventHandler;
 		class EventArgs;
 	}
 	namespace Debug{
-		class Debug; typedef std::shared_ptr<Debug> DebugPTR;
-	}
+		class Debug;
+	}
 }
 
 namespace Osaka{
@@ -44,9 +44,9 @@ namespace Osaka{
 		class ServerConn
 		{
 		public:
-			ServerConn(Debug::DebugPTR& debug);
+			ServerConn(Debug::Debug* debug);
 			~ServerConn();
-			void _delete();
+			
 			void Start();
 			bool StartAndWaitForConnection();
 			//Runs on a separate thread
@@ -68,9 +68,9 @@ namespace Osaka{
 
 			//MEMBERS -------------------------------------------------------------
 			//This is the event when someone has been recieved. See WinProc->FD_Read
-			Component::EventHandlerPTR ConnectionRecieveEventPTR;
+			Component::EventHandler* ConnectionRecieveEvent;
 			//This fires when the connection is up
-			Component::EventHandlerPTR ConnectedEventPTR;
+			Component::EventHandler* ConnectedEvent;
 		private:
 			//MEMBERS -------------------------------------------------------------
 			//Window (for the message queue loop) for the non blocking socket
@@ -101,7 +101,7 @@ namespace Osaka{
 			bool Connect();
 
 			/* NOT Owner. To display the errors. */
-			Debug::DebugPTR debug;
+			Debug::Debug* debug;
 		};
 	}
 }

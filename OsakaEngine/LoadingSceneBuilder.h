@@ -10,17 +10,17 @@ namespace Osaka{
 
 		class LoadingSceneBuilder : public SceneBuilder{
 		public:
-			LoadingSceneBuilder(AssetManagerPTR& assetmanager);
+			LoadingSceneBuilder(AssetManager* assetmanager);
 			virtual ~LoadingSceneBuilder();
 		protected:
 			
-			virtual SceneScriptPTR CreateMainScript() override;
-			virtual void CreateLayers(RPGScenePTR& scene, SceneScriptPTR& mainscript) override;
-			virtual LayerDataPTR CreateFadeLayer(RPGScenePTR& scene, SceneScriptPTR& mainscript);
+			virtual SceneScript* CreateMainScript() override;
+			virtual void CreateLayers(RPGScene& scene, SceneScript& mainscript) override;
+			virtual LayerData CreateFadeLayer(RPGScene& scene, LoadingSceneScript& mainscript);
 			
 		private:
 			/* NOT Owner */
-			AssetManagerPTR assetmanager;
+			AssetManager* assetmanager;
 		};
 	}
 }

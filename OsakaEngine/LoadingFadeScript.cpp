@@ -5,6 +5,7 @@
 #include "EventArgs.h"
 #include "ESceneArgs.h"
 
+#include "Layer.h"
 #include "RPGScene.h"
 #include "LoadingSceneScript.h"
 #include "RPGApplication.h"
@@ -17,7 +18,7 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		LoadingFadeScript::LoadingFadeScript(RPGApplicationPTR& app, RPGScenePTR& parent, LoadingFadeCanvasPTR& canvas, LoadingSceneScriptPTR& mainscript)
+		LoadingFadeScript::LoadingFadeScript(RPGApplication* app, RPGScene* parent, LoadingFadeCanvas* canvas, LoadingSceneScript* mainscript)
 			: Script(app, parent){
 			
 			ResetVariables();
@@ -28,18 +29,18 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("LoadingFadeScript");
 #endif
-		}
-		void LoadingFadeScript::_delete(){
-			lcanvas->endAnimation->Unhook(LOADINGSCRIPT_ENDANIMATION);
-			lcanvas->midAnimation->Unhook(LOADINGSCRIPT_MIDANIMATION);
+			if( layer_parent->isCanvasValid() ){
+				//Layer outlives script because Layer is the owner of script.
+				lcanvas->endAnimation->Unhook(LOADINGSCRIPT_ENDANIMATION);
+				lcanvas->midAnimation->Unhook(LOADINGSCRIPT_MIDANIMATION);
+			}
 
-			Script::_delete();
 			scene_params = nullptr;
-			lcanvas = nullptr;
-			mainscript = nullptr;
+			lcanvas = NULL;
+			mainscript = NULL;
 		}
-
-		void LoadingFadeScript::Init(LayerPTR& layer_parent){
+		
+		void LoadingFadeScript::Init(Layer* layer_parent){
 			Script::Init(layer_parent);
 			//If transitiontype == Stack, there is no endAnimation.
 			lcanvas->endAnimation->Hook(LOADINGSCRIPT_ENDANIMATION, std::bind(&LoadingFadeScript::OnCanvasEndAnimation, this, std::placeholders::_1));
@@ -64,7 +65,8 @@ namespace Osaka{
 			if( transition_type == TransitionType::FADE_STACK ){
 				app->debug->l("[LoadingFadeLayer] OnCanvasMidAnimation::Stack");
 				//If it is stack then, there is no fade out animation
-				app->Stack(scene_id, scene_params);
+				app->Stack(scene_id, *scene_params.get());
+				scene_params = nullptr;
 				/* It has to be in this order because if there is an scene below this one, it will `Focus()` then immediately `StandBy()` */
 				app->Remove(scene_parent->GetId());
 
@@ -73,16 +75,17 @@ namespace Osaka{
 				app->debug->l("[LoadingFadeLayer] OnCanvasMidAnimation::Switch");
 				/* Remove all scenes except this one */
 				app->RemoveAllFromStack(scene_parent->GetId());
-				app->BottomStack(scene_id, scene_params);
+				app->BottomStack(scene_id, *scene_params.get());
+				scene_params = nullptr;
 			}else if( transition_type == TransitionType::LOADING_STACK){
 				app->debug->e("[LoadingFadeLayer] LOADING_STACK NOT IMPLEMENTED YET");
 			}
 		}
 		
-		void LoadingFadeScript::Ready(LayerArgsPTR& args){
+		void LoadingFadeScript::Ready(LayerArgs& args){
 			ResetVariables();
 
-			LoadingFadeLayerArgsPTR largs = std::dynamic_pointer_cast<LoadingFadeLayerArgs>(args);
+			LoadingFadeLayerArgs* largs = dynamic_cast<LoadingFadeLayerArgs*>(&args);
 			this->scene_id = largs->scene_id;
 			this->scene_params = largs->scene_params;
 			this->transition_type = largs->type;

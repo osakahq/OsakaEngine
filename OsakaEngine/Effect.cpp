@@ -6,9 +6,8 @@
 namespace Osaka{
 	namespace RPGLib{
 
-		Effect::Effect(){
-			id = "_effect"; //this should be changed in derived class
-
+		Effect::Effect(const std::string& _id) : id(_id){
+			
 			repeat = true;
 			times_repeat = 1;
 			current_loop = 0;
@@ -20,10 +19,17 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("Effect");
 #endif
-			//there is no need for `raw_obj = NULL;`
+			if( raw_obj != NULL ){
+				//It's okay to check because when drawable is being deleted, it announces to all effects.
+				raw_obj->RemoveEffect(this->id); //This will call `effect->Deattach()`
+			}
+			raw_obj = NULL;
 		}
 
 		void Effect::Attach(Drawable* obj){
+			if( raw_obj != NULL ){
+				throw std::exception("[Effect] Effect cannot have 2 or more objects at the same time.");
+			}
 			this->raw_obj = obj;
 		}
 		void Effect::Deattach(){
@@ -32,10 +38,7 @@ namespace Osaka{
 		void Effect::Update(){
 
 		}
-		void Effect::ChangeId(std::string id){
-			this->id = id;
-		}
-			
+		
 		void Effect::Reset(){
 			isActive = true;
 			current_loop = 0;

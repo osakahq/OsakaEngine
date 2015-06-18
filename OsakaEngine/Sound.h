@@ -8,16 +8,15 @@ namespace Osaka{
 		
 		class Sound {
 		public:
-			Sound(Debug::DebugPTR& debug, IFileLoaderPTR& fileloader);
+			Sound(Debug::Debug* debug, IFileLoader* fileloader);
 			virtual ~Sound();
-			virtual void _delete();
 			virtual void Load(const char* filename) = 0;
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner */
-			IFileLoaderPTR fileloader;
+			IFileLoader* fileloader;
 			/* NOT Owner */
-			Debug::DebugPTR debug;
+			Debug::Debug* debug;
 		};
 	}
 }

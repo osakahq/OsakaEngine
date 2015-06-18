@@ -23,61 +23,64 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		Factory::Factory(Debug::DebugPTR& debug){
+		Factory::Factory(Debug::Debug* debug){
 			this->debug = debug;
+
+			sdl = NULL;
+			this->debug = NULL;
+			assetm = NULL;
+			fileloader = NULL;
+			app = NULL;
+			timem = NULL;
+			texturem = NULL;
 		}
 		Factory::~Factory(){
 #ifdef _DEBUG
 			_CHECKDELETE("Factory");
-#endif				
+#endif		
+			sdl = NULL;
+			debug = NULL;
+			assetm = NULL;
+			fileloader = NULL;
+			app = NULL;
+			timem = NULL;
+			texturem = NULL;
 		}
-		void Factory::_delete(){
-			sdl = nullptr;
-			debug = nullptr;
-			assetm = nullptr;
-			fileloader = nullptr;
-			app = nullptr;
-			timem = nullptr;
-			texturem = nullptr;
-		}
+		
 		void Factory::Check(){
-			if( app == nullptr || sdl == nullptr || fileloader == nullptr || assetm == nullptr || timem == nullptr || texturem == nullptr ){
+			if( app == NULL || sdl == NULL || fileloader == NULL || assetm == NULL || timem == NULL || texturem == NULL ){
 				debug->e("[Factory] Init failed.");
 			}
 		}
 		
-		Engine::TexturePTR Factory::CreateTexture(){
-#ifdef _DEBUG
-			if( fileloader == nullptr )
+		Engine::Texture* Factory::CreateTexture(){
+			if( fileloader == NULL )
 				throw std::exception("[Factory] fileloader is nullptr");
-#endif
-			return std::make_shared<Engine::Texture>(*sdl->GetRAWSDLRenderer(), debug, fileloader);
+
+			return new Engine::Texture(sdl->GetRAWSDLRenderer(), debug, fileloader);
 		}
-		Engine::SoundPTR Factory::CreateSound(sound_dataPTR& data){
-#ifdef _DEBUG
-			if( fileloader == nullptr )
+		Engine::Sound* Factory::CreateSound(sound_data& data){
+			if( fileloader == NULL )
 				throw std::exception("[Factory] fileloader is nullptr");
-#endif
-			Engine::SoundPTR sound;
-			if( data->type == SoundType::BGM ){
-				sound = std::make_shared<Engine::Music>(debug, fileloader);
+
+			Engine::Sound* sound;
+			if( data.type == SoundType::BGM ){
+				sound = new Engine::Music(debug, fileloader);
 			}else{
-				sound = std::make_shared<Engine::SoundEffect>(debug, fileloader);
+				sound = new Engine::SoundEffect(debug, fileloader);
 			}
 			return sound;
 		}
 
-		InitScenePTR Factory::CreateInitScene(){
-			return std::make_shared<RPGLib::InitScene>(app);
+		InitScene* Factory::CreateInitScene(){
+			return new RPGLib::InitScene(app);
 		}
 
-		TimerPTR Factory::CreateTimer(){
-#ifdef _DEBUG
-			if( timem == nullptr )
+		Timer* Factory::CreateTimer(){
+			if( timem == NULL )
 				throw std::exception("[Factory] timem is nullptr");
-#endif
-			TimerPTR timer = std::make_shared<Timer>(timem);
-			return timer;
+
+			return new Timer(timem);
 		}
 	}
 }

@@ -12,20 +12,19 @@ namespace Osaka{
 		/* Some functions are completely overriden in OneLayerScene.h. So for modifications, please go over there as well. */
 		class RPGScene : public Engine::EScene{
 		public:
-			RPGScene(std::string id, SceneScriptPTR& mainscript);
+			RPGScene(const std::string& _id, SceneScript* mainscript);
 			virtual ~RPGScene();
-			virtual void _delete() override;
 			
 			virtual void Start() override;
 
 			/* Do not override this. Not used. */
 			void Load() override;
-			virtual void Load(RPGFactoryPTR& factory);
+			virtual void Load(RPGFactory& factory);
 			virtual void Unload() override;
 
 			virtual void Enter() override;
-			virtual void ReadyStandBy(Engine::ESceneArgsPTR& params) override;
-			virtual void ReadyShow(Engine::ESceneArgsPTR& params) override;
+			virtual void ReadyStandBy(Engine::ESceneArgs& params) override;
+			virtual void ReadyShow(Engine::ESceneArgs& params) override;
 			virtual void Exit() override;
 
 			virtual void StandBy() override;
@@ -37,14 +36,15 @@ namespace Osaka{
 			virtual void End() override;
 
 			//Functions for the layers
-			void Stack(std::string id, LayerArgsPTR& args);
-			void StackBefore(std::string id, std::string ref_layer, LayerArgsPTR& args);
-			void StackAfter(std::string id, std::string ref_layer, LayerArgsPTR& args);
-			void Switch(std::string id, LayerArgsPTR& args);
+			void Stack(const std::string& id, LayerArgs& args);
+			void StackBefore(const std::string& id, const std::string& ref_layer, LayerArgs& args);
+			void StackAfter(const std::string& id, const std::string& ref_layer, LayerArgs& args);
+			void Switch(const std::string& id, LayerArgs& args);
 
-			void Remove(std::string id);
+			void Remove(const std::string& id);
 			void RemoveAll();
-			void Add(LayerPTR layer);
+			/* It is a pointer because RPGScene is the owner of its layers. */
+			void Add(Layer* layer);
 
 			std::string GetId();
 		/* ----------------------------------------------------------------------------------- */
@@ -52,17 +52,13 @@ namespace Osaka{
 			/* This is a helper var so that it can't add layers once the loop starts */
 			bool started;
 		protected:
-			std::string  id;
+			const std::string id;
 			
-			/* Owner of SceneScript */
-			SceneScriptPTR mainscript;
-			/* The cache version. */
+			/* Owner. */
 			SceneScript* raw_mainscript;
 			
 			/* Owner (layers). ID of the layer. 
-			 * It is responsability of the factory to add the layers into the vector */
-			std::unordered_map<std::string, LayerPTR> layers;
-			/* This is the one we use to search the layers. */
+			 * This is the one that holds the true references, thus you need to delete them when done. */
 			std::unordered_map<std::string, Layer*> raw_layers;
 			/* Because map iterator is too slow, we need either vector[] or array. Array because we don't remove or add constantly at all.
 			 * This array holds ALL the layers too. This array is used to call ALL the layers. For example, End(), Enter(). */

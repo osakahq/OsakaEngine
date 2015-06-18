@@ -8,24 +8,19 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		OneLayer::OneLayer(std::string id, OneLayerScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui) : Layer(id, std::static_pointer_cast<Script>(script), canvas, ui){
+		OneLayer::OneLayer(const std::string& id, OneLayerScript* script, Canvas* canvas, UserInterface* ui) : Layer(id, script, canvas, ui){
 			this->onelayerscript = script;
 		}
 		OneLayer::~OneLayer(){
-			
+			onelayerscript = NULL;
 		}
 		
-		void OneLayer::_delete(){
-			Layer::_delete();
-			this->onelayerscript = nullptr;
-		}
-
-		void OneLayer::Ready(Engine::ESceneArgsPTR& args){
+		void OneLayer::Ready(Engine::ESceneArgs& args){
 			instack = true;
 			//They are sent directly to the script.
 			onelayerscript->Ready(args);
-			canvas->Ready();
-			ui->Ready();
+			raw_canvas->Ready();
+			raw_ui->Ready();
 		}
 		
 	}

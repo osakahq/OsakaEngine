@@ -8,32 +8,28 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		Script::Script(RPGApplicationPTR& app, RPGScenePTR& scene_parent){
+		Script::Script(RPGApplication* app, RPGScene* scene_parent){
 			this->app = app;
 			this->scene_parent = scene_parent;
+			layer_parent = NULL;
 		}
 		Script::~Script(){
 #ifdef _DEBUG
 			_CHECKDELETE("Script");
 #endif		
+			app = NULL;
+			scene_parent = NULL;
+			layer_parent = NULL;
 		}
-		void Script::_delete(){
-#ifdef _DEBUG
-			_CHECKDELETE("Script_delete");
-#endif
-			app = nullptr;
-			scene_parent = nullptr;
-			layer_parent = nullptr;
-		}
-
-		void Script::Init(LayerPTR& layer_parent){
+		
+		void Script::Init(Layer* layer_parent){
 			this->layer_parent = layer_parent;
 		}
 
 		/* These functions are not required to be implemented in the derived classes */
 		void Script::Enter(){}
-		void Script::Ready(LayerArgsPTR& args){}
-		void Script::Load(RPGFactoryPTR& factory){}
+		void Script::Ready(LayerArgs& args){}
+		void Script::Load(RPGFactory& factory){}
 		void Script::Unload(){}
 		void Script::Exit(){}
 

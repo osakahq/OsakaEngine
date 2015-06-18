@@ -14,13 +14,13 @@ namespace Osaka{
 			virtual ~PlaybackIntroSceneBuilder();
 		protected:
 			
-			virtual SceneScriptPTR CreateMainScript() override;
-			virtual void CreateLayers(RPGScenePTR& scene, SceneScriptPTR& mainscript) override;
-			virtual LayerDataPTR CreateMainLayer(RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript);
-			virtual LayerDataPTR CreateFadeLayer(RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript);
-			virtual PlaybackIntroScriptPTR CreateLayer1Script(PlaybackIntroCanvasPTR& canvas, RPGScenePTR& scene, PlaybackIntroSceneScriptPTR& mainscript);
+			virtual SceneScript* CreateMainScript() override;
+			virtual void CreateLayers(RPGScene& scene, SceneScript& mainscript) override;
+			virtual LayerData CreateMainLayer(RPGScene& scene, PlaybackIntroSceneScript& mainscript);
+			virtual LayerData CreateFadeLayer(RPGScene& scene, PlaybackIntroSceneScript& mainscript);
+			virtual PlaybackIntroScript* CreateLayer1Script(PlaybackIntroCanvas& canvas, RPGScene& scene, PlaybackIntroSceneScript& mainscript);
 
-			virtual PlaybackIntroCanvasPTR CreateLayer1Canvas();
+			virtual PlaybackIntroCanvas* CreateLayer1Canvas();
 		private:
 
 		};

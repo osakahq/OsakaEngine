@@ -10,15 +10,14 @@ namespace Osaka{
 		 * All modifications done to this class (overriden functions) must be considered if they apply also to RPGScene */
 		class OneLayerScene : public RPGScene{
 		public:
-			OneLayerScene(std::string id, SceneScriptPTR& mainscript, OneLayerPTR& onelayer);
+			OneLayerScene(const std::string& id, SceneScript* mainscript, OneLayer* onelayer);
 			~OneLayerScene();
-			void _delete() override;
 			
-			void Load(RPGFactoryPTR& factory) override;
+			void Load(RPGFactory& factory) override;
 			void Unload() override;
 
-			void ReadyStandBy(Engine::ESceneArgsPTR& params) override;
-			void ReadyShow(Engine::ESceneArgsPTR& params) override;
+			void ReadyStandBy(Engine::ESceneArgs& params) override;
+			void ReadyShow(Engine::ESceneArgs& params) override;
 			void Exit() override;
 
 			void StandBy() override;
@@ -30,7 +29,7 @@ namespace Osaka{
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* Owner */
-			OneLayerPTR onelayer;
+			OneLayer* onelayer;
 		};
 	}
 }

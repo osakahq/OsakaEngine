@@ -5,24 +5,20 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		OneLayerScene::OneLayerScene(std::string id, SceneScriptPTR& mainscript, OneLayerPTR& onelayer) : RPGScene(id, mainscript){
+		OneLayerScene::OneLayerScene(const std::string& id, SceneScript* mainscript, OneLayer* onelayer) : RPGScene(id, mainscript){
 			this->onelayer = onelayer;
 		}
 		OneLayerScene::~OneLayerScene(){
-			onelayer = nullptr;
-		}
-		void OneLayerScene::_delete(){
-			RPGScene::_delete();
-			onelayer->_delete(); onelayer = nullptr;
+			delete onelayer; onelayer = NULL;
 		}
 		
-		void OneLayerScene::Load(RPGFactoryPTR& factory){
+		void OneLayerScene::Load(RPGFactory& factory){
 			onelayer->Load(factory);
 		}
 		void OneLayerScene::Unload(){
 			onelayer->Unload();
 		}
-		void OneLayerScene::ReadyStandBy(Engine::ESceneArgsPTR& params){
+		void OneLayerScene::ReadyStandBy(Engine::ESceneArgs& params){
 			instack = true;
 			focus = false;
 			standby = true;
@@ -30,7 +26,7 @@ namespace Osaka{
 			onelayer->Ready(params);
 			onelayer->StandBy();
 		}
-		void OneLayerScene::ReadyShow(Engine::ESceneArgsPTR& params){
+		void OneLayerScene::ReadyShow(Engine::ESceneArgs& params){
 			instack = true;
 			focus = true;
 			standby = false;

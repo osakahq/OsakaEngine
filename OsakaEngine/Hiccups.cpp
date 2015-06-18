@@ -12,10 +12,6 @@ namespace Osaka{
 
 		}
 
-		void Hiccups::_delete(){
-
-		}
-
 		void Hiccups::Frame(const int frame_ms){
 #ifdef _DEBUG
 			if( frame_ms < 0 ){

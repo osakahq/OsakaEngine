@@ -7,24 +7,20 @@
 namespace Osaka{
 	namespace RPGLib{
 
-		StartMenuScript::StartMenuScript(RPGApplicationPTR& app, RPGScenePTR& parent, StartMenuCanvasPTR& canvas, StartMenuSceneScriptPTR& mainscript) : Script(app, parent){
+		StartMenuScript::StartMenuScript(RPGApplication* app, RPGScene* parent, StartMenuCanvas* canvas, StartMenuSceneScript* mainscript) : Script(app, parent){
 			this->canvas = canvas;
 			this->mainscript = mainscript;
 		}
 		StartMenuScript::~StartMenuScript(){
-
-		}
-		void StartMenuScript::_delete(){
-			Script::_delete();
-			canvas = nullptr;
-			mainscript = nullptr;
+			canvas = NULL;
+			mainscript = NULL;
 		}
 			
 		void StartMenuScript::Update(){
 
 		}
 
-		void StartMenuScript::Ready(LayerArgsPTR& args){
+		void StartMenuScript::Ready(LayerArgs& args){
 
 		}
 

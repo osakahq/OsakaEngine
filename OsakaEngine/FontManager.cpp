@@ -7,19 +7,15 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		FontManager::FontManager(TextureManagerPTR& texture, std::string _fontmap_error, int _space_x, int _space_y) 
+		FontManager::FontManager(TextureManager* texturem, const std::string& _fontmap_error, int _space_x, int _space_y) 
 			: fontmap_error(_fontmap_error), fontmap_char_space_x(_space_x), fontmap_char_space_y(_space_y)
 		{
-			fontmap = nullptr;
-			this->texture = texture;
+			this->texturem = texturem;
 
 			for(int i = 0; i < FONTMANAGER_MAX_CHAR; ++i)
 				sprites[i] = NULL;
 		}
 		FontManager::~FontManager(){
-
-		}
-		void FontManager::_delete(){
 			raw_renderer = NULL;
 
 			for(int i = 0; i < FONTMANAGER_MAX_CHAR; ++i){
@@ -27,20 +23,21 @@ namespace Osaka{
 					delete sprites[i];
 			}
 			
-			fontmap = nullptr;
-			texture = nullptr;
+			fontmap.clear();
+			texturem = NULL;
 		}
-		void FontManager::SetFontmap(unorderedmap_fontcharacter_dataPTR& fontmap){
+		
+		void FontManager::SetFontmap(unorderedmap_fontcharacter_data& fontmap){
 			this->fontmap = fontmap;
 		}
-		void FontManager::Init(SDL_Renderer& _renderer){
-			raw_renderer = &_renderer;
+		void FontManager::Init(SDL_Renderer* _renderer){
+			raw_renderer = _renderer;
 
-			for( auto it = fontmap->begin(); it != fontmap->end(); ++it ){
+			for( auto it = fontmap.begin(); it != fontmap.end(); ++it ){
 				//it->first = char
 				if( (int)it->first >= FONTMANAGER_MAX_CHAR )
 					throw std::exception("[FontManager] Outside of limit > FONTMANAGER_MAX_CHAR");
-				sprites[(int)it->first] = texture->CreateSpriteRAWPointer(it->second->sprite);
+				sprites[(int)it->first] = texturem->CreateSpriteRAWPointer(it->second->sprite);
 			}
 		}
 
@@ -67,7 +64,7 @@ namespace Osaka{
 		void FontManager::RenderTextMultiple(const char* text, const int x, const int y, const int max_slots){
 #ifdef _DEBUG
 			if( max_slots <= 1 ){
-				throw std::exception("[FontManager] RenderTextMultiple > max_slots is to little");
+				throw std::exception("[FontManager] RenderTextMultiple > max_slots is too little");
 			}
 #endif
 			/* This code is also in CreateStaticText. */
@@ -132,7 +129,7 @@ namespace Osaka{
 			}
 		}
 
-		StaticTextPTR FontManager::CreateStaticText(const char* text, const int x, const int y, const int max_slots){
+		StaticText* FontManager::CreateStaticText(const char* text, const int x, const int y, const int max_slots){
 			int text_size = strlen(text);
 			std::vector<sprite_info*> vector;
 			vector.reserve( text_size + (int)std::ceil(((float)text_size/max_slots)) );
@@ -183,7 +180,7 @@ namespace Osaka{
 				}
 			}
 
-			return std::make_shared<StaticText>(*raw_renderer, vector, max_slots, fontmap_char_space_x, fontmap_char_space_y);
+			return new StaticText(raw_renderer, vector, max_slots, fontmap_char_space_x, fontmap_char_space_y);
 		}
 	}
 }

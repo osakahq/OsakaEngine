@@ -22,8 +22,8 @@ namespace Osaka{
 		public:
 			Debug(const char* path, bool isConsoleAvailable, DEBUG_LEVEL::Value debug_level);
 			~Debug();
-			void _delete();
-			void init(Network::ServerConnPTR& conn);
+
+			void init(Network::ServerConn* conn);
 			//Restarts the connection
 			void restart();
 			void stop();
@@ -44,9 +44,9 @@ namespace Osaka{
 			void localL(const char* str);
 		private:
 			/* Owner */
-			LogPTR log;
+			Log* log;
 			/* Owner */
-			Network::ServerConnPTR conn;
+			Network::ServerConn* conn;
 
 			bool consoleAvailable;
 			bool noDebug;

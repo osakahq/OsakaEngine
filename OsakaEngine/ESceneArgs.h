@@ -7,14 +7,15 @@ namespace Osaka{
 
 		class ESceneArgs{
 		public:
-			ESceneArgs();
-			virtual ~ESceneArgs();
+			ESceneArgs(){
+				
+			}
+			virtual ~ESceneArgs(){
+				
+			}
 		private:
 			
 		};
-
-		extern std::shared_ptr<ESceneArgs> EmptyESceneArgsPTR;
-
 	}
 }
 #endif

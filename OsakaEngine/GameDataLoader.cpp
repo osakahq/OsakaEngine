@@ -13,18 +13,17 @@
 namespace Osaka{
 	namespace RPGLib{
 
-		GameDataLoader::GameDataLoader(Debug::DebugPTR& debug){
+		GameDataLoader::GameDataLoader(Debug::Debug* debug){
 			this->debug = debug;
 		}
 		GameDataLoader::~GameDataLoader(){
 #ifdef _DEBUG
 			_CHECKDELETE("GameDataLoader");
 #endif		
+			debug = NULL;
 		}
-		void GameDataLoader::_delete(){
-			debug = nullptr;
-		}
-		void GameDataLoader::LoadGameFile(const char* filename, GameDataPTR data){
+		
+		void GameDataLoader::LoadGameFile(const char* filename, GameData& data){
 			//GameDataPTR data = factory->CreateGameData();
 
 			rapidxml::xml_document<> doc;
@@ -32,16 +31,16 @@ namespace Osaka{
 			doc.parse<0>(xmlFile.data());
 			
 			rapidxml::xml_node<>* root = doc.first_node("game");
-			data->name = root->first_attribute("name")->value();
+			data.name = root->first_attribute("name")->value();
 			
-			data->window_width = std::stoi(std::string(root->first_attribute("width")->value()));
-			data->window_height = std::stoi(std::string(root->first_attribute("height")->value()));
+			data.window_width = std::stoi(std::string(root->first_attribute("width")->value()));
+			data.window_height = std::stoi(std::string(root->first_attribute("height")->value()));
 			
-			data->vsync = GetTrueFalse(root->first_attribute("vsync")->value());
-			data->time_per_frame = std::stoi(std::string(root->first_attribute("time-per-frame")->value()));
-			data->target_fps = std::stoi(std::string(root->first_attribute("target-fps")->value()));
+			data.vsync = GetTrueFalse(root->first_attribute("vsync")->value());
+			data.time_per_frame = std::stoi(std::string(root->first_attribute("time-per-frame")->value()));
+			data.target_fps = std::stoi(std::string(root->first_attribute("target-fps")->value()));
 
-			data->max_updates_catch_up = std::stoi(std::string(root->first_attribute("max-updates-catch-up")->value()));
+			data.max_updates_catch_up = std::stoi(std::string(root->first_attribute("max-updates-catch-up")->value()));
 
 			std::string linefeed;
 			/* This is needed because SplitString doesn't behave as a normal split function. "\r\n" is taking as 2 separate tokens
@@ -56,20 +55,20 @@ namespace Osaka{
 			
 			std::string loadin_type = root->first_node("asset-map")->first_attribute("loading")->value();
 			if( strcmp(loadin_type.c_str(), "FULL_LOAD_STARTUP") == 0 ){
-				data->asset_loading_type = AssetLoadingType::FULL_LOAD_STARTUP;
+				data.asset_loading_type = AssetLoadingType::FULL_LOAD_STARTUP;
 			}else if( strcmp(loadin_type.c_str(), "SMARTLOAD_PARCIAL_NOUNLOAD") == 0 ){
-				data->asset_loading_type = AssetLoadingType::SMARTLOAD_PARCIAL_NOUNLOAD;
+				data.asset_loading_type = AssetLoadingType::SMARTLOAD_PARCIAL_NOUNLOAD;
 			}else if( strcmp(loadin_type.c_str(), "SMARTLOAD_FULL_NOUNLOAD") == 0 ){
-				data->asset_loading_type = AssetLoadingType::SMARTLOAD_FULL_NOUNLOAD;
+				data.asset_loading_type = AssetLoadingType::SMARTLOAD_FULL_NOUNLOAD;
 			}else if( strcmp(loadin_type.c_str(), "SMARTLOAD") == 0 ){
-				data->asset_loading_type = AssetLoadingType::SMARTLOAD;
+				data.asset_loading_type = AssetLoadingType::SMARTLOAD;
 			}
 
 			rapidxml::xml_node<>* drc_node = root->first_node("default-render-color");
-			data->default_render_color_data.r = std::stoi(drc_node->first_node("r")->value());
-			data->default_render_color_data.g = std::stoi(drc_node->first_node("g")->value());
-			data->default_render_color_data.b = std::stoi(drc_node->first_node("b")->value());
-			data->default_render_color_data.a = std::stoi(drc_node->first_node("a")->value());
+			data.default_render_color_data.r = std::stoi(drc_node->first_node("r")->value());
+			data.default_render_color_data.g = std::stoi(drc_node->first_node("g")->value());
+			data.default_render_color_data.b = std::stoi(drc_node->first_node("b")->value());
+			data.default_render_color_data.a = std::stoi(drc_node->first_node("a")->value());
 			
 			debug->l("[GameData] Loading asset-map:\"init-load\" data...");
 				LoadInitialAssetmap(data, *root->first_node("asset-map")->first_node("init-load"));
@@ -80,9 +79,14 @@ namespace Osaka{
 				debug->l("[GameData] Loading asset-map:\"groups\"...");
 				LoadAssetGroups(groups, *root->first_node("asset-map")->first_node("groups"));
 			}
-
+			
 			debug->l("[GameData] Loading asset-map:\"scenes\"data...");
 				LoadScenesAssetmap(groups, data, *root->first_node("asset-map")->first_node("scenes"));
+			for(auto it = groups.begin(); it != groups.end(); ++it){
+				/* We need to delete them because when we pass them to the real map, we copy the values. */
+				delete it->second;
+			}
+			groups.clear();
 
 			debug->l("[GameData] Loading sprites map data...");
 				LoadSpritemaps(data, *root->first_node("spritemaps"), linefeed);
@@ -95,14 +99,17 @@ namespace Osaka{
 
 		}
 
-		void GameDataLoader::LoadInitialAssetmap(GameDataPTR& data, rapidxml::xml_node<>& init_load_node){
+		void GameDataLoader::LoadInitialAssetmap(GameData& data, rapidxml::xml_node<>& init_load_node){
 			//Inside asset-map > init-load node
-			asset_initload_dataPTR asset_data;
+			asset_initload_data* asset_data;
 			for(rapidxml::xml_node<>* asset_node = init_load_node.first_node(); asset_node != NULL; asset_node = asset_node->next_sibling("asset")){
-				asset_data = std::make_shared<asset_initload_data>();
+				asset_data = new asset_initload_data();
 				asset_data->id = asset_node->first_attribute("id")->value();
 				//asset_data->type = (AssetType::Value)GameDataLoader::GetAssetType(asset_node->Attribute("type"));
-				data->assets_initload->insert(std::make_pair(asset_data->id,asset_data));
+				auto it_assets_initload = data.assets_initload.insert(std::make_pair(asset_data->id,asset_data));
+				if( !it_assets_initload.second ){
+					debug->e("[GameDataLoader] Failed to insert asset. ID: " + asset_data->id);
+				}
 			}
 		}
 
@@ -110,9 +117,9 @@ namespace Osaka{
 			//group_dataPTR = scene_dataPTR (typedef)
 
 			//For each group in groups node
-			group_dataPTR group;
+			group_data* group;
 			for(rapidxml::xml_node<>* group_node = groups_node.first_node(); group_node != NULL; group_node = group_node->next_sibling("group")){
-				group = std::make_shared<scene_data>();
+				group = new scene_data();
 				group->id = group_node->first_attribute("id")->value();
 
 				//For each asset node in scene > assets node
@@ -137,17 +144,20 @@ namespace Osaka{
 					}
 				}
 				//insert the group into the group list
-				groups.insert(std::make_pair(group->id, group));
+				auto it_groups = groups.insert(std::make_pair(group->id, group));
+				if( !it_groups.second ){
+					debug->e("[GameDataLoader] Failed to insert group. ID: " + group->id);
+				}
 			}
 		}
 
-		void GameDataLoader::LoadScenesAssetmap(unorderedmap_group_data& groups, GameDataPTR& data, rapidxml::xml_node<>& scenes_node){
+		void GameDataLoader::LoadScenesAssetmap(unorderedmap_group_data& groups, GameData& data, rapidxml::xml_node<>& scenes_node){
 			//Inside asset-map > scenes node
 
 			//For each scene node in scenes node
-			scene_dataPTR scene_d;
+			scene_data* scene_d;
 			for(rapidxml::xml_node<>* scene_node = scenes_node.first_node(); scene_node != NULL; scene_node = scene_node->next_sibling("scene")){
-				scene_d = std::make_shared<scene_data>();
+				scene_d = new scene_data();
 				scene_d->id = scene_node->first_attribute("id")->value();
 				
 				//For each asset node in scene > assets node
@@ -179,25 +189,29 @@ namespace Osaka{
 				
 				/* Shortcut for a group id. <scene id="id" group-id="id" */
 				if( scene_node->first_attribute("group-id") != NULL ){
-					CopyGroupData(scene_d.get(), groups.at(scene_node->first_attribute("group-id")->value()));
+					CopyGroupData(scene_d, *groups.at(scene_node->first_attribute("group-id")->value()));
 				}
 				//For each group in groups node
 				if( scene_node->first_node("groups") != NULL ){
 					for(rapidxml::xml_node<>* group_node = scene_node->first_node("groups")->first_node("group"); group_node != NULL; group_node = group_node->next_sibling("group")
 					){
-						CopyGroupData(scene_d.get(), groups.at(group_node->first_attribute("id")->value()));
+						CopyGroupData(scene_d, *groups.at(group_node->first_attribute("id")->value()));
 					}
 				}
 
-				data->assets_scenes->insert(std::make_pair(scene_d->id, scene_d));
+				auto it_assets_scenes = data.assets_scenes.insert(std::make_pair(scene_d->id, scene_d));
+				if( !it_assets_scenes.second ){
+					debug->e("[GameDataLoader] Failed to insert scene. ID: " + scene_d->id);
+				}
 			}
 
 		}
 
 		/* Helper functions: It modifies the struct scene_data */
-		void GameDataLoader::CopyGroupData(scene_data* scene_d, const group_dataPTR& group_data){
-			scene_d->assets.insert(group_data->assets.begin(), group_data->assets.end());
-			scene_d->related_scenes_data.insert(group_data->related_scenes_data.begin(), group_data->related_scenes_data.end());
+		void GameDataLoader::CopyGroupData(scene_data* scene_d, const group_data& group_data){
+			//We don't really need to check if insert succeded because, if there are duplicates, we don't really care.
+			scene_d->assets.insert(group_data.assets.begin(), group_data.assets.end());
+			scene_d->related_scenes_data.insert(group_data.related_scenes_data.begin(), group_data.related_scenes_data.end());
 		}
 
 		/* Helper functions: It modifies the struct */
@@ -238,11 +252,11 @@ namespace Osaka{
 			return false;
 		}
 
-		void GameDataLoader::LoadSounds(GameDataPTR& data, rapidxml::xml_node<>& sounds_node){
+		void GameDataLoader::LoadSounds(GameData& data, rapidxml::xml_node<>& sounds_node){
 			//Inside <sounds> node
-			sound_dataPTR sound;
+			sound_data* sound;
 			for(rapidxml::xml_node<>* sound_node = sounds_node.first_node(); sound_node != NULL; sound_node = sound_node->next_sibling("sound")){
-				sound = std::make_shared<sound_data>();
+				sound = new sound_data();
 				sound->filename = sound_node->first_attribute("filename")->value();
 				sound->id = sound_node->first_attribute("id")->value();
 				if( strcmp(sound_node->first_attribute("type")->value(), "bgm") == 0 ){
@@ -250,21 +264,27 @@ namespace Osaka{
 				}else{
 					sound->type = SoundType::Effect;
 				}
-				data->assets_type->insert(std::make_pair(sound->id, AssetType::SOUND));;
-				data->sounds->insert(std::make_pair(sound->id, sound));
+				auto it_assets_type = data.assets_type.insert(std::make_pair(sound->id, AssetType::SOUND));
+				if( !it_assets_type.second ){
+					debug->e("[GameDataLoader] Failed to type sound. ID: " + sound->id);
+				}
+				auto it_sounds = data.sounds.insert(std::make_pair(sound->id, sound));
+				if( !it_sounds.second ){
+					debug->e("[GameDataLoader] Failed to insert sound. ID: " + sound->id);
+				}
 			}
 		}
 
-		void GameDataLoader::LoadSpritemaps(GameDataPTR& data, rapidxml::xml_node<>& spritemaps_node, std::string linefeed){
+		void GameDataLoader::LoadSpritemaps(GameData& data, rapidxml::xml_node<>& spritemaps_node, const std::string& linefeed){
 			//spritemaps_node = <spritemapS> node
 			
 			//For each child in <spritemaps> node
-			spritemap_dataPTR spritemap;
+			spritemap_data* spritemap;
 			for(rapidxml::xml_node<>* spritemap_node = spritemaps_node.first_node(); spritemap_node != NULL; spritemap_node = spritemap_node->next_sibling("spritemap")){
 				//We have a <spritemap> node
 				
 				//`spritemap` is always inserted in GameData->spritemaps
-				spritemap = std::make_shared<spritemap_data>();
+				spritemap = new spritemap_data();
 				spritemap->filename = spritemap_node->first_attribute("filename")->value();
 				spritemap->id = spritemap_node->first_attribute("id")->value();
 				spritemap->colorkey.r = std::stoi(spritemap_node->first_attribute("colorkey-r")->value());
@@ -272,7 +292,10 @@ namespace Osaka{
 				spritemap->colorkey.b = std::stoi(spritemap_node->first_attribute("colorkey-b")->value());
 				
 				//We add the texture asset to the global asset list
-				data->assets_type->insert(std::make_pair(spritemap->id, AssetType::TEXTURE));
+				auto it_assets_type = data.assets_type.insert(std::make_pair(spritemap->id, AssetType::TEXTURE));
+				if( !it_assets_type.second ){
+					debug->e("[GameDataLoader] Failed to insert spritemap. ID: " + spritemap->id);
+				}
 
 				std::vector<std::string> sprite_text;
 				//Split it so have get: sprite_id = 0 0 32 32 / sprite_id2 = 32 32 32 32
@@ -317,16 +340,22 @@ namespace Osaka{
 						case 3:
 							temp_sprite.clip.h = stoi(*it_coords);
 							//This is a copy. Inserts the sprite into the spritemap
-							spritemap->sprites.insert(std::make_pair(temp_sprite.id, temp_sprite));
+							auto it_sprites = spritemap->sprites.insert(std::make_pair(temp_sprite.id, temp_sprite));
+							if( !it_sprites.second ){
+								debug->e("[GameDataLoader] Failed to insert sprite. ID: " + temp_sprite.id);
+							}
 
 							//Insert the id of the sprite and where it belongs (spritemap) so I can search them easily
-							sprite_dataPTR temp_spritePTR = std::make_shared<sprite_data>();
+							sprite_data* temp_spritePTR = new sprite_data();
 							temp_spritePTR->id = temp_sprite.id;
 							temp_spritePTR->belongs_to_texture = spritemap->id;
 							temp_spritePTR->clip.x = temp_sprite.clip.x; temp_spritePTR->clip.y = temp_sprite.clip.y;
 							temp_spritePTR->clip.w = temp_sprite.clip.w; temp_spritePTR->clip.h = temp_sprite.clip.h;
 
-							data->sprite_ids->insert(std::make_pair(temp_sprite.id, temp_spritePTR));
+							auto it_sprite_ids = data.sprite_ids.insert(std::make_pair(temp_sprite.id, temp_spritePTR));
+							if( !it_sprite_ids.second ){
+								debug->e("[GameDataLoader] Failed to insert sprite (sprite_ids). ID: " + temp_sprite.id);
+							}
 							break;
 						}
 					}
@@ -335,21 +364,24 @@ namespace Osaka{
 						debug->e("[GameDataLoader] Corrupted spritemap data. STAGE 2");
 					}
 					//Inserts the spritemap into the spritemap list (spritemapS)
-					data->spritemaps->insert(std::make_pair(spritemap->id, spritemap));
+					auto it_spritemaps = data.spritemaps.insert(std::make_pair(spritemap->id, spritemap));
+					if( !it_spritemaps.second ){
+						debug->e("[GameDataLoader] Failed to insert spritemap. ID: " + spritemap->id);
+					}
 				}
 			}//End for (no more spritemapS)
 		}
 	
-		void GameDataLoader::LoadFontmap(GameDataPTR& data, rapidxml::xml_node<>& fontmap_node){
+		void GameDataLoader::LoadFontmap(GameData& data, rapidxml::xml_node<>& fontmap_node){
 			//Inside <fontmap> node
 
-			data->fontmap_error = fontmap_node.first_attribute("error-sprite")->value();
-			data->fontmap_space_x = std::stoi(fontmap_node.first_attribute("space-x")->value());
-			data->fontmap_space_y = std::stoi(fontmap_node.first_attribute("space-y")->value());;
+			data.fontmap_error = fontmap_node.first_attribute("error-sprite")->value();
+			data.fontmap_space_x = std::stoi(fontmap_node.first_attribute("space-x")->value());
+			data.fontmap_space_y = std::stoi(fontmap_node.first_attribute("space-y")->value());;
 
-			fontcharacter_dataPTR character;
+			fontcharacter_data* character;
 			for(rapidxml::xml_node<>* character_node = fontmap_node.first_node(); character_node != NULL; character_node = character_node->next_sibling("character")){
-				character = std::make_shared<fontcharacter_data>();
+				character = new fontcharacter_data();
 				character->id = character_node->first_attribute("id")->value();
 				character->sprite = character_node->first_attribute("sprite")->value();
 
@@ -357,7 +389,10 @@ namespace Osaka{
 					debug->e("[GameDataLoader] ID fontmap sprite has to be 1 character (char)");
 
 				char id = character->id.c_str()[0];
-				data->fontmap->insert(std::make_pair(id, character));
+				auto it = data.fontmap.insert(std::make_pair(id, character));
+				if( !it.second ){
+					debug->e("[GameDataLoader] Failed to insert fontcharacter. Char:" + std::to_string(id) + " ID: " + character->id);
+				}
 			}
 		}
 	}

@@ -57,6 +57,8 @@
 	#include "_checkdelete.h"
 #endif
 
+#include "global_vars.h"
+
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")

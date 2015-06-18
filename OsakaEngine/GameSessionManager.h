@@ -8,33 +8,33 @@ namespace Osaka{
 		/* You can have different game sessions. Example: FF8 Laguna and company */
 		class GameSessionManager{
 		public:
-			GameSessionManager(GameDataPTR& data);
+			GameSessionManager(GameData* data);
 			~GameSessionManager();
-			void _delete();
-			void InsertSession(std::string name, GameSessionPTR& session);
+			
+			void InsertSession(const std::string& name, GameSession* session);
 
 			/*************************************************************************/
 			//I moved these functions from RPGFactory to here
 			/* Gives away ownership. 
 			 * It creates the sample gamesessions for newgame (acquired from the data game file) */
-			GameSessionManagerPTR CreateGameSessionManagerFromGameData();
+			GameSessionManager* CreateGameSessionManagerFromGameData();
 			/* Gives away ownership. 
 			 * This functions is to load games. */
-			GameSessionManagerPTR CreateGameSessionManager(unorderedmap_gamesession_dataPTR& gamesessions);
+			GameSessionManager* CreateGameSessionManager(unorderedmap_gamesession_data& gamesessions);
 			/* Gives away onwership.
 			 * This is used to save games */
-			unorderedmap_gamesession_dataPTR CreateGameSessionStructs(GameSessionManagerPTR& gsm);
+			unorderedmap_gamesession_data CreateGameSessionStructs(GameSessionManager& gsm);
 			/* This function was on Private, Gives away ownership. 
 			 * I'm not sure if this goes here of factory */
-			GameSessionPTR CreateGameSession(gamesession_dataPTR& session);
+			GameSession* CreateGameSession(gamesession_data& session);
 			/*************************************************************************/
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			//OWNER of all GameSessions and the map sessions
-			std::unordered_map<std::string, GameSessionPTR> sessions;
+			std::unordered_map<std::string, GameSession*> sessions;
 
 			/* NOT Owner. This was in RPGFactory. GameData ownership is in RPGApplication */
-			GameDataPTR data;
+			GameData* data;
 		};
 	}
 }

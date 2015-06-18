@@ -10,30 +10,25 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		PlaybackIntroScript::PlaybackIntroScript(RPGApplicationPTR& app, RPGScenePTR& parent, PlaybackIntroCanvasPTR& canvas, PlaybackIntroSceneScriptPTR& mainscript)
+		PlaybackIntroScript::PlaybackIntroScript(RPGApplication* app, RPGScene* parent, PlaybackIntroCanvas* canvas, PlaybackIntroSceneScript* mainscript)
 			: Script(app, parent){
 			
 			this->canvas = canvas;
 			this->mainscript = mainscript;
 		}
 		PlaybackIntroScript::~PlaybackIntroScript(){
-
+			canvas = NULL;
+			mainscript = NULL;
 		}
-		void PlaybackIntroScript::_delete(){
-			Script::_delete();
-
-			canvas = nullptr;
-			mainscript = nullptr;
-		}
-
-		void PlaybackIntroScript::Init(LayerPTR& layer_parent){
+		
+		void PlaybackIntroScript::Init(Layer* layer_parent){
 			Script::Init(layer_parent);
 		}
-		void PlaybackIntroScript::Load(RPGFactoryPTR& factory){
+		void PlaybackIntroScript::Load(RPGFactory& factory){
 			//called from the loading thread.
 			app->debug->l("[PlaybackIntroScript] Load called.");
 		}
-		void PlaybackIntroScript::Ready(LayerArgsPTR& args){
+		void PlaybackIntroScript::Ready(LayerArgs& args){
 			
 		}
 

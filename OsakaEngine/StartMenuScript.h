@@ -11,22 +11,21 @@ namespace Osaka{
 		
 		class StartMenuScript: public Script{
 		public:
-			StartMenuScript(RPGApplicationPTR& app, RPGScenePTR& parent, StartMenuCanvasPTR& canvas, StartMenuSceneScriptPTR& mainscript);
+			StartMenuScript(RPGApplication* app, RPGScene* parent, StartMenuCanvas* canvas, StartMenuSceneScript* mainscript);
 			~StartMenuScript();
-			void _delete() override;
 			
 			void Update() override;
 			/* This function is called when entering the stack */
-			void Ready(LayerArgsPTR& args) override;
+			void Ready(LayerArgs& args) override;
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			
 		private:
 			
 			/* NOT Owner. Owner is in parent class (layer). This is a cache reference. */
-			StartMenuCanvasPTR canvas;
+			StartMenuCanvas* canvas;
 			/* NOT Owner. Owner is in RPGScene*/
-			StartMenuSceneScriptPTR mainscript;
+			StartMenuSceneScript* mainscript;
 		};
 	}
 }

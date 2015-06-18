@@ -6,25 +6,24 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		SceneScript::SceneScript(RPGApplicationPTR& app){
+		SceneScript::SceneScript(RPGApplication* app){
 			this->app = app;
 		}
 		SceneScript::~SceneScript(){
 #ifdef _DEBUG
 			_CHECKDELETE("SceneScript");
 #endif	
+			app = NULL;
+			scene_parent = NULL;
 		}
-		void SceneScript::_delete(){
-			app = nullptr;
-			scene_parent = nullptr;
-		}
-		void SceneScript::Init(RPGScenePTR& scene_parent){
+		
+		void SceneScript::Init(RPGScene* scene_parent){
 			this->scene_parent = scene_parent;
 		}
 		/* These functions are not required to be implemented in the derived classes */
 		void SceneScript::Enter(){}
-		void SceneScript::Ready(Engine::ESceneArgsPTR& args){}
-		void SceneScript::Load(RPGFactoryPTR& factory){}
+		void SceneScript::Ready(Engine::ESceneArgs& args){}
+		void SceneScript::Load(RPGFactory& factory){}
 		void SceneScript::Unload(){}
 		void SceneScript::Exit(){}
 

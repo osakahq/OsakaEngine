@@ -11,11 +11,12 @@
 #include "Factory.h"
 #include "RPGFactory.h"
 #include "Image.h"
+#include "FadeInFadeOutEffect.h"
 #include "Square.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		RPGFactory::RPGFactory(Debug::DebugPTR& debug, GameDataPTR& data, GameDataParamsPTR& gdp, FactoryPTR& factory){
+		RPGFactory::RPGFactory(Debug::Debug* debug, GameData* data, GameDataParams* gdp, Factory* factory){
 			this->debug = debug;
 			this->data = data;
 			this->factory = factory;
@@ -23,32 +24,33 @@ namespace Osaka{
 
 		}
 		RPGFactory::~RPGFactory(){
-			
-		}
-		void RPGFactory::_delete(){
 			raw_renderer = NULL;
-			debug = nullptr;
-			data = nullptr;
-			factory = nullptr;
-			gamedataparams = nullptr;
+			debug = NULL;
+			data = NULL;
+			factory = NULL;
+			gamedataparams = NULL;
 		}
+		
 		void RPGFactory::Init(){
 			//Be careful. This function is called BEFORE `app->Init()`
 			raw_renderer = factory->app->sdl->GetRAWSDLRenderer();
 		}
-		ImagePTR RPGFactory::CreateImage(std::string id_sprite){
-			return std::make_shared<Image>(raw_renderer, factory->texturem->CreateSpriteRAWPointer(id_sprite));
+		Image* RPGFactory::CreateImage(const std::string& id_sprite){
+			return new Image(raw_renderer, factory->texturem->CreateSpriteRAWPointer(id_sprite));
 		}
-		SquarePTR RPGFactory::CreateSquare(int x, int y, int h, int w){
-			SquarePTR square = std::make_shared<Square>(raw_renderer);
+		Square* RPGFactory::CreateSquare(int x, int y, int h, int w){
+			Square* square = new Square(raw_renderer);
 			square->square.x = x;
 			square->square.y = y;
 			square->square.h = h;
 			square->square.w = w;
 			return square;
 		}
-		SquarePTR RPGFactory::CreateSquare(){
-			return std::make_shared<Square>(raw_renderer);
+		Square* RPGFactory::CreateSquare(){
+			return new Square(raw_renderer);
+		}
+		FadeInFadeOutEffect* RPGFactory::CreateFadeInFadeOutEffect(){
+			return new FadeInFadeOutEffect(factory->CreateTimer());
 		}
 	}
 }

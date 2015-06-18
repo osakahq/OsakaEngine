@@ -8,8 +8,5 @@ namespace Osaka{
 		Settings::~Settings(){
 
 		}
-		void Settings::_delete(){
-
-		}
 	}
 }

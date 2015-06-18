@@ -9,20 +9,17 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		StartMenuSceneScript::StartMenuSceneScript(RPGApplicationPTR& app) 
-			: SceneScript(app)
+		StartMenuSceneScript::StartMenuSceneScript(RPGApplication* app) 
+			: SceneScript(app), mainlayer_id("_mainlayer")
 		{
-			mainlayer_id = "_mainlayer";
+			
 		}
 		StartMenuSceneScript::~StartMenuSceneScript(){
-
-		}
-		void StartMenuSceneScript::_delete(){
-			SceneScript::_delete();
+			
 		}
 		
-		void StartMenuSceneScript::Ready(Engine::ESceneArgsPTR& params){
-			//TODO: scene_parent->Stack(layer1, EmptyLayerArgsPTR);
+		void StartMenuSceneScript::Ready(Engine::ESceneArgs& params){
+			//TODO: scene_parent->Stack(layer1, EmptyLayerArgs);
 		}
 	}
 }

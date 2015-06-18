@@ -14,7 +14,7 @@ namespace Osaka{
 			~PlaybackIntroSceneTestBuilder();
 
 		protected:
-			RPGLib::PlaybackIntroScriptPTR CreateLayer1Script(RPGLib::PlaybackIntroCanvasPTR& canvas, RPGLib::RPGScenePTR& scene, RPGLib::PlaybackIntroSceneScriptPTR& mainscript) override;
+			RPGLib::PlaybackIntroScript* CreateLayer1Script(RPGLib::PlaybackIntroCanvas& canvas, RPGLib::RPGScene& scene, RPGLib::PlaybackIntroSceneScript& mainscript) override;
 
 		private:
 			

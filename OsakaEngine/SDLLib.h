@@ -12,9 +12,8 @@ namespace Osaka{
 		
 		class SDLLib{
 		public:
-			SDLLib(Debug::DebugPTR& debug);
+			SDLLib(Debug::Debug* debug);
 			~SDLLib();
-			void _delete();
 			/* Creates all that is needed for a full functionality of SDL */
 			void Init(const char* title, int window_width, int window_height, RGBA_HEX& render_color, bool vsync);
 			bool Start();
@@ -49,7 +48,7 @@ namespace Osaka{
 			RGBA_HEX render_color;
 
 			/* NOT owner */
-			Debug::DebugPTR debug;
+			Debug::Debug* debug;
 
 			/* OWNER */
 			SDL_Window* window;

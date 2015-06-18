@@ -5,7 +5,7 @@
 
 namespace Osaka{
 	namespace TestSuite{
-		TestPlaybackIntroScript::TestPlaybackIntroScript(RPGLib::RPGApplicationPTR& app, RPGLib::RPGScenePTR& parent, RPGLib::PlaybackIntroCanvasPTR& canvas, RPGLib::PlaybackIntroSceneScriptPTR& mainscript)
+		TestPlaybackIntroScript::TestPlaybackIntroScript(RPGLib::RPGApplication* app, RPGLib::RPGScene* parent, RPGLib::PlaybackIntroCanvas* canvas, RPGLib::PlaybackIntroSceneScript* mainscript)
 			: PlaybackIntroScript(app, parent, canvas, mainscript){
 			_is_loaded = false;
 		}
@@ -13,7 +13,7 @@ namespace Osaka{
 
 		}
 		
-		void TestPlaybackIntroScript::Load(RPGLib::RPGFactoryPTR& factory){
+		void TestPlaybackIntroScript::Load(RPGLib::RPGFactory& factory){
 			PlaybackIntroScript::Load(factory);
 			_is_loaded = true;
 		}

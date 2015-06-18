@@ -11,8 +11,8 @@ namespace Osaka{
 
 		Debug::Debug(const char* path, bool isConsoleAvailable, DEBUG_LEVEL::Value debug_level){
 			consoleAvailable = isConsoleAvailable;
-			log = std::make_shared<Log>(path);
-			
+			log = new Log(path);
+			conn = NULL;
 			noDebug = false;
 			onlyFileDebug = false;
 
@@ -35,13 +35,12 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("Debug");
 #endif
-		}
-		void Debug::_delete(){
 			//~ServerConn() calls Stop(); so it may call `debug->l`
-			conn->_delete(); conn = nullptr;
-			log->_delete(); log = nullptr;
+			delete conn; conn = NULL;
+			delete log; log = NULL;
 		}
-		void Debug::init(Network::ServerConnPTR& conn){
+		
+		void Debug::init(Network::ServerConn* conn){
 			this->conn = conn;
 		}
 		void Debug::restart(){

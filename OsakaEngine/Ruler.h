@@ -9,7 +9,7 @@ namespace Osaka{
 		public:
 			Ruler(int width, int height);
 			~Ruler();
-			void _delete();
+
 			int x_top_left_corner;
 			int y_top_left_corner;
 

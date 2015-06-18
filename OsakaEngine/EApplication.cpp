@@ -14,49 +14,48 @@
 
 namespace Osaka{
 	namespace Engine{
-		EApplication::EApplication(Debug::DebugPTR& d, SDLLibPTR& sdl, IFileLoaderPTR& fileloader){
+		EApplication::EApplication(Debug::Debug* d, SDLLib* sdl, IFileLoader* fileloader){
 			this->sdl = sdl;
 			this->debug = d;
-			
+			this->fileloader = fileloader;
+
 			stack.reserve(EAPP_MAXSTACK);
 			entering.reserve(EAPP_MAXSTACK);
 			stackHasChanged = true;
-			this->fileloader = fileloader;
-
 		}
 		EApplication::~EApplication(){
 #ifdef _DEBUG
 			_CHECKDELETE("EApplication");
-#endif			
-		}
-		void EApplication::_delete(){
+#endif		
 			stack.clear();
 			entering.clear();
-			raw_scenes.clear();
-
-			for(auto it = scenes.begin(); it != scenes.end(); ++it ){
-				it->second->_delete();
+			
+			for(auto it = raw_scenes.begin(); it != raw_scenes.end(); ++it ){
+				delete it->second;
 			}
-			scenes.clear();
-			sdl->_delete(); sdl = nullptr;
-			fileloader->_delete(); fileloader = nullptr;
-			debug = nullptr;
+			raw_scenes.clear();
+			delete sdl; sdl = NULL;
+			delete fileloader; fileloader = NULL;
+			debug = NULL;
 		}
+		
 		void EApplication::Init(bool vsync, int timePerFrame, int maxUpdatesToCatchUp){
 			this->vsync = vsync;
 			this->timePerFrame = timePerFrame;
 			this->maxUpdatesToCatchUp = maxUpdatesToCatchUp;
 		}
-		void EApplication::AddScene(std::string id, EScenePTR& scene){
+		void EApplication::AddScene(const std::string& id, EScene* scene){
 			//Takes ownership of the scene
-			scenes[id] = scene;
-			raw_scenes[id] = scene.get();
+			raw_scenes[id] = scene;
 		}
-		void EApplication::CallLoad(std::string id){
+		void EApplication::CallLoad(const std::string& id){
 			raw_scenes[id]->Load();
 		}
+		void EApplication::CallUnload(const std::string& id){
+			raw_scenes[id]->Unload();
+		}
 
-		void EApplication::Switch(std::string scene, ESceneArgsPTR& in_param){
+		void EApplication::Switch(const std::string& scene, ESceneArgs& in_param){
 			RemoveAllFromStack();
 			printf("[EApplication] Switch\n");
 			EScene* sceneptr = raw_scenes[scene];
@@ -67,7 +66,7 @@ namespace Osaka{
 			sceneptr->ReadyShow(in_param);
 			stackHasChanged = true;
 		}
-		void EApplication::Stack(std::string scene, ESceneArgsPTR& in_param){
+		void EApplication::Stack(const std::string& scene, ESceneArgs& in_param){
 			printf("[EApplication] Stack\n");
 			if( stack.size() > 0 ){
 				//We only need to call StandBy on current top scene because the others are already in standby
@@ -83,7 +82,7 @@ namespace Osaka{
 			sceneptr->ReadyShow(in_param);
 			stackHasChanged = true;
 		}
-		void EApplication::BottomStack(std::string scene, ESceneArgsPTR& in_param){
+		void EApplication::BottomStack(const std::string& scene, ESceneArgs& in_param){
 			printf("[EApplication] BottomStack\n");
 			EScene* sceneptr = raw_scenes[scene];
 
@@ -94,7 +93,7 @@ namespace Osaka{
 			sceneptr->ReadyStandBy(in_param);
 			stackHasChanged = true;
 		}
-		void EApplication::Remove(std::string scene){
+		void EApplication::Remove(const std::string& scene){
 			printf("[EApplication] Remove\n");
 			auto it = std::find(stack.begin(), stack.end(), raw_scenes[scene]);
 			if( it == stack.end() ){
@@ -119,7 +118,8 @@ namespace Osaka{
 			}
 			stackHasChanged = true;
 		}
-		void EApplication::RemoveAllFromStack(std::string except_scene){
+		void EApplication::RemoveAllFromStack(const std::string& except_scene){
+			//Default: except_scene = ""
 			printf("[EApplication] RemoveAllFromStack\n");
 			if( stack.size() == 0 ){
 				if( !except_scene.empty() ){
@@ -127,7 +127,6 @@ namespace Osaka{
 				}
 				return;
 			}
-			//default parameter except_scene = ""
 			if( except_scene.empty() == false ){
 				EScene* escene = raw_scenes[except_scene];
 				auto it = std::find(stack.begin(), stack.end(), escene);
@@ -336,6 +335,7 @@ namespace Osaka{
 			for(auto it = raw_scenes.begin(); it != raw_scenes.end(); ++it ){
 				it->second->End();
 			}
+			End();
 		}
 
 	}

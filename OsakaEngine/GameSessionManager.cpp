@@ -5,35 +5,33 @@
 #include "GameSessionManager.h"
 namespace Osaka{
 	namespace RPGLib{
-		GameSessionManager::GameSessionManager(GameDataPTR& data){
+		GameSessionManager::GameSessionManager(GameData* data){
 			this->data = data;
 		}
 		GameSessionManager::~GameSessionManager(){
 #ifdef _DEBUG
 			_CHECKDELETE("GameSessionManager");
 #endif
-		}
-		void GameSessionManager::_delete(){
-			data = nullptr;
+			data = NULL;
 			for(auto it = sessions.begin(); it != sessions.end(); ++it )
-				it->second->_delete();
+				delete it->second;
 			sessions.clear();
 		}
-
+		
 		/* Only called from Factory */
-		void GameSessionManager::InsertSession(std::string name, GameSessionPTR& session){
+		void GameSessionManager::InsertSession(const std::string& name, GameSession* session){
 			/* Takes ownership */
 			sessions[name] = session;
 		}
 
-		GameSessionPTR GameSessionManager::CreateGameSession(gamesession_dataPTR& session){
+		GameSession* GameSessionManager::CreateGameSession(gamesession_data& session){
 			//TODO: I'm not sure if this goes here of factory
-			GameSessionPTR gs = std::make_shared<GameSession>();
+			GameSession* gs = new GameSession();
 			//debug->l("[RPGFactory] TODO CREATEGAMESESSION");
 			printf("[RPGFactory] TODO CREATEGAMESESSION\n");
 			return gs;
 		}
-		GameSessionManagerPTR GameSessionManager::CreateGameSessionManagerFromGameData(){
+		GameSessionManager* GameSessionManager::CreateGameSessionManagerFromGameData(){
 			/* TODO: Creo que necesito crear SessionManager, GameSessionManager maneja SessionManager el cual tiene las sesiones del juego.
 			 * Las sesiones sirve por ejemplo: FF8, cuando esta en la historia principal pero esta la historia de Lagoon. */
 
@@ -46,7 +44,8 @@ namespace Osaka{
 			//--}
 			
 			//--return gsm;
-			return nullptr;
+			printf("[RPGFactory] TODO CreateGameSessionManagerFromGameData\n");
+			return NULL;
 		}
 	}
 }

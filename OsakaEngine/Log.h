@@ -10,8 +10,7 @@ namespace Osaka{
 		public:
 			Log(const char* file);
 			~Log();
-			void _delete();
-
+			
 			void fileL(const char* str);
 			void consoleL(const char* str);
 		private:

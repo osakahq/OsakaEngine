@@ -17,7 +17,7 @@ int _tmain(int argc, _TCHAR* argv[])
 #ifdef _CRTDBG_MAP_ALLOC
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 #endif
-	TestSuite::RPGLibTestSuitePTR test = std::make_shared<TestSuite::RPGLibTestSuite>();
+	TestSuite::RPGLibTestSuite* test = new TestSuite::RPGLibTestSuite();
 	/* This is for faster OSAKA_ASSERT (macro) */
 	OsakaAssertBegin(test);
 
@@ -58,8 +58,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	test->CheckResults();
 	/* Rember to always call `OsakaAssertEnd()` when `OsakaAssertBegin(...)` is called */
 	OsakaAssertEnd();
-	test->_delete(); 
-	test = nullptr;
+	delete test; test = NULL;
 			
 #ifdef _DEBUG
 	if( resp == "s" ){

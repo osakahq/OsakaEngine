@@ -8,17 +8,18 @@ namespace Osaka{
 
 		class FadeInOutCanvas : public Canvas{
 		public:
-			FadeInOutCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler, SquarePTR& square, FadeInFadeOutEffectPTR& effect);
+			FadeInOutCanvas(SDL_Renderer* raw_renderer, Ruler* ruler);
 			~FadeInOutCanvas();
-			void _delete() override;
-
+			
+			void Load(RPGFactory& factory) override;
+			void Unload() override;
 			void Enter() override;
 			void Ready() override;
 			void Update() override;
 			void Draw() override;
 
-			Component::EventHandlerPTR midAnimation;
-			Component::EventHandlerPTR endAnimation;
+			Component::EventHandler* midAnimation;
+			Component::EventHandler* endAnimation;
 
 			/* This is called from Effect EventHandler */
 			void OnEffectMidAnimation(Component::EventArgs& e);
@@ -32,9 +33,9 @@ namespace Osaka{
 			void SetFadeTimes(float fadein, float fadeout);
 		protected:
 			/* Owner */
-			SquarePTR square;
+			Square* square;
 			/* Owner */
-			FadeInFadeOutEffectPTR effect;
+			FadeInFadeOutEffect* effect;
 		};
 	}
 }

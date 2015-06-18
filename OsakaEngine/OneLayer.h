@@ -8,17 +8,16 @@ namespace Osaka{
 		
 		class OneLayer : public Layer{
 		public:
-			OneLayer(std::string id, OneLayerScriptPTR& script, CanvasPTR& canvas, UserInterfacePTR& ui);
+			OneLayer(const std::string& id, OneLayerScript* script, Canvas* canvas, UserInterface* ui);
 			~OneLayer();
-			void _delete() override;
-
+			
 			/* When entering the stack(vector) in RPGScene. Completely overriden: Doesn't call parent:Ready function */
-			void Ready(Engine::ESceneArgsPTR& args);
+			void Ready(Engine::ESceneArgs& args);
 			
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner. Owner is in base class. */
-			OneLayerScriptPTR onelayerscript;
+			OneLayerScript* onelayerscript;
 		};
 	}
 }

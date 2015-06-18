@@ -5,7 +5,7 @@
 #include "SoundEffect.h"
 namespace Osaka{
 	namespace Engine{
-		SoundEffect::SoundEffect(Debug::DebugPTR& debug, IFileLoaderPTR& fileloader) : Sound(debug, fileloader){
+		SoundEffect::SoundEffect(Debug::Debug* debug, IFileLoader* fileloader) : Sound(debug, fileloader){
 			effect = NULL;
 		}
 		SoundEffect::~SoundEffect(){
@@ -15,9 +15,7 @@ namespace Osaka{
 			if( effect != NULL )
 				Mix_FreeChunk(effect);
 		}
-		void SoundEffect::_delete(){
-			Sound::_delete();
-		}
+		
 		void SoundEffect::Load(const char* filename){
 			if( effect != NULL ){
 				debug->e("[SoundEffect] WARNING! Sound is already loaded: " + std::string(filename));

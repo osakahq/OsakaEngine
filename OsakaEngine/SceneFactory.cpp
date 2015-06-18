@@ -14,12 +14,12 @@
 #include "SceneFactory.h"
 namespace Osaka{
 	namespace RPGLib{
-		SceneFactory::SceneFactory(FactoryPTR& factory, RPGApplicationPTR& app, TextureManagerPTR& texturem){
+		SceneFactory::SceneFactory(Factory* factory, RPGApplication* app, TextureManager* texturem){
 			this->factory = factory;
 			this->app = app;
 			this->texturem = texturem;
 
-			if( this->factory == nullptr || this->app == nullptr || this->texturem == nullptr ){
+			if( this->factory == NULL || this->app == NULL || this->texturem == NULL ){
 				throw std::exception("[SceneFactory] Failed nullptr check.");
 			}
 		}
@@ -27,40 +27,38 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("SceneFactory");
 #endif	
+			factory = NULL;
+			app = NULL;
+			texturem = NULL;
 		}
-		void SceneFactory::_delete(){
-			factory = nullptr;
-			app = nullptr;
-			texturem = nullptr;
-		}
-
-		RPGScenePTR SceneFactory::CreateLoadingScene(const char* name){
+		
+		RPGScene* SceneFactory::CreateLoadingScene(const char* name){
 			LoadingSceneBuilder* builder = new LoadingSceneBuilder(factory->assetm);
 			builder->Init(app, app->ruler, app->sdl->GetRAWSDLRenderer(), factory, texturem);
-			RPGScenePTR scene = builder->CreateScene(name);
+			RPGScene* scene = builder->CreateScene(name);
 			delete builder;
 			return scene;
 		}
-		RPGScenePTR SceneFactory::CreatePlaybackIntroScene(const char* name){
+		RPGScene* SceneFactory::CreatePlaybackIntroScene(const char* name){
 			PlaybackIntroSceneBuilder* builder = new PlaybackIntroSceneBuilder();
 			builder->Init(app, app->ruler, app->sdl->GetRAWSDLRenderer(), factory, texturem);
-			RPGScenePTR scene = builder->CreateScene(name);
+			RPGScene* scene = builder->CreateScene(name);
 			delete builder;
 			return scene;
 		}
-		RPGScenePTR SceneFactory::CreateStartMenuScene(const char* name){
+		RPGScene* SceneFactory::CreateStartMenuScene(const char* name){
 			StartMenuSceneBuilder* builder = new StartMenuSceneBuilder();
 			builder->Init(app, app->ruler, app->sdl->GetRAWSDLRenderer(), factory, texturem);
-			RPGScenePTR scene = builder->CreateScene(name);
+			RPGScene* scene = builder->CreateScene(name);
 			delete builder;
 			return scene;
 		}
 
-		std::shared_ptr<DummyScene> SceneFactory::CreateDummyScene(const char* name){
-			SceneScriptPTR& mainscript = std::make_shared<SceneScript>(app);
-			DummyScenePTR scene = std::make_shared<DummyScene>(name, mainscript);
+		DummyScene* SceneFactory::CreateDummyScene(const char* name){
+			SceneScript* mainscript = new SceneScript(app);
+			DummyScene* scene = new DummyScene(name, mainscript);
 			/* Not really needed, but just in case. */
-			mainscript->Init(std::static_pointer_cast<RPGScene>(scene));
+			mainscript->Init(scene);
 			return scene;
 		}
 	}

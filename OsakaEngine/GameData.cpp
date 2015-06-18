@@ -3,32 +3,43 @@
 #include "GameData.h"
 namespace Osaka{
 	namespace RPGLib{
+
 		GameData::GameData(){
 			vsync = true;
 			time_per_frame = 16; //60 fps
 			target_fps = 60;
 			max_updates_catch_up = 10; //160ms max time for delta
 			asset_loading_type = AssetLoadingType::NOT_SET;
-			sounds = std::make_shared<std::unordered_map<std::string, sound_dataPTR>>();
-			spritemaps = std::make_shared<std::unordered_map<std::string, spritemap_dataPTR>>();
-			sprite_ids = std::make_shared<std::unordered_map<std::string, sprite_dataPTR>>();
-			gamesessions = std::make_shared<std::unordered_map<std::string, gamesession_dataPTR>>();
-
-			assets_type = std::make_shared<std::unordered_map<std::string, unsigned int>>();	
-			assets_initload = std::make_shared<std::unordered_map<std::string, asset_initload_dataPTR>>();
-			assets_scenes = std::make_shared<std::unordered_map<std::string, scene_dataPTR>>();
-
-			fontmap = std::make_shared<std::unordered_map<char, fontcharacter_dataPTR>>();
 		}
 		GameData::~GameData(){
 #ifdef _DEBUG
 			_CHECKDELETE("GameData");
 #endif
-		}
-		void GameData::_delete(){
-#ifdef _DEBUG
-			_CHECKDELETE("GameData_delete");
-#endif
+			for(auto it = assets_initload.begin();	it != assets_initload.end(); ++it){ delete it->second; }
+			for(auto it = assets_scenes.begin();	it != assets_scenes.end(); ++it){ delete it->second; }
+
+			for(auto it = battles.begin();			it != battles.end(); ++it){ delete it->second; }
+			for(auto it = characters.begin();		it != characters.end(); ++it){ delete it->second; }
+			for(auto it = credits.begin();			it != credits.end(); ++it){ delete it->second; }
+			for(auto it = enemies.begin();			it != enemies.end(); ++it){ delete it->second; }
+			for(auto it = instances.begin();		it != instances.end(); ++it){ delete it->second; }
+			for(auto it = npcs.begin();				it != npcs.end(); ++it){ delete it->second; }
+			for(auto it = spells.begin();			it != spells.end(); ++it){ delete it->second; }
+
+			for(auto it = stats.begin();			it != stats.end(); ++it){ delete it->second; }
+			for(auto it = videos.begin();			it != videos.end(); ++it){ delete it->second; }
+			for(auto it = worlds.begin();			it != worlds.end(); ++it){ delete it->second; }
+
+			for(auto it = fontmap.begin();			it != fontmap.end(); ++it){ delete it->second; }
+			for(auto it = sounds.begin();			it != sounds.end(); ++it){ delete it->second; }
+			for(auto it = spritemaps.begin();		it != spritemaps.end(); ++it){ delete it->second; }
+			for(auto it = sprite_ids.begin();		it != sprite_ids.end(); ++it){ delete it->second; }
+			for(auto it = gamesessions.begin();		it != gamesessions.end(); ++it){ delete it->second; }
+
+			assets_type.clear();
+			assets_initload.clear();
+			assets_scenes.clear();
+
 			battles.clear();
 			characters.clear();
 			credits.clear();
@@ -40,18 +51,13 @@ namespace Osaka{
 			videos.clear();
 			worlds.clear();
 
-			fontmap->clear(); fontmap = nullptr;
+			fontmap.clear();
 			
-			//This is only needed when the structs have a PTR to free.
-			//for(auto it = sounds->begin(); it != sounds->end(); ++it ) it->second->_delete();
-			sounds->clear(); sounds = nullptr;
-			spritemaps->clear(); spritemaps = nullptr;
-			gamesessions->clear(); gamesessions = nullptr;
-			sprite_ids->clear(); sprite_ids = nullptr;
-
-			assets_type->clear(); assets_type = nullptr;
-			assets_initload->clear(); assets_initload = nullptr;
-			assets_scenes->clear(); assets_scenes = nullptr;
+			sounds.clear();
+			spritemaps.clear();
+			gamesessions.clear();
+			sprite_ids.clear();
 		}
+		
 	}
 }

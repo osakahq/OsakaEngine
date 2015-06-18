@@ -14,7 +14,7 @@ namespace Osaka{
 			~StartMenuSceneTestBuilder();
 		protected:
 			
-			virtual RPGLib::SceneScriptPTR CreateMainScript() override;
+			virtual RPGLib::SceneScript* CreateMainScript() override;
 			
 		private:
 

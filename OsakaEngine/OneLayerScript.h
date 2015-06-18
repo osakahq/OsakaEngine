@@ -8,10 +8,14 @@ namespace Osaka{
 		
 		class OneLayerScript : public Script{
 		public:
-			OneLayerScript(RPGApplicationPTR& app, RPGScenePTR& scene_parent);
-			virtual ~OneLayerScript();
+			OneLayerScript(RPGApplication* app, RPGScene* scene_parent) : Script(app, scene_parent){
+				
+			}
+			virtual ~OneLayerScript(){
+
+			}
 			
-			virtual void Ready(Engine::ESceneArgsPTR& args) = 0;
+			virtual void Ready(Engine::ESceneArgs& args) = 0;
 			
 		/* ----------------------------------------------------------------------------------- */
 		protected:

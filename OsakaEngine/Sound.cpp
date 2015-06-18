@@ -5,7 +5,7 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace Engine{
-		Sound::Sound(Debug::DebugPTR& debug, IFileLoaderPTR& fileloader){
+		Sound::Sound(Debug::Debug* debug, IFileLoader* fileloader){
 			this->debug = debug;
 			this->fileloader = fileloader;
 		}
@@ -13,10 +13,9 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("Sound");
 #endif			 
+			debug = NULL;
+			fileloader = NULL;
 		}
-		void Sound::_delete(){
-			debug = nullptr;
-			fileloader = nullptr;
-		}
+		
 	}
 }

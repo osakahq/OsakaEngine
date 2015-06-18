@@ -9,10 +9,9 @@ namespace Osaka{
 
 		class Timer{
 		public:
-			Timer(TimeManagerPTR& timem);
+			Timer(TimeManager* timem);
 			~Timer();
-			void _delete();
-
+			
 			void Start();
 			void Stop();
 			void Pause();
@@ -30,7 +29,7 @@ namespace Osaka{
 			bool IsStarted();
 		private:
 			/* NOT Owner. */
-			TimeManagerPTR timem;
+			TimeManager* timem;
 
 			Uint32 mStartTicks;
 			Uint32 mPausedTicks;

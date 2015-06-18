@@ -9,26 +9,25 @@ namespace Osaka{
 		
 		class LoadingSceneScript : public SceneScript {
 		public:
-			LoadingSceneScript(RPGApplicationPTR& app, AssetManagerPTR& assetm);
+			LoadingSceneScript(RPGApplication* app, AssetManager* assetm);
 			~LoadingSceneScript();
-			void _delete() override;
-
+			
 			/* This is called from stack(from RPGApplication) */
-			void Ready(Engine::ESceneArgsPTR& params) override;
+			void Ready(Engine::ESceneArgs& params) override;
 			
 			/* This function is accesed by the other loading thread.
 			 * It is called inside the anonymous function that this class sets on GameLoader function */
 			void LoadCompleted();
 			bool isLoadCompleted();
 
-			std::string fadelayer_id;
+			const std::string fadelayer_id;
 		protected:
 			
 		private:
 			/* volatile because this variable changes in 2 different threads */
 			volatile bool loadCompleted;
 			/* NOT Owner */
-			AssetManagerPTR assetm;
+			AssetManager* assetm;
 
 		};
 	}

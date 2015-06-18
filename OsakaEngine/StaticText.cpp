@@ -7,29 +7,27 @@
 namespace Osaka{
 	namespace RPGLib{
 
-		StaticText::StaticText(SDL_Renderer& _renderer, std::vector<sprite_info*>& sprites, int max_slots, int space_x, int space_y) 
+		StaticText::StaticText(SDL_Renderer* _renderer, std::vector<sprite_info*>& sprites, int max_slots, int space_x, int space_y) 
 			: raw_renderer(_renderer), fontmap_char_space_x(space_x), fontmap_char_space_y(space_y){
-			if( sprites.size() <= 1 )
-				throw std::exception("[StaticText] sprites size is <= 1");
+			if( sprites.size() < 1 )
+				throw std::exception("[StaticText] sprites size is < 1");
 
 			this->sprites = sprites;
 			this->max_slots = max_slots;
 		}
 		StaticText::~StaticText(){
-
-		}
-		void StaticText::_delete(){
 			//If sprite_info had _delete() function, it should be called before `delete *it;`
-			for( auto it = sprites.begin(); it != sprites.end(); ++it){
-				delete *it;
+			for(unsigned int i = 0; i < sprites.size(); ++i){
+				delete sprites[i];
 			}
 			sprites.clear();
-			//raw_renderer = NULL; is a Reference(&)
+			raw_renderer = NULL;
 		}
-
+		
 		void StaticText::Render(){
-			for( auto it = sprites.begin(); it != sprites.end(); ++it){
-				SDL_RenderCopy(&raw_renderer, (*it)->raw_texture, &(*it)->clip, &(*it)->quad);
+			/* Talvez cuando ponga la funcion para que StaticText se pueda modificar, poner un array para el tight loop */
+			for(unsigned int i = 0; i < sprites.size(); ++i){
+				SDL_RenderCopy(raw_renderer, sprites[i]->raw_texture, &sprites[i]->clip, &sprites[i]->quad);
 			}
 		}
 		
@@ -37,9 +35,9 @@ namespace Osaka{
 			int valx = x - sprites.front()->quad.x;
 			int valy = y - sprites.front()->quad.y;
 			//We change the coordinates relative to the current ones
-			for( auto it = sprites.begin(); it != sprites.end(); ++it){
-				(*it)->quad.x += valx;
-				(*it)->quad.y += valy;
+			for(unsigned int i = 0; i < sprites.size(); ++i){
+				sprites[i]->quad.x += valx;
+				sprites[i]->quad.y += valy;
 			}
 		}
 	}

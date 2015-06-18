@@ -7,29 +7,28 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		Canvas::Canvas(SDL_Renderer* raw_renderer, RulerPTR& ruler){
+		Canvas::Canvas(SDL_Renderer* raw_renderer, Ruler* ruler){
 			this->raw_renderer = raw_renderer;
 			this->ruler = ruler;
+
+			layer_parent = NULL;
+			scene_parent = NULL;
 		}
 		Canvas::~Canvas(){
 #ifdef _DEBUG
 			_CHECKDELETE("Canvas");
 #endif			
-		}
-		void Canvas::_delete(){
-#ifdef _DEBUG
-			_CHECKDELETE("Canvas_delete");
-#endif
-			layer_parent = nullptr;
-			scene_parent = nullptr;
-			ruler = nullptr;
+			layer_parent = NULL;
+			scene_parent = NULL;
+			ruler = NULL;
 			raw_renderer = NULL;
 		}
-		void Canvas::Init(LayerPTR& layer_parent, RPGScenePTR& scene_parent, ScriptPTR& script, SceneScriptPTR& mainscript){
+		
+		void Canvas::Init(Layer* layer_parent, RPGScene* scene_parent, Script* script, SceneScript* mainscript){
 			this->layer_parent = layer_parent;
 			this->scene_parent = scene_parent;
 		}
-		void Canvas::Init(LayerPTR& layer_parent, RPGScenePTR& scene_parent){
+		void Canvas::Init(Layer* layer_parent, RPGScene* scene_parent){
 			//This is the function the derived class will call if it overrides the INit(layer,scene,script,mainscript) function
 			this->layer_parent = layer_parent;
 			this->scene_parent = scene_parent;
@@ -37,7 +36,7 @@ namespace Osaka{
 
 		/* These functions are not required to be implemented in the derived classes */
 		void Canvas::Enter(){}
-		void Canvas::Load(RPGFactoryPTR& factory){}
+		void Canvas::Load(RPGFactory& factory){}
 		void Canvas::Unload(){}
 		void Canvas::Ready(){}
 		void Canvas::Exit(){}

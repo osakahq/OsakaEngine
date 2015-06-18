@@ -10,23 +10,22 @@ namespace Osaka{
 
 		class SceneFactory {
 		public:
-			SceneFactory(FactoryPTR& factory, RPGApplicationPTR& app, TextureManagerPTR& texturem);
+			SceneFactory(Factory* factory, RPGApplication* app, TextureManager* texturem);
 			virtual ~SceneFactory();
-			virtual void _delete();
-
-			virtual RPGScenePTR CreateLoadingScene(const char* name);
-			virtual RPGScenePTR CreatePlaybackIntroScene(const char* name);
-
-			virtual RPGScenePTR CreateStartMenuScene(const char* name);
 			
-			virtual DummyScenePTR CreateDummyScene(const char* name);
+			virtual RPGScene* CreateLoadingScene(const char* name);
+			virtual RPGScene* CreatePlaybackIntroScene(const char* name);
+
+			virtual RPGScene* CreateStartMenuScene(const char* name);
+			
+			virtual DummyScene* CreateDummyScene(const char* name);
 		protected:
 			/* NOT Owner */
-			FactoryPTR factory;
+			Factory* factory;
 			/* NOT Owner */
-			RPGApplicationPTR app;
+			RPGApplication* app;
 			/* NOT Owner */
-			TextureManagerPTR texturem;
+			TextureManager* texturem;
 		};
 	}
 }

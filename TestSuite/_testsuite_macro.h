@@ -4,12 +4,17 @@
 #define TESTSUITE_TESTSUITEMACRO_H
 
 #include "idtests.h"
-#include <osaka_forward.h>
 
-/* If you use this global variable, make sure to call `OsakaAssertEnd` */
-extern Osaka::TestSuite::RPGLibTestSuitePTR ASSERT_RPGLibTestSuitePTR;
+namespace Osaka{
+	namespace TestSuite{
+		class RPGLibTestSuite;
+	}
+}
 
-void OsakaAssertBegin(Osaka::TestSuite::RPGLibTestSuitePTR& ptr);
+/* NOT Owner. If you use this global variable, make sure to call `OsakaAssertEnd` */
+extern Osaka::TestSuite::RPGLibTestSuite* ASSERT_RPGLibTestSuite;
+
+void OsakaAssertBegin(Osaka::TestSuite::RPGLibTestSuite* ptr);
 /* This is the global function, you can call anywhere */
 void OsakaAssert(const bool test, const int cline, const char* cfile);
 /* Expect. */

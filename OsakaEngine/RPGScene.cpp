@@ -6,10 +6,10 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		RPGScene::RPGScene(std::string id, SceneScriptPTR& mainscript){
-			this->id = id;
-			this->mainscript = mainscript;
-			this->raw_mainscript = mainscript.get();
+		RPGScene::RPGScene(const std::string& _id, SceneScript* mainscript)
+			:id(_id)
+		{
+			this->raw_mainscript = mainscript;
 
 			focus = false;
 			standby = false;
@@ -19,34 +19,27 @@ namespace Osaka{
 			started = false;
 			//It is recommended to `layers.reserve(x)` to the actual max of layers.
 			map_size = 0;
+
 		}
 		RPGScene::~RPGScene(){
 #ifdef _DEBUG
 			_CHECKDELETE("RPGScene");
 #endif			
-		}
-		void RPGScene::_delete(){
-#ifdef _DEBUG
-			_CHECKDELETE("RPGScene_delete");
-#endif
-			raw_mainscript = NULL;
-			mainscript->_delete(); mainscript = nullptr;
-
-			raw_layers.clear();
+			delete raw_mainscript; raw_mainscript = NULL;
 			stack_layers.clear();
 
-			for(auto it = layers.begin(); it != layers.end(); ++it ){
-				it->second->_delete(); 
-				//it->second = nullptr; Not needed because when destroying the list (clear), it is automatically set free.
+			for(auto it = raw_layers.begin(); it != raw_layers.end(); ++it ){
+				delete it->second;
 			}
-			layers.clear();
+			raw_layers.clear();
 		}
+		
 		std::string RPGScene::GetId(){
 			return this->id;
 		}
 		
 		void RPGScene::Load(){}
-		void RPGScene::Load(RPGFactoryPTR& factory){
+		void RPGScene::Load(RPGFactory& factory){
 			raw_mainscript->Load(factory);
 			for(int i = 0; i < map_size; ++i){
 				array_raw_layers[i]->Load(factory);
@@ -58,7 +51,7 @@ namespace Osaka{
 				array_raw_layers[i]->Unload();
 			}
 		}
-		void RPGScene::ReadyStandBy(Engine::ESceneArgsPTR& params){
+		void RPGScene::ReadyStandBy(Engine::ESceneArgs& params){
 			instack = true;
 			focus = false;
 			standby = true;
@@ -66,7 +59,7 @@ namespace Osaka{
 			raw_mainscript->Ready(params);
 			raw_mainscript->StandBy();
 		}
-		void RPGScene::ReadyShow(Engine::ESceneArgsPTR& params){
+		void RPGScene::ReadyShow(Engine::ESceneArgs& params){
 			instack = true;
 			focus = true;
 			standby = false;
@@ -97,22 +90,22 @@ namespace Osaka{
 		}
 		void RPGScene::Start(){
 			started = true;
+			stack_layers.reserve(raw_layers.size());
 		}
-		void RPGScene::Add(LayerPTR layer){
+		void RPGScene::Add(Layer* layer){
 			if( started ){
 				throw std::exception("[RPGScene] Can't add layers when the loop has started.");
 			}
-			if( layers.find(layer->id) != layers.end() ){
+			if( raw_layers.find(layer->id) != raw_layers.end() ){
 				throw std::exception("[RPGScene] Duplicated layer id.");
 			}
 			/* This function can only be called inside a SceneBuilder */
-			layers[layer->id] = layer;
-			raw_layers[layer->id] = layer.get();
+			raw_layers[layer->id] = layer;
 			//First grabs value then increments
-			array_raw_layers[map_size++] = layer.get();
+			array_raw_layers[map_size++] = layer;
 			//You can't add layers inside the loop. stackHasChanged = true;
 		}
-		void RPGScene::Stack(std::string id, LayerArgsPTR& args){
+		void RPGScene::Stack(const std::string& id, LayerArgs& args){
 			printf("[RPGScene] Stack\n");
 			if( stack_layers.size() > 0 ){
 				stack_layers.back()->StandBy();
@@ -124,12 +117,12 @@ namespace Osaka{
 			stack_layers.push_back(layer);
 			stackHasChanged = true;
 		}
-		void RPGScene::StackBefore(std::string id, std::string ref_layer, LayerArgsPTR& args){
+		void RPGScene::StackBefore(const std::string& id, const std::string& ref_layer, LayerArgs& args){
 			printf("[RPGScene] StackBefore\n");
 			Layer* layer = raw_layers[id];
 			auto it = std::find(stack_layers.begin(), stack_layers.end(), raw_layers[ref_layer]);
 			if( it == stack_layers.end() ){
-				throw new std::exception("[RPGScene] Layer not found.");
+				throw std::exception("[RPGScene] Layer not found.");
 			}
 			
 			layer->Ready(args);
@@ -138,13 +131,13 @@ namespace Osaka{
 			stack_layers.insert(it, layer);
 			stackHasChanged = true;
 		}
-		void RPGScene::StackAfter(std::string id, std::string ref_layer, LayerArgsPTR& args){
+		void RPGScene::StackAfter(const std::string& id, const std::string& ref_layer, LayerArgs& args){
 			printf("[RPGScene] StackAfter\n");
 			Layer* layer_stack = raw_layers[id];
 			Layer* layer_ref = raw_layers[ref_layer];
 			auto it_ref = std::find(stack_layers.begin(), stack_layers.end(), layer_ref);
 			if( it_ref == stack_layers.end() ){
-				throw new std::exception("[RPGScene] Layer not found.");
+				throw std::exception("[RPGScene] Layer not found.");
 			}
 
 			layer_stack->Ready(args);
@@ -167,7 +160,7 @@ namespace Osaka{
 			
 			stackHasChanged = true;
 		}
-		void RPGScene::Switch(std::string id, LayerArgsPTR& args){
+		void RPGScene::Switch(const std::string& id, LayerArgs& args){
 			printf("[RPGScene] Switch\n");
 			//Removes all
 			RemoveAll();
@@ -177,7 +170,7 @@ namespace Osaka{
 			stack_layers.push_back(layer);
 			stackHasChanged = true;
 		}
-		void RPGScene::Remove(std::string id){
+		void RPGScene::Remove(const std::string& id){
 			printf("[RPGScene] Remove\n");
 			if( stack_layers.size() == 1 ){
 				raw_layers[id]->Exit();
@@ -186,7 +179,7 @@ namespace Osaka{
 				Layer* layer = raw_layers[id];
 				auto it = std::find(stack_layers.begin(), stack_layers.end(), layer);
 				if( it == stack_layers.end() ){
-					throw new std::exception("[RPGScene] Layer not found.");
+					throw std::exception("[RPGScene] Layer not found.");
 				}
 				if( it+1 == stack_layers.end() ){
 					//If position of the elemnt to remove is top(begin) then the soon to be first, needs to have Focus function called.

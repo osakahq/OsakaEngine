@@ -10,23 +10,23 @@ namespace Osaka{
 		
 		class PlaybackIntroScript: public Script{
 		public:
-			PlaybackIntroScript(RPGApplicationPTR& app, RPGScenePTR& parent, PlaybackIntroCanvasPTR& canvas, PlaybackIntroSceneScriptPTR& mainscript);
+			PlaybackIntroScript(RPGApplication* app, RPGScene* parent, PlaybackIntroCanvas* canvas, PlaybackIntroSceneScript* mainscript);
 			~PlaybackIntroScript();
-			void _delete() override;
-			void Init(LayerPTR& layer_parent) override;
-			void Load(RPGFactoryPTR& factory) override;
+			
+			void Init(Layer* layer_parent) override;
+			void Load(RPGFactory& factory) override;
 			void Update() override;
 			/* This function is called when entering the stack */
-			void Ready(LayerArgsPTR& args) override;
+			void Ready(LayerArgs& args) override;
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			
 		private:
 			
 			/* NOT Owner. Owner is in parent class (layer). This is a cache reference. */
-			PlaybackIntroCanvasPTR canvas;
+			PlaybackIntroCanvas* canvas;
 			/* NOT Owner. Owner is in RPGScene*/
-			PlaybackIntroSceneScriptPTR mainscript;
+			PlaybackIntroSceneScript* mainscript;
 
 		};
 	}

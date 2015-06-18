@@ -7,29 +7,25 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		InitScene::InitScene(RPGApplicationPTR& app){
+		InitScene::InitScene(RPGApplication* app){
 			this->app = app;
 			callTransition = true;
 		}
 		InitScene::~InitScene(){
 #ifdef _DEBUG
 			_CHECKDELETE("InitScene");
-#endif			
-		}
-		void InitScene::_delete(){
-#ifdef _DEBUG
-			_CHECKDELETE("InitScene_delete");
-#endif
-			app = nullptr;
+#endif		
+			app = NULL;
 			init_args = nullptr;
 		}
+		
 		std::string InitScene::GetId(){
 			return std::string("__rpglib_initscene");
 		}
 		
-		void InitScene::ReadyShow(Engine::ESceneArgsPTR& params){
+		void InitScene::ReadyShow(Engine::ESceneArgs& params){
 			printf("[InitScene] ReadyShow\n");
-			InitSceneArgsPTR args = std::dynamic_pointer_cast<InitSceneArgs>(params);
+			InitSceneArgs* args = dynamic_cast<InitSceneArgs*>(&params);
 			app->debug->l("[InitScene] Scene: " + args->scene);
 			scene = args->scene;
 			init_args = args->init_args;
@@ -40,6 +36,7 @@ namespace Osaka{
 				printf("[InitScene] Update -> callTransition\n");
 				//Switch will make this scene go out of the loop.
 				app->FadeSwitchTransition(scene, init_args);
+				init_args = nullptr;
 				callTransition = false;
 			}
 		}
@@ -49,7 +46,7 @@ namespace Osaka{
 		void InitScene::Load(){};
 		void InitScene::Unload() {};
 		void InitScene::Exit() {};
-		void InitScene::ReadyStandBy(Engine::ESceneArgsPTR& params) {};
+		void InitScene::ReadyStandBy(Engine::ESceneArgs& params) {};
 		void InitScene::StandBy() {};
 		void InitScene::Focus() {};
 		void InitScene::Draw() {};

@@ -9,8 +9,7 @@ namespace Osaka{
 		public:
 			TimeManager();
 			~TimeManager();
-			void _delete();
-
+			
 			/* Delta value is handled by EApplication. */
 			void Update(const Uint32 delta);
 			

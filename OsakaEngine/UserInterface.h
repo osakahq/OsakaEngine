@@ -7,12 +7,12 @@ namespace Osaka{
 		
 		class UserInterface{
 		public:
-			UserInterface(SDL_Renderer* raw_renderer, RulerPTR& ruler);
+			UserInterface(SDL_Renderer* raw_renderer, Ruler* ruler);
 			virtual ~UserInterface();
-			virtual void _delete();
-			virtual void Init(LayerPTR& layer_parent);
+			
+			virtual void Init(Layer* layer_parent);
 
-			virtual void Load(RPGFactoryPTR& factory);
+			virtual void Load(RPGFactory& factory);
 			virtual void Unload();
 
 			virtual void Enter();
@@ -29,11 +29,11 @@ namespace Osaka{
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner. Layer parent */
-			LayerPTR layer_parent;
+			Layer* layer_parent;
 			/* NOT Owner. Raw */
 			SDL_Renderer* raw_renderer;
 			/* NOT Owner */
-			RulerPTR ruler;
+			Ruler* ruler;
 		};
 	}
 }

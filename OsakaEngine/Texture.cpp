@@ -7,9 +7,9 @@
 
 namespace Osaka{
 	namespace Engine{
-		Texture::Texture(SDL_Renderer& renderer, Debug::DebugPTR& d, IFileLoaderPTR& fileloader){
+		Texture::Texture(SDL_Renderer* renderer, Debug::Debug* d, IFileLoader* fileloader){
 			this->debug = d;
-			this->renderer = &renderer;
+			this->renderer = renderer;
 			texture = NULL;
 			width = 0;
 			height = 0;
@@ -24,11 +24,11 @@ namespace Osaka{
 				SDL_DestroyTexture(texture);
 				texture = NULL;
 			}
+			renderer = NULL;
+			fileloader = NULL;
+			debug = NULL;
 		}
-		void Texture::_delete(){
-			fileloader = nullptr;
-			debug = nullptr;
-		}
+		
 		void Texture::Load(const char* path, RGB_HEX& colorkey){
 			if( texture != NULL ){
 				debug->e("[Texture] Texture is already loaded.");
@@ -71,17 +71,6 @@ namespace Osaka{
 			return texture;
 		}
 
-		void Texture::Render(const int x, const int y, const SDL_Rect& clip){
-			const SDL_Rect renderQuad = {x, y, clip.w, clip.h};
-			SDL_RenderCopy(renderer, texture, &clip, &renderQuad);
-		}
-
-		void Texture::RenderEx(const SDL_Rect& clip, const render_info_ex& info){
-			//Expensive
-			SDL_Rect renderQuad = {info.x, info.y, clip.w, clip.h};
-			SDL_RenderCopyEx(renderer, texture, &clip, &renderQuad, info.angle, info.center, info.flip);
-		}
-		
 		int Texture::GetWeight(){
 			return width;
 		}

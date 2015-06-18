@@ -11,7 +11,7 @@ namespace Osaka{
 			
 		protected:
 
-			RPGLib::SceneFactoryPTR CreateSceneFactory(RPGLib::FactoryPTR& factory, RPGLib::RPGApplicationPTR& app, RPGLib::TextureManagerPTR& texturem) override;
+			RPGLib::SceneFactory* CreateSceneFactory(RPGLib::Factory& factory, RPGLib::RPGApplication& app, RPGLib::TextureManager& texturem) override;
 		};
 		
 	}

@@ -9,7 +9,7 @@ namespace Osaka{
 		public:
 			Settings(const char* filesettings);
 			~Settings();
-			void _delete();
+
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			

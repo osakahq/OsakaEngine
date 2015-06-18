@@ -17,10 +17,7 @@ namespace Osaka{
 			}
 			file = nullptr;
 		}
-		void Log::_delete(){
-
-		}
-
+		
 		void Log::consoleL(const char* str){
 			printf("%s\n", str);
 		}

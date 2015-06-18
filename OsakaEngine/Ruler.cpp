@@ -18,8 +18,6 @@ namespace Osaka{
 			_CHECKDELETE("Ruler");
 #endif	
 		}
-		void Ruler::_delete(){
-
-		}
+		
 	}
 }

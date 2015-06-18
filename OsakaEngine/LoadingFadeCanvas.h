@@ -11,10 +11,9 @@ namespace Osaka{
 		
 		class LoadingFadeCanvas : public Canvas{
 		public:
-			LoadingFadeCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler, TimerPTR& timer);
+			LoadingFadeCanvas(SDL_Renderer* raw_renderer, Ruler* ruler, Timer* timer);
 			~LoadingFadeCanvas();
-			void _delete() override;
-
+			
 			void Update() override;
 			void Draw() override;
 
@@ -22,9 +21,9 @@ namespace Osaka{
 			void BeginEndAnimation();
 
 			/* Owner. Mid animation is when the animation is in total back */
-			Component::EventHandlerPTR midAnimation;
+			Component::EventHandler* midAnimation;
 			/* Owner. End animation is when the animation is done and scene is ready to take itself out */
-			Component::EventHandlerPTR endAnimation;
+			Component::EventHandler* endAnimation;
 		private:
 			/* Switch or stack animation? */
 			TransitionType::Value type;
@@ -44,7 +43,7 @@ namespace Osaka{
 			Engine::RGBA_HEX color;
 
 			/* Owner. Timer for the animation */
-			TimerPTR timer;
+			Timer* timer;
 
 			/* The box that covers the entire screen */
 			SDL_Rect carp;

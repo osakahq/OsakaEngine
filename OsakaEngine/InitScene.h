@@ -9,11 +9,10 @@ namespace Osaka{
 		/* This class is only a placeholder/(dummy scene) to switch to the real first scene. */
 		class InitScene : public Engine::EScene{
 		public:
-			InitScene(RPGApplicationPTR& app);
+			InitScene(RPGApplication* app);
 			~InitScene();
-			void _delete() override;
 			
-			void ReadyShow(Engine::ESceneArgsPTR& params) override;
+			void ReadyShow(Engine::ESceneArgs& params) override;
 			void Update() override;
 			
 			std::string GetId() override;
@@ -24,7 +23,7 @@ namespace Osaka{
 			void Load() override;
 			void Unload() override;
 			void Exit() override;
-			void ReadyStandBy(Engine::ESceneArgsPTR& params) override;
+			void ReadyStandBy(Engine::ESceneArgs& params) override;
 			void StandBy() override;
 			void Focus() override;
 			void Draw() override;
@@ -32,7 +31,7 @@ namespace Osaka{
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner */
-			RPGApplicationPTR app;
+			RPGApplication* app;
 
 			/* (There are no owners for Args). This is the params to start the first scene */
 			Engine::ESceneArgsPTR init_args;

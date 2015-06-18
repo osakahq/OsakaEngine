@@ -29,58 +29,75 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		RPGApplication::RPGApplication(Debug::DebugPTR& d, Engine::SDLLibPTR& sdl, Engine::IFileLoaderPTR& fileloader, const bool _show_fpscounter) 
+		RPGApplication::RPGApplication(Debug::Debug* d, Engine::SDLLib* sdl, Engine::IFileLoader* fileloader, const bool _show_fpscounter) 
 			: EApplication(d, sdl, fileloader), show_fpscounter(_show_fpscounter){
-			gsm = nullptr;
-			assetm = nullptr;
-			ruler = nullptr;
-			counter = nullptr;
-			gameDataParams = nullptr;
+
+			settings = NULL;
+			gameData = NULL;
+			gameDataParams = NULL;
+			
+			scenefactory = NULL;
+			factory = NULL;
+			rpgfactory = NULL;
+			loader = NULL;
+			
+			assetm = NULL;
+			texturem = NULL;
+			fontm = NULL;
+			soundm = NULL;
+
+			gsm = NULL;
+
+			ruler = NULL;
+			timem = NULL;
+			counter = NULL;
+			initscene = NULL;
+
+			args = new LoadingArgs();
 		}
 
 		RPGApplication::~RPGApplication(){
 #ifdef _DEBUG
 			_CHECKDELETE("RPGApplication");
 #endif
-		}
-		void RPGApplication::_delete(){
-			EApplication::_delete();
-			settings->_delete(); settings = nullptr;
-			gameData->_delete(); gameData = nullptr;
-			gameDataParams->_delete(); gameDataParams = nullptr;
+			delete settings; settings = NULL;
+			delete gameData; gameData = NULL;
+			delete gameDataParams; gameDataParams = NULL;
 			
-			scenefactory->_delete(); scenefactory = nullptr;
-			factory->_delete(); factory = nullptr;
-			rpgfactory->_delete(); rpgfactory = nullptr;
-			loader->_delete(); loader = nullptr;
+			delete scenefactory; scenefactory = NULL;
+			delete factory; factory = NULL;
+			delete rpgfactory; rpgfactory = NULL;
+			delete loader; loader = NULL;
 			//Managers
-			assetm->_delete(); assetm = nullptr;
-			texturem->_delete(); texturem = nullptr;
-			fontm->_delete(); fontm = nullptr;
-			soundm->_delete(); soundm = nullptr;
+			delete assetm; assetm = NULL;
+			delete texturem; texturem = NULL;
+			delete fontm; fontm = NULL;
+			delete soundm; soundm = NULL;
 
-			gsm->_delete(); gsm = nullptr;
+			delete gsm; gsm = NULL;
 
-			ruler->_delete(); ruler = nullptr;
-			timem->_delete(); timem = nullptr;
-			counter->_delete(); counter = nullptr;
-			
+			delete ruler; ruler = NULL;
+			delete timem; timem = NULL;
+			delete counter; counter = NULL;
+
+			delete args; args = NULL;
 			//loadingscene = nullptr;
-			initscene = nullptr;
+			initscene = NULL;
 		}
-		void RPGApplication::Init(bool vsync, int timePerFrame, int maxUpdatesToCatchUp, GameSessionManagerPTR& gsm){
+		
+		void RPGApplication::Init(bool vsync, int timePerFrame, int maxUpdatesToCatchUp, GameSessionManager* gsm){
 			EApplication::Init(vsync, timePerFrame, maxUpdatesToCatchUp);
 			this->gsm = gsm;
-			if( settings == nullptr || gameData == nullptr  || factory == nullptr || rpgfactory == nullptr || scenefactory == nullptr ||
-				loader == nullptr || assetm == nullptr || ruler == nullptr || timem == nullptr || counter == nullptr || this->gsm == nullptr || gameDataParams == nullptr ||
-				texturem == nullptr || fontm == nullptr || soundm == nullptr )
+			if( settings == NULL || gameData == NULL  || factory == NULL || rpgfactory == NULL || scenefactory == NULL ||
+				loader == NULL || assetm == NULL || ruler == NULL || timem == NULL || counter == NULL || this->gsm == NULL || gameDataParams == NULL ||
+				texturem == NULL || fontm == NULL || soundm == NULL )
 			{
 				debug->e("[RPGApplication] Init failed.");
 			}
 		}
 
-		void RPGApplication::CallLoad(std::string id){
-			std::dynamic_pointer_cast<RPGScene>(scenes[id])->Load(rpgfactory);
+		void RPGApplication::CallLoad(const std::string& id){
+			dynamic_cast<RPGScene*>(raw_scenes[id])->Load(*rpgfactory);
 		}
 
 		void RPGApplication::Update(const Uint32 delta){
@@ -101,15 +118,16 @@ namespace Osaka{
 			}
 		}
 
-		void RPGApplication::Run(const std::string scene, Engine::ESceneArgsPTR& init_params){
-			if( loadingscene_id.empty() || initscene == nullptr )
+		void RPGApplication::Run(const std::string& scene, Engine::ESceneArgsPTR& init_params){
+			if( loadingscene_id.empty() || initscene == NULL )
 				throw std::exception("[RPGApplication] loadingscene is nullptr or initscene is nullptr");
 
 			//We switch the init scene with the args that has the initial real scene
-			InitSceneArgsPTR args = std::make_shared<InitSceneArgs>();
+			InitSceneArgs* args = new InitSceneArgs();
 			args->scene = scene;
 			args->init_args = init_params; //These params are passed to the real first scene
-			this->Switch(initscene->GetId(), std::static_pointer_cast<Engine::ESceneArgs>(args));
+			this->Switch(initscene->GetId(), *args);
+			delete args;
 
 			if( show_fpscounter ){ //constant
 				counter->Start();
@@ -117,40 +135,45 @@ namespace Osaka{
 
 			EApplication::Run();
 		}
-
-		void RPGApplication::FadeStackTransition(const std::string scene, Engine::ESceneArgsPTR& params){
+		void RPGApplication::End(){
+			assetm->End(); //Unloads the loaded scenes
+		}
+		void RPGApplication::FadeStackTransition(const std::string& scene, const Engine::ESceneArgsPTR& params){
 			printf("[RPGApplication] FadeStackTransition\n");
-			LoadingArgsPTR args = std::make_shared<LoadingArgs>();
 			args->scene = scene;
 			args->send_params = params;
 			args->type = TransitionType::FADE_STACK;
-			Stack(loadingscene_id, std::static_pointer_cast<Engine::ESceneArgs>(args));
+			Stack(loadingscene_id, *args);
+
+			args->send_params = nullptr;
 		}
-		void RPGApplication::FadeSwitchTransition(const std::string scene, Engine::ESceneArgsPTR& params){
+		void RPGApplication::FadeSwitchTransition(const std::string& scene, const Engine::ESceneArgsPTR& params){
 			printf("[RPGApplication] FadeSwitchTransition\n");
-			LoadingArgsPTR args = std::make_shared<LoadingArgs>();
 			args->scene = scene;
 			args->send_params = params;
 			args->type = TransitionType::FADE_SWITCH;
-			Stack(loadingscene_id, std::static_pointer_cast<Engine::ESceneArgs>(args));
+			Stack(loadingscene_id, *args);
+
+			args->send_params = nullptr;
 		}
-		void RPGApplication::LoadingStackTransition(const std::string scene, Engine::ESceneArgsPTR& params){
+		void RPGApplication::LoadingStackTransition(const std::string& scene, const Engine::ESceneArgsPTR& params){
 			printf("[RPGApplication] LoadingStackTransition\n");
-			LoadingArgsPTR args = std::make_shared<LoadingArgs>();
 			args->scene = scene;
 			args->send_params = params;
 			args->type = TransitionType::LOADING_STACK;
-			Stack(loadingscene_id, std::static_pointer_cast<Engine::ESceneArgs>(args));
+			Stack(loadingscene_id, *args);
+
+			args->send_params = nullptr;
 		}
 
-		void RPGApplication::SetLoadingScene(std::string loadingscene_id){
+		void RPGApplication::SetLoadingScene(const std::string& loadingscene_id){
 			this->loadingscene_id = loadingscene_id;
 		}
-		void RPGApplication::SetInitScene(InitScenePTR& scene){
+		void RPGApplication::SetInitScene(InitScene* scene){
 			this->initscene = scene;
 		}
 		
-		GameSessionManagerPTR RPGApplication::GetGameSessionManager(){
+		GameSessionManager* RPGApplication::GetGameSessionManager(){
 			//See RPGScene:Reset() function
 			//resetScenes.push_back(scene.id);
 			return gsm;

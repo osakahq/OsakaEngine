@@ -12,14 +12,11 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		StartMenuCanvas::StartMenuCanvas(SDL_Renderer* raw_renderer, RulerPTR& ruler) : Canvas(raw_renderer, ruler){
+		StartMenuCanvas::StartMenuCanvas(SDL_Renderer* raw_renderer, Ruler* ruler) : Canvas(raw_renderer, ruler){
 			
 		}
 		StartMenuCanvas::~StartMenuCanvas(){
 
-		}
-		void StartMenuCanvas::_delete(){
-			Canvas::_delete();
 		}
 		void StartMenuCanvas::Update(){
 		}

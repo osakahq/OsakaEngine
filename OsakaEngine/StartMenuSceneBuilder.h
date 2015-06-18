@@ -14,8 +14,8 @@ namespace Osaka{
 			virtual ~StartMenuSceneBuilder();
 		protected:
 			
-			virtual SceneScriptPTR CreateMainScript() override;
-			virtual void CreateLayers(RPGScenePTR& scene, SceneScriptPTR& mainscript) override;
+			virtual SceneScript* CreateMainScript() override;
+			virtual void CreateLayers(RPGScene& scene, SceneScript& mainscript) override;
 			
 		private:
 
