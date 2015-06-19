@@ -5,6 +5,12 @@ namespace Osaka{
 	namespace Component{
 		class EventHandler;
 		class EventArgs;
+		class Registree;
+		class Registry;
+		class Callback;
+
+		typedef std::shared_ptr<Registry>	RegistryPTR;
+		typedef std::shared_ptr<Callback>	CallbackPTR;
 	}
 	namespace Network{
 		class ServerConn;		

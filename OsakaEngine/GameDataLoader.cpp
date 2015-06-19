@@ -363,11 +363,11 @@ namespace Osaka{
 						//This means we didn't get 4 numbers [0 0 32 32]
 						debug->e("[GameDataLoader] Corrupted spritemap data. STAGE 2");
 					}
-					//Inserts the spritemap into the spritemap list (spritemapS)
-					auto it_spritemaps = data.spritemaps.insert(std::make_pair(spritemap->id, spritemap));
-					if( !it_spritemaps.second ){
-						debug->e("[GameDataLoader] Failed to insert spritemap. ID: " + spritemap->id);
-					}
+				}
+				//Inserts the spritemap into the spritemap list (spritemapS)
+				auto it_spritemaps = data.spritemaps.insert(std::make_pair(spritemap->id, spritemap));
+				if( !it_spritemaps.second ){
+					debug->e("[GameDataLoader] Failed to insert spritemap. ID: " + spritemap->id);
 				}
 			}//End for (no more spritemapS)
 		}

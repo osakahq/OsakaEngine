@@ -42,6 +42,8 @@ namespace Osaka{
 			RPGScene* scene_parent;
 			/* NOT Owner */
 			Ruler* ruler;
+			/* Owner */
+			Component::Registree* registree;
 		};
 	}
 }

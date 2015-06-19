@@ -32,10 +32,7 @@ namespace Osaka{
 
 			raw_app = NULL;
 		}
-		bool Layer::isCanvasValid(){
-			//Layer is the owner of raw_canvas so it's fine.
-			return !(raw_canvas == NULL);
-		}
+		
 		void Layer::Init(RPGApplication* app){
 			this->raw_app = app;
 		}

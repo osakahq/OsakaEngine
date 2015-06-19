@@ -49,7 +49,7 @@ namespace Osaka{
 					printf("[FadeInFadeOutEffect] Update -> !onMidAnimation [mid]\n");
 					timer->Stop();
 					onMidAnimation = true;
-					midAnimation->Raise(Component::EmptyEventArgs);
+					midAnimation->Raise(Component::EventArgs::CreateEmptyArgs());
 
 					if( pause_on_midanim == false ){
 						beginSecondPart = true;
@@ -68,7 +68,7 @@ namespace Osaka{
 						if( timer->GetTicks() >= fadeOutTime ){
 							printf("[FadeInFadeOutEffect] Update -> beginSecondPart [end]\n");
 							timer->Stop();
-							endAnimation->Raise(Component::EmptyEventArgs);
+							endAnimation->Raise(Component::EventArgs::CreateEmptyArgs());
 							//This is when the effect completes the process.
 							this->OneLoopDone();
 						}

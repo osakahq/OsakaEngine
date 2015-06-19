@@ -4,6 +4,7 @@
 
 #include "Script.h"
 #include "LayerArgs.h"
+#include "Callback.h"
 #include "osaka_forward.h"
 
 namespace Osaka{
@@ -13,12 +14,16 @@ namespace Osaka{
 		public:
 			FadeInOutLayerArgs(){
 				removeItselfWhenFinished = true;
+
+				callbackOnMidAnimation = std::make_shared<Component::Callback>();
+				callbackOnEndAnimation = std::make_shared<Component::Callback>();
 			}
 			float fadeInTime;
 			float fadeOutTime;
 
-			std::function<void()> callbackOnMidAnimation;
-			std::function<void()> callbackOnEndAnimation;
+			/* Ownership of these 2 passes to FadeInOutScript. There is no `_delete` */
+			Component::CallbackPTR callbackOnMidAnimation;
+			Component::CallbackPTR callbackOnEndAnimation;
 			
 			/* If true it will remove itself from the stack (layer stack) */
 			bool removeItselfWhenFinished;
@@ -38,9 +43,9 @@ namespace Osaka{
 			void OnCanvasEndAnimation(Component::EventArgs& e);
 		/* ----------------------------------------------------------------------------------- */
 		protected:
-			/* Remember you have to set them nullptr in `_delete` */
-			std::function<void()> callbackOnMidAnimation;
-			std::function<void()> callbackOnEndAnimation;
+			/* Owner. Remember you have to set them nullptr in `_delete` */
+			Component::CallbackPTR callbackOnMidAnimation;
+			Component::CallbackPTR callbackOnEndAnimation;
 
 		private:
 			/* NOT Owner */

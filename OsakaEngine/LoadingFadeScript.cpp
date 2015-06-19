@@ -2,6 +2,7 @@
 
 #include "Debug.h"
 #include "EventHandler.h"
+#include "Registree.h"
 #include "EventArgs.h"
 #include "ESceneArgs.h"
 
@@ -19,7 +20,8 @@
 namespace Osaka{
 	namespace RPGLib{
 		LoadingFadeScript::LoadingFadeScript(RPGApplication* app, RPGScene* parent, LoadingFadeCanvas* canvas, LoadingSceneScript* mainscript)
-			: Script(app, parent){
+			: Script(app, parent)
+		{
 			
 			ResetVariables();
 			lcanvas = canvas;
@@ -29,12 +31,6 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("LoadingFadeScript");
 #endif
-			if( layer_parent->isCanvasValid() ){
-				//Layer outlives script because Layer is the owner of script.
-				lcanvas->endAnimation->Unhook(LOADINGSCRIPT_ENDANIMATION);
-				lcanvas->midAnimation->Unhook(LOADINGSCRIPT_MIDANIMATION);
-			}
-
 			scene_params = nullptr;
 			lcanvas = NULL;
 			mainscript = NULL;
@@ -43,8 +39,8 @@ namespace Osaka{
 		void LoadingFadeScript::Init(Layer* layer_parent){
 			Script::Init(layer_parent);
 			//If transitiontype == Stack, there is no endAnimation.
-			lcanvas->endAnimation->Hook(LOADINGSCRIPT_ENDANIMATION, std::bind(&LoadingFadeScript::OnCanvasEndAnimation, this, std::placeholders::_1));
-			lcanvas->midAnimation->Hook(LOADINGSCRIPT_MIDANIMATION, std::bind(&LoadingFadeScript::OnCanvasMidAnimation, this, std::placeholders::_1));
+			registree->Register(lcanvas->endAnimation, std::bind(&LoadingFadeScript::OnCanvasEndAnimation, this, std::placeholders::_1));
+			registree->Register(lcanvas->midAnimation, std::bind(&LoadingFadeScript::OnCanvasMidAnimation, this, std::placeholders::_1));
 		}
 
 		void LoadingFadeScript::ResetVariables(){

@@ -4,6 +4,7 @@
 #include "RPGScene.h"
 #include "EventHandler.h"
 #include "EventArgs.h"
+#include "Registree.h"
 #include "FadeInOutCanvas.h"
 #include "FadeInOutScript.h"
 
@@ -12,22 +13,15 @@
 
 namespace Osaka{
 	namespace RPGLib{
-		FadeInOutScript::FadeInOutScript(RPGApplication* app, RPGScene* parent, FadeInOutCanvas* canvas) : Script(app, parent){
+		FadeInOutScript::FadeInOutScript(RPGApplication* app, RPGScene* parent, FadeInOutCanvas* canvas) 
+			: Script(app, parent)
+		{
 			this->canvas = canvas;
 
-			canvas->endAnimation->Hook(FADEINOUTSCRIPT_ENDANIMATION, std::bind(&FadeInOutScript::OnCanvasEndAnimation, this, std::placeholders::_1));
-			canvas->midAnimation->Hook(FADEINOUTSCRIPT_MIDANIMATION, std::bind(&FadeInOutScript::OnCanvasMidAnimation, this, std::placeholders::_1));
+			registree->Register(canvas->endAnimation, std::bind(&FadeInOutScript::OnCanvasEndAnimation, this, std::placeholders::_1));
+			registree->Register(canvas->midAnimation, std::bind(&FadeInOutScript::OnCanvasMidAnimation, this, std::placeholders::_1));
 		}
 		FadeInOutScript::~FadeInOutScript(){
-			if( layer_parent->isCanvasValid() ){
-				//The owner of script is layer, so layer will always outlive 
-				//The owner of canvas is layer. If canvas has been deleted, then there is no reason to Unhook.
-				canvas->endAnimation->Unhook(FADEINOUTSCRIPT_ENDANIMATION);
-				canvas->midAnimation->Unhook(FADEINOUTSCRIPT_MIDANIMATION);
-			}
-
-			callbackOnMidAnimation = nullptr;
-			callbackOnEndAnimation = nullptr;
 			canvas = NULL;
 		}
 			
@@ -44,11 +38,11 @@ namespace Osaka{
 		void FadeInOutScript::OnCanvasMidAnimation(Component::EventArgs& e){
 			midAnimationEnded = true;
 			if( callbackOnMidAnimation != nullptr )
-				callbackOnMidAnimation();
+				callbackOnMidAnimation->Call(e);
 		}
 		void FadeInOutScript::OnCanvasEndAnimation(Component::EventArgs& e){
 			if( callbackOnEndAnimation != nullptr )
-				callbackOnEndAnimation();
+				callbackOnEndAnimation->Call(e);
 
 			if( removeItselfWhenFinished ){
 				//Safe to remove, because this event fires up inside Update

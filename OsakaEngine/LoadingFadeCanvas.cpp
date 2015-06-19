@@ -74,7 +74,7 @@ namespace Osaka{
 						timer->Stop();
 						onMidAnimation = true;
 						printf("[LoadingFadeCanvas] Raising midAnimation Event\n");
-						midAnimation->Raise(Component::EmptyEventArgs);
+						midAnimation->Raise(Component::EventArgs::CreateEmptyArgs());
 					}
 				}else{
 					if( beginSecondPart ){
@@ -89,7 +89,7 @@ namespace Osaka{
 							if( timer->GetTicks() >= fadeOutTime ){
 								timer->Stop();
 								printf("[LoadingFadeCanvas] Raising end animation.\n");
-								endAnimation->Raise(Component::EmptyEventArgs);
+								endAnimation->Raise(Component::EventArgs::CreateEmptyArgs());
 								skipUpdate = true;
 							}
 						}

@@ -37,7 +37,6 @@ namespace Osaka{
 			/* NOT Owner. The reason Layer has `app` is because Canvas/UI might need debug or other unforseen dependencies */
 			RPGApplication* raw_app;
 
-			bool isCanvasValid();
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* Owner */

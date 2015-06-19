@@ -45,5 +45,11 @@ namespace Osaka{
 			return (stat (name.c_str(), &buffer) == 0); 
 		}
 
+		int Utils_UniqueID_id = 0;
+		int UniqueID(){
+			//First increments then grabs value
+			return ++Utils_UniqueID_id;
+		}
+
 	}
 }

@@ -23,6 +23,7 @@ namespace Osaka{
 		inline double Round(double n){
 			return n < 0.0 ? std::ceil(n - 0.5) : std::floor(n + 0.5);
 		}
+		int UniqueID();
 	}
 }
 

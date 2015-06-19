@@ -2,26 +2,25 @@
 
 #include "Ruler.h"
 #include "EventArgs.h"
+#include "Registree.h"
 #include "EventHandler.h"
 #include "FadeInFadeOutEffect.h"
 #include "Square.h"
 #include "RPGFactory.h"
 #include "FadeInOutCanvas.h"
 
-#define FADEINOUTCANVAS_MIDANIMATION 428046
-#define FADEINOUTCANVAS_ENDANIMATION 654887
-
 namespace Osaka{
 	namespace RPGLib{
 
-		FadeInOutCanvas::FadeInOutCanvas(SDL_Renderer* raw_renderer, Ruler* ruler) : Canvas(raw_renderer, ruler){
+		FadeInOutCanvas::FadeInOutCanvas(SDL_Renderer* raw_renderer, Ruler* ruler) 
+			: Canvas(raw_renderer, ruler)
+		{
 			this->square = NULL;
 			this->effect = NULL;
 			
 			midAnimation = new Component::EventHandler();
 			endAnimation = new Component::EventHandler();
 
-			
 			//effect->midAnimation/endAnimation Hook events.
 		}
 		FadeInOutCanvas::~FadeInOutCanvas(){
@@ -35,22 +34,22 @@ namespace Osaka{
 			square->rgba = hex;
 			effect = factory.CreateFadeInFadeOutEffect();
 			square->AddEffect(effect);
-			effect->endAnimation->Hook(FADEINOUTCANVAS_MIDANIMATION, std::bind(&FadeInOutCanvas::OnEffectEndAnimation, this, std::placeholders::_1));
-			effect->midAnimation->Hook(FADEINOUTCANVAS_ENDANIMATION, std::bind(&FadeInOutCanvas::OnEffectMidAnimation, this, std::placeholders::_1));
+
+			registree->Register(effect->endAnimation, std::bind(&FadeInOutCanvas::OnEffectEndAnimation, this, std::placeholders::_1));
+			registree->Register(effect->midAnimation, std::bind(&FadeInOutCanvas::OnEffectMidAnimation, this, std::placeholders::_1));
 		}
 		void FadeInOutCanvas::Unload(){
 			//This is the owner of effect.
-			effect->endAnimation->Unhook(FADEINOUTCANVAS_MIDANIMATION);
-			effect->midAnimation->Unhook(FADEINOUTCANVAS_ENDANIMATION);
+			//When effect is deleted, it automatically Unhooks all the events.
 			delete effect; effect = NULL;
 			delete square; square = NULL;
 		}
 		
 		void FadeInOutCanvas::OnEffectEndAnimation(Component::EventArgs& e){
-			endAnimation->Raise(Component::EmptyEventArgs);
+			endAnimation->Raise(Component::EventArgs::CreateEmptyArgs());
 		}
 		void FadeInOutCanvas::OnEffectMidAnimation(Component::EventArgs& e){
-			midAnimation->Raise(Component::EmptyEventArgs);
+			midAnimation->Raise(Component::EventArgs::CreateEmptyArgs());
 		}
 		void FadeInOutCanvas::BeginEndAnimation(){
 			effect->BeginEndAnimation();

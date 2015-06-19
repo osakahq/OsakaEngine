@@ -12,6 +12,7 @@
 #include "Utils.h"
 #include "PlaybackIntroSceneScript.h"
 #include "FadeInOutScript.h"
+#include "Registree.h"
 #include "RPGScene.h"
 #include "Factory.h"
 #include "RPGFactory.h"
@@ -19,15 +20,17 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		PlaybackIntroCanvas::PlaybackIntroCanvas(SDL_Renderer* raw_renderer, Ruler* ruler) : Canvas(raw_renderer, ruler){
+		PlaybackIntroCanvas::PlaybackIntroCanvas(SDL_Renderer* raw_renderer, Ruler* ruler) 
+			: Canvas(raw_renderer, ruler)
+		{
 			this->engine_logo = NULL;
 			this->gamestudio_logo = NULL;
 			background = NULL;
 			phase = 0;
 
 			args = new FadeInOutLayerArgs();
-			args->callbackOnMidAnimation = std::bind(&PlaybackIntroCanvas::CallbackLayerMidAnimation, this);
-			args->callbackOnEndAnimation = std::bind(&PlaybackIntroCanvas::CallbackLayerEndAnimation, this);
+			registree->Register(args->callbackOnMidAnimation, std::bind(&PlaybackIntroCanvas::CallbackLayerMidAnimation, this, std::placeholders::_1));
+			registree->Register(args->callbackOnEndAnimation, std::bind(&PlaybackIntroCanvas::CallbackLayerEndAnimation, this, std::placeholders::_1));
 			args->removeItselfWhenFinished = true;
 		}
 		PlaybackIntroCanvas::~PlaybackIntroCanvas(){
@@ -67,7 +70,7 @@ namespace Osaka{
 			movePhaseUp = false;
 			timer->Start();
 		}
-		void PlaybackIntroCanvas::CallbackLayerMidAnimation(){
+		void PlaybackIntroCanvas::CallbackLayerMidAnimation(Component::EventArgs& e){
 			switch(phase){
 			case 0:
 				//FadeLayer is in total black. Time to start drawing the engine logo
@@ -87,7 +90,7 @@ namespace Osaka{
 				break;
 			}
 		}
-		void PlaybackIntroCanvas::CallbackLayerEndAnimation(){
+		void PlaybackIntroCanvas::CallbackLayerEndAnimation(Component::EventArgs& e){
 			
 		}
 		void PlaybackIntroCanvas::Update(){

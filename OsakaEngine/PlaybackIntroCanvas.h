@@ -22,8 +22,8 @@ namespace Osaka{
 			void Draw() override;
 
 			/* These are called from "fadelayer" */
-			void CallbackLayerMidAnimation();
-			void CallbackLayerEndAnimation();
+			void CallbackLayerMidAnimation(Component::EventArgs& e);
+			void CallbackLayerEndAnimation(Component::EventArgs& e);
 		private:
 			/* phase = 0: just entered 
 			 * phase = 1: is fading for engine logo

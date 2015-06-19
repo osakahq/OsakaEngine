@@ -9,14 +9,20 @@ namespace Osaka{
 		{
 	
 		public:
-			EventArgs();
-			//~EventArgs();
+			/* No raw pointer. */
+			static EventArgs CreateEmptyArgs(){
+				return EventArgs();
+			}
+			EventArgs(){
+				auto_unregister = false;
+			}
+			virtual ~EventArgs(){
+
+			}
+
+			bool auto_unregister;
 		};
 
-		//Empty Event Args
-		//For extern to work it also needs the implemantation in cpp
-		//Source: http://stackoverflow.com/questions/19929681/c-global-variable-declaration
-		extern EventArgs EmptyEventArgs;
 	}
 }
 #endif

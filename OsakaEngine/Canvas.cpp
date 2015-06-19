@@ -4,6 +4,7 @@
 #include "Layer.h"
 #include "RPGScene.h"
 #include "Canvas.h"
+#include "Registree.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
@@ -13,6 +14,8 @@ namespace Osaka{
 
 			layer_parent = NULL;
 			scene_parent = NULL;
+
+			registree = Component::Registree::CreateRawRegistree();
 		}
 		Canvas::~Canvas(){
 #ifdef _DEBUG
@@ -22,6 +25,7 @@ namespace Osaka{
 			scene_parent = NULL;
 			ruler = NULL;
 			raw_renderer = NULL;
+			delete registree; registree = NULL;
 		}
 		
 		void Canvas::Init(Layer* layer_parent, RPGScene* scene_parent, Script* script, SceneScript* mainscript){
