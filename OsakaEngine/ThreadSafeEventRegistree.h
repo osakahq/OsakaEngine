@@ -1,7 +1,7 @@
  #include "stdafx.h"
 
-#ifndef COMPONENT_THREADSAFEEVENT_H
-#define COMPONENT_THREADSAFEEVENT_H
+#ifndef COMPONENT_THREADSAFEEVENTREGISTREE_H
+#define COMPONENT_THREADSAFEEVENTREGISTREE_H
 
 namespace Osaka{
 	namespace Component{
@@ -11,10 +11,15 @@ namespace Osaka{
 		class ThreadSafeEventRegistree
 		{
 		private:
-			ThreadSafeEventHandler* ref;
+			ThreadSafeEventHandler* eventhandler;
 			CRITICAL_SECTION criticalSection;
 			std::function<void(EventArgs&)> func;
+
+			/* When calling Unhook it will set this false so that if a Raise action is going on, it won't call the callback. */
+			volatile bool deattaching;
+			volatile bool deleting;
 		public:
+			/* Gives away ownership */
 			static ThreadSafeEventRegistree* CreateRawEvent(){
 				//If I need to override this function then, I should have like a global EventBuilder var.
 				return new ThreadSafeEventRegistree();
@@ -23,19 +28,15 @@ namespace Osaka{
 			ThreadSafeEventRegistree();
 			~ThreadSafeEventRegistree();
 
-			void SetFunc(std::function<void(EventArgs&)> func);
-			/* When calling Unhook it will set this false so that if a Raise action is going on, it won't call the callback. */
-			volatile bool deattaching;
-			void CallFunc(EventArgs& args);
+			
+			void Call(EventArgs& args);
 
-			/* OPTIONAL. This can be called by the owner, if you want to manually unhook
-			 * ~destructor will call this function if ref is not NULL */
-			void Unhook();
+			void Register(ThreadSafeEventHandler* eventhandler, std::function<void(EventArgs&)> callback);
 
-			/* This is called by the EventHandler */
-			void __EventHandler_Attach(ThreadSafeEventHandler* ref, bool _throw);
-			/* This is called from EventHandler */
-			void __EventHandler_Deattach();
+			/* Call this if you need to manually unhook */
+			void Unregister();
+			/* Called from Registry when Registry is being deleted. */
+			void __Registry_Deattach();
 		};
 	}
 }

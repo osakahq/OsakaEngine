@@ -15,14 +15,16 @@
 //Forward declarations. Unfortunately, it's easier to make them pointers
 namespace Osaka{
 	namespace Component{
-		class EventHandler;
+		class ThreadSafeEventHandler;
+		class ThreadSafeEventRegistree;
 		class EventArgs;
 	}
 	namespace Debug{
 		class Debug;
-	}
-}
+	}
 
+}
+//GIT #MODIFICATION453256 2015-06-19 [This is when I changed EventHandler to ThreadSafeEventHandler]
 namespace Osaka{
 	namespace Network{
 
@@ -68,9 +70,11 @@ namespace Osaka{
 
 			//MEMBERS -------------------------------------------------------------
 			//This is the event when someone has been recieved. See WinProc->FD_Read
-			Component::EventHandler* ConnectionRecieveEvent;
+			Component::ThreadSafeEventHandler* ConnectionRecieveEvent;
+			Component::ThreadSafeEventRegistree* ConnectionRecieveEventRegistree;
 			//This fires when the connection is up
-			Component::EventHandler* ConnectedEvent;
+			Component::ThreadSafeEventHandler* ConnectedEvent;
+			Component::ThreadSafeEventRegistree* ConnectedEventRegistree;
 		private:
 			//MEMBERS -------------------------------------------------------------
 			//Window (for the message queue loop) for the non blocking socket

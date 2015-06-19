@@ -3,37 +3,39 @@
 #ifndef COMPONENT_EVENTHANDLER_H
 #define COMPONENT_EVENTHANDLER_H
 
+#include "Registry.h"
 namespace Osaka{
 	namespace Component{
 		class EventArgs;
-		/* Note:
-		 *  - uintptr_t was a hack.
-		 *
-		 * TODO: 
-		 *	- Maybe add a return value when the functions are called to know if they wanna be automatically unhooked */
+		class Registree;
+		
+		struct __eventhandler_info{
+			__eventhandler_info(Registree* _r, std::function<void(EventArgs&)> _callback) : r(_r), callback(_callback){}
+			~__eventhandler_info(){}
+			/* NOT Owner */
+			Registree* r;
+			std::function<void(EventArgs&)> callback;
+		};
 
-		/* Source: http://stackoverflow.com/questions/14189440/c-class-member-callback-simple-examples
-		 * Usage:
-		 *  - class: 
-		 * 		- eventhandler->add(this, std::bind(&MyClass::Callback, this, std::placeholders::_1));
-		 *  - static function (free functions): 
-		 * 		- eventhandler->addHandler([](int x) { std::cout << "x is " << x << '\n'; });
-		 * 		- eventhandler->addHandler(freeStandingCallback); 
-		 * */
-		class EventHandler
+		class EventHandler : public Registry
 		{
 		private:
-			std::unordered_map<int, std::function<void(EventArgs&)>> map;
+			/* Owner */
+			std::unordered_map<int, __eventhandler_info*> registrees;
+			/* int = id. This is a temp list so that in raise you can auto unregister */
+			std::vector<int> remove_queue;
 
-			CRITICAL_SECTION criticalSection;
+			/* Child class must implement this so that you can auto unregister */
+			void __AutoRemove() override;
 		public:
-
 			EventHandler();
 			~EventHandler();
 			void Raise(EventArgs& e);
 
-			void Hook(int id, std::function<void(EventArgs&)> callback);
-			void Unhook(int id);
+			/* Called from Registree */
+			void __Registree_Attach(Registree* r, std::function<void(EventArgs&)>& callback, const int id) override;
+			/* Called from Registree when Registree is being deleted. or manually */
+			void __Registree_Deattach(const int id) override;
 		};
 	}
 }

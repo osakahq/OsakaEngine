@@ -21,19 +21,25 @@ namespace Osaka{
 		class ThreadSafeEventHandler
 		{
 		private:
+			bool volatile deleting;
 			/* NOT Owner of Event* */
 			std::vector<ThreadSafeEventRegistree*> events;
-			
+			/* int is the position. */
+			std::vector<int> remove_queue;
+
 			CRITICAL_SECTION criticalSection;
+
+			void __AutoRemove();
 		public:
 
 			ThreadSafeEventHandler();
 			~ThreadSafeEventHandler();
 			void Raise(EventArgs& e);
 
-			void Hook(ThreadSafeEventRegistree* e, std::function<void(EventArgs&)> callback, bool _throw = false);
-			/* Called by Event (coming from manually called from the owner of Event) OR ~destructor */
-			void __Event_Unhook(ThreadSafeEventRegistree* e);
+			/* Called from EventRegistree */
+			void __Registree_Attach(ThreadSafeEventRegistree* e, std::function<void(EventArgs&)>& callback);
+			/* Called from EventRegistree when Registree is being deleted */
+			void __Registree_Deattach(ThreadSafeEventRegistree* e);
 		};
 	}
 }

@@ -45,6 +45,8 @@ namespace Osaka{
 
 		/* Called from Registry when Registry is being deleted. */
 		void Registree::__Registry_Deattach(const int id){
+			/* The reason we don't need to check anything is because this is different than attach.
+			 * If were are replacing an id, we must make sure to announce to deattach it. */
 			registries.erase(id);
 		}
 

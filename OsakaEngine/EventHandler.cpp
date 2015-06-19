@@ -1,45 +1,53 @@
  #include "stdafx.h"
 #include "ConsoleColors.h"
 #include "EventArgs.h"
+#include "Registree.h"
 #include "EventHandler.h"
 
 namespace Osaka{
 	namespace Component{
+		
 		EventHandler::EventHandler(){
-			InitializeCriticalSection(&this->criticalSection);
+			
 		}
 		EventHandler::~EventHandler(){
-			map.clear();
-			DeleteCriticalSection(&this->criticalSection);
+			for(auto it = registrees.begin(); it != registrees.end(); ++it){
+				it->second->r->__Registry_Deattach(it->first);
+				delete it->second;
+			}
 		}
 
 		void EventHandler::Raise(EventArgs& e){
-			EnterCriticalSection(&this->criticalSection);
-			for(auto i = map.begin(); i != map.end(); ++i){
-				(i->second)(e);
+			for(auto it = registrees.begin(); it != registrees.end(); ++it){
+				it->second->callback(e);
+				if( e.auto_unregister ){
+					remove_queue.push_back(it->first);
+				}
 			}
-			LeaveCriticalSection(&this->criticalSection);
+			if( !remove_queue.empty() ){
+				__AutoRemove();
+			}
 		}
-		
-		void EventHandler::Hook(int id, std::function<void(EventArgs&)> callback){
-			EnterCriticalSection(&this->criticalSection);
-			if( map.find(id) == map.end()) {
-				map[id] = callback;
-			}else{
-				throw std::exception("[EventHandler] Hook -> Caller is already registered");
+		void EventHandler::__AutoRemove(){
+			for(unsigned int i = 0; i < remove_queue.size(); ++i){
+				registrees[remove_queue[i]]->r->__Registry_Deattach(remove_queue[i]);
+				registrees.erase(remove_queue[i]);
 			}
-			LeaveCriticalSection(&this->criticalSection);
+			remove_queue.clear();
 		}
-		
-		void EventHandler::Unhook(int id){
-			EnterCriticalSection(&this->criticalSection);
-			auto it = map.find(id);
-			if( it != map.end()) {
-				map.erase(it);
-			}else{
-				throw std::exception("[EventHandler] Unhook -> Caller is not registered");
+		void EventHandler::__Registree_Attach(Registree* r, std::function<void(EventArgs&)>& callback, const int id){
+			auto it = registrees.find(id);
+			if( it != registrees.end() ){
+				it->second->r->__Registry_Deattach(id);
+				registrees.erase(it);
 			}
-			LeaveCriticalSection(&this->criticalSection);
+			registrees[id] = new __eventhandler_info(r, callback);
+		}
+		void EventHandler::__Registree_Deattach(const int id){
+			//Called from Registree
+			/* The reason we don't need to check anything is because this is different than attach.
+			 * If were are replacing an id, we must make sure to announce to deattach it. */
+			registrees.erase(id);
 		}
 	}
 }

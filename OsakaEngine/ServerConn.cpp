@@ -1,12 +1,12 @@
  #include "stdafx.h"
 #include "EventArgs.h"
 #include "RecieveEventArgs.h"
-#include "EventHandler.h"
+#include "ThreadSafeEventRegistree.h"
+#include "ThreadSafeEventHandler.h"
 #include "Debug.h"
 #include "ServerConn.h"
 
-#define SERVERCONN_CONNECTION_RECIEVE 394981
-#define SERVERCONN_CONNECTED_EVENT 162746
+//GIT #MODIFICATION453256 2015-06-19 [This is when I changed EventHandler to ThreadSafeEventHandler]
 namespace Osaka{
 	namespace Network{
 
@@ -32,7 +32,10 @@ namespace Osaka{
 			return d->WinProc(hWnd, msg, wParam, lParam);
 		}
 
-		ServerConn::ServerConn(Debug::Debug* debug){
+		ServerConn::ServerConn(Debug::Debug* debug)
+		{
+			ConnectionRecieveEventRegistree = Component::ThreadSafeEventRegistree::CreateRawEvent();
+			ConnectedEventRegistree = Component::ThreadSafeEventRegistree::CreateRawEvent();
 			//HWND this is the handle so I can catch the socket messages
 			hwnd = NULL;
 	
@@ -47,15 +50,15 @@ namespace Osaka{
 			connIsUp = false;
 
 			InitializeCriticalSection(&this->csCleanup);
-			this->ConnectionRecieveEvent = new Component::EventHandler();
-			this->ConnectionRecieveEvent->Hook(SERVERCONN_CONNECTION_RECIEVE+99, std::bind(&ServerConn::RecieveEvent, this, std::placeholders::_1));
-
+			this->ConnectionRecieveEvent = new Component::ThreadSafeEventHandler();
+			ConnectionRecieveEventRegistree->Register(this->ConnectionRecieveEvent, std::bind(&ServerConn::RecieveEvent, this, std::placeholders::_1));
+			
 			state.bytes_read = 0;
 			//no performance hit
 			state.data.reserve(DEFAULT_BUFLEN*2);
 			state.data = "";
 
-			this->ConnectedEvent = new Component::EventHandler();
+			this->ConnectedEvent = new Component::ThreadSafeEventHandler();
 
 			this->debug = debug;
 		}
@@ -64,12 +67,12 @@ namespace Osaka{
 #ifdef _DEBUG
 			_CHECKDELETE("ServerConn");
 #endif
-			this->ConnectionRecieveEvent->Unhook(SERVERCONN_CONNECTION_RECIEVE+99);
-
 			delete ConnectionRecieveEvent; ConnectionRecieveEvent = NULL;
 			delete ConnectedEvent; ConnectedEvent = NULL;
 
 			this->Stop(true);
+			delete ConnectionRecieveEventRegistree; ConnectionRecieveEventRegistree = NULL;
+			delete ConnectedEventRegistree; ConnectedEventRegistree = NULL;
 			DeleteCriticalSection(&this->csCleanup);
 			debug = NULL;
 		}
@@ -83,7 +86,7 @@ namespace Osaka{
 	
 			if( pingThread == NULL ){
 				ServerConn* c = this;
-				this->ConnectedEvent->Hook(SERVERCONN_CONNECTED_EVENT+2, [c](Component::EventArgs& e){
+				ConnectedEventRegistree->Register(this->ConnectedEvent, [c](Component::EventArgs& e){
 					c->pingThread = CreateThread(NULL, 0, &ServerConn_StartPing, c, 0, NULL);
 				});
 			}
@@ -98,7 +101,7 @@ namespace Osaka{
 			if( !this->Connect() ){
 				this->CleanupConnection();
 			}
-			ConnectedEvent->Raise(Component::EmptyEventArgs);
+			ConnectedEvent->Raise(Component::EventArgs::CreateEmptyArgs());
 			MSG msg;
 			ZeroMemory(&msg, sizeof(MSG));
 	
@@ -110,7 +113,7 @@ namespace Osaka{
 
 		void ServerConn::Ping(){
 			//This function will always be called because if you see ConnectedEvent.raise() will be called regardless if this->Connect() returns true
-			this->ConnectedEvent->Unhook(SERVERCONN_CONNECTED_EVENT+2);
+			ConnectedEventRegistree->Unregister(); //this->ConnectedEvent->Unhook(ConnectedEventRegistree);
 			HANDLE hConnectedEvent = CreateEvent(NULL, TRUE, FALSE, TEXT("DebugClient_Ping_ConnectedEvent"));
 			while(connIsUp){
 				this->Send("~client-im-here");
@@ -124,16 +127,18 @@ namespace Osaka{
 		bool ServerConn::StartAndWaitForConnection(){
 	
 			HANDLE hConnectedEvent = CreateEvent(NULL, TRUE, FALSE, TEXT("DebugClient_Stop_ConnectedEvent"));
-			this->ConnectedEvent->Hook(SERVERCONN_CONNECTED_EVENT+1, [hConnectedEvent](Component::EventArgs& e){
+			Component::ThreadSafeEventRegistree* registree = Component::ThreadSafeEventRegistree::CreateRawEvent();
+			registree->Register(this->ConnectedEvent, [hConnectedEvent](Component::EventArgs& e){
 				SetEvent(hConnectedEvent);
 			});
-
+			
 			this->Start();
 
 			if( (DWORD)WaitForSingleObject(hConnectedEvent, 1000) == WAIT_OBJECT_0 ){
 				//ret = true;
 			}
-			this->ConnectedEvent->Unhook(SERVERCONN_CONNECTED_EVENT+1);
+			//Not needed. this->ConnectedEvent->Unhook(registree);
+			delete registree;
 			CloseHandle(hConnectedEvent);
 
 			return connIsUp;
@@ -148,13 +153,14 @@ namespace Osaka{
 
 			if( connIsUp && skipSend == false ){
 				HANDLE hRecieveEvent = CreateEvent(NULL, TRUE, FALSE, TEXT("DebugClient_Stop_RecieveEvent"));
-				this->ConnectionRecieveEvent->Hook(SERVERCONN_CONNECTION_RECIEVE+1, [hRecieveEvent](Component::EventArgs& e){
+				Component::ThreadSafeEventRegistree* registree = Component::ThreadSafeEventRegistree::CreateRawEvent();
+				registree->Register(this->ConnectionRecieveEvent, [hRecieveEvent](Component::EventArgs& e){
 					RecieveEventArgs& re = (RecieveEventArgs&)e;
 					if( re.find("~bye") ){
 						SetEvent(hRecieveEvent);
 					}
 				});
-
+				
 				if( this->Send("~close-connection") ){
 					debug->localL("[ServerConn]  Waiting on server to reply bye...");
 					if( (DWORD)WaitForSingleObject(hRecieveEvent, 1000) != WAIT_OBJECT_0 ){
@@ -162,7 +168,8 @@ namespace Osaka{
 					}
 				}
 
-				this->ConnectionRecieveEvent->Unhook(SERVERCONN_CONNECTION_RECIEVE+1);
+				//Not needed: this->ConnectionRecieveEvent->Unhook(registree);
+				delete registree;
 				CloseHandle(hRecieveEvent);
 			}
 	

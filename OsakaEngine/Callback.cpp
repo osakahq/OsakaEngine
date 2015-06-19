@@ -38,7 +38,7 @@ namespace Osaka{
 		void Callback::__Registree_Attach(Registree* r, std::function<void(EventArgs&)>& callback, const int id){
 			if( this->id != 0 ){
 				/* We only need to announce. */
-				registree->__Registry_Deattach(id);
+				registree->__Registry_Deattach(this->id);
 			}
 			registree = r;
 			this->callback = callback;
@@ -50,7 +50,8 @@ namespace Osaka{
 				return;
 			}
 			if( this->id != id ){
-				throw std::exception("[Callback] ID mismatch");
+				//throw std::exception("[Callback] ID mismatch");
+				return;
 			}
 			callback = nullptr;
 			registree = NULL;
