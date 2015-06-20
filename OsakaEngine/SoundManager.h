@@ -31,7 +31,7 @@ namespace Osaka{
 			/* NOT Owner */
 			Engine::SDLLib* sdl;
 			/* NOT Owner. Unorderedmap */
-			unorderedmap_sound_data sounds;
+			const unorderedmap_sound_data* sounds;
 			/* Owner of all Sounds* */
 			std::unordered_map<std::string, Engine::Sound*> esounds;
 		};

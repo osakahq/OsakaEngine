@@ -24,11 +24,11 @@ namespace Osaka{
 			/* NOT Owner */
 			Factory* factory;
 			/* NOT Owner (list or spritemap_data) */
-			unorderedmap_spritemap_data spritemaps;
+			const unorderedmap_spritemap_data* spritemaps;
 			/* NOT Owner of the list (unordered_map*).
 			 * This one holds which sprite_id is in which spritemap 
 			 * hash=sprite_id, value=spritemap_id */
-			unorderedmap_spriteids_data sprite_ids;
+			const unorderedmap_spriteids_data* sprite_ids;
 			/* Owner of all Textures */
 			std::unordered_map<std::string, Engine::Texture*> textures;
 		};

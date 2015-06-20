@@ -20,9 +20,9 @@ namespace Osaka{
 			sceneToLoadEvent = NULL;
 			signalStopLoadThread = false;
 
-			this->assets_type = assets_type;
-			this->assets_initload = assets_initload;
-			this->scenes = scenes;
+			this->assets_type = &assets_type;
+			this->assets_initload = &assets_initload;
+			this->scenes = &scenes;
 
 			this->debug = debug;
 
@@ -57,9 +57,15 @@ namespace Osaka{
 			threadParams.callback = nullptr;
 			threadParams.scene = NULL;
 			app = NULL;
-			assets_type.clear();
-			assets_initload.clear();
-			scenes.clear();
+			
+			//We have the const pointer so.. don't do this:
+			//assets_type.clear();
+			//assets_initload.clear();
+			//scenes.clear();
+			assets_type = NULL;
+			assets_initload = NULL;
+			scenes = NULL;
+
 			loadedScenes.clear();
 			loadedAssets.clear();
 		}
@@ -67,7 +73,7 @@ namespace Osaka{
 		void AssetManager::Init(RPGApplication* app){
 			debug->l("[AssetManager] Init");
 			this->app = app;
-			for( auto it = assets_initload.begin(); it != assets_initload.end(); ++it ){
+			for( auto it = assets_initload->begin(); it != assets_initload->end(); ++it ){
 				LoadAsset((*it->second).id);
 			}
 			//Initial state = false
@@ -82,8 +88,8 @@ namespace Osaka{
 				return;
 			}
 
-			auto it_scene = scenes.find(scene);
-			if( it_scene == scenes.end() ){
+			auto it_scene = scenes->find(scene);
+			if( it_scene == scenes->end() ){
 				debug->e("[AssetManager] Scene does not exists: " + scene);
 			}
 
@@ -130,8 +136,8 @@ namespace Osaka{
 				//Asset is already loaded.
 				return;
 			}
-			auto it = assets_type.find(id);
-			if( it == assets_type.end() ){
+			auto it = assets_type->find(id);
+			if( it == assets_type->end() ){
 				debug->e("[AssetManager] Asset was not defined. (asset_types:id="+id+")");
 			}
 
@@ -177,10 +183,10 @@ namespace Osaka{
 			for( auto it = related_scenes_data.begin(); it != related_scenes_data.end(); ++it ){
 				if( it->second.linked ){
 					//Scenes are always loaded when linked (remember, there is no unload atm)
-					ProcessScene(*scenes.at(it->second.id), false); //firstlevel is no longer.
+					ProcessScene(*scenes->at(it->second.id), false); //firstlevel is no longer.
 				}else if( firstlevel && it->second.always_load ){
 					//only load through always-load if its firstlevel (main scene to load)
-					ProcessScene(*scenes.at(it->second.id), false);
+					ProcessScene(*scenes->at(it->second.id), false);
 				}
 			}
 		}

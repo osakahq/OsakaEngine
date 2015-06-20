@@ -3,8 +3,6 @@
 #define ENGINE_SDLLIB_H
 #include "engine_include.h"
 #include "osaka_forward.h"
-struct SDL_Window;
-struct SDL_Renderer;
 
 namespace Osaka{
 	

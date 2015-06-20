@@ -33,7 +33,7 @@ namespace Osaka{
 			const int fontmap_char_space_x;
 			const int fontmap_char_space_y;
 			/* NOT Owner. */
-			unorderedmap_fontcharacter_data fontmap;
+			const unorderedmap_fontcharacter_data* fontmap;
 			/* NOT Owner */
 			TextureManager* texturem;
 

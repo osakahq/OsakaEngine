@@ -55,11 +55,11 @@ namespace Osaka{
 			volatile bool signalStopLoadThread;
 
 			/* NOT Owner. The map to know which asset is what type */
-			unorderedmap_assets_type assets_type;
+			const unorderedmap_assets_type* assets_type;
 			/* NOT Owner. The struct info from the XML */
-			unorderedmap_asset_initload_data assets_initload;
+			const unorderedmap_asset_initload_data* assets_initload;
 			/* NOT Owner. The struct info from the XML */
-			unorderedmap_scene_data scenes;
+			const unorderedmap_scene_data* scenes;
 
 			/* Helper function: Loads the asset depending on the type */
 			void LoadAsset(const std::string& id);

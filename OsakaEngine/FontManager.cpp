@@ -23,17 +23,18 @@ namespace Osaka{
 					delete sprites[i];
 			}
 			
-			fontmap.clear();
+			//fontmap.clear();
+			fontmap = NULL;
 			texturem = NULL;
 		}
 		
 		void FontManager::SetFontmap(unorderedmap_fontcharacter_data& fontmap){
-			this->fontmap = fontmap;
+			this->fontmap = &fontmap;
 		}
 		void FontManager::Init(SDL_Renderer* _renderer){
 			raw_renderer = _renderer;
 
-			for( auto it = fontmap.begin(); it != fontmap.end(); ++it ){
+			for( auto it = fontmap->begin(); it != fontmap->end(); ++it ){
 				//it->first = char
 				if( (int)it->first >= FONTMANAGER_MAX_CHAR )
 					throw std::exception("[FontManager] Outside of limit > FONTMANAGER_MAX_CHAR");

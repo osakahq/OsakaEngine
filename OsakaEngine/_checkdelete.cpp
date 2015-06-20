@@ -27,12 +27,10 @@ void _STARTCHECKDELETE(bool ascension){
 	_check_delete_info["Factory"] = false;
 	_check_delete_info["GameDataLoader"] = false;
 	_check_delete_info["GameData"] = false;
-	_check_delete_info["GameData_delete"] = false;
 	_check_delete_info["Effect"] = true;
 	_check_delete_info["Layer"] = true;
 	_check_delete_info["SceneScript"] = true;
 	_check_delete_info["LoadingSceneScript"] = false;
-	_check_delete_info["LoadingSceneScript_delete"] = false;
 		
 	_check_delete_info["LoadingFadeScript"] = false;
 	_check_delete_info["LoadingFadeCanvas"] = false;
@@ -41,13 +39,8 @@ void _STARTCHECKDELETE(bool ascension){
 	_check_delete_info["TimeManager"] = false;
 
 	_check_delete_info["InitScene"] = false;
-	_check_delete_info["InitScene_delete"] = false;
 	_check_delete_info["InitSceneArgs"] = false;
 		
-	_check_delete_info["RPGScene_delete"] = true;
-	_check_delete_info["Canvas_delete"] = true;
-	_check_delete_info["Script_delete"] = true;
-	_check_delete_info["UserInterface_delete"] = true;
 		
 	//I no longer need these 2.
 	//_check_delete_info["LayerArgs"] = true;
