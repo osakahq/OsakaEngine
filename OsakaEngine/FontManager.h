@@ -20,7 +20,7 @@ namespace Osaka{
 			void Init(SDL_Renderer* _renderer);
 			
 			void RenderTextLine(const char* text, const int x, const int y);
-			void RenderTextLine(const std::string text, const int x, const int y);
+			void RenderTextLine(const std::string& text, const int x, const int y);
 
 			void RenderTextMultiple(const char* text, const int x, const int y, const int max_slots);
 			void RenderTextMultiple(const std::string& str, const int x, const int y, const int max_slots);

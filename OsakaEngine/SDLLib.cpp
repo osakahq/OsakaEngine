@@ -79,7 +79,7 @@ namespace Osaka{
 		
 		bool SDLLib::Start(){
 			SDL_LogSetOutputFunction(_SDLLib_Log, NULL);
-			SDL_LogCritical(1, "SDL Log set to _SDLLib_Log");
+			SDL_LogDebug(1, "SDL Log set to _SDLLib_Log");
 
 			if( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 ){
 				debug->l((std::string("[SDLLib] SDL could not initialize! SDL_Error: ")+SDL_GetError()).c_str() );

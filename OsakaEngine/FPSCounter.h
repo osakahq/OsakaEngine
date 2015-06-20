@@ -13,8 +13,8 @@ namespace Osaka{
 		public:
 			FPSCounter(int target_fps, int _space_x, int _space_y, const bool _show_sum_frames);
 			~FPSCounter();
-			void Init(Debug::DebugPTR& debug, FontManagerPTR& font);
-			void _delete();
+			void Init(Debug::Debug* debug, FontManager* font);
+			
 			/* This is called before EApplication::Run() (in RPGApplication, right outside the loop) */
 			void Start();
 			/* This is called after the draw loop and before SDL_Present and before manual cap (if vsync is on) */
@@ -27,9 +27,9 @@ namespace Osaka{
 			Hiccups* hiccups; //It's okay to use raw pointer. The only class using it is this one.
 
 			/* NOT Owner */
-			Debug::DebugPTR debug;
+			Debug::Debug* debug;
 			/* NOT Owner */
-			FontManagerPTR font;
+			FontManager* font;
 
 			/* For every second, show the counted frames */
 			Uint32 ticks;
@@ -52,12 +52,12 @@ namespace Osaka{
 
 			//Text for FPS and AVG
 			/* Owner */
-			StaticTextPTR stext_fps;
+			StaticText* stext_fps;
 			/* Owner */
-			StaticTextPTR stext_avg;
+			StaticText* stext_avg;
 
 			/* Owner */
-			StaticTextPTR stext_ram;
+			StaticText* stext_ram;
 			std::string usedMB;
 			/* Every FPSCOUNTER_SECONDS_RAM seconds it will update */
 			int seconds;

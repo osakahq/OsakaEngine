@@ -3,12 +3,15 @@
 #ifdef _DEBUG
 	#include <Psapi.h>
 #endif
+#include "ConsoleColors.h"
 #include "Hiccups.h"
 #include "StaticText.h"
 #include "engine_include.h"
 #include "Debug.h"
 #include "FontManager.h"
 #include "FPSCounter.h"
+
+#define FPSCOUNTER_CAPTIMER 3000
 
 namespace Osaka{
 	namespace RPGLib{
@@ -27,18 +30,26 @@ namespace Osaka{
 			usedMB = "";
 
 			hiccups = new Hiccups();
+			stext_ram = NULL;
+			stext_fps = NULL;
+			stext_avg = NULL;
+			font = NULL;
+			debug = NULL;
+
+			average_frame_ms.reserve(10);
+			current_fps.reserve(4);
+			usedMB.reserve(14);
 		}
 		FPSCounter::~FPSCounter(){
-			delete hiccups;
+			font = NULL;
+			debug = NULL;
+			delete hiccups; hiccups = NULL;
+			delete stext_ram; stext_ram = NULL;
+			delete stext_fps; stext_fps = NULL;
+			delete stext_avg; stext_avg = NULL;
 		}
-		void FPSCounter::_delete(){
-			font = nullptr;
-			debug = nullptr;
-			stext_ram->_delete(); stext_ram = nullptr;
-			stext_fps->_delete(); stext_fps = nullptr;
-			stext_avg->_delete(); stext_avg = nullptr;
-		}
-		void FPSCounter::Init(Debug::DebugPTR& debug, FontManagerPTR& font){
+		
+		void FPSCounter::Init(Debug::Debug* debug, FontManager* font){
 			this->font = font;
 			this->debug = debug;
 		}
@@ -46,11 +57,11 @@ namespace Osaka{
 			debug->l("[FPSCounter] Indicator FPS: How many frames have passed in 1 second.");
 			debug->l("[FPSCounter] Indicator Average: Average time in " + std::to_string(target_fps) + " frames.");
 			debug->l("[FPSCounter] Indicator Hiccups: Reports if the times of frames take longer than the mean(average) in sets of " + std::to_string(target_fps));
-			ticks = SDL_GetTicks();
-
+			
 			stext_fps = font->CreateStaticText("fps", 5, 5, 3);
 			stext_avg = font->CreateStaticText("avg", 5, space_y + 5, 3);
 			stext_ram = font->CreateStaticText("ram", 5, space_y + 20, 3);
+			ticks = SDL_GetTicks();
 		}
 		
 		void FPSCounter::BeforePresent(){
@@ -67,9 +78,14 @@ namespace Osaka{
 				font->RenderTextLine(average_frame_ms, space_x, space_y+5);
 			}
 			
-			Uint32 time = SDL_GetTicks() - ticks;
-			if( time >= 1000 ){
-				ticks = SDL_GetTicks() - (time-1000);
+			Uint32 time = SDL_GetTicks();
+			Uint32 diff = time - ticks;
+			if( diff >= 1000 ){
+				/* Because we aren't resetting the `ticks`, if diff is more than 3 seconds, then cap it. Why? So it catches up faster. */
+				if( diff > FPSCOUNTER_CAPTIMER ){
+					diff = FPSCOUNTER_CAPTIMER;
+				}
+				ticks = time - (diff-1000);
 				current_fps = std::to_string(frames);
 				frames = 0;
 #ifdef _DEBUG

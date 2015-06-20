@@ -30,15 +30,15 @@ namespace Osaka{
 		void Hiccups::EndSet(const float average_ms){
 			const float comparison = (average_ms * 0.7f)*2;
 			bool printed = false;
-			for(auto it = fills_in_array.begin(); it != fills_in_array.end(); ++it ){
-				if( *it > 1 && *it >= comparison ){
+			for(unsigned int i = 0; i < fills_in_array.size(); ++i){
+				if( fills_in_array[i] > 1 && fills_in_array[i] >= comparison ){
 					if( printed == false ){
 						printf("[Hiccups]");
 					}
 					printed = true;
-					printf(" %d[%dms] |", hiccups_array[*it].quantity, *it);
+					printf(" %d[%dms] |", hiccups_array[fills_in_array[i]].quantity, fills_in_array[i]);
 				}
-				hiccups_array[*it].quantity = 0;
+				hiccups_array[fills_in_array[i]].quantity = 0;
 			}
 			fills_in_array.clear();
 			if( printed ){

@@ -50,7 +50,7 @@ namespace Osaka{
 				quad.x += fontmap_char_space_x;
 			}
 		}
-		void FontManager::RenderTextLine(const std::string text, const int x, const int y){
+		void FontManager::RenderTextLine(const std::string& text, const int x, const int y){
 			//Because we know all fontmap sprites are the same size, we set the quad space_x, space_y
 			SDL_Rect quad = {x, y, fontmap_char_space_x, fontmap_char_space_y};
 			for(const char c : text){

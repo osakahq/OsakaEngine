@@ -218,9 +218,9 @@ namespace Osaka{
 #ifdef EAPPLICATION_PAUSEFRAME
 				paused_time = 0;
 				if( pause_frame ){
-					//First grabs value then increments, so... we actually wait the for the actual frame to complete.
-					if( current_frame++ >= frames_per_key ){
-						current_frame = 1;
+					//First increments then grabs value, so... we actually wait the for the actual frame to complete.
+					if( ++current_frame >= frames_per_key ){
+						current_frame = 0;
 						printf("-- Frame is paused, please press enter to continue...");
 						paused_time = SDL_GetTicks();
 						getchar();
