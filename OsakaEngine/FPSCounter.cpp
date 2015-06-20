@@ -38,7 +38,7 @@ namespace Osaka{
 
 			average_frame_ms.reserve(10);
 			current_fps.reserve(4);
-			usedMB.reserve(14);
+			usedMB.reserve(15);
 		}
 		FPSCounter::~FPSCounter(){
 			font = NULL;
@@ -89,7 +89,7 @@ namespace Osaka{
 				current_fps = std::to_string(frames);
 				frames = 0;
 #ifdef _DEBUG
-				if( time > 1017 ){
+				if( diff > 1017 ){
 					//In a fast normal operation, the difference between time-1000 will be minimal.
 					//If the application is starting to slow, make sure to announce that BeforePresent was called late
 					debug->l("[FPSCounter] BeforePresent() was called very late: " + std::to_string(time));

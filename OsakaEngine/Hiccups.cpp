@@ -1,5 +1,5 @@
  #include "stdafx.h"
-
+#include "ConsoleColors.h"
 #include "Hiccups.h"
 namespace Osaka{
 	namespace RPGLib{
@@ -33,16 +33,18 @@ namespace Osaka{
 			for(unsigned int i = 0; i < fills_in_array.size(); ++i){
 				if( fills_in_array[i] > 1 && fills_in_array[i] >= comparison ){
 					if( printed == false ){
+						std::cout << Debug::yellow;
 						printf("[Hiccups]");
+						std::cout << Debug::white;
 					}
 					printed = true;
-					printf(" %d[%dms] |", hiccups_array[fills_in_array[i]].quantity, fills_in_array[i]);
+					printf(" %d[%dms], ", hiccups_array[fills_in_array[i]].quantity, fills_in_array[i]);
 				}
 				hiccups_array[fills_in_array[i]].quantity = 0;
 			}
 			fills_in_array.clear();
 			if( printed ){
-				printf("| Average was: %fms\n", average_ms);
+				printf("Average was: %fms\n", average_ms);
 			}
 		}
 	}
