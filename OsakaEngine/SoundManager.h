@@ -18,6 +18,8 @@ namespace Osaka{
 			void SetMusicVolume(int volume);
 
 			void PlaySoundEffect(const std::string& id, int times);
+			/* Doesn't give away ownership. Use this one to play sound effects */
+			Mix_Chunk* GetSoundEffect(const std::string& id);
 
 			void PlayMusic(const std::string& id);
 			void PauseMusic();

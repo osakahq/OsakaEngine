@@ -26,6 +26,13 @@ namespace Osaka{
 				debug->e("[SoundEffect] Load: effect is NULL");
 			}
 		}
+
+		Mix_Chunk* SoundEffect::GetRAWMixChunk(){
+			if( effect == NULL )
+				debug->e("[SoundEffect] effect is NULL");
+			return effect;
+		}
+
 		void SoundEffect::Play(int times){
 #ifdef _DEBUG
 			if( effect == NULL )

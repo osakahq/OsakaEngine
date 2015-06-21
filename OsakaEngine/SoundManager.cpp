@@ -43,7 +43,11 @@ namespace Osaka{
 			sdl->SetMusicVolume(volume);
 		}
 
-
+		Mix_Chunk* SoundManager::GetSoundEffect(const std::string& id){
+			Engine::Sound* sound = this->esounds[std::string(id)];
+			Engine::SoundEffect* effect = dynamic_cast<Engine::SoundEffect*>(sound);
+			return effect->GetRAWMixChunk();
+		}
 		void SoundManager::PlaySoundEffect(const std::string& id, int times){
 			Engine::Sound* sound = this->esounds[std::string(id)];
 			Engine::SoundEffect* effect = dynamic_cast<Engine::SoundEffect*>(sound);

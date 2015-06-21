@@ -13,6 +13,7 @@ namespace Osaka{
 			
 			void Load(const char* filename) override;
 			void Play(int times);
+			Mix_Chunk* GetRAWMixChunk();
 		/* ----------------------------------------------------------------------------------- */
 		private:
 			/* Owner */
