@@ -27,8 +27,7 @@ namespace Osaka{
 			//this->target_fps = target_fps;
 
 			seconds = FPSCOUNTER_SECONDS_RAM;
-			usedMB = "";
-
+			
 			hiccups = new Hiccups();
 			stext_ram = NULL;
 			stext_fps = NULL;
@@ -36,9 +35,9 @@ namespace Osaka{
 			font = NULL;
 			debug = NULL;
 
-			average_frame_ms.reserve(10);
-			current_fps.reserve(4);
-			usedMB.reserve(15);
+			average_frame_ms[0] = '\0';
+			current_fps[0] = '\0';
+			usedMB[0] = '\0';
 		}
 		FPSCounter::~FPSCounter(){
 			font = NULL;
@@ -54,9 +53,9 @@ namespace Osaka{
 			this->debug = debug;
 		}
 		void FPSCounter::Start(){
-			debug->l("[FPSCounter] Indicator FPS: How many frames have passed in 1 second.");
-			debug->l("[FPSCounter] Indicator Average: Average time in " + std::to_string(target_fps) + " frames.");
-			debug->l("[FPSCounter] Indicator Hiccups: Reports if the times of frames take longer than the mean(average) in sets of " + std::to_string(target_fps));
+			MULTIPLE_LOG_START("[FPSCounter] Indicator FPS: How many frames have passed in 1 second.\n");
+			MULTIPLE_LOG("[FPSCounter] Indicator Average: Average time in %d frames.\n", target_fps);
+			MULTIPLE_LOG_END("[FPSCounter] Indicator Hiccups: Reports if the times of frames take longer than the mean(average) in sets of %d\n", target_fps);
 			
 			stext_fps = font->CreateStaticText("fps", 5, 5, 3);
 			stext_avg = font->CreateStaticText("avg", 5, space_y + 5, 3);
@@ -69,7 +68,7 @@ namespace Osaka{
 				//show_sum_frames is a constant
 				if( calls == target_fps ){
 					float avr = static_cast<float>(sum_frame_ms) / calls;
-					average_frame_ms = std::to_string(avr);
+					sprintf_s(average_frame_ms, "%.3f", avr);
 					hiccups->EndSet(avr);
 					sum_frame_ms = 0;
 					calls = 0;
@@ -86,33 +85,31 @@ namespace Osaka{
 					diff = FPSCOUNTER_CAPTIMER;
 				}
 				ticks = time - (diff-1000);
-				current_fps = std::to_string(frames);
+				sprintf_s(current_fps, "%d", frames);
 				frames = 0;
 #ifdef _DEBUG
 				if( diff > 1017 ){
 					//In a fast normal operation, the difference between time-1000 will be minimal.
 					//If the application is starting to slow, make sure to announce that BeforePresent was called late
-					debug->l("[FPSCounter] BeforePresent() was called very late: " + std::to_string(time));
+					LOG("[FPSCounter] BeforePresent() was called very late: %d\n", time);
 				}
 
 				//First increments then grabs value.
 				if( ++seconds >= FPSCOUNTER_SECONDS_RAM ){
 					PROCESS_MEMORY_COUNTERS_EX pmc;
 					if( GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc)) ){
-						char buff[6] = "";
-						sprintf_s(buff, "%.2f", (static_cast<float>(pmc.PrivateUsage)/1024)/1024);
-						usedMB = buff;
-						usedMB += "|";
-						sprintf_s(buff, "%.2f", (static_cast<float>(pmc.WorkingSetSize)/1024)/1024);
-						usedMB += buff;
+						sprintf_s(usedMB, "%.2f|%.2f", (static_cast<float>(pmc.PrivateUsage)/1024)/1024, (static_cast<float>(pmc.WorkingSetSize)/1024)/1024);
+						current_dot = 11; //11 slot is \0
 					}else{
-						usedMB = "error";
-						debug->l("[FPSCounter] ERROR! GetProcessMemoryInfo returned false.");
+						sprintf_s(usedMB, "%s", "error");
+						current_dot = 6; //6 slot is \0
+						LOG("[FPSCounter] ERROR! GetProcessMemoryInfo returned false.\n");
 					}
 					seconds = 0;
 				}
 				if( seconds > 0 && seconds % 3 == 0 ){
-					usedMB += ".";
+					usedMB[current_dot] = '.';
+					usedMB[++current_dot] = '\0'; //first increments, then grabs value
 				}
 #endif
 			}

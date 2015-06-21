@@ -13,13 +13,12 @@ namespace Osaka{
 		}
 
 		void Hiccups::Frame(const int frame_ms){
-#ifdef _DEBUG
 			if( frame_ms < 0 ){
 				throw std::exception("[Hiccups] frame_ms cannot be lesser than 0.");
 			}
-#endif
+
 			if( frame_ms >= HICCUPS_MAX_ARRAY ){
-				printf("[Hiccups] Current frame is longer than HICCUPS_MAX_ARRAY < [%d]\n", frame_ms);
+				LOG("[Hiccups] Current frame is longer than HICCUPS_MAX_ARRAY < [%d]\n", frame_ms);
 				return;
 			}
 			if( hiccups_array[frame_ms].quantity == 0 ){
@@ -34,17 +33,17 @@ namespace Osaka{
 				if( fills_in_array[i] > 1 && fills_in_array[i] >= comparison ){
 					if( printed == false ){
 						std::cout << Debug::yellow;
-						printf("[Hiccups]");
+						LOG("[Hiccups]");
 						std::cout << Debug::white;
 					}
 					printed = true;
-					printf(" %d[%dms], ", hiccups_array[fills_in_array[i]].quantity, fills_in_array[i]);
+					LOG(" %d[%dms], ", hiccups_array[fills_in_array[i]].quantity, fills_in_array[i]);
 				}
 				hiccups_array[fills_in_array[i]].quantity = 0;
 			}
 			fills_in_array.clear();
 			if( printed ){
-				printf("Average was: %fms\n", average_ms);
+				LOG("Average was: %fms\n", average_ms);
 			}
 		}
 	}

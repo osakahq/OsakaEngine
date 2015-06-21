@@ -3,7 +3,7 @@
 #include "SDLLib.h"
 
 void _SDLLib_Log(void* userdata, int category, SDL_LogPriority priority, const char* message) { 
-	printf("[SDLLib] Log: %s\n", message);
+	LOG("[SDLLib] Log: %s\n", message);
 } 
 
 namespace Osaka{
@@ -82,12 +82,12 @@ namespace Osaka{
 			SDL_LogDebug(1, "SDL Log set to _SDLLib_Log");
 
 			if( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 ){
-				debug->l((std::string("[SDLLib] SDL could not initialize! SDL_Error: ")+SDL_GetError()).c_str() );
+				LOG("[SDLLib] SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
 				return false;
 			}
 			//Set texture filtering to linear
 			if( !SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1") ){
-				debug->l("[SDLLib] Warning: Linear texture filtering not enabled.");
+				LOG("[SDLLib] Warning: Linear texture filtering not enabled.\n");
 			}
 
 #ifdef _DEBUG
@@ -97,18 +97,18 @@ namespace Osaka{
 			window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_width, window_height, SDL_WINDOW_HIDDEN );
 #endif
 			if( window == NULL ){
-				debug->l(std::string("[SDLLib] Window could not be created! SDL_Error: ")+SDL_GetError());
+				LOG("[SDLLib] Window could not be created! SDL_Error: %s\n", SDL_GetError());
 				return false;
 			}
 			Uint32 flag = SDL_RENDERER_ACCELERATED;
 			if( vsync ){
-				debug->l("[SDLLib] VSync On");
+				LOG("[SDLLib] VSync On\n");
 				flag |= SDL_RENDERER_PRESENTVSYNC;
 			}
 			//Create renderer for window
 			renderer = SDL_CreateRenderer(window, -1, flag);
 			if( renderer == NULL ){
-				debug->l(std::string("[SDLLib] Renderer could not be created. SDL Error: ") + SDL_GetError());
+				LOG("[SDLLib] Renderer could not be created. SDL Error: %s\n", SDL_GetError());
 				return false;
 			}
 				
@@ -118,7 +118,7 @@ namespace Osaka{
 			//Initialize PNG loading
 			int imgFlags = IMG_INIT_PNG;
 			if( !(IMG_Init(imgFlags) & imgFlags)){
-				debug->l((std::string("[SDLLib] IMG_Init error! IMG_Error: ")+IMG_GetError()).c_str());
+				LOG("[SDLLib] IMG_Init error! IMG_Error: %s\n", IMG_GetError());
 				return false;
 			}else{
 				//Success
@@ -126,18 +126,18 @@ namespace Osaka{
 			}
 
 			/*if( TTF_Init() == -1 ){
-				printf("TTF_Init error! TTF_Error: %s\n", TTF_GetError() );
+				LOG("TTF_Init error! TTF_Error: %s\n", TTF_GetError() );
 				success = false;
 			}else{
 				SDLMain::Font = TTF_OpenFont("..\\test-sdl\\font.ttf", 12);
 				if( Font == NULL ){
-					printf("Failed to open font.tff. TTF_Error: %s\n", TTF_GetError());
+					LOG("Failed to open font.tff. TTF_Error: %s\n", TTF_GetError());
 				}
 			}*/
 
 			//chunk size is 1024 because there is only 1ms of lag when playing a song
 			if( Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0 ){
-				debug->l(std::string("[SDLLib] SDL_mixer could not initialize. SDL_mixer error: ") + Mix_GetError());
+				LOG("[SDLLib] SDL_mixer could not initialize. SDL_mixer error: %s\n", Mix_GetError());
 				//return false;
 			}
 				

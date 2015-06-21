@@ -24,16 +24,16 @@ namespace Osaka{
 		}
 		
 		void InitScene::ReadyShow(Engine::ESceneArgs& params){
-			printf("[InitScene] ReadyShow\n");
+			LOG("[InitScene] ReadyShow\n");
 			InitSceneArgs* args = dynamic_cast<InitSceneArgs*>(&params);
-			app->debug->l("[InitScene] Scene: " + args->scene);
+			LOG("[InitScene] Scene: %s\n", args->scene.c_str());
 			scene = args->scene;
 			init_args = args->init_args;
 		}
 		
 		void InitScene::Update(){
 			if( callTransition ){
-				printf("[InitScene] Update -> callTransition\n");
+				LOG("[InitScene] Update -> callTransition\n");
 				//Switch will make this scene go out of the loop.
 				app->FadeSwitchTransition(scene, init_args);
 				init_args = nullptr;

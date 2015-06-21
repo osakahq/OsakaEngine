@@ -28,7 +28,9 @@ namespace Osaka{
 			failedTests = 0;
 			succesfulTests = 0;
 
-			this->debug = new Debug::Debug("tests\\test-log.txt", true, Debug::DEBUG_LEVEL::CONSOLE);
+			/* This value should be gotten from command line arguments */
+			bool commandlineargs_debug = true;
+			this->debug = new Debug::Debug("tests\\test-log.txt", true, Debug::DEBUG_LEVEL::CONSOLE, commandlineargs_debug);
 			Network::ServerConn* conn = new Network::ServerConn(debug);
 			debug->init(conn);
 			rpgapp = NULL;
@@ -42,7 +44,7 @@ namespace Osaka{
 		
 		void RPGLibTestSuite::Run(TEST_PHASE::Value phase){
 			/* This has to be the same as in Ascension.cpp */
-			debug->l("[RPGLibTestSuite] Run");
+			LOG("[RPGLibTestSuite] Run\n");
 			
 			TestApplicationBuilder* appbuilder = new TestApplicationBuilder();
 
@@ -62,7 +64,7 @@ namespace Osaka{
 
 				rpgapp->Run("playbackintro_phase1_test1", Engine::EmptyESceneArgsPTR);
 			}else{
-				debug->l("[RPGLibTestSuite] Unkown phase.");
+				LOG("[RPGLibTestSuite] Unkown phase.\n");
 			}
 			
 			delete appbuilder;
@@ -73,13 +75,8 @@ namespace Osaka{
 			}else{
 				failedTests++;
 
-				std::string text = "Test failed. Line: [";
-				text += std::to_string(cline);
-				text += "] File: [";
-				text += cfile;
-
 				std::cout << Debug::red;
-				debug->l(text);
+				LOG("Test failed. Line: [%d] File: [%s]\n", cline, cfile);
 				std::cout << Debug::white;
 			}
 			
@@ -102,16 +99,16 @@ namespace Osaka{
 				int notcalled = 0;
 				int success = 0;
 				int fail = 0;
-				debug->l("[RPGLibTestSuite] Results (expected): ");
-				printf("[RPGLibTestSuite] [F]ailed/[N]ot called tests: ");
+				MULTIPLE_LOG_START("[RPGLibTestSuite] Results (expected): \n");
+				MULTIPLE_LOG_END("[RPGLibTestSuite] [F]ailed/[N]ot called tests: ");
 				for( auto it = expectedTests.begin(); it != expectedTests.end(); ++it ){
 					switch(it->second){
 					case ASSERTEX_NOTCALLED:
-						printf("%d[n], ", it->first);
+						LOG("%d[n], ", it->first);
 						++notcalled;
 						break;
 					case ASSERTEX_FAIL:
-						printf("%d[f], ", it->first);
+						LOG("%d[f], ", it->first);
 						++fail;
 						break;
 					case ASSERTEX_SUCCESS:
@@ -122,16 +119,16 @@ namespace Osaka{
 						break;
 					}
 				}
-				printf("\n");
-				debug->l(std::string("\t") + std::to_string(notcalled)+" not called tests.");
-				debug->l(std::string("\t") + std::to_string(success)+" succesful tests.");
-				debug->l(std::string("\t") + std::to_string(fail)+" failed tests.");
+				MULTIPLE_LOG_START("\n");
+				MULTIPLE_LOG("\t%d not called tests.\n", notcalled);
+				MULTIPLE_LOG("\t%d succesful tests.\n", success);
+				MULTIPLE_LOG_END("\t%d failed tests.\n", fail);
 				if( fail == 0 && notcalled == 0 ){
 					std::cout << Debug::green;
-					debug->l("[RPGLibTestSuite] Veredict (expected): PASSED");
+					LOG("[RPGLibTestSuite] Veredict (expected): PASSED\n");
 				}else{
 					std::cout << Debug::red;
-					debug->l("[RPGLibTestSuite] Veredict (expected): FAILED");
+					LOG("[RPGLibTestSuite] Veredict (expected): FAILED\n");
 				}
 				std::cout << Debug::white;
 
@@ -143,19 +140,19 @@ namespace Osaka{
 			}
 			if( succesfulTests == 0 && failedTests == 0 ){
 				std::cout << Debug::yellow;
-				debug->l("[RPGLibTestSuite] 0 tests were conducted.");
+				LOG("[RPGLibTestSuite] 0 tests were conducted.\n");
 				std::cout << Debug::white;
 				return;
 			}
-			debug->l("[RPGLibTestSuite] Results: ");
-			debug->l(std::string("\t") + std::to_string(succesfulTests)+" succesful tests.");
-			debug->l(std::string("\t") + std::to_string(failedTests)+" failed tests.");
+			MULTIPLE_LOG_START("[RPGLibTestSuite] Results: \n");
+			MULTIPLE_LOG("\t%d succesful tests.\n", succesfulTests);
+			MULTIPLE_LOG_END("\t%d failed tests.\n", failedTests);
 			if( failedTests == 0 ){
 				std::cout << Debug::green;
-				debug->l("[RPGLibTestSuite] Veredict: PASSED");
+				LOG("[RPGLibTestSuite] Veredict: PASSED\n");
 			}else{
 				std::cout << Debug::red;
-				debug->l("[RPGLibTestSuite] Veredict: FAILED");
+				LOG("[RPGLibTestSuite] Veredict: FAILED\n");
 			}
 			std::cout << Debug::white;
 		}
@@ -175,25 +172,14 @@ namespace Osaka{
 			loader->LoadGameFile(filedata, *data);
 
 			/* Since the file is already loaded... we only need to make sure it is correctly loaded... */
-			debug->l("[TestLoadGameFile] Start");
-			debug->l("[TestLoadGameFile] Spritemaps count: " + std::to_string(data->spritemaps.size()));
+			MULTIPLE_LOG_START("[TestLoadGameFile] Start\n");
+			MULTIPLE_LOG_END("[TestLoadGameFile] Spritemaps count: %d\n", data->spritemaps.size());
 
 			for( auto it = data->spritemaps.begin(); it != data->spritemaps.end(); ++it ){	
-				debug->l(
-					//std::string("\t ")+it->first+std::string(" ID: ")+it->second->id+std::string(" Filename: ")+it->second->filename+
-					std::string("\t ID: ")+it->first+
-					"\t Sprites count: " + std::to_string(it->second->sprites.size())
-				);
+				LOG("\t ID: %s \t %d\n", it->first.c_str(), it->second->sprites.size());
 				if( verbose ){
 					for( auto it_sprite = it->second->sprites.begin(); it_sprite != it->second->sprites.end(); ++it_sprite ){
-						debug->l(
-							//std::string("\t\t ")+it_sprite->first+std::string(" : ")+it_sprite->second.id +
-							std::string("\t\t ")+it_sprite->first+
-							std::string(" \t X: ")+std::to_string(it_sprite->second.clip.x)+
-							std::string(", Y: ")+std::to_string(it_sprite->second.clip.y)+
-							std::string(", W: ")+std::to_string(it_sprite->second.clip.w)+
-							std::string(", H: ")+std::to_string(it_sprite->second.clip.h)
-						);
+						LOG("\t\t %s \t X: %d, Y: %d, W: %d, H: %d \n", it_sprite->first.c_str(), it_sprite->second.clip.x, it_sprite->second.clip.y, it_sprite->second.clip.w, it_sprite->second.clip.h);
 					}
 				}
 			}
@@ -203,7 +189,7 @@ namespace Osaka{
 			
 			OSAKA_ASSERT( ( data->spritemaps.at("texturemap_cinematics")->colorkey.r == 0xFF ));
 			OSAKA_ASSERT( ( data->spritemaps.at("texturemap_common")->colorkey.b == 0xFF ));
-			debug->l("[TestLoadGameFile] Texturemap cinematics colorkey.r = " + std::to_string(data->spritemaps.at("texturemap_cinematics")->colorkey.r));
+			LOG("[TestLoadGameFile] Texturemap cinematics colorkey.r = %d\n", data->spritemaps.at("texturemap_cinematics")->colorkey.r);
 			sprite_data* sprite;
 			sprite = &data->spritemaps.at("texturemap_cinematics")->sprites.at("startmenu_background");
 			OSAKA_ASSERT( !( sprite->clip.x != 0 || sprite->clip.y != 0 || sprite->clip.w != 614 || sprite->clip.h != 608 ));//0 0 614 608

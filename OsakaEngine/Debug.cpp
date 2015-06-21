@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ #include "stdafx.h"
 #include "ServerConn.h"
 #include "Log.h"
 //For forward declarations, you need to add them last
@@ -9,7 +9,11 @@
 namespace Osaka{
 	namespace Debug{
 
-		Debug::Debug(const char* path, bool isConsoleAvailable, DEBUG_LEVEL::Value debug_level){
+		Debug::Debug(const char* path, bool isConsoleAvailable, DEBUG_LEVEL::Value debug_level, const bool _debug_log)
+			: debug_log(_debug_log)
+		{
+			__GLOBALVARS__debug = &this->debug_log;
+			
 			consoleAvailable = isConsoleAvailable;
 			log = new Log(path);
 			conn = NULL;
@@ -45,7 +49,7 @@ namespace Osaka{
 		}
 		void Debug::restart(){
 			if( conn->isConnected() ){
-				l("[Debug] Restart failed. Connection is on.");
+				__l("[Debug] Restart failed. Connection is on.");
 				return;
 			}
 			//conn->Stop(); //Start calls Stop();
@@ -59,7 +63,7 @@ namespace Osaka{
 		}
 		//TODO: Show message box if console is unavailable
 		void Debug::e(const char* str){
-			l(str);
+			__l(str);
 			//SetForegroundWindow(GetConsoleWindow());
 			std::wstring wstr;
 			std::string temp = str;
@@ -67,15 +71,19 @@ namespace Osaka{
 			MessageBox(NULL, wstr.c_str(), L"Debug - Exception", NULL);
 			throw std::exception(str);
 		}
-		void Debug::e(std::string str){
-			l(str.c_str());
+		void Debug::e(const std::string& str){
+			__l(str.c_str());
 			//SetForegroundWindow(GetConsoleWindow());
 			std::wstring wstr;
 			wstr.assign(str.begin(), str.end());
 			MessageBox(NULL, wstr.c_str(), L"Debug - Exception", NULL);
 			throw std::exception(str.c_str());
 		}
-		void Debug::l(const char* str, DEBUG_LOGCOLOR::Value color){
+		void Debug::__l(const char* str, DEBUG_LOGCOLOR::Value color){
+			if( color == DEBUG_LOGCOLOR::WHITE ){
+				__l(str);
+				return;
+			}
 			switch(color){
 			case DEBUG_LOGCOLOR::BLUE:
 				std::cout << blue;
@@ -89,20 +97,17 @@ namespace Osaka{
 			case DEBUG_LOGCOLOR::YELLOW:
 				std::cout << yellow;
 				break;
-			case DEBUG_LOGCOLOR::WHITE:
-				std::cout << white;
-				break;
 			}
-			l(str);
+			__l(str);
 			std::cout << white;
 		}
-		void Debug::l(std::string str, DEBUG_LOGCOLOR::Value color){
-			l(str.c_str(), color);
+		void Debug::__l(const std::string& str, DEBUG_LOGCOLOR::Value color){
+			__l(str.c_str(), color);
 		}
-		void Debug::l(std::string str){
-			l(str.c_str());
+		void Debug::__l(const std::string& str){
+			__l(str.c_str());
 		}
-		void Debug::l(const char* str){
+		void Debug::__l(const char* str){
 			if( noDebug )
 				return;
 			if( log == nullptr ){

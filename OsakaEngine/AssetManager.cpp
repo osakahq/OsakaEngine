@@ -71,7 +71,7 @@ namespace Osaka{
 		}
 		
 		void AssetManager::Init(RPGApplication* app){
-			debug->l("[AssetManager] Init");
+			LOG("[AssetManager] Init\n");
 			this->app = app;
 			for( auto it = assets_initload->begin(); it != assets_initload->end(); ++it ){
 				LoadAsset((*it->second).id);
@@ -118,7 +118,7 @@ namespace Osaka{
 				ResetEvent(sceneToLoadEvent);
 				SceneIsLoaded();
 			}
-			debug->l("[AssetManager] ProcessLoad thread ended gracefully.");
+			LOG("[AssetManager] ProcessLoad thread ended gracefully.\n");
 		}
 
 		void AssetManager::End(){
@@ -169,7 +169,7 @@ namespace Osaka{
 				app->CallLoad(data.id);
 				loadedScenes[data.id] = true;
 #ifdef _DEBUG
-				debug->l("[AssetManager] Loading scene: " + data.id);
+				LOG("[AssetManager] Loading scene: %s\n", data.id.c_str());
 #endif
 			}
 			

@@ -51,7 +51,7 @@ namespace Osaka{
 		}
 
 		void LoadingFadeScript::OnCanvasEndAnimation(Component::EventArgs& e){
-			app->debug->l("[LoadingFadeLayer] OnCanvasEndAnimation (Switch)");
+			LOG("[LoadingFadeLayer] OnCanvasEndAnimation (Switch)\n");
 			//If transitiontype == Stack, there is no endAnimation.
 			app->Remove(scene_parent->GetId());
 
@@ -59,7 +59,7 @@ namespace Osaka{
 		}
 		void LoadingFadeScript::OnCanvasMidAnimation(Component::EventArgs& e){
 			if( transition_type == TransitionType::FADE_STACK ){
-				app->debug->l("[LoadingFadeLayer] OnCanvasMidAnimation::Stack");
+				LOG("[LoadingFadeLayer] OnCanvasMidAnimation::Stack\n");
 				//If it is stack then, there is no fade out animation
 				app->Stack(scene_id, *scene_params.get());
 				scene_params = nullptr;
@@ -68,7 +68,7 @@ namespace Osaka{
 
 				ResetVariables();
 			}else if( transition_type == TransitionType::FADE_SWITCH ){
-				app->debug->l("[LoadingFadeLayer] OnCanvasMidAnimation::Switch");
+				LOG("[LoadingFadeLayer] OnCanvasMidAnimation::Switch\n");
 				/* Remove all scenes except this one */
 				app->RemoveAllFromStack(scene_parent->GetId());
 				app->BottomStack(scene_id, *scene_params.get());

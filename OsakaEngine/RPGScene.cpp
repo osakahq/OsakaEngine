@@ -106,7 +106,7 @@ namespace Osaka{
 			//You can't add layers inside the loop. stackHasChanged = true;
 		}
 		void RPGScene::Stack(const std::string& id, LayerArgs& args){
-			printf("[RPGScene] Stack\n");
+			LOG("[RPGScene] Stack\n");
 			if( stack_layers.size() > 0 ){
 				stack_layers.back()->StandBy();
 			}
@@ -118,7 +118,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void RPGScene::StackBefore(const std::string& id, const std::string& ref_layer, LayerArgs& args){
-			printf("[RPGScene] StackBefore\n");
+			LOG("[RPGScene] StackBefore\n");
 			Layer* layer = raw_layers[id];
 			auto it = std::find(stack_layers.begin(), stack_layers.end(), raw_layers[ref_layer]);
 			if( it == stack_layers.end() ){
@@ -132,7 +132,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void RPGScene::StackAfter(const std::string& id, const std::string& ref_layer, LayerArgs& args){
-			printf("[RPGScene] StackAfter\n");
+			LOG("[RPGScene] StackAfter\n");
 			Layer* layer_stack = raw_layers[id];
 			Layer* layer_ref = raw_layers[ref_layer];
 			auto it_ref = std::find(stack_layers.begin(), stack_layers.end(), layer_ref);
@@ -161,7 +161,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void RPGScene::Switch(const std::string& id, LayerArgs& args){
-			printf("[RPGScene] Switch\n");
+			LOG("[RPGScene] Switch\n");
 			//Removes all
 			RemoveAll();
 			Layer* layer = raw_layers[id];
@@ -171,7 +171,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void RPGScene::Remove(const std::string& id){
-			printf("[RPGScene] Remove\n");
+			LOG("[RPGScene] Remove\n");
 			if( stack_layers.size() == 1 ){
 				raw_layers[id]->Exit();
 				stack_layers.clear();
@@ -193,7 +193,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void RPGScene::RemoveAll(){
-			printf("[RPGScene] RemoveAll\n");
+			LOG("[RPGScene] RemoveAll\n");
 			int quantity = stack_layers.size();
 			std::copy(stack_layers.begin(), stack_layers.end(), copy_stack_layers);
 			stack_layers.clear();
@@ -210,7 +210,7 @@ namespace Osaka{
 			raw_mainscript->Update();
 
 			if( stackHasChanged ){
-				printf("[RPGScene] Update -> stackHasChanged\n");
+				LOG("[RPGScene] Update -> stackHasChanged\n");
 				temp_stack_layers_items = stack_layers.size();
 				std::copy(stack_layers.begin(), stack_layers.end(), temp_stack_layers);
 				stackHasChanged = false;
@@ -232,7 +232,7 @@ namespace Osaka{
 		}
 		
 		void RPGScene::Enter(){
-			printf("[RPGScene] Enter\n");
+			LOG("[RPGScene] Enter\n");
 			raw_mainscript->Enter();
 			for(int i = 0; i < map_size; ++i){
 				array_raw_layers[i]->Enter();

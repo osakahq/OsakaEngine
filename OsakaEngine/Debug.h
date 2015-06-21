@@ -20,21 +20,23 @@ namespace Osaka{
 		
 		class Debug{
 		public:
-			Debug(const char* path, bool isConsoleAvailable, DEBUG_LEVEL::Value debug_level);
+			Debug(const char* path, bool isConsoleAvailable, DEBUG_LEVEL::Value debug_level, const bool _debug_log);
 			~Debug();
 
 			void init(Network::ServerConn* conn);
 			//Restarts the connection
 			void restart();
 			void stop();
-			void l(const char* str);
-			void l(std::string str);
 
-			void l(const char* str, DEBUG_LOGCOLOR::Value color);
-			void l(std::string str, DEBUG_LOGCOLOR::Value color);
+			/* We are going to use the macro instead. If we need to log to network but create a new macro */
+			void __l(const char* str);
+			void __l(const std::string& str);
+			void __l(const char* str, DEBUG_LOGCOLOR::Value color);
+			void __l(const std::string& str, DEBUG_LOGCOLOR::Value color);
+
 			//e is to show errors.
 			void e(const char* str);
-			void e(std::string str);
+			void e(const std::string& str);
 			void setConsoleAvailable(bool isIt);
 			//Test the connection
 			void _test();
@@ -48,6 +50,7 @@ namespace Osaka{
 			/* Owner */
 			Network::ServerConn* conn;
 
+			const bool debug_log;
 			bool consoleAvailable;
 			bool noDebug;
 			bool onlyFileDebug;

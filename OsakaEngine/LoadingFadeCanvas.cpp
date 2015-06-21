@@ -46,7 +46,7 @@ namespace Osaka{
 		}
 		
 		void LoadingFadeCanvas::StartAnimation(TransitionType::Value type){
-			printf("[LoadingFadeCanvas] StartAnimation\n");
+			LOG("[LoadingFadeCanvas] StartAnimation\n");
 			this->type = type;
 			isAnimating = true;
 			beginSecondPart = false;
@@ -56,7 +56,7 @@ namespace Osaka{
 			timer->Start();
 		}
 		void LoadingFadeCanvas::BeginEndAnimation(){
-			layer_parent->raw_app->debug->l("[LoadingCanvas] Begin second part of animation");
+			LOG("[LoadingCanvas] Begin second part of animation\n");
 			beginSecondPart = true;
 		}
 		
@@ -73,7 +73,7 @@ namespace Osaka{
 					if( timer->GetTicks() >= fadeInTime ){
 						timer->Stop();
 						onMidAnimation = true;
-						printf("[LoadingFadeCanvas] Raising midAnimation Event\n");
+						LOG("[LoadingFadeCanvas] Raising midAnimation Event\n");
 						midAnimation->Raise(Component::EventArgs::CreateEmptyArgs());
 					}
 				}else{
@@ -81,14 +81,14 @@ namespace Osaka{
 						if( color.a == 255 && timer->IsStarted() == false ){
 							//With this `if` we make sure that the animation (fade in) ends before we start the fade out animation
 							//Doesn't matter if script called `BeginEndAnimation()` earlier than expected
-							printf("[LoadingFadeCanvas] Starting end animation.\n");
+							LOG("[LoadingFadeCanvas] Starting end animation.\n");
 							timer->Start();
 						}else{
 							//This means we are ready to go fade out and the fade in animation ended
 							color.a = static_cast<Uint8>( 255.f - Utils::Clamp( std::ceil((timer->GetTicks() / fadeOutTime)*255.f), 0.f, 255.f) );
 							if( timer->GetTicks() >= fadeOutTime ){
 								timer->Stop();
-								printf("[LoadingFadeCanvas] Raising end animation.\n");
+								LOG("[LoadingFadeCanvas] Raising end animation.\n");
 								endAnimation->Raise(Component::EventArgs::CreateEmptyArgs());
 								skipUpdate = true;
 							}

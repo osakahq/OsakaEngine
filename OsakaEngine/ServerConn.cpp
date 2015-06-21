@@ -383,7 +383,7 @@ namespace Osaka{
 				if( strcmp(str, "~server-im-here") == 0 ){
 					//do nothing
 				}else if( strcmp(str, "~hello-client") == 0 ){
-					debug->l("[ServerConn]  Server replied with hello client\n");
+					debug->__l("[ServerConn]  Server replied with hello client\n");
 				}else if( strcmp(str, "~close-connection") == 0 ){
 					this->Send("~bye");
 				}else{
@@ -470,7 +470,7 @@ namespace Osaka{
 			connIsUp = true;
 			//Send the first hello message
 			this->Send("~hello-server");
-			debug->l("[ServerConn]  Connected to server.");
+			debug->__l("[ServerConn]  Connected to server.");
 			return true;
 		}
 

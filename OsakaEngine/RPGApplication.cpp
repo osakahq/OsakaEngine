@@ -139,7 +139,7 @@ namespace Osaka{
 			assetm->End(); //Unloads the loaded scenes
 		}
 		void RPGApplication::FadeStackTransition(const std::string& scene, const Engine::ESceneArgsPTR& params){
-			printf("[RPGApplication] FadeStackTransition\n");
+			LOG("[RPGApplication] FadeStackTransition\n");
 			args->scene = scene;
 			args->send_params = params;
 			args->type = TransitionType::FADE_STACK;
@@ -148,7 +148,7 @@ namespace Osaka{
 			args->send_params = nullptr;
 		}
 		void RPGApplication::FadeSwitchTransition(const std::string& scene, const Engine::ESceneArgsPTR& params){
-			printf("[RPGApplication] FadeSwitchTransition\n");
+			LOG("[RPGApplication] FadeSwitchTransition\n");
 			args->scene = scene;
 			args->send_params = params;
 			args->type = TransitionType::FADE_SWITCH;
@@ -157,7 +157,7 @@ namespace Osaka{
 			args->send_params = nullptr;
 		}
 		void RPGApplication::LoadingStackTransition(const std::string& scene, const Engine::ESceneArgsPTR& params){
-			printf("[RPGApplication] LoadingStackTransition\n");
+			LOG("[RPGApplication] LoadingStackTransition\n");
 			args->scene = scene;
 			args->send_params = params;
 			args->type = TransitionType::LOADING_STACK;

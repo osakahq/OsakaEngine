@@ -3,6 +3,8 @@
 #include "LayerArgs.h"
 #include "ESceneArgs.h"
 
+const bool* __GLOBALVARS__debug = NULL;
+
 namespace Osaka{
 	namespace Engine{
 		std::shared_ptr<ESceneArgs> EmptyESceneArgsPTR = std::make_shared<ESceneArgs>();

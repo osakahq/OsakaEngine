@@ -38,7 +38,7 @@ namespace Osaka{
 			const int space_x;
 			const int space_y;
 			
-			std::string current_fps;
+			char current_fps[4];
 
 			const int target_fps;
 			int frames;
@@ -46,7 +46,7 @@ namespace Osaka{
 			/* If true everytime the loop ends (after Present), we count the frame ms */
 			const bool show_sum_frames;
 			Uint32 sum_frame_ms;
-			std::string average_frame_ms;
+			char average_frame_ms[6];
 			/* We need to make sure that average ms frames is perfect. That is why we need a separate variable (from frames) */
 			int calls;
 
@@ -58,7 +58,9 @@ namespace Osaka{
 
 			/* Owner */
 			StaticText* stext_ram;
-			std::string usedMB;
+			char usedMB[15];
+			/* This is a helper variable to overcome char array shortcomings */
+			int current_dot;
 			/* Every FPSCOUNTER_SECONDS_RAM seconds it will update */
 			int seconds;
 		};

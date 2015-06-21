@@ -28,7 +28,7 @@ namespace Osaka{
 			//TODO: I'm not sure if this goes here of factory
 			GameSession* gs = new GameSession();
 			//debug->l("[RPGFactory] TODO CREATEGAMESESSION");
-			printf("[RPGFactory] TODO CREATEGAMESESSION\n");
+			LOG("[RPGFactory] TODO CREATEGAMESESSION\n");
 			return gs;
 		}
 		GameSessionManager* GameSessionManager::CreateGameSessionManagerFromGameData(){
@@ -44,7 +44,7 @@ namespace Osaka{
 			//--}
 			
 			//--return gsm;
-			printf("[RPGFactory] TODO CreateGameSessionManagerFromGameData\n");
+			LOG("[RPGFactory] TODO CreateGameSessionManagerFromGameData\n");
 			return NULL;
 		}
 	}

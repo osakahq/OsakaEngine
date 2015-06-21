@@ -57,7 +57,7 @@ namespace Osaka{
 
 		void EApplication::Switch(const std::string& scene, ESceneArgs& in_param){
 			RemoveAllFromStack();
-			printf("[EApplication] Switch\n");
+			LOG("[EApplication] Switch\n");
 			EScene* sceneptr = raw_scenes[scene];
 
 			stack.push_back(sceneptr);
@@ -67,7 +67,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void EApplication::Stack(const std::string& scene, ESceneArgs& in_param){
-			printf("[EApplication] Stack\n");
+			LOG("[EApplication] Stack\n");
 			if( stack.size() > 0 ){
 				//We only need to call StandBy on current top scene because the others are already in standby
 				//Remember than the last one is the last one to be drawn, making it the top one.
@@ -83,7 +83,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void EApplication::BottomStack(const std::string& scene, ESceneArgs& in_param){
-			printf("[EApplication] BottomStack\n");
+			LOG("[EApplication] BottomStack\n");
 			EScene* sceneptr = raw_scenes[scene];
 
 			//When groing through the loop, 0 is first drawn, making it the bottom one.
@@ -94,7 +94,7 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 		void EApplication::Remove(const std::string& scene){
-			printf("[EApplication] Remove\n");
+			LOG("[EApplication] Remove\n");
 			auto it = std::find(stack.begin(), stack.end(), raw_scenes[scene]);
 			if( it == stack.end() ){
 				debug->e("[EApplication] Unkown scene (Remove function).");
@@ -120,7 +120,7 @@ namespace Osaka{
 		}
 		void EApplication::RemoveAllFromStack(const std::string& except_scene){
 			//Default: except_scene = ""
-			printf("[EApplication] RemoveAllFromStack\n");
+			LOG("[EApplication] RemoveAllFromStack\n");
 			if( stack.size() == 0 ){
 				if( !except_scene.empty() ){
 					debug->e("[EApplication] stack is empty but `except_scene` is not empty.");
@@ -196,7 +196,7 @@ namespace Osaka{
 			
 			//160ms which equals to roughly 10 updates max.
 			const Uint32 max_delta = maxUpdatesToCatchUp * _targetTimePerFrame;
-			printf("[EApplication] max_delta = %d\n", max_delta);
+			LOG("[EApplication] max_delta = %d\n", max_delta);
 			//Delta is the elapsed time since the last => (SDL_GetTicks())
 			Uint32 delta = 0;
 			Uint32 accumulated_delta = 0;
@@ -208,7 +208,7 @@ namespace Osaka{
 			Uint32 paused_time = 0;
 #endif
 
-			debug->l("[EApplication] Loop begins...\n\n");
+			LOG("[EApplication] Loop begins...\n\n");
 			for(auto it = raw_scenes.begin(); it != raw_scenes.end(); ++it ){
 				//Announce the loop is about to begin.
 				it->second->Start();
@@ -221,7 +221,7 @@ namespace Osaka{
 					//First increments then grabs value, so... we actually wait the for the actual frame to complete.
 					if( ++current_frame >= frames_per_key ){
 						current_frame = 0;
-						printf("-- Frame is paused, please press enter to continue...");
+						LOG("-- Frame is paused, please press enter to continue...\n");
 						paused_time = SDL_GetTicks();
 						getchar();
 						paused_time = SDL_GetTicks() - paused_time;
@@ -250,7 +250,7 @@ namespace Osaka{
 				/* If delta is lower than 16ms, that's fine. But it won't process `accumulated_delta` lower than 16ms */
 				if( delta > _targetTimePerFrame ){
 					std::cout << Debug::yellow;
-					printf("[EApplication] Delta is higher than target ms = %d\n", delta);
+					LOG("[EApplication] Delta is higher than target ms = %d\n", delta);
 					std::cout << Debug::white;
 					delta = _targetTimePerFrame;
 				}
@@ -264,7 +264,7 @@ namespace Osaka{
 					}else{
 						//We are setting delta a value of 16ms then substracting that to accumulated_delta
 						accumulated_delta -= delta = _targetTimePerFrame;
-						printf("[EApplication] Catching up...\n");
+						LOG("[EApplication] Catching up...\n");
 					}
 					
 					/* We consult the input every catch up, in order to be more responsive when lagging */
@@ -295,7 +295,7 @@ namespace Osaka{
 					/* The reason this is after tempStack is because if Enter stacks a scene, it will "queue" the enter function but call Update first.
 					 * In this order, first copies the tempStack then Enter and Update function will be called in the correct order. */
 					if( entering.size() > 0 ){
-						printf("[EApplication] Enter\n");
+						LOG("[EApplication] Enter\n");
 						//Basically, Enter() is like an early Update. I have decided it's okay to stack inside Enter as well (only Update and Enter)
 						//tempEntering.swap(entering); //`entering` will be empty.
 						temp_entering_items = entering.size();

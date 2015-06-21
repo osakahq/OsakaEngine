@@ -47,10 +47,10 @@ namespace Osaka{
 			 * For some reason if the file has \r\n and linefeed='\n', it bugs out. */
 			if(strcmp(GAMEDATA_LINEFEED_WINDOWS, root->first_attribute("linefeed")->value()) == 0){
 				linefeed = "\r\n";
-				debug->l("[GameData] linefeed is \\r\\n");
+				LOG("[GameData] linefeed is \\r\\n\n");
 			}else{
 				linefeed = "\n";
-				debug->l("[GameData] linefeed is \\n");
+				LOG("[GameData] linefeed is \\n\n");
 			}
 			
 			std::string loadin_type = root->first_node("asset-map")->first_attribute("loading")->value();
@@ -70,17 +70,17 @@ namespace Osaka{
 			data.default_render_color_data.b = std::stoi(drc_node->first_node("b")->value());
 			data.default_render_color_data.a = std::stoi(drc_node->first_node("a")->value());
 			
-			debug->l("[GameData] Loading asset-map:\"init-load\" data...");
+			LOG("[GameData] Loading asset-map:\"init-load\" data...\n");
 				LoadInitialAssetmap(data, *root->first_node("asset-map")->first_node("init-load"));
 			
 			/* This is a temporary variable, because the group data is inserted into the scene data. */
 			unorderedmap_group_data groups;
 			if( root->first_node("asset-map")->first_node("groups") != NULL ){
-				debug->l("[GameData] Loading asset-map:\"groups\"...");
+				LOG("[GameData] Loading asset-map:\"groups\"...\n");
 				LoadAssetGroups(groups, *root->first_node("asset-map")->first_node("groups"));
 			}
 			
-			debug->l("[GameData] Loading asset-map:\"scenes\"data...");
+			LOG("[GameData] Loading asset-map:\"scenes\"data...\n");
 				LoadScenesAssetmap(groups, data, *root->first_node("asset-map")->first_node("scenes"));
 			for(auto it = groups.begin(); it != groups.end(); ++it){
 				/* We need to delete them because when we pass them to the real map, we copy the values. */
@@ -88,13 +88,13 @@ namespace Osaka{
 			}
 			groups.clear();
 
-			debug->l("[GameData] Loading sprites map data...");
+			LOG("[GameData] Loading sprites map data...\n");
 				LoadSpritemaps(data, *root->first_node("spritemaps"), linefeed);
 
-			debug->l("[GameData] Loading sound data...");
+			LOG("[GameData] Loading sound data...\n");
 				LoadSounds(data, *root->first_node("sounds"));
 
-			debug->l("[GameData] Loading fontmap data...");
+			LOG("[GameData] Loading fontmap data...\n");
 				LoadFontmap(data, *root->first_node("fontmap"));
 
 		}

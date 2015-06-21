@@ -26,7 +26,7 @@ namespace Osaka{
 		}
 		void PlaybackIntroScript::Load(RPGFactory& factory){
 			//called from the loading thread.
-			app->debug->l("[PlaybackIntroScript] Load called.");
+			LOG("[PlaybackIntroScript] Load called.\n");
 		}
 		void PlaybackIntroScript::Ready(LayerArgs& args){
 			
