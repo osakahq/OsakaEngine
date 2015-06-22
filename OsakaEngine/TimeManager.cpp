@@ -9,9 +9,7 @@ namespace Osaka{
 			delta = 0;
 		}
 		TimeManager::~TimeManager(){
-#ifdef _DEBUG
-			_CHECKDELETE("TimeManager");
-#endif
+
 		}
 		
 		void TimeManager::Update(const Uint32 delta){

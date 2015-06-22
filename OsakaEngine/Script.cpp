@@ -14,11 +14,13 @@ namespace Osaka{
 			this->scene_parent = scene_parent;
 			layer_parent = NULL;
 			registree = Component::Registree::CreateRawRegistree();
+			__init = false;
 		}
 		Script::~Script(){
-#ifdef _DEBUG
-			_CHECKDELETE("Script");
-#endif		
+			if( !__init ){
+				LOG("[Script] Didn't call init");
+				throw std::exception("[Script] Didn't call init");
+			}
 			app = NULL;
 			scene_parent = NULL;
 			layer_parent = NULL;
@@ -27,6 +29,7 @@ namespace Osaka{
 		
 		void Script::Init(Layer* layer_parent){
 			this->layer_parent = layer_parent;
+			__init = true;
 		}
 
 		/* These functions are not required to be implemented in the derived classes */

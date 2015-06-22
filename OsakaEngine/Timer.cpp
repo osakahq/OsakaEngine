@@ -15,9 +15,6 @@ namespace Osaka{
 			mStarted = false;
 		}
 		Timer::~Timer(){
-#ifdef _DEBUG
-			_CHECKDELETE("Timer");
-#endif
 			timem= NULL;
 		}
 		

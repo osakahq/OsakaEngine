@@ -17,9 +17,6 @@ namespace Osaka{
 			vsync = true;
 		}
 		SDLLib::~SDLLib(){
-#ifdef _DEBUG
-			_CHECKDELETE("SDLLib");
-#endif
 			debug = NULL;
 			Mix_HaltMusic();
 			Mix_HaltChannel(-1); //-1 for all channels

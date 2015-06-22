@@ -13,54 +13,18 @@ void _STARTCHECKDELETE(bool ascension){
 	/* If it's false then only 1 call is expected to be called (one instance)
 	 * If it's true then 2 calls are expected (multiple instances) */
 	_check_delete_init = true;
-	_check_delete_info["Debug"] = false;
-	_check_delete_info["Log"] = false;
-	_check_delete_info["DefaultFileLoader"] = false;
-	_check_delete_info["EApplication"] = false;
-	_check_delete_info["SDLLib"] = false;
-	_check_delete_info["ServerConn"] = false;
-	_check_delete_info["RPGApplication"] = false;
-	_check_delete_info["TextureManager"] = false;
-
-	_check_delete_info["Ruler"] = false;
-	_check_delete_info["SceneFactory"] = false;
-	_check_delete_info["Factory"] = false;
-	_check_delete_info["GameDataLoader"] = false;
-	_check_delete_info["GameData"] = false;
-	_check_delete_info["Effect"] = true;
-	_check_delete_info["Layer"] = true;
-	_check_delete_info["SceneScript"] = true;
 	_check_delete_info["LoadingSceneScript"] = false;
 		
 	_check_delete_info["LoadingFadeScript"] = false;
 	_check_delete_info["LoadingFadeCanvas"] = false;
-	_check_delete_info["GameSessionManager"] = false;
-	_check_delete_info["AssetManager"] = false;
-	_check_delete_info["TimeManager"] = false;
-
-	_check_delete_info["InitScene"] = false;
+	
 	_check_delete_info["InitSceneArgs"] = false;
-		
-		
-	//I no longer need these 2.
-	//_check_delete_info["LayerArgs"] = true;
-	//_check_delete_info["ESceneArgs"] = true;
+	
 	_check_delete_info["LoadingArgs"] = true;
 	_check_delete_info["LoadingFadeLayerArgs"] = true;
 	
-	_check_delete_info["RPGScene"] = true;
-	_check_delete_info["Texture"] = true;
-	_check_delete_info["Sound"] = true;
-	_check_delete_info["Music"] = true;
-	_check_delete_info["SoundEffect"] = true;
-	_check_delete_info["UserInterface"] = true;
-	_check_delete_info["Script"] = true;
-	_check_delete_info["Canvas"] = true;
-	_check_delete_info["GameSession"] = true;
-	_check_delete_info["Timer"] = true;
-
 	if( ascension ){
-		_check_delete_info["AscApplication"] = false;
+		//_check_delete_info["AscApplication"] = false;
 	}
 }
 	

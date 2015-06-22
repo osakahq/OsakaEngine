@@ -12,9 +12,7 @@ namespace Osaka{
 
 		}
 		AscApplication::~AscApplication(){
-#ifdef _DEBUG
-			_CHECKDELETE("AscApplication");
-#endif
+
 		}
 		void AscApplication::_delete(){
 			RPGApplication::_delete();

@@ -9,9 +9,6 @@ namespace Osaka{
 			this->data = data;
 		}
 		GameSessionManager::~GameSessionManager(){
-#ifdef _DEBUG
-			_CHECKDELETE("GameSessionManager");
-#endif
 			data = NULL;
 			for(auto it = sessions.begin(); it != sessions.end(); ++it )
 				delete it->second;

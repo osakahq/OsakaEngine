@@ -3,9 +3,7 @@
 namespace Osaka{
 	namespace Engine{
 		DefaultFileLoader::~DefaultFileLoader(){
-#ifdef _DEBUG
-			_CHECKDELETE("DefaultFileLoader");
-#endif
+
 		}
 		
 		Mix_Music* DefaultFileLoader::LoadMusic(const char* path){

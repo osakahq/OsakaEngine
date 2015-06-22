@@ -9,9 +9,6 @@ namespace Osaka{
 			this->file = std::make_shared<std::ofstream>();
 		}
 		Log::~Log(){
-#ifdef _DEBUG
-			_CHECKDELETE("Log");
-#endif
 			if( file->is_open() ){
 				file->close();
 			}

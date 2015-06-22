@@ -35,6 +35,8 @@ namespace Osaka{
 			SDL_Renderer* raw_renderer;
 			/* NOT Owner */
 			Ruler* ruler;
+		private:
+			bool __init;
 		};
 	}
 }

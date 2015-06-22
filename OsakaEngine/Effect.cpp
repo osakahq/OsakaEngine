@@ -16,9 +16,6 @@ namespace Osaka{
 			raw_obj = NULL;
 		}
 		Effect::~Effect(){
-#ifdef _DEBUG
-			_CHECKDELETE("Effect");
-#endif
 			if( raw_obj != NULL ){
 				//It's okay to check because when drawable is being deleted, it announces to all effects.
 				raw_obj->RemoveEffect(this->id); //This will call `effect->Deattach()`

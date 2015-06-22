@@ -35,9 +35,6 @@ namespace Osaka{
 			texturem = NULL;
 		}
 		Factory::~Factory(){
-#ifdef _DEBUG
-			_CHECKDELETE("Factory");
-#endif		
 			sdl = NULL;
 			debug = NULL;
 			assetm = NULL;

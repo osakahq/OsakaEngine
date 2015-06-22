@@ -24,9 +24,6 @@ namespace Osaka{
 			}
 		}
 		SceneFactory::~SceneFactory(){
-#ifdef _DEBUG
-			_CHECKDELETE("SceneFactory");
-#endif	
 			factory = NULL;
 			app = NULL;
 			texturem = NULL;

@@ -57,9 +57,6 @@ namespace Osaka{
 		}
 
 		RPGApplication::~RPGApplication(){
-#ifdef _DEBUG
-			_CHECKDELETE("RPGApplication");
-#endif
 			delete settings; settings = NULL;
 			delete gameData; gameData = NULL;
 			delete gameDataParams; gameDataParams = NULL;

@@ -5,10 +5,7 @@ namespace Osaka{
 		GameSession::GameSession(){
 
 		}
-		GameSession::~GameSession(){
-#ifdef _DEBUG
-			_CHECKDELETE("GameSession");
-#endif		
+		GameSession::~GameSession(){	
 			//delete character;
 			//delete party;
 			//delete vars;

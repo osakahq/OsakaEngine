@@ -64,9 +64,6 @@ namespace Osaka{
 		}
 
 		ServerConn::~ServerConn(){
-#ifdef _DEBUG
-			_CHECKDELETE("ServerConn");
-#endif
 			delete ConnectionRecieveEvent; ConnectionRecieveEvent = NULL;
 			delete ConnectedEvent; ConnectedEvent = NULL;
 

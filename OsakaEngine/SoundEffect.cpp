@@ -9,9 +9,6 @@ namespace Osaka{
 			effect = NULL;
 		}
 		SoundEffect::~SoundEffect(){
-#ifdef _DEBUG
-			_CHECKDELETE("SoundEffect");
-#endif
 			if( effect != NULL )
 				Mix_FreeChunk(effect);
 		}

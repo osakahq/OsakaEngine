@@ -37,6 +37,8 @@ namespace Osaka{
 			/* Owner */
 			Component::Registree* registree;
 			
+		private:
+			bool __init;
 		};
 	}
 }

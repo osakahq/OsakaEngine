@@ -12,9 +12,6 @@ namespace Osaka{
 			asset_loading_type = AssetLoadingType::NOT_SET;
 		}
 		GameData::~GameData(){
-#ifdef _DEBUG
-			_CHECKDELETE("GameData");
-#endif
 			for(auto it = assets_initload.begin();	it != assets_initload.end(); ++it){ delete it->second; }
 			for(auto it = assets_scenes.begin();	it != assets_scenes.end(); ++it){ delete it->second; }
 

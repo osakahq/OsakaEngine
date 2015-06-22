@@ -36,9 +36,6 @@ namespace Osaka{
 			}
 		}
 		Debug::~Debug(){
-#ifdef _DEBUG
-			_CHECKDELETE("Debug");
-#endif
 			//~ServerConn() calls Stop(); so it may call `debug->l`
 			delete conn; conn = NULL;
 			delete log; log = NULL;

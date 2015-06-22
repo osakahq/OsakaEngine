@@ -10,9 +10,6 @@ namespace Osaka{
 			music = NULL;
 		}
 		Music::~Music(){
-#ifdef _DEBUG
-			_CHECKDELETE("Music");
-#endif
 			if( music != NULL )
 				Mix_FreeMusic(music);
 			music = NULL;

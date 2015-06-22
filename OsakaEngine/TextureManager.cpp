@@ -11,9 +11,6 @@ namespace Osaka{
 			this->factory = factory;
 		}
 		TextureManager::~TextureManager(){
-#ifdef _DEBUG
-			_CHECKDELETE("TextureManager");
-#endif
 			for(auto it = textures.begin(); it != textures.end(); ++it ){
 				delete it->second;
 			}

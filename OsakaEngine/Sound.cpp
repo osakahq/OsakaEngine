@@ -9,10 +9,7 @@ namespace Osaka{
 			this->debug = debug;
 			this->fileloader = fileloader;
 		}
-		Sound::~Sound(){
-#ifdef _DEBUG
-			_CHECKDELETE("Sound");
-#endif			 
+		Sound::~Sound(){			 
 			debug = NULL;
 			fileloader = NULL;
 		}

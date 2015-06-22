@@ -108,16 +108,7 @@ namespace Osaka{
 			std::unordered_map<std::string, sprite_data> sprites;
 		};
 		/* ------------------------------------------------------------------ */
-		struct startmenu_data{
-			startmenu_data(){};
-			std::string background_sprite;
-			std::string title_sprite;
-			std::string subtitle_sprite;
-
-			std::string loadgame_screen;
-			std::string savegame_screen;
-			std::string options_screen;
-		};
+		
 		struct stat_data{
 			stat_data(){};
 		};

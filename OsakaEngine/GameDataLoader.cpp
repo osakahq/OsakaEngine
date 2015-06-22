@@ -17,9 +17,6 @@ namespace Osaka{
 			this->debug = debug;
 		}
 		GameDataLoader::~GameDataLoader(){
-#ifdef _DEBUG
-			_CHECKDELETE("GameDataLoader");
-#endif		
 			debug = NULL;
 		}
 		

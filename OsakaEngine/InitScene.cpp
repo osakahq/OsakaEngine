@@ -11,10 +11,7 @@ namespace Osaka{
 			this->app = app;
 			callTransition = true;
 		}
-		InitScene::~InitScene(){
-#ifdef _DEBUG
-			_CHECKDELETE("InitScene");
-#endif		
+		InitScene::~InitScene(){	
 			app = NULL;
 			init_args = nullptr;
 		}

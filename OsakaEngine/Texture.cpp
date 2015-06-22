@@ -17,9 +17,6 @@ namespace Osaka{
 			this->fileloader = fileloader;
 		}
 		Texture::~Texture(){
-#ifdef _DEBUG
-			_CHECKDELETE("Texture");
-#endif
 			if( texture != NULL ){
 				SDL_DestroyTexture(texture);
 				texture = NULL;

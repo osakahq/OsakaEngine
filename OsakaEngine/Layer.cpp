@@ -21,10 +21,7 @@ namespace Osaka{
 			standby = false;
 			hidden = false;
 		}
-		Layer::~Layer(){
-#ifdef _DEBUG
-			_CHECKDELETE("Layer");
-#endif		
+		Layer::~Layer(){	
 			/* You must *NOT* use external pointers. */
 			delete raw_ui;		raw_ui = NULL;
 			delete raw_canvas;	raw_canvas = NULL;

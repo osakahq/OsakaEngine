@@ -21,10 +21,7 @@ namespace Osaka{
 			map_size = 0;
 
 		}
-		RPGScene::~RPGScene(){
-#ifdef _DEBUG
-			_CHECKDELETE("RPGScene");
-#endif			
+		RPGScene::~RPGScene(){			
 			delete raw_mainscript; raw_mainscript = NULL;
 			stack_layers.clear();
 

@@ -16,11 +16,13 @@ namespace Osaka{
 			scene_parent = NULL;
 
 			registree = Component::Registree::CreateRawRegistree();
+			__init = false;
 		}
 		Canvas::~Canvas(){
-#ifdef _DEBUG
-			_CHECKDELETE("Canvas");
-#endif			
+			if( !__init ){
+				LOG("[Canvas] Didn't call init");
+				throw std::exception("[Canvas] Didn't call init");
+			}
 			layer_parent = NULL;
 			scene_parent = NULL;
 			ruler = NULL;
@@ -31,11 +33,13 @@ namespace Osaka{
 		void Canvas::Init(Layer* layer_parent, RPGScene* scene_parent, Script* script, SceneScript* mainscript){
 			this->layer_parent = layer_parent;
 			this->scene_parent = scene_parent;
+			__init = true;
 		}
 		void Canvas::Init(Layer* layer_parent, RPGScene* scene_parent){
 			//This is the function the derived class will call if it overrides the INit(layer,scene,script,mainscript) function
 			this->layer_parent = layer_parent;
 			this->scene_parent = scene_parent;
+			__init = true;
 		}
 
 		/* These functions are not required to be implemented in the derived classes */

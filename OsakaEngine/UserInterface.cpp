@@ -11,11 +11,13 @@ namespace Osaka{
 			this->ruler = ruler;
 
 			layer_parent = NULL;
+			__init = false;
 		}
 		UserInterface::~UserInterface(){
-#ifdef _DEBUG
-			_CHECKDELETE("UserInterface");
-#endif
+			if( !__init ){
+				LOG("[UserInterface] Didn't call init");
+				throw std::exception("[UserInterface] Didn't call init");
+			}
 			raw_renderer = NULL;
 			layer_parent = NULL;
 			ruler = NULL;
@@ -23,6 +25,7 @@ namespace Osaka{
 		
 		void UserInterface::Init(Layer* layer_parent){
 			this->layer_parent = layer_parent;
+			__init = true;
 		}
 
 		/* These functions are not required to be implemented in the derived classes */

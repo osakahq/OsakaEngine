@@ -32,9 +32,6 @@ namespace Osaka{
 			app = NULL;
 		}
 		AssetManager::~AssetManager(){
-#ifdef _DEBUG
-			_CHECKDELETE("AssetManager");
-#endif	
 			signalStopLoadThread = true;
 			/* We need to make sure to signal the event or it will be forever waiting */
 			SetEvent(sceneToLoadEvent);

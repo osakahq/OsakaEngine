@@ -23,10 +23,7 @@ namespace Osaka{
 			entering.reserve(EAPP_MAXSTACK);
 			stackHasChanged = true;
 		}
-		EApplication::~EApplication(){
-#ifdef _DEBUG
-			_CHECKDELETE("EApplication");
-#endif		
+		EApplication::~EApplication(){		
 			stack.clear();
 			entering.clear();
 			

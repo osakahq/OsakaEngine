@@ -46,6 +46,8 @@ namespace Osaka{
 			Ruler* ruler;
 			/* Owner */
 			Component::Registree* registree;
+		private:
+			bool __init;
 		};
 	}
 }
