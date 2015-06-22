@@ -54,10 +54,11 @@ namespace Osaka{
 		void FadeInOutCanvas::BeginEndAnimation(){
 			effect->BeginEndAnimation();
 		}
-		void FadeInOutCanvas::SetFadeTimes(float fadein, float fadeout){
+		void FadeInOutCanvas::SetFadeTimes(float fadein, float fadeout, float still){
 			//This is called when you call the Layer Ready (coming from Script)
 			effect->fadeInTime = fadein;
 			effect->fadeOutTime = fadeout;
+			effect->stillTime = still;
 		}
 		void FadeInOutCanvas::Ready(){
 			square->Reset();

@@ -30,7 +30,7 @@ namespace Osaka{
 			void BeginEndAnimation();
 
 			/* Called from script */
-			void SetFadeTimes(float fadein, float fadeout);
+			void SetFadeTimes(float fadein, float fadeout, float still);
 		protected:
 			/* Owner */
 			Square* square;

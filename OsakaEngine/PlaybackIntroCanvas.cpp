@@ -106,6 +106,7 @@ namespace Osaka{
 			switch(phase){
 			case 0:
 				if( timer->GetTicks() >= 2000 ){
+					args->stillTime = 0;
 					args->fadeInTime = args->fadeOutTime = 2500;
 					scene_parent->Stack(mainscript->fadelayer_id, *args);
 					timer->Stop();
@@ -113,6 +114,7 @@ namespace Osaka{
 				break;
 			case 1:
 				if( timer->GetTicks() >= 3500 ){
+					args->stillTime = 800;
 					args->fadeInTime = args->fadeOutTime = 2500;
 					scene_parent->Stack(mainscript->fadelayer_id, *args);
 					timer->Stop();

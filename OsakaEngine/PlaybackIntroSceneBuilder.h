@@ -17,7 +17,7 @@ namespace Osaka{
 			virtual SceneScript* CreateMainScript() override;
 			virtual void CreateLayers(RPGScene& scene, SceneScript& mainscript) override;
 			virtual LayerData CreateMainLayer(RPGScene& scene, PlaybackIntroSceneScript& mainscript);
-			virtual LayerData CreateFadeLayer(RPGScene& scene, PlaybackIntroSceneScript& mainscript);
+			
 			virtual PlaybackIntroScript* CreateLayer1Script(PlaybackIntroCanvas& canvas, RPGScene& scene, PlaybackIntroSceneScript& mainscript);
 
 			virtual PlaybackIntroCanvas* CreateLayer1Canvas();

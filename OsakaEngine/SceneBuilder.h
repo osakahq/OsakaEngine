@@ -39,6 +39,8 @@ namespace Osaka{
 
 			/* Helper functions. Gives away ownership. */
 			UserInterface* CreateDummyUI();
+			virtual LayerData CreateFadeLayer(RPGScene& scene, PlaybackIntroSceneScript& mainscript);
+
 			/* This is a helper function that creates and inits the layer */
 			Layer* CreateAndInitLayer(const std::string& name, Script& script, Canvas& canvas, UserInterface& ui);
 			/* This is a helper function and not required. If you need custom inits, then you have to call the inits in a function like `InitLayer1` */

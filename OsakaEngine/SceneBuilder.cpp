@@ -12,6 +12,10 @@
 #include "RPGScene.h"
 #include "UserInterface.h"
 #include "TextureManager.h"
+
+#include "FadeInOutCanvas.h"
+#include "FadeInOutScript.h"
+
 #include "SceneBuilder.h"
 
 namespace Osaka{
@@ -62,6 +66,14 @@ namespace Osaka{
 
 		UserInterface* SceneBuilder::CreateDummyUI(){
 			return new UserInterface(raw_renderer, ruler);
+		}
+		LayerData SceneBuilder::CreateFadeLayer(RPGScene& scene, PlaybackIntroSceneScript& mainscript){
+			FadeInOutCanvas* canvas = new FadeInOutCanvas(this->raw_renderer, this->ruler);
+			FadeInOutScript* script = new FadeInOutScript(app, &scene, canvas);
+			UserInterface* ui = CreateDummyUI();
+
+			LayerData data(script, canvas, ui);
+			return data;
 		}
 
 		Layer* SceneBuilder::CreateAndInitLayer(const std::string& name, Script& script, Canvas& canvas, UserInterface& ui){

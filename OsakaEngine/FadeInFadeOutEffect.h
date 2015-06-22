@@ -26,6 +26,7 @@ namespace Osaka{
 
 			float fadeInTime;
 			float fadeOutTime;
+			float stillTime;
 		protected:
 			/* In case you don't need to wait for something. */
 			bool pause_on_midanim;
@@ -33,6 +34,8 @@ namespace Osaka{
 			Timer* timer;
 			Uint8 alpha;
 
+			bool begin;
+			bool beginStillTime;
 			/* TODO: update description: When the animation starts, it has to stop in black (and letters "loading"), we need script to let us know when to being the end animation */
 			bool beginSecondPart;
 			/* So we can know we finished, the first animation */

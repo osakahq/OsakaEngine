@@ -24,11 +24,14 @@ namespace Osaka{
 
 			pause_on_midanim = true;
 			alpha = 0;
+			begin = false;
 			beginSecondPart = false;
 			onMidAnimation = false;
+			beginStillTime = false;
 
 			fadeInTime = 750;
 			fadeOutTime = 750;
+			stillTime = 750;
 		}
 		FadeInFadeOutEffect::~FadeInFadeOutEffect(){
 			delete midAnimation; midAnimation = NULL;
@@ -40,23 +43,31 @@ namespace Osaka{
 			if( !isActive )
 				return;
 			
-			if( onMidAnimation == false ){
+			//onMidAnimation == false
+			if( begin ){
 				//This means we are animating, but we are in the fade in part
 				//Alpha is related to how much time has passed. The animation must be finished in 1 second (fade in)
 				alpha = static_cast<Uint8>(Utils::Clamp( std::ceil((timer->GetTicks() / fadeInTime)*255.f), 0.f, 255.f));
 				raw_obj->rgba.a = alpha;
 				if( timer->GetTicks() >= fadeInTime ){
+					timer->Start();
+					beginStillTime = true;
+					begin = false;
+				}
+			}else if( beginStillTime ){
+				if( timer->GetTicks() >= stillTime ){
 					LOG("[FadeInFadeOutEffect] Update -> !onMidAnimation [mid]\n");
 					timer->Stop();
 					onMidAnimation = true;
+					beginStillTime = false;
 					midAnimation->Raise(Component::EventArgs::CreateEmptyArgs());
 
 					if( pause_on_midanim == false ){
 						beginSecondPart = true;
 					}
 				}
-			}else{
-				if( beginSecondPart ){
+			}else if( onMidAnimation ){ 
+				if( beginSecondPart ){ 
 					if( alpha == 255 && timer->IsStarted() == false ){
 						//With this `if` we make sure that the animation (fade in) ends before we start the fade out animation
 						//Doesn't matter if script called `BeginEndAnimation()` earlier than expected
@@ -73,8 +84,7 @@ namespace Osaka{
 							this->OneLoopDone();
 						}
 					}
-				}
-					
+				}	
 			}
 			
 		}
@@ -84,7 +94,9 @@ namespace Osaka{
 		void FadeInFadeOutEffect::Reset(){
 			Effect::Reset();
 			beginSecondPart = false;
+			beginStillTime = false;
 			onMidAnimation = false;
+			begin = true;
 			alpha = 0;
 			raw_obj->rgba.a = 0;
 			timer->Start();

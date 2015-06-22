@@ -17,8 +17,13 @@ namespace Osaka{
 
 				callbackOnMidAnimation = std::make_shared<Component::Callback>();
 				callbackOnEndAnimation = std::make_shared<Component::Callback>();
+
+				stillTime = 750;
+				fadeInTime = 750;
+				fadeOutTime = 750;
 			}
 			float fadeInTime;
+			float stillTime;
 			float fadeOutTime;
 
 			/* Ownership of these 2 passes to FadeInOutScript. There is no `_delete` */

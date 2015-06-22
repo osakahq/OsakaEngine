@@ -34,7 +34,7 @@ namespace Osaka{
 			
 			/* The reason LayerWrapper has id_layer is that it can be safely overriden (`CreateMainLayer`, etc. functions) */
 			this->LayerWrapper(pmainscript->mainlayer_id, CreateMainLayer(scene, *pmainscript), scene, mainscript);
-			this->LayerWrapper(pmainscript->fadelayer_id, CreateFadeLayer(scene, *pmainscript), scene, mainscript);
+			this->LayerWrapper(pmainscript->fadelayer_id, SceneBuilder::CreateFadeLayer(scene, *pmainscript), scene, mainscript);
 		}
 
 		LayerData PlaybackIntroSceneBuilder::CreateMainLayer(RPGScene& scene, PlaybackIntroSceneScript& mainscript){
@@ -49,14 +49,7 @@ namespace Osaka{
 			LayerData data(script, canvas, ui);
 			return data;
 		}
-		LayerData PlaybackIntroSceneBuilder::CreateFadeLayer(RPGScene& scene, PlaybackIntroSceneScript& mainscript){
-			FadeInOutCanvas* canvas = new FadeInOutCanvas(this->raw_renderer, this->ruler);
-			FadeInOutScript* script = new FadeInOutScript(app, &scene, canvas);
-			UserInterface* ui = CreateDummyUI();
-
-			LayerData data(script, canvas, ui);
-			return data;
-		}
+		
 		PlaybackIntroScript* PlaybackIntroSceneBuilder::CreateLayer1Script(PlaybackIntroCanvas& canvas, RPGScene& scene, PlaybackIntroSceneScript& mainscript){
 			return new PlaybackIntroScript(app, &scene, &canvas, &mainscript);
 		}

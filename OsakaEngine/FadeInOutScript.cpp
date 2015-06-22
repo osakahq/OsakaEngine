@@ -31,7 +31,7 @@ namespace Osaka{
 			FadeInOutLayerArgs* fargs = dynamic_cast<FadeInOutLayerArgs*>(&args);
 			callbackOnEndAnimation = fargs->callbackOnEndAnimation;
 			callbackOnMidAnimation = fargs->callbackOnMidAnimation;
-			canvas->SetFadeTimes(fargs->fadeInTime, fargs->fadeOutTime);
+			canvas->SetFadeTimes(fargs->fadeInTime, fargs->fadeOutTime, fargs->stillTime);
 			removeItselfWhenFinished = fargs->removeItselfWhenFinished;
 		}
 
