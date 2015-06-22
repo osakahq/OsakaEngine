@@ -6,9 +6,7 @@
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
-		//Forward
-		class FadeInOutLayerArgs;
-
+		
 		class PlaybackIntroCanvas : public Canvas{
 		public:
 			PlaybackIntroCanvas(SDL_Renderer* raw_renderer, Ruler* ruler);
@@ -22,9 +20,9 @@ namespace Osaka{
 			void Draw() override;
 
 			/* These are called from "fadelayer" */
-			void CallbackLayerMidAnimation(Component::EventArgs& e);
-			void CallbackLayerEndAnimation(Component::EventArgs& e);
-		private:
+			virtual void CallbackLayerMidAnimation(Component::EventArgs& e);
+			virtual void CallbackLayerEndAnimation(Component::EventArgs& e);
+		protected:
 			/* phase = 0: just entered 
 			 * phase = 1: is fading for engine logo
 			 * phase = 2: is showing engine logo 

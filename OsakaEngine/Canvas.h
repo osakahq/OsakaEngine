@@ -32,6 +32,8 @@ namespace Osaka{
 			virtual void Update() = 0;
 			virtual void Draw() = 0;
 
+			/* When the loop ends. */
+			virtual void End();
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner. Raw */

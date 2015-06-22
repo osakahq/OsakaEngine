@@ -38,5 +38,6 @@ namespace Osaka{
 
 		void UserInterface::Update(){}
 		void UserInterface::Draw(){}
+		void UserInterface::End(){}
 	}
 }

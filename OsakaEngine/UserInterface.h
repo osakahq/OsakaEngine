@@ -26,6 +26,7 @@ namespace Osaka{
 			virtual void Update();
 			virtual void Draw();
 
+			virtual void End();
 		/* ----------------------------------------------------------------------------------- */
 		protected:
 			/* NOT Owner. Layer parent */

@@ -48,6 +48,7 @@ namespace Osaka{
 		void Canvas::Show(){}
 		void Canvas::StandBy(){}
 		void Canvas::Focus(){}
+		void Canvas::End(){}
 
 	}
 }

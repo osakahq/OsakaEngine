@@ -118,6 +118,8 @@ namespace Osaka{
 		}
 		void Layer::End(){
 			raw_script->End();
+			raw_canvas->End();
+			raw_ui->End();
 		}
 	}
 }

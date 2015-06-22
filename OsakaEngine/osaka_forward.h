@@ -83,7 +83,8 @@ namespace Osaka{
 		class OneLayerScript;	
 
 		class FadeInOutScript;	
-		class FadeInOutCanvas;	
+		class FadeInOutCanvas;
+		class FadeInOutLayerArgs;
 
 		class LoadingArgs;
 		class LoadingSceneScript;
