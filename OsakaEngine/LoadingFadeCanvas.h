@@ -14,7 +14,7 @@ namespace Osaka{
 			LoadingFadeCanvas(SDL_Renderer* raw_renderer, Ruler* ruler, Timer* timer);
 			~LoadingFadeCanvas();
 			
-			void Update() override;
+			void Update(Engine::keyboard_state& state) override;
 			void Draw() override;
 
 			void StartAnimation(TransitionType::Value type);

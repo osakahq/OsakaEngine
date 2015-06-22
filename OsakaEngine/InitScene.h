@@ -13,7 +13,7 @@ namespace Osaka{
 			~InitScene();
 			
 			void ReadyShow(Engine::ESceneArgs& params) override;
-			void Update() override;
+			void Update(Engine::keyboard_state& state) override;
 			
 			std::string GetId() override;
 

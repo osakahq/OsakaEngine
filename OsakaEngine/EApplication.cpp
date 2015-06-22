@@ -6,6 +6,7 @@
 #include "EScene.h"
 #include "IFileLoader.h"
 #include "EApplication.h"
+#include "rpglib_include.h"
 #include "osaka_forward.h"
 
 #ifdef _DEBUG
@@ -22,8 +23,10 @@ namespace Osaka{
 			stack.reserve(EAPP_MAXSTACK);
 			entering.reserve(EAPP_MAXSTACK);
 			stackHasChanged = true;
+
+			state = new keyboard_state();
 		}
-		EApplication::~EApplication(){		
+		EApplication::~EApplication(){
 			stack.clear();
 			entering.clear();
 			
@@ -34,6 +37,7 @@ namespace Osaka{
 			delete sdl; sdl = NULL;
 			delete fileloader; fileloader = NULL;
 			debug = NULL;
+			delete state; state = NULL;
 		}
 		
 		void EApplication::Init(bool vsync, int timePerFrame, int maxUpdatesToCatchUp){
@@ -198,13 +202,15 @@ namespace Osaka{
 			Uint32 delta = 0;
 			Uint32 accumulated_delta = 0;
 			
+			bool enable_commands = false;
+
 #ifdef EAPPLICATION_PAUSEFRAME
 			bool pause_frame = false;
 			const int frames_per_key = 3;
 			int current_frame = 0;
 			Uint32 paused_time = 0;
 #endif
-
+			state->keystate = SDL_GetKeyboardState(NULL);
 			LOG("[EApplication] Loop begins...\n\n");
 			for(auto it = raw_scenes.begin(); it != raw_scenes.end(); ++it ){
 				//Announce the loop is about to begin.
@@ -265,21 +271,43 @@ namespace Osaka{
 					}
 					
 					/* We consult the input every catch up, in order to be more responsive when lagging */
+					// `SDL_PumpEvents` is not needed because `SDL_PollEvent` calls it.
+					state->keystate_down = state->keystate_up = false;
 					while( SDL_PollEvent(&e) != 0 ){
-						if( e.type == SDL_QUIT ){
+						switch(e.type){
+						case SDL_KEYDOWN:
+							state->keystate_down = true;
+							break;
+						case SDL_KEYUP:
+							state->keystate_up = true;
+							break;
+						case SDL_QUIT:
 							quit = true;
-						}else if( e.type == SDL_KEYDOWN ){
-#ifdef EAPPLICATION_PAUSEFRAME
-							switch(e.key.keysym.sym){
-							case SDLK_F1:
-								pause_frame = (pause_frame) ? false : true;
-								current_frame = 0;
-								break;
-							}
-#endif
+							break;
 						}
 					}
 					
+					if( state->keystate_down && state->keystate[SDL_SCANCODE_F1] ){
+						enable_commands = (enable_commands) ? false : true;
+						LOG("[EApplication] Commands enabled?: %d\n", enable_commands);
+					}
+					if( enable_commands && state->keystate_down ){
+						if( state->keystate[SDL_SCANCODE_F3] ){
+							//Shows the current stack
+							MULTIPLE_LOG_START("[EApplication] Stack[%d]:", stack.size());
+							for(unsigned int i = 0; i < stack.size(); ++i){
+								MULTIPLE_LOG("%s, ", stack[i]->GetId().c_str());
+							}
+							MULTIPLE_LOG_END("\n");
+						}
+#ifdef EAPPLICATION_PAUSEFRAME
+						if( state->keystate[SDL_SCANCODE_F2] ){
+							pause_frame = (pause_frame) ? false : true;
+							current_frame = 0;
+						}
+#endif
+					}
+
 					/* We need to copy it because a scene in `Update()` can mess the stack/loop 
 					 * The changes are not "seen" until the next update. */
 					if( stackHasChanged ){
@@ -303,7 +331,7 @@ namespace Osaka{
 						}
 					}
 					for(int i = 0; i < temp_stack_items; i++){
-						temp_stack[i]->Update();
+						temp_stack[i]->Update(*state);
 					}
 
 				}while(accumulated_delta >= _targetTimePerFrame);

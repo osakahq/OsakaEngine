@@ -23,7 +23,7 @@ namespace Osaka{
 			void StandBy() override;
 			void Focus() override;
 
-			void Update() override;
+			void Update(Engine::keyboard_state& state) override;
 			void Draw() override;
 
 		/* ----------------------------------------------------------------------------------- */

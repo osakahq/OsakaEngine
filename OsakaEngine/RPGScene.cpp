@@ -201,10 +201,10 @@ namespace Osaka{
 			stackHasChanged = true;
 		}
 
-		void RPGScene::Update(){
+		void RPGScene::Update(Engine::keyboard_state& state){
 			if( hidden )
 				return;
-			raw_mainscript->Update();
+			raw_mainscript->Update(state);
 
 			if( stackHasChanged ){
 				LOG("[RPGScene] Update -> stackHasChanged\n");
@@ -213,7 +213,7 @@ namespace Osaka{
 				stackHasChanged = false;
 			}
 			for(int i = 0; i < temp_stack_layers_items; ++i){
-				temp_stack_layers[i]->Update();
+				temp_stack_layers[i]->Update(state);
 			}
 		}
 		void RPGScene::Draw(){

@@ -32,7 +32,7 @@ namespace Osaka{
 			
 		}
 
-		void PlaybackIntroScript::Update(){
+		void PlaybackIntroScript::Update(Engine::keyboard_state& state){
 			
 		}
 

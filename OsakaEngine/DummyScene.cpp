@@ -13,7 +13,7 @@ namespace Osaka{
 			
 		}
 		
-		void DummyScene::Update(){
+		void DummyScene::Update(Engine::keyboard_state& state){
 			
 		}
 		

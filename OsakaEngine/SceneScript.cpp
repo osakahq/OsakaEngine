@@ -28,7 +28,7 @@ namespace Osaka{
 		void SceneScript::StandBy(){}
 		void SceneScript::Focus(){}
 
-		void SceneScript::Update(){
+		void SceneScript::Update(Engine::keyboard_state& state){
 
 		}
 		void SceneScript::End(){}

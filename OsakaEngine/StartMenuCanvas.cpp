@@ -18,7 +18,7 @@ namespace Osaka{
 		StartMenuCanvas::~StartMenuCanvas(){
 
 		}
-		void StartMenuCanvas::Update(){
+		void StartMenuCanvas::Update(Engine::keyboard_state& state){
 		}
 		void StartMenuCanvas::Draw(){
 		}

@@ -13,7 +13,7 @@ namespace Osaka{
 			~DummyScene();
 			
 			void ReadyShow(Engine::ESceneArgs& params) override;
-			void Update() override;
+			void Update(Engine::keyboard_state& state) override;
 			
 			/* I need to implement these methods because I'm inheriting from EScene and not RPGScene */
 			void Start() override;

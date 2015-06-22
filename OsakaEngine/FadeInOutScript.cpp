@@ -51,7 +51,7 @@ namespace Osaka{
 				callbackOnEndAnimation = nullptr;
 			}
 		}
-		void FadeInOutScript::Update(){
+		void FadeInOutScript::Update(Engine::keyboard_state& state){
 			if( midAnimationEnded ){
 				canvas->BeginEndAnimation();
 				midAnimationEnded = false;

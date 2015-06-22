@@ -39,7 +39,7 @@ namespace Osaka{
 		void UserInterface::StandBy(){}
 		void UserInterface::Focus(){}
 
-		void UserInterface::Update(){}
+		void UserInterface::Update(Engine::keyboard_state& state){}
 		void UserInterface::Draw(){}
 		void UserInterface::End(){}
 	}

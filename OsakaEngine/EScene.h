@@ -36,7 +36,7 @@ namespace Osaka{
 			/* Called when the scene is BACK on top of the stack (already in stack) */
 			virtual void Focus() = 0;
 
-			virtual void Update() = 0;
+			virtual void Update(keyboard_state& state) = 0;
 			virtual void Draw() = 0;
 
 			/* Called when the application is closing... */

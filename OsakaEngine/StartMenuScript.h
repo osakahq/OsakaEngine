@@ -14,7 +14,7 @@ namespace Osaka{
 			StartMenuScript(RPGApplication* app, RPGScene* parent, StartMenuCanvas* canvas, StartMenuSceneScript* mainscript);
 			~StartMenuScript();
 			
-			void Update() override;
+			void Update(Engine::keyboard_state& state) override;
 			/* This function is called when entering the stack */
 			void Ready(LayerArgs& args) override;
 		/* ----------------------------------------------------------------------------------- */

@@ -49,8 +49,11 @@ namespace Osaka{
 			/* Removes all scenes from the stack */
 			void RemoveAllFromStack(const std::string& except_scene = "");
 
+			/* Owner. This is passed by in `Update()` */
+			Engine::keyboard_state* state;
 		/* ----------------------------------------------------------------------------------- */
 		protected:
+
 			/* Owner. This class is the owner of the scenes. So, it is its responsability to delete them
 			 * All other vector/arrays that use the raw pointer, its fine because the scenes won't be deleted but in `_delete` */
 			std::unordered_map<std::string, EScene*> raw_scenes;

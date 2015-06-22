@@ -15,7 +15,7 @@ namespace Osaka{
 			
 			void Init(Layer* layer_parent) override;
 			void Load(RPGFactory& factory) override;
-			void Update() override;
+			void Update(Engine::keyboard_state& state) override;
 			/* This function is called when entering the stack */
 			void Ready(LayerArgs& args) override;
 		/* ----------------------------------------------------------------------------------- */

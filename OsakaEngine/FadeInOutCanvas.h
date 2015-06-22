@@ -15,7 +15,7 @@ namespace Osaka{
 			void Unload() override;
 			void Enter() override;
 			void Ready() override;
-			void Update() override;
+			void Update(Engine::keyboard_state& state) override;
 			void Draw() override;
 
 			Component::EventHandler* midAnimation;

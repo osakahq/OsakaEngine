@@ -60,7 +60,7 @@ namespace Osaka{
 			beginSecondPart = true;
 		}
 		
-		void LoadingFadeCanvas::Update(){
+		void LoadingFadeCanvas::Update(Engine::keyboard_state& state){
 			if( skipUpdate )
 				return;
 			const float fadeInTime = 750;

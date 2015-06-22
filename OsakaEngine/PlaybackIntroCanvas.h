@@ -16,7 +16,7 @@ namespace Osaka{
 			void Load(RPGFactory& factory) override;
 			void Unload() override;
 			void Enter() override;
-			void Update() override;
+			void Update(Engine::keyboard_state& state) override;
 			void Draw() override;
 
 			/* These are called from "fadelayer" */

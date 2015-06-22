@@ -12,7 +12,7 @@ namespace Osaka{
 			StartMenuCanvas(SDL_Renderer* raw_renderer, Ruler* ruler);
 			~StartMenuCanvas();
 			
-			void Update() override;
+			void Update(Engine::keyboard_state& state) override;
 			void Draw() override;
 		private:
 			

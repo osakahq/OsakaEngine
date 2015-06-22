@@ -16,7 +16,7 @@ namespace Osaka{
 			mainscript = NULL;
 		}
 			
-		void StartMenuScript::Update(){
+		void StartMenuScript::Update(Engine::keyboard_state& state){
 
 		}
 

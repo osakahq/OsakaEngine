@@ -41,7 +41,7 @@ namespace Osaka{
 			
 			/* This function is called when entering the stack */
 			void Ready(LayerArgs& args) override;
-			void Update() override;
+			void Update(Engine::keyboard_state& state) override;
 			void Exit() override;
 			/* This is called from Canvas EventHandler */
 			void OnCanvasMidAnimation(Component::EventArgs& e);

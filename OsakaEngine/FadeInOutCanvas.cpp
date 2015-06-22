@@ -66,7 +66,7 @@ namespace Osaka{
 		void FadeInOutCanvas::Enter(){
 			square->Reset();
 		}
-		void FadeInOutCanvas::Update(){
+		void FadeInOutCanvas::Update(Engine::keyboard_state& state){
 			square->Update();
 		}
 		void FadeInOutCanvas::Draw(){

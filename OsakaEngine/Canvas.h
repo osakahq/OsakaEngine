@@ -29,7 +29,7 @@ namespace Osaka{
 			virtual void StandBy();
 			virtual void Focus();
 
-			virtual void Update() = 0;
+			virtual void Update(Engine::keyboard_state& state) = 0;
 			virtual void Draw() = 0;
 
 			/* When the loop ends. */

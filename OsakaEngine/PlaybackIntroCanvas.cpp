@@ -93,7 +93,7 @@ namespace Osaka{
 		void PlaybackIntroCanvas::CallbackLayerEndAnimation(Component::EventArgs& e){
 			
 		}
-		void PlaybackIntroCanvas::Update(){
+		void PlaybackIntroCanvas::Update(Engine::keyboard_state& state){
 			//See in header why, this is needed.
 			if( movePhaseUp ){
 				++phase;

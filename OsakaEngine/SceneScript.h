@@ -22,13 +22,13 @@ namespace Osaka{
 			virtual void StandBy();
 			virtual void Focus();
 
-			virtual void Update();
+			virtual void Update(Engine::keyboard_state& state);
 			virtual void End();
 			
-		/* ----------------------------------------------------------------------------------- */
-		protected:
 			/* NOT Owner */
 			RPGApplication* app;
+		/* ----------------------------------------------------------------------------------- */
+		protected:
 			/* NOT Owner. EApplication has ownership */
 			RPGScene* scene_parent;
 			

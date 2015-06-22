@@ -29,7 +29,7 @@ namespace Osaka{
 			void StandBy(); //Already or just entering the stack and doesn't have focus.
 			void Focus();	//When already in stack and regained focus
 
-			void Update();
+			void Update(Engine::keyboard_state& state);
 			void Draw();
 			void End();
 			const std::string id;

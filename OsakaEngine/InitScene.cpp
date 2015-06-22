@@ -28,7 +28,7 @@ namespace Osaka{
 			init_args = args->init_args;
 		}
 		
-		void InitScene::Update(){
+		void InitScene::Update(Engine::keyboard_state& state){
 			if( callTransition ){
 				LOG("[InitScene] Update -> callTransition\n");
 				//Switch will make this scene go out of the loop.

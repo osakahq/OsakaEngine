@@ -54,10 +54,10 @@ namespace Osaka{
 			onelayer->StandBy();
 		}
 
-		void OneLayerScene::Update(){
+		void OneLayerScene::Update(Engine::keyboard_state& state){
 			if( hidden )
 				return;
-			onelayer->Update();
+			onelayer->Update(state);
 		}
 		void OneLayerScene::Draw(){
 			if( hidden )

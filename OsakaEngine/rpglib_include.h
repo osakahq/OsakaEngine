@@ -1,7 +1,7 @@
  #include "stdafx.h"
 #ifndef RPGLIB_RPGLIBINCLUDE_H
 #define RPGLIB_RPGLIBINCLUDE_H
-
+#include "rpglib_include.h"
 namespace Osaka{
 	namespace RPGLib{
 		/* FADE_STACK: Fade in fade out, but stacking

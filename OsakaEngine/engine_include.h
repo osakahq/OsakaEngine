@@ -33,6 +33,16 @@ namespace Osaka{
 			Uint8 b;
 		};
 		extern RGB_HEX EMPTYRGB_HEX;
+
+		struct keyboard_state{
+			keyboard_state(){
+				keystate = NULL;
+				keystate_up = keystate_down = false;
+			}
+			const Uint8* keystate;
+			bool keystate_down;
+			bool keystate_up;
+		};
 	}
 }
 #endif

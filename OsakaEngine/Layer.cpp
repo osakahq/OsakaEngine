@@ -88,13 +88,13 @@ namespace Osaka{
 			raw_ui->Focus();
 		}
 
-		void Layer::Update(){
+		void Layer::Update(Engine::keyboard_state& state){
 			if( hidden )
 				return;
 			
-			raw_script->Update();
-			raw_canvas->Update();
-			raw_ui->Update();
+			raw_script->Update(state);
+			raw_canvas->Update(state);
+			raw_ui->Update(state);
 		}
 		void Layer::Draw(){
 			if( hidden )

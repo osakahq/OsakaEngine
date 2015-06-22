@@ -30,7 +30,7 @@ namespace Osaka{
 			virtual void StandBy() override;
 			virtual void Focus() override;
 
-			virtual void Update() override;
+			virtual void Update(Engine::keyboard_state& state) override;
 			virtual void Draw() override;
 
 			virtual void End() override;

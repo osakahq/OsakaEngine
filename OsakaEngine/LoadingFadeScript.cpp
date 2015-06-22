@@ -88,7 +88,7 @@ namespace Osaka{
 			startAnimation = true;
 		}
 
-		void LoadingFadeScript::Update(){
+		void LoadingFadeScript::Update(Engine::keyboard_state& state){
 			if( startAnimation ){
 				lcanvas->StartAnimation(transition_type);
 				startAnimation = false;

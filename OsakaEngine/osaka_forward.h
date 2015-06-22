@@ -38,7 +38,9 @@ namespace Osaka{
 		class Music;				
 		class EApplication;			
 		class SDLLib;				
-		class Texture;				
+		class Texture;
+
+		struct keyboard_state;
 	}
 	namespace RPGLib{
 		class Factory;			
