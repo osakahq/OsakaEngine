@@ -49,10 +49,10 @@ namespace Osaka{
 			/* Removes all scenes from the stack */
 			void RemoveAllFromStack(const std::string& except_scene = "");
 
-			/* Owner. This is passed by in `Update()` */
-			Engine::keyboard_state* state;
 		/* ----------------------------------------------------------------------------------- */
 		protected:
+			/* Owner. This is passed by in `Update()` */
+			Engine::keyboard_state* state;
 
 			/* Owner. This class is the owner of the scenes. So, it is its responsability to delete them
 			 * All other vector/arrays that use the raw pointer, its fine because the scenes won't be deleted but in `_delete` */
@@ -68,6 +68,8 @@ namespace Osaka{
 			
 			/* Owner of the stack. Scenes are in the `scenes` variable */
 			std::vector<EScene*> stack;
+			/* NOT Owner of EScene*. This is to check if a scene is in the stack or not. */
+			std::unordered_map<EScene*, bool> scenes_in_stack;
 			/* Even though is a vector, we still need this variable. This is used to not copy the stack every loop */
 			bool stackHasChanged;
 

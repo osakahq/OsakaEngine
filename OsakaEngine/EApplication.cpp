@@ -63,7 +63,7 @@ namespace Osaka{
 
 			stack.push_back(sceneptr);
 			entering.push_back(sceneptr);
-
+			scenes_in_stack[sceneptr] = true;
 			sceneptr->ReadyShow(in_param);
 			stackHasChanged = true;
 		}
@@ -76,9 +76,14 @@ namespace Osaka{
 			}
 			EScene* sceneptr = raw_scenes[scene];
 
+			if( scenes_in_stack.find(sceneptr) != scenes_in_stack.end() ){
+				debug->e("[EApplication] Scene is already stacked.");
+			}
+
 			//We add it to bottom, when going through the loop, it will be last to be called.
 			stack.push_back(sceneptr);
 			entering.push_back(sceneptr);
+			scenes_in_stack[sceneptr] = true;
 
 			sceneptr->ReadyShow(in_param);
 			stackHasChanged = true;
@@ -87,9 +92,14 @@ namespace Osaka{
 			LOG("[EApplication] BottomStack\n");
 			EScene* sceneptr = raw_scenes[scene];
 
+			if( scenes_in_stack.find(sceneptr) != scenes_in_stack.end() ){
+				debug->e("[EApplication] Scene is already stacked.");
+			}
+
 			//When groing through the loop, 0 is first drawn, making it the bottom one.
 			stack.insert(stack.begin(), sceneptr);
 			entering.push_back(sceneptr);
+			scenes_in_stack[sceneptr] = true;
 
 			sceneptr->ReadyStandBy(in_param);
 			stackHasChanged = true;
@@ -111,10 +121,12 @@ namespace Osaka{
 				//We don't need to check if `it != stack.end()` here, because I already do that.
 				//If the scene to remove is top and there is more than 1, then we have to let the next one(-1 from position) scene know it is its turn
 				stack.erase(it);
+				scenes_in_stack.erase(sceneptr);
 				stack.back()->Focus();
 				sceneptr->Exit();
 			}else{
 				stack.erase(it);
+				scenes_in_stack.erase(sceneptr);
 				sceneptr->Exit();
 			}
 			stackHasChanged = true;
@@ -122,7 +134,7 @@ namespace Osaka{
 		void EApplication::RemoveAllFromStack(const std::string& except_scene){
 			//Default: except_scene = ""
 			LOG("[EApplication] RemoveAllFromStack\n");
-			if( stack.size() == 0 ){
+			if( stack.empty() ){
 				if( !except_scene.empty() ){
 					debug->e("[EApplication] stack is empty but `except_scene` is not empty.");
 				}
@@ -150,7 +162,9 @@ namespace Osaka{
 				int except_pos = it - stack.begin();
 				std::copy(stack.begin(), stack.end(), copy_stack);
 				stack.clear();
+				scenes_in_stack.clear();
 				stack.push_back(escene);
+				scenes_in_stack[escene] = true;
 
 				if( gained_focus ){
 					//Scene functions must be done AFTER the stack modifications.
@@ -167,6 +181,7 @@ namespace Osaka{
 				int quantity = stack.size();
 				std::copy(stack.begin(), stack.end(), copy_stack);
 				stack.clear();
+				scenes_in_stack.clear();
 				for(int i = 0; i < quantity; ++i){
 					copy_stack[i]->Exit();
 				}

@@ -108,15 +108,24 @@ namespace Osaka{
 				stack_layers.back()->StandBy();
 			}
 			Layer* layer = raw_layers[id];
+			if( layers_in_stack.find(layer) != layers_in_stack.end() ){
+				throw std::exception("[RPGScene] Layer is already stacked.");
+			}
+
 			layer->Ready(args);
 			layer->Show();
 			//When you add to last, it will be drawn last, making it the "first" one on the stack.
 			stack_layers.push_back(layer);
+			layers_in_stack[layer] = true;
 			stackHasChanged = true;
 		}
 		void RPGScene::StackBefore(const std::string& id, const std::string& ref_layer, LayerArgs& args){
 			LOG("[RPGScene] StackBefore\n");
 			Layer* layer = raw_layers[id];
+			if( layers_in_stack.find(layer) != layers_in_stack.end() ){
+				throw std::exception("[RPGScene] Layer is already stacked.");
+			}
+
 			auto it = std::find(stack_layers.begin(), stack_layers.end(), raw_layers[ref_layer]);
 			if( it == stack_layers.end() ){
 				throw std::exception("[RPGScene] Layer not found.");
@@ -126,11 +135,16 @@ namespace Osaka{
 			layer->StandBy();
 			//Insert functions inserts the element BEFORE the element
 			stack_layers.insert(it, layer);
+			layers_in_stack[layer] = true;
 			stackHasChanged = true;
 		}
 		void RPGScene::StackAfter(const std::string& id, const std::string& ref_layer, LayerArgs& args){
 			LOG("[RPGScene] StackAfter\n");
 			Layer* layer_stack = raw_layers[id];
+			if( layers_in_stack.find(layer_stack) != layers_in_stack.end() ){
+				throw std::exception("[RPGScene] Layer is already stacked.");
+			}
+
 			Layer* layer_ref = raw_layers[ref_layer];
 			auto it_ref = std::find(stack_layers.begin(), stack_layers.end(), layer_ref);
 			if( it_ref == stack_layers.end() ){
@@ -140,11 +154,13 @@ namespace Osaka{
 			layer_stack->Ready(args);
 			if( stack_layers.size() == 1 ){
 				stack_layers.push_back(layer_stack);
+				layers_in_stack[layer_stack] = true;
 				layer_ref->StandBy(); //Loses focus.
 				layer_stack->Show(); //Gains focus.
 
 			}else if( it_ref+1 == stack_layers.end() ){ //Do not be confused with `.end()`. Begin points to the first one while end points to `past-the-end`
 				stack_layers.push_back(layer_stack);
+				layers_in_stack[layer_stack] = true;
 
 				//Means we are replacing the top place.
 				layer_ref->StandBy(); //Loses focus.
@@ -152,6 +168,7 @@ namespace Osaka{
 			}else{
 				//Insert functions inserts the element BEFORE the element, that's why we need to go 1 position+
 				stack_layers.insert(it_ref+1, layer_stack);
+				layers_in_stack[layer_stack] = true;
 				layer_stack->StandBy();
 			}
 			
@@ -165,6 +182,7 @@ namespace Osaka{
 			layer->Ready(args);
 			layer->Show();
 			stack_layers.push_back(layer);
+			layers_in_stack[layer] = true;
 			stackHasChanged = true;
 		}
 		void RPGScene::Remove(const std::string& id){
@@ -172,6 +190,7 @@ namespace Osaka{
 			if( stack_layers.size() == 1 ){
 				raw_layers[id]->Exit();
 				stack_layers.clear();
+				layers_in_stack.clear();
 			}else{
 				Layer* layer = raw_layers[id];
 				auto it = std::find(stack_layers.begin(), stack_layers.end(), layer);
@@ -181,9 +200,11 @@ namespace Osaka{
 				if( it+1 == stack_layers.end() ){
 					//If position of the elemnt to remove is top(begin) then the soon to be first, needs to have Focus function called.
 					stack_layers.erase(it);
+					layers_in_stack.erase(layer);
 					stack_layers.back()->Focus();
 				}else{
 					stack_layers.erase(it);
+					layers_in_stack.erase(layer);
 				}
 				layer->Exit();
 			}
@@ -194,7 +215,7 @@ namespace Osaka{
 			int quantity = stack_layers.size();
 			std::copy(stack_layers.begin(), stack_layers.end(), copy_stack_layers);
 			stack_layers.clear();
-
+			layers_in_stack.clear();
 			for(int i = 0; i < quantity; ++i){
 				copy_stack_layers[i]->Exit();
 			}

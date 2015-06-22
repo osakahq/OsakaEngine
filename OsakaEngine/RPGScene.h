@@ -68,6 +68,9 @@ namespace Osaka{
 
 			/* Layers are owned in the unorderedmap */
 			std::vector<Layer*> stack_layers;
+			/* NOT Owner of Layer*. This is to check if a layer is in the stack or not. */
+			std::unordered_map<Layer*, bool> layers_in_stack;
+
 			/* Helper copy var. This is used to loop through stack_layers. (RemoveAll for example) */
 			Layer* copy_stack_layers[RPGSCENE_MAX_LAYERS];
 
