@@ -52,7 +52,7 @@ namespace Osaka{
 			if( phase == TEST_PHASE::PHASE1 ){
 				this->rpgapp = appbuilder->Create("tests\\SceneTests_Phase1\\phase1_data.xml", "tests\\SceneTests_Phase1\\does_not_exists.xml", "tests\\SceneTests_Phase1\\does_not_exists.7z", *debug);
 				
-				int tests[] = {TESTID_PHASE1_PLAYBACKLOAD, TESTID_PHASE1_PLAYBACKLOAD_LINKED};
+				int tests[] = {TESTID_PHASE1_PLAYBACKLOAD, TESTID_PHASE1_PLAYBACKLOAD_LINKED, TESTID_PHASE1_PLAYBACKINTRO_ALPHA};
 				AddExpectedTests(sizeof(tests)/sizeof(*tests), tests);
 				rpgapp->AddScene("playbackintro_phase1_test1", rpgapp->scenefactory->CreatePlaybackIntroScene("playbackintro_phase1_test1"));
 				rpgapp->AddScene("test_startmenu", rpgapp->scenefactory->CreateStartMenuScene("test_startmenu"));

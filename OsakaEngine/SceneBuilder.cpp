@@ -67,8 +67,11 @@ namespace Osaka{
 		UserInterface* SceneBuilder::CreateDummyUI(){
 			return new UserInterface(raw_renderer, ruler);
 		}
+		FadeInOutCanvas* SceneBuilder::CreateFadeInOutCanvas(){
+			return new FadeInOutCanvas(this->raw_renderer, this->ruler);
+		}
 		LayerData SceneBuilder::CreateFadeLayer(RPGScene& scene, PlaybackIntroSceneScript& mainscript){
-			FadeInOutCanvas* canvas = new FadeInOutCanvas(this->raw_renderer, this->ruler);
+			FadeInOutCanvas* canvas = CreateFadeInOutCanvas();
 			FadeInOutScript* script = new FadeInOutScript(app, &scene, canvas);
 			UserInterface* ui = CreateDummyUI();
 

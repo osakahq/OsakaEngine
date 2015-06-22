@@ -16,6 +16,7 @@ namespace Osaka{
 		protected:
 			RPGLib::PlaybackIntroScript* CreateLayer1Script(RPGLib::PlaybackIntroCanvas& canvas, RPGLib::RPGScene& scene, RPGLib::PlaybackIntroSceneScript& mainscript) override;
 
+			RPGLib::FadeInOutCanvas* CreateFadeInOutCanvas() override;
 		private:
 			
 		};

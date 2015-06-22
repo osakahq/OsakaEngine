@@ -3,6 +3,7 @@
 #include <TextureManager.h>
 #include <Image.h>
 #include <PlaybackIntroCanvas.h>
+#include "TestFadeInOutCanvas.h"
 #include "TestPlaybackIntroScript.h"
 #include "PlaybackIntroSceneTestBuilder.h"
 
@@ -19,5 +20,8 @@ namespace Osaka{
 			return new TestPlaybackIntroScript(app, &scene, &canvas, &mainscript);
 		}
 
+		RPGLib::FadeInOutCanvas* PlaybackIntroSceneTestBuilder::CreateFadeInOutCanvas(){
+			return new TestFadeInOutCanvas(this->raw_renderer, this->ruler);
+		}
 	}
 }

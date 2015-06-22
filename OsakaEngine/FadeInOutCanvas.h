@@ -22,8 +22,8 @@ namespace Osaka{
 			Component::EventHandler* endAnimation;
 
 			/* This is called from Effect EventHandler */
-			void OnEffectMidAnimation(Component::EventArgs& e);
-			void OnEffectEndAnimation(Component::EventArgs& e);
+			virtual void OnEffectMidAnimation(Component::EventArgs& e);
+			virtual void OnEffectEndAnimation(Component::EventArgs& e);
 
 			/* TODO: Feels like a lot of work...
 			 * Called from Script */
