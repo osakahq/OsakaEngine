@@ -77,7 +77,7 @@ namespace Osaka{
 		class DrawableTexture;	
 		class Square;	
 		class Image;	
-		class Effect;	
+		class Modifier;	
 		class FadeInFadeOutEffect;	
 
 		class OneLayer;			

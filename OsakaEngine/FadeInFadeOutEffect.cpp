@@ -10,14 +10,11 @@
 namespace Osaka{
 	namespace RPGLib{
 
-		FadeInFadeOutEffect::FadeInFadeOutEffect(Timer* timer) : Effect("_fadeinfadeout"){
+		FadeInFadeOutEffect::FadeInFadeOutEffect(Timer* timer){
 			this->timer = timer;
 			_Construct();
 		}
-		FadeInFadeOutEffect::FadeInFadeOutEffect(const std::string& id, Timer* timer) : Effect(id){
-			this->timer = timer;
-			_Construct();
-		}
+		
 		void FadeInFadeOutEffect::_Construct(){
 			midAnimation = new Component::EventHandler();
 			endAnimation = new Component::EventHandler();
@@ -39,16 +36,15 @@ namespace Osaka{
 			delete timer; timer = NULL;
 		}
 
-		void FadeInFadeOutEffect::Update(){
-			if( !isActive )
-				return;
-			
-			//onMidAnimation == false
+		void FadeInFadeOutEffect::__Drawable_Mod(Drawable& obj){
+			//We could check beforehand if the obj is inside `objs` map var (base).
+			obj.rgba.a = alpha;
+		}
+		void FadeInFadeOutEffect::_Update(){
 			if( begin ){
 				//This means we are animating, but we are in the fade in part
 				//Alpha is related to how much time has passed. The animation must be finished in 1 second (fade in)
 				alpha = static_cast<Uint8>(Utils::Clamp( std::ceil((timer->GetTicks() / fadeInTime)*255.f), 0.f, 255.f));
-				raw_obj->rgba.a = alpha;
 				if( timer->GetTicks() >= fadeInTime ){
 					timer->Start();
 					beginStillTime = true;
@@ -75,13 +71,12 @@ namespace Osaka{
 					}else{
 						//This means we are ready to go fade out and the fade in animation ended
 						alpha = static_cast<Uint8>( 255.f - Utils::Clamp( std::ceil((timer->GetTicks() / fadeOutTime)*255.f), 0.f, 255.f) );
-						raw_obj->rgba.a = alpha;
 						if( timer->GetTicks() >= fadeOutTime ){
 							LOG("[FadeInFadeOutEffect] Update -> beginSecondPart [end]\n");
 							timer->Stop();
 							endAnimation->Raise(Component::EventArgs::CreateEmptyArgs());
 							//This is when the effect completes the process.
-							this->OneLoopDone();
+							this->OneLoop();
 						}
 					}
 				}	
@@ -92,15 +87,12 @@ namespace Osaka{
 			beginSecondPart = true;
 		}
 		void FadeInFadeOutEffect::Reset(){
-			Effect::Reset();
 			beginSecondPart = false;
 			beginStillTime = false;
 			onMidAnimation = false;
 			begin = true;
 			alpha = 0;
-			raw_obj->rgba.a = 0;
 			timer->Start();
-			//Remember that this is also called from Drawable:AddEffect.
 		}
 	}
 }

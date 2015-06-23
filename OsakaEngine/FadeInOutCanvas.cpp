@@ -33,7 +33,7 @@ namespace Osaka{
 			square = factory.CreateSquare(ruler->x_top_left_corner, ruler->y_top_left_corner, ruler->max_height, ruler->max_width);
 			square->rgba = hex;
 			effect = factory.CreateFadeInFadeOutEffect();
-			square->AddEffect(effect);
+			square->AddMod(effect);
 
 			registree->Register(effect->endAnimation, std::bind(&FadeInOutCanvas::OnEffectEndAnimation, this, std::placeholders::_1));
 			registree->Register(effect->midAnimation, std::bind(&FadeInOutCanvas::OnEffectMidAnimation, this, std::placeholders::_1));
@@ -61,12 +61,15 @@ namespace Osaka{
 			effect->stillTime = still;
 		}
 		void FadeInOutCanvas::Ready(){
+			LOG("[FadeInOutCanvas] Enter\n");
+			effect->Restart();
 			square->Reset();
 		}
 		void FadeInOutCanvas::Enter(){
-			square->Reset();
+			
 		}
 		void FadeInOutCanvas::Update(Engine::keyboard_state& state){
+			effect->Update();
 			square->Update();
 		}
 		void FadeInOutCanvas::Draw(){

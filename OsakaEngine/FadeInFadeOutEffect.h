@@ -3,19 +3,15 @@
 #ifndef RPGLIB_FADEINFADEOUTEFFECT_H
 #define RPGLIB_FADEINFADEOUTEFFECT_H
 
-#include "Effect.h"
+#include "Modifier.h"
 
 namespace Osaka{
 	namespace RPGLib{
 
-		class FadeInFadeOutEffect : public Effect{
+		class FadeInFadeOutEffect : public Modifier{
 		public:
-			FadeInFadeOutEffect(const std::string& id, Timer* timer);
 			FadeInFadeOutEffect(Timer* timer);
-			~FadeInFadeOutEffect();
-
-			void Update() override;
-			void Reset() override;
+			virtual ~FadeInFadeOutEffect();
 
 			/* Owner. Mid animation is when the animation is in total back */
 			Component::EventHandler* midAnimation;
@@ -27,7 +23,12 @@ namespace Osaka{
 			float fadeInTime;
 			float fadeOutTime;
 			float stillTime;
+
+			void __Drawable_Mod(Drawable& obj) override;
 		protected:
+			void Reset() override;
+			void _Update() override;
+
 			/* In case you don't need to wait for something. */
 			bool pause_on_midanim;
 			/* Owner */

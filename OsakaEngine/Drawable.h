@@ -23,8 +23,8 @@ namespace Osaka{
 			SDL_RendererFlip flip;
 			
 			/* This is called from Canvas */
-			virtual void Reset();
 			virtual void Update();
+			virtual void Reset();
 			/* Inexpensive draw */
 			virtual void Draw();
 			/* Expensive draw (RenderCopyEx) */
@@ -33,19 +33,21 @@ namespace Osaka{
 			 * For that you need to call a function with the texture (See `Texture`) */
 			virtual void DrawBlend();
 
-			void ResetAllEffects();
 			/* Drawable will call `effect->Attach(this)` */
-			void AddEffect(Effect* effect);
+			void AddMod(Modifier* effect);
 			/* Normally, the effects should deattach themselves, so this function is "if you need to remove one effect manually" */
-			void RemoveEffect(const std::string& id);
-			void RemoveAllEffects();
+			void RemoveMod(Modifier* effect);
+			void RemoveMods();
+
+			/* Called from Mod */
+			void __Mod_Deattach(Modifier* effect);
 		protected:
 			/* NOT Owner. */
-			std::unordered_map<std::string, Effect*> effects;
+			std::unordered_map<Modifier*, bool> effects_in_list;
 			/* NOT Owner. Has the same items as `effects` */
-			std::vector<Effect*> stack_effects;
+			std::vector<Modifier*> stack_effects;
 			/* NOT Owner. Because vector invalidates the iterator, we need a temp list */
-			Effect* temp_stack[DRAWABLE_MAXEFFECTS];
+			Modifier* temp_stack[DRAWABLE_MAXEFFECTS];
 			int temp_stack_items;
 
 			bool has_list_changed;
