@@ -40,9 +40,9 @@ namespace Osaka{
 				temp_stack[i]->Update();
 			}
 		}
-		void Drawable::Draw(){
-
-		}
+		void Drawable::Draw(){}
+		void Drawable::DrawEx(){}
+		void Drawable::DrawBlend(){}
 
 		void Drawable::ResetAllEffects(){
 			//We don't need to copy the stack because the effects dont remove themselves in Reset

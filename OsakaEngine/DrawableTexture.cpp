@@ -17,5 +17,9 @@ namespace Osaka{
 			info = NULL;
 		}
 
+		void DrawableTexture::DrawBlend(){
+			throw std::exception("[DrawableTexture] Don't call this function");
+		}
+
 	}
 }

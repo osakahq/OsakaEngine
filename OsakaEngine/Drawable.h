@@ -25,7 +25,13 @@ namespace Osaka{
 			/* This is called from Canvas */
 			virtual void Reset();
 			virtual void Update();
+			/* Inexpensive draw */
 			virtual void Draw();
+			/* Expensive draw (RenderCopyEx) */
+			virtual void DrawEx();
+			/* Draw with blend. Don't call this while using a DrawableTexture.
+			 * For that you need to call a function with the texture (See `Texture`) */
+			virtual void DrawBlend();
 
 			void ResetAllEffects();
 			/* Drawable will call `effect->Attach(this)` */

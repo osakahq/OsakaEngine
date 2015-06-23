@@ -14,6 +14,7 @@ namespace Osaka{
 			~Square();
 			
 			void Draw() override;
+			void DrawBlend() override;
 
 			SDL_Rect square;
 		protected:

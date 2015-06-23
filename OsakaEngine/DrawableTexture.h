@@ -15,6 +15,8 @@ namespace Osaka{
 			/* OWNER. Raw pointer */
 			sprite_info* info;
 
+			/* Don't call this function. More info see: `Drawable` */
+			void DrawBlend() override;
 		protected:
 			
 		private:

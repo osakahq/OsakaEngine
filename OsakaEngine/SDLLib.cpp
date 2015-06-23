@@ -66,13 +66,6 @@ namespace Osaka{
 		void SDLLib::ShowWindow(){
 			SDL_ShowWindow(window);
 		}
-		void SDLLib::SetRenderAlphaMode(){
-			/* So the alpha value works */
-			SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-		}
-		void SDLLib::ResetRenderBlendMode(){
-			SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
-		}
 		
 		bool SDLLib::Start(){
 			SDL_LogSetOutputFunction(_SDLLib_Log, NULL);

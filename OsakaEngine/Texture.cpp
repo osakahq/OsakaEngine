@@ -37,7 +37,7 @@ namespace Osaka{
 				debug->e("[Texture] Unable to load image: "+std::string(path)+". Error: "+IMG_GetError());
 			}
 			//TODO: If you use a png with transparency, there is really no need to set the ColorKey
-			SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, colorkey.r, colorkey.g, colorkey.b));
+			//SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, colorkey.r, colorkey.g, colorkey.b));
 			newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 
 			if( newTexture == NULL ){

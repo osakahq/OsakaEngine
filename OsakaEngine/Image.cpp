@@ -12,10 +12,8 @@ namespace Osaka{
 		}
 
 		void Image::Draw(){
-			//TODO: falta mucho.. si tiene angle? alpha? etc.
-			//SDL_SetRenderDrawBlendMode(raw_renderer, SDL_BLENDMODE_BLEND);
+			//Inexpensive draw
 			SDL_RenderCopy(raw_renderer, info->raw_texture, &info->clip, &info->quad);
-			//SDL_SetRenderDrawBlendMode(raw_renderer, SDL_BLENDMODE_NONE);
 		}
 	}
 }
