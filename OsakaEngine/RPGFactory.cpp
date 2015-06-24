@@ -9,10 +9,12 @@
 #include "Debug.h"
 #include "TextureManager.h"
 #include "Factory.h"
-#include "RPGFactory.h"
 #include "Image.h"
 #include "FadeInFadeOutEffect.h"
+#include "FloatingEffect.h"
+#include "FadeInEffect.h"
 #include "Square.h"
+#include "RPGFactory.h"
 #include "osaka_forward.h"
 namespace Osaka{
 	namespace RPGLib{
@@ -51,6 +53,12 @@ namespace Osaka{
 		}
 		FadeInFadeOutEffect* RPGFactory::CreateFadeInFadeOutEffect(){
 			return new FadeInFadeOutEffect(factory->CreateTimer());
+		}
+		FloatingEffect* RPGFactory::CreateFloatingEffect(){
+			return new FloatingEffect(factory->timem);
+		}
+		FadeInEffect* RPGFactory::CreateFadeInEffect(){
+			return new FadeInEffect(factory->CreateTimer());
 		}
 	}
 }

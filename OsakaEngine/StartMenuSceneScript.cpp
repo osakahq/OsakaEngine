@@ -19,7 +19,7 @@ namespace Osaka{
 		}
 		
 		void StartMenuSceneScript::Ready(Engine::ESceneArgs& params){
-			//TODO: scene_parent->Stack(layer1, EmptyLayerArgs);
+			scene_parent->Stack(mainlayer_id, EmptyLayerArgs);
 		}
 	}
 }

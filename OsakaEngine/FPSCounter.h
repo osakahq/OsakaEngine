@@ -46,7 +46,7 @@ namespace Osaka{
 			/* If true everytime the loop ends (after Present), we count the frame ms */
 			const bool show_sum_frames;
 			Uint32 sum_frame_ms;
-			char average_frame_ms[6];
+			char average_frame_ms[7];
 			/* We need to make sure that average ms frames is perfect. That is why we need a separate variable (from frames) */
 			int calls;
 

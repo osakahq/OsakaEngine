@@ -13,6 +13,7 @@
 #include <GameSessionManager.h>
 #include <RPGFactory.h>
 #include <GameData.h>
+#include <GameDataParams.h>
 #include <RPGApplication.h>
 #include "TestApplicationBuilder.h"
 #include "RPGLibTestSuite.h"
@@ -54,15 +55,16 @@ namespace Osaka{
 				
 				int tests[] = {TESTID_PHASE1_PLAYBACKLOAD, TESTID_PHASE1_PLAYBACKLOAD_LINKED, TESTID_PHASE1_PLAYBACKINTRO_ALPHA};
 				AddExpectedTests(sizeof(tests)/sizeof(*tests), tests);
-				rpgapp->AddScene("playbackintro_phase1_test1", rpgapp->scenefactory->CreatePlaybackIntroScene("playbackintro_phase1_test1"));
-				rpgapp->AddScene("test_startmenu", rpgapp->scenefactory->CreateStartMenuScene("test_startmenu"));
+				rpgapp->AddScene(rpgapp->scenefactory->CreatePlaybackIntroScene(rpgapp->gameDataParams->scene_intro.c_str()));
+				rpgapp->AddScene(rpgapp->scenefactory->CreateStartMenuScene(rpgapp->gameDataParams->scene_startmenu.c_str()));
 				
-				rpgapp->AddScene("loadgame", rpgapp->scenefactory->CreateDummyScene("loadgame"));
-				rpgapp->AddScene("options", rpgapp->scenefactory->CreateDummyScene("options"));
-				rpgapp->AddScene("credits", rpgapp->scenefactory->CreateDummyScene("credits"));
-				rpgapp->AddScene("playback_newgame", rpgapp->scenefactory->CreateDummyScene("playback_newgame"));
+				rpgapp->AddScene(rpgapp->scenefactory->CreateDummyScene(rpgapp->gameDataParams->scene_loadgame.c_str()));
+				rpgapp->AddScene(rpgapp->scenefactory->CreateDummyScene(rpgapp->gameDataParams->scene_options.c_str()));
+				rpgapp->AddScene(rpgapp->scenefactory->CreateDummyScene(rpgapp->gameDataParams->scene_credits.c_str()));
+				rpgapp->AddScene(rpgapp->scenefactory->CreateDummyScene(rpgapp->gameDataParams->scene_startmenu_newgame.c_str()));
 
-				rpgapp->Run("playbackintro_phase1_test1", Engine::EmptyESceneArgsPTR);
+				//rpgapp->Run(rpgapp->gameDataParams->scene_intro, Engine::EmptyESceneArgsPTR);
+				rpgapp->Run(rpgapp->gameDataParams->scene_startmenu, Engine::EmptyESceneArgsPTR);
 			}else{
 				LOG("[RPGLibTestSuite] Unkown phase.\n");
 			}

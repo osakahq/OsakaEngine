@@ -10,7 +10,7 @@ namespace Osaka{
 		class PlaybackIntroSceneScript : public SceneScript {
 		public:
 			PlaybackIntroSceneScript(RPGApplication* app);
-			~PlaybackIntroSceneScript();
+			virtual ~PlaybackIntroSceneScript();
 			
 			void Enter() override;
 			void Ready(Engine::ESceneArgs& params) override;

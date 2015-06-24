@@ -54,8 +54,8 @@ namespace Osaka{
 			return new PlaybackIntroScript(app, &scene, &canvas, &mainscript);
 		}
 
-		RPGLib::PlaybackIntroCanvas* PlaybackIntroSceneBuilder::CreateLayer1Canvas(){
-			RPGLib::PlaybackIntroCanvas* canvas = new RPGLib::PlaybackIntroCanvas(this->raw_renderer, this->ruler);
+		PlaybackIntroCanvas* PlaybackIntroSceneBuilder::CreateLayer1Canvas(){
+			PlaybackIntroCanvas* canvas = new PlaybackIntroCanvas(this->raw_renderer, this->ruler);
 			return canvas;
 		}
 	}

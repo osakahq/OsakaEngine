@@ -16,7 +16,7 @@ namespace Osaka{
 			
 			virtual SceneScript* CreateMainScript() override;
 			virtual void CreateLayers(RPGScene& scene, SceneScript& mainscript) override;
-			
+			LayerData StartMenuSceneBuilder::CreateMainLayer(RPGScene& scene, StartMenuSceneScript& mainscript);
 		private:
 
 		};

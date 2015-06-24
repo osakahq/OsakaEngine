@@ -17,6 +17,8 @@ namespace Osaka{
 			Square* CreateSquare(int x, int y, int h, int w);
 			Square* CreateSquare();
 			FadeInFadeOutEffect* CreateFadeInFadeOutEffect();
+			FloatingEffect* CreateFloatingEffect();
+			FadeInEffect* CreateFadeInEffect();
 
 			/* NOT Owner. GameData ownership is in RPGApplication */
 			GameData* data;

@@ -16,6 +16,7 @@
 #include "RPGScene.h"
 #include "Factory.h"
 #include "RPGFactory.h"
+#include "RPGApplication.h"
 #include "PlaybackIntroCanvas.h"
 #include "osaka_forward.h"
 namespace Osaka{
@@ -53,8 +54,10 @@ namespace Osaka{
 			background = factory.CreateSquare(ruler->x_top_left_corner, ruler->y_top_left_corner, ruler->max_height, ruler->max_width);
 			background->rgba.r = background->rgba.g = background->rgba.b = 0;
 
-			engine_logo = factory.CreateImage(factory.gamedataparams->engine_logo);
-			gamestudio_logo = factory.CreateImage(factory.gamedataparams->gamestudio_logo);
+			engine_logo = factory.CreateImage(factory.gamedataparams->sprite_engine_logo);
+			gamestudio_logo = factory.CreateImage(factory.gamedataparams->sprite_gamestudio_logo);
+
+			scene_startmenu = factory.gamedataparams->scene_startmenu;
 		}
 		void PlaybackIntroCanvas::Unload(){
 			//Just an example. This function will never be called inside the loop (for now)
@@ -78,6 +81,7 @@ namespace Osaka{
 				//FadeInOutLayer automatically starts the end animation.
 				break;
 			case 1:
+				//Start drawing gamestudio logo
 				movePhaseUp = true;
 				break;
 			case 2:
@@ -98,6 +102,10 @@ namespace Osaka{
 			if( movePhaseUp ){
 				++phase;
 				if( phase == 1 ){
+					timer->Start();
+				}
+				if( phase == 2 ){
+					//We need to start timing in order to switch scenes to startmenu
 					timer->Start();
 				}
 				movePhaseUp = false;
@@ -122,6 +130,10 @@ namespace Osaka{
 				engine_logo->Update();
 				break;
 			case 2:
+				if( timer->GetTicks() >= 4200 ){
+					mainscript->app->FadeSwitchTransition(scene_startmenu, Engine::EmptyESceneArgsPTR);
+					timer->Stop();
+				}
 				gamestudio_logo->Update();
 				break;
 			case 3:

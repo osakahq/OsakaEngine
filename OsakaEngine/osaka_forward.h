@@ -73,12 +73,15 @@ namespace Osaka{
 		class Canvas;			
 		class UserInterface;	
 
+		struct drawable_mod_args;
 		class Drawable;	
 		class DrawableTexture;	
 		class Square;	
 		class Image;	
 		class Modifier;	
 		class FadeInFadeOutEffect;	
+		class FloatingEffect;
+		class FadeInEffect;
 
 		class OneLayer;			
 		class OneLayerScene;	

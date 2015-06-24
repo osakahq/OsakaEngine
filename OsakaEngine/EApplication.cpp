@@ -45,9 +45,9 @@ namespace Osaka{
 			this->timePerFrame = timePerFrame;
 			this->maxUpdatesToCatchUp = maxUpdatesToCatchUp;
 		}
-		void EApplication::AddScene(const std::string& id, EScene* scene){
+		void EApplication::AddScene(EScene* scene){
 			//Takes ownership of the scene
-			raw_scenes[id] = scene;
+			raw_scenes[scene->GetId()] = scene;
 		}
 		void EApplication::CallLoad(const std::string& id){
 			raw_scenes[id]->Load();
@@ -267,9 +267,7 @@ namespace Osaka{
 				accumulated_delta += delta;
 				/* If delta is lower than 16ms, that's fine. But it won't process `accumulated_delta` lower than 16ms */
 				if( delta > _targetTimePerFrame ){
-					std::cout << Debug::yellow;
-					LOG("[EApplication] Delta is higher than target ms = %d\n", delta);
-					std::cout << Debug::white;
+					std::cout << Debug::yellow; LOG("[EApplication] Delta is higher than target ms = %d\n", delta); std::cout << Debug::white;
 					delta = _targetTimePerFrame;
 				}
 				

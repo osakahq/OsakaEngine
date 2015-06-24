@@ -11,6 +11,7 @@ namespace Osaka{
 			: FadeInOutCanvas(raw_renderer, ruler)
 		{
 			alpha_255 = false;
+			alpha_0 = false;
 		}
 		
 		void TestFadeInOutCanvas::OnEffectEndAnimation(Component::EventArgs& e){

@@ -54,7 +54,8 @@ namespace Osaka{
 		}
 		void FPSCounter::Start(){
 			MULTIPLE_LOG_START("[FPSCounter] Indicator FPS: How many frames have passed in 1 second.\n");
-			MULTIPLE_LOG("[FPSCounter] Indicator Average: Average time in %d frames.\n", target_fps);
+			MULTIPLE_LOG("[FPSCounter] Indicator Average: Average of how long %d frames took to render without SDL_Delay.\n", target_fps);
+			MULTIPLE_LOG("[FPSCounter] Indicator Delta: If delta is greater than %d.\n", target_fps);
 			MULTIPLE_LOG_END("[FPSCounter] Indicator Hiccups: Reports if the times of frames take longer than the mean(average) in sets of %d\n", target_fps);
 			
 			stext_fps = font->CreateStaticText("fps", 5, 5, 3);

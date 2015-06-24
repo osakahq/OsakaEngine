@@ -10,13 +10,15 @@ namespace Osaka{
 			Ruler(int width, int height);
 			~Ruler();
 
-			int x_top_left_corner;
-			int y_top_left_corner;
+			const int x_top_left_corner;
+			const int y_top_left_corner;
 
 			//Window size
-			int max_width;
-			int max_height;
+			const int max_width;
+			const int max_height;
 
+			int MidX(int xsize);
+			int MidY(int ysize);
 		private:
 		};
 	}

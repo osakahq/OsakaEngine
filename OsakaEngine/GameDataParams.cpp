@@ -15,9 +15,22 @@ namespace Osaka{
 		
 		void GameDataParams::SetParams(){
 			//default values
-			engine_logo = "engine_logo";
-			gamestudio_logo = "gamestudio_logo";
-			intro_song = "s_startmenu";
+
+			scene_intro					= "playbackintro";
+			scene_startmenu				= "startmenu";
+			scene_startmenu_newgame		= "startmenu_playbacknewgame";
+			scene_loadgame				= "loadgame";
+			scene_savegame				= "savegame";
+			scene_options				= "options";
+			scene_credits				= "credits";
+
+			sprite_engine_logo			= "engine_logo";
+			sprite_gamestudio_logo		= "gamestudio_logo";
+			music_intro_song			= "s_startmenu";
+
+			sprite_startmenu_background = "startmenu_background";
+			sprite_startmenu_title = "startmenu_title";
+			sprite_startmenu_subtitle = "startmenu_subtitle";
 		}
 
 		void GameDataParams::GetMapData(const std::string& map_id){

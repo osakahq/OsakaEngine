@@ -47,7 +47,7 @@
 			<!-- MISC --------------------------------------------------------------- -->
 			<scene id="loadgame"></scene>
 			<scene id="options"></scene>
-			<scene id="test_startmenu">
+			<scene id="startmenu">
 				<assets>
 					<asset id="texturemap_cinematics" />
 					<asset id="s_startmenu" />
@@ -57,18 +57,18 @@
 					<scene id="options" linked="true" always-load="true" />
 					<scene id="credits" linked="false" always-load="true" />
 					<!-- new game -->
-					<scene id="playback_newgame" linked="false" always-load="false" />
+					<scene id="startmenu_playbacknewgame" linked="false" always-load="false" />
 				</related-scenes>
 			</scene>
 			
 			<!-- PLAYBACKS START --------------------------------------------------------------- -->
-			<scene id="playbackintro_phase1_test1">
+			<scene id="playbackintro">
 				<assets>
 					<asset id="texturemap_cinematics" />
 					<asset id="s_startmenu" />
 				</assets>
 				<related-scenes>
-					<scene id="test_startmenu" linked="true" always-load="true" />
+					<scene id="startmenu" linked="true" always-load="true" />
 				</related-scenes>
 			</scene>
 			<scene id="credits">
@@ -76,7 +76,7 @@
 					<asset id="texturemap_cinematics" />
 				</assets>
 			</scene>
-			<scene id="playback_newgame">
+			<scene id="startmenu_playbacknewgame">
 				<assets>
 					<asset id="video_intro" always-load-unload="true" />
 					<asset id="texturemap_cinematics" />

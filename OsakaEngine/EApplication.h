@@ -21,7 +21,7 @@ namespace Osaka{
 			/* */
 			virtual void Init(bool vsync, int timePerFrame, int maxUpdatesToCatchUp);
 			/* Takes owner ship of the scene */
-			void AddScene(const std::string& id, EScene* scene);
+			void AddScene(EScene* scene);
 			/* Class a scene load function. Called from AssetManager (loading thread) */
 			virtual void CallLoad(const std::string& id);
 			virtual void CallUnload(const std::string& id);

@@ -23,7 +23,7 @@ namespace Osaka{
 		}
 		
 		void PlaybackIntroSceneScript::Enter(){
-			app->soundm->PlayMusic(app->gameDataParams->intro_song);
+			app->soundm->PlayMusic(app->gameDataParams->music_intro_song);
 		}
 		void PlaybackIntroSceneScript::Ready(Engine::ESceneArgs& params){
 			scene_parent->Stack(mainlayer_id, EmptyLayerArgs);

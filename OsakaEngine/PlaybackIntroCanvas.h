@@ -40,6 +40,7 @@ namespace Osaka{
 			Square* background;
 			Image* engine_logo; 
 			Image* gamestudio_logo;
+			std::string scene_startmenu;
 
 			/* Owner. This is used to time when to switch the images. */
 			Timer* timer;

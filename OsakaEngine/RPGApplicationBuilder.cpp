@@ -134,7 +134,7 @@ namespace Osaka{
 			/* --- After this point, everything is loaded ------------------------------------------------------------------- */
 
 			InitScene* initscene = factory->CreateInitScene();
-			app->AddScene(initscene->GetId(), initscene);
+			app->AddScene(initscene);
 			app->SetInitScene(initscene);
 
 			/* RPGApplication stacks RPGScene (mainscript:LoadingSceneScript) then stacks the LoadingFade/LoadingTextLayer */
@@ -142,7 +142,7 @@ namespace Osaka{
 			app->SetLoadingScene("rpglib_loadingscene");
 			/* We need to call Load because the place to call `scene->Load()` is in AssetManager */
 			loadingscene->Load();
-			app->AddScene("rpglib_loadingscene", loadingscene);
+			app->AddScene(loadingscene);
 
 			return app;
 		}
