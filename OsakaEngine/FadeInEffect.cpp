@@ -32,7 +32,9 @@ namespace Osaka{
 			if( alpha == 255 ){
 				//The next `Modifier::Update`, Reset will be called.
 				timer->Stop();
-				OneLoop(); //Since this effect only works 1 way. It will be automatically deattached.
+				/* Since this effect only works 1 way. It will be automatically deattached.
+				 * forever_repeat is false by default  */
+				OneLoop();
 			}
 		}
 		

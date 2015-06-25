@@ -34,6 +34,7 @@ namespace Osaka{
 		void StartMenuCanvas::Load(RPGFactory& factory){
 			timer = factory.factory->CreateTimer();
 			effect = factory.CreateFloatingEffect();
+			effect->SetRepetitions(0, true);
 			fadein = factory.CreateFadeInEffect();
 			fadein->Set(5000);
 
@@ -52,7 +53,7 @@ namespace Osaka{
 			subtitle->quad.y += 20;
 			subtitle->quad.y -= 85;
 
-			title->AddMod(effect, DrawableModFloatingArgs(5));
+			title->AddMod(effect, DrawableModFloatingArgs(8, 0.20f));
 			title->AddMod(fadein);
 			subtitle->AddMod(fadein);
 		}
@@ -77,7 +78,7 @@ namespace Osaka{
 		void StartMenuCanvas::Update(Engine::keyboard_state& state){
 			if( !added_subtitle_effect && timer->GetTicks() >= 700 ){
 				added_subtitle_effect = true;
-				subtitle->AddMod(effect, DrawableModFloatingArgs(7));
+				subtitle->AddMod(effect, DrawableModFloatingArgs(8, 0.20f));
 				timer->Stop();
 			}
 			fadein->Update();

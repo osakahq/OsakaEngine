@@ -13,8 +13,9 @@ namespace Osaka{
 			FadeInEffect(Timer* timer);
 			virtual ~FadeInEffect();
 
-			void __Drawable_Mod(Drawable& obj) override;
 			void Set(float fadeInTime);
+
+			void __Drawable_Mod(Drawable& obj) override;
 		protected:
 			void Reset() override;
 			void _Update() override;

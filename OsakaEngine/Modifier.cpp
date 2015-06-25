@@ -29,8 +29,10 @@ namespace Osaka{
 			if( !active )
 				return;
 			if( loop_was_done ){
-				loop_was_done = false;
 				Reset();
+				/* This has to be after Reset() so we can actually identify when: 
+				 * Reset is being called when a loop is done or when owner calls it (Restart) */
+				loop_was_done = false;
 			}
 			//It deattaches itself in the next Update.
 			if( forever_repeat == false && current_loop >= times_repeat ){
