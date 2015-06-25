@@ -19,6 +19,9 @@ namespace Osaka{
 	namespace RPGLib{
 		class LayerArgs;
 		extern LayerArgs EmptyLayerArgs;
+		
+		class DrawableModifierArgs;
+		extern DrawableModifierArgs EmptyDrawableModifierArgs;
 	}
 }
 #endif

@@ -10,10 +10,11 @@ namespace Osaka{
 
 		class Image : public DrawableTexture{
 		public:
-			Image(SDL_Renderer* raw_renderer, sprite_info* info);
+			Image(SDL_Renderer* raw_renderer, SDL_Texture* _raw_texture, SDL_Rect _clip);
 			~Image();
 			
-			void Draw() override;
+			void _Draw() override;
+			void _DrawTransparency() override;
 		protected:
 			
 		private:

@@ -24,6 +24,7 @@ namespace Osaka{
 			Uint8 b;
 			Uint8 a;
 		};
+		typedef RGBA_HEX RGBA;
 		extern RGBA_HEX EMPTYRGBA_HEX;
 
 		struct RGB_HEX{
@@ -32,7 +33,12 @@ namespace Osaka{
 			Uint8 g;
 			Uint8 b;
 		};
+		typedef RGBA_HEX RGB;
 		extern RGB_HEX EMPTYRGB_HEX;
+
+		struct E_Size{
+			int h, w;
+		};
 
 		struct keyboard_state{
 			keyboard_state(){

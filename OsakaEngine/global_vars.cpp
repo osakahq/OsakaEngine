@@ -2,6 +2,7 @@
 
 #include "LayerArgs.h"
 #include "ESceneArgs.h"
+#include "DrawableModifierArgs.h"
 
 const bool* __GLOBALVARS__debug = NULL;
 
@@ -12,5 +13,6 @@ namespace Osaka{
 	}
 	namespace RPGLib{
 		LayerArgs EmptyLayerArgs;
+		DrawableModifierArgs EmptyDrawableModifierArgs;
 	}
 }

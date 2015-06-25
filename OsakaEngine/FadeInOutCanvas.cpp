@@ -73,7 +73,7 @@ namespace Osaka{
 			square->Update();
 		}
 		void FadeInOutCanvas::Draw(){
-			square->DrawBlend();
+			square->Draw();
 		}
 	}
 }

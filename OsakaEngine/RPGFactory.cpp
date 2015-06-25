@@ -14,6 +14,7 @@
 #include "FloatingEffect.h"
 #include "FadeInEffect.h"
 #include "Square.h"
+#include "rpglib_include.h"
 #include "RPGFactory.h"
 #include "osaka_forward.h"
 namespace Osaka{
@@ -38,14 +39,15 @@ namespace Osaka{
 			raw_renderer = factory->app->sdl->GetRAWSDLRenderer();
 		}
 		Image* RPGFactory::CreateImage(const std::string& id_sprite){
-			return new Image(raw_renderer, factory->texturem->CreateSpriteRAWPointer(id_sprite));
+			sprite_info& info = factory->texturem->CreateSprite(id_sprite);
+			return new Image(raw_renderer, info.raw_texture, info.clip);
 		}
 		Square* RPGFactory::CreateSquare(int x, int y, int h, int w){
 			Square* square = new Square(raw_renderer);
-			square->square.x = x;
-			square->square.y = y;
-			square->square.h = h;
-			square->square.w = w;
+			square->quad.x = x;
+			square->quad.y = y;
+			square->quad.h = h;
+			square->quad.w = w;
 			return square;
 		}
 		Square* RPGFactory::CreateSquare(){

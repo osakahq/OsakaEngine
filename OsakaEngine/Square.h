@@ -13,10 +13,9 @@ namespace Osaka{
 			Square(SDL_Renderer* raw_renderer);
 			~Square();
 			
-			void Draw() override;
-			void DrawBlend() override;
+			void _Draw() override;
+			void _DrawTransparency() override;
 
-			SDL_Rect square;
 		protected:
 			
 		private:

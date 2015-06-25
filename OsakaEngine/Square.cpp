@@ -11,15 +11,16 @@ namespace Osaka{
 
 		}
 
-		void Square::Draw(){
+		void Square::_Draw(){
 			SDL_SetRenderDrawColor(raw_renderer, rgba.r, rgba.g, rgba.b, rgba.a);
-			SDL_RenderFillRect(raw_renderer, &square);
+			SDL_RenderFillRect(raw_renderer, &quad);
 		}
-		void Square::DrawBlend(){
+		void Square::_DrawTransparency(){
 			SDL_SetRenderDrawColor(raw_renderer, rgba.r, rgba.g, rgba.b, rgba.a);
 			SDL_SetRenderDrawBlendMode(raw_renderer, SDL_BLENDMODE_BLEND);
-			SDL_RenderFillRect(raw_renderer, &square);
+			SDL_RenderFillRect(raw_renderer, &quad);
 			SDL_SetRenderDrawBlendMode(raw_renderer, SDL_BLENDMODE_NONE);
 		}
+		
 	}
 }

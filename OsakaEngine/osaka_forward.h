@@ -73,7 +73,7 @@ namespace Osaka{
 		class Canvas;			
 		class UserInterface;	
 
-		struct drawable_mod_args;
+		class DrawableModifierArgs;
 		class Drawable;	
 		class DrawableTexture;	
 		class Square;	

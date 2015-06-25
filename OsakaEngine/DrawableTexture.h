@@ -10,16 +10,14 @@ namespace Osaka{
 
 		class DrawableTexture : public Drawable{
 		public:
-			DrawableTexture(SDL_Renderer* raw_renderer, sprite_info* info);
+			DrawableTexture(SDL_Renderer* raw_renderer, SDL_Texture* _raw_texture, SDL_Rect _clip);
 			virtual ~DrawableTexture();
-			/* OWNER. Raw pointer */
-			sprite_info* info;
-
-			/* Don't call this function. More info see: `Drawable` */
-			void DrawBlend() override;
+			
+			const SDL_Rect clip;
+			/* NOT Owner. */
+			SDL_Texture* raw_texture;
 		protected:
 			
-		private:
 		};
 	}
 }

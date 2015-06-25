@@ -10,7 +10,7 @@
 namespace Osaka{
 	namespace RPGLib{
 
-		FadeInFadeOutEffect::FadeInFadeOutEffect(Timer* timer){
+		FadeInFadeOutEffect::FadeInFadeOutEffect(Timer* timer) : Modifier(false, true){
 			this->timer = timer;
 			_Construct();
 		}
