@@ -1,5 +1,7 @@
  #include "stdafx.h"
 
+#include "EventArgs.h"
+#include "EventHandler.h"
 #include "Drawable.h"
 #include "Modifier.h"
 
@@ -13,12 +15,14 @@ namespace Osaka{
 			loop_was_done = false;
 
 			active = true;
+			oneLoop = new Component::EventHandler();
 		}
 		Modifier::~Modifier(){
 			for(auto it = objs.begin(); it != objs.end(); ++it){
 				it->second->__Mod_Need(need_ex, need_transparency, false);
 				it->second->__Mod_Deattach(this);
 			}
+			delete oneLoop; oneLoop = NULL;
 		}
 		void Modifier::SetRepetitions(int times_repeat, bool forever_repeat){
 			this->forever_repeat = forever_repeat;
@@ -28,25 +32,33 @@ namespace Osaka{
 		void Modifier::Update(){
 			if( !active )
 				return;
+
+			/* When current_loop changes value (++), `loop_was_done` is always true. */
 			if( loop_was_done ){
 				Reset();
 				/* This has to be after Reset() so we can actually identify when: 
 				 * Reset is being called when a loop is done or when owner calls it (Restart) */
 				loop_was_done = false;
-			}
-			//It deattaches itself in the next Update.
-			if( forever_repeat == false && current_loop >= times_repeat ){
-				active = false;
-				//Since it reached times_repeat, then it will always deattach itself
-				for(auto it = objs.begin(); it != objs.end(); ++it){
-					it->second->__Mod_Need(need_ex, need_transparency, false);
-					it->second->__Mod_Deattach(this);
+
+				//It deattaches itself in the next Update.
+				if( forever_repeat == false && current_loop >= times_repeat ){
+					active = false;
+					//Since it reached times_repeat, then it will always deattach itself
+					for(auto it = objs.begin(); it != objs.end(); ++it){
+						it->second->__Mod_Need(need_ex, need_transparency, false);
+						it->second->__Mod_Deattach(this);
+					}
+					objs.clear();
+					ModifierEventArgs* args = new ModifierEventArgs(true);
+					oneLoop->Raise(*args);
+					delete args;
+				}else{
+					//If forever repeat == true and current_loop is lesser than times_repeat
+					ModifierEventArgs* args = new ModifierEventArgs();
+					oneLoop->Raise(*args);
+					delete args;
 				}
-				objs.clear();
-				return;
-				
 			}else{
-				//If forever repeat == true and current_loop is lesser than times_repeat
 				_Update();
 			}
 		}

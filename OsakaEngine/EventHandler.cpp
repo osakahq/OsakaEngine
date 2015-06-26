@@ -23,6 +23,8 @@ namespace Osaka{
 				if( e.auto_unregister ){
 					remove_queue.push_back(it->first);
 				}
+				//We need to reset the vars because, if we don't it's gonna look like every Registree wants to auto unregister
+				e.Reset();
 			}
 			if( !remove_queue.empty() ){
 				__AutoRemove();

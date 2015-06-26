@@ -52,6 +52,7 @@ namespace Osaka{
 			/* To know which phase does what, refer to `testsuite_run.cpp` */
 			if( phase == TEST_PHASE::PHASE1 ){
 				this->rpgapp = appbuilder->Create("tests\\SceneTests_Phase1\\phase1_data.xml", "tests\\SceneTests_Phase1\\does_not_exists.xml", "tests\\SceneTests_Phase1\\does_not_exists.7z", *debug);
+				//this->rpgapp = appbuilder->Create("data.xml", "tests\\SceneTests_Phase1\\does_not_exists.xml", "tests\\SceneTests_Phase1\\does_not_exists.7z", *debug);
 				
 				int tests[] = {TESTID_PHASE1_PLAYBACKLOAD, TESTID_PHASE1_PLAYBACKLOAD_LINKED, TESTID_PHASE1_PLAYBACKINTRO_ALPHA};
 				AddExpectedTests(sizeof(tests)/sizeof(*tests), tests);
@@ -63,8 +64,8 @@ namespace Osaka{
 				rpgapp->AddScene(rpgapp->scenefactory->CreateDummyScene(rpgapp->gameDataParams->scene_credits.c_str()));
 				rpgapp->AddScene(rpgapp->scenefactory->CreateDummyScene(rpgapp->gameDataParams->scene_startmenu_newgame.c_str()));
 
-				//rpgapp->Run(rpgapp->gameDataParams->scene_intro, Engine::EmptyESceneArgsPTR);
-				rpgapp->Run(rpgapp->gameDataParams->scene_startmenu, Engine::EmptyESceneArgsPTR);
+				rpgapp->Run(rpgapp->gameDataParams->scene_intro, Engine::EmptyESceneArgsPTR);
+				//rpgapp->Run(rpgapp->gameDataParams->scene_startmenu, Engine::EmptyESceneArgsPTR);
 			}else{
 				LOG("[RPGLibTestSuite] Unkown phase.\n");
 			}

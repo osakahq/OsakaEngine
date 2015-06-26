@@ -20,6 +20,13 @@ namespace Osaka{
 
 			}
 
+			/* You only need to override this function when you want a custom EventHandler */
+			virtual void Reset(){
+				//This is needed because when a Registree wants to unregister, 
+				//the next one might not want to do the same.
+				auto_unregister = false;
+			}
+
 			bool auto_unregister;
 		};
 

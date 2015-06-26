@@ -3,10 +3,21 @@
 #ifndef RPGLIB_MODIFIER_H
 #define RPGLIB_MODIFIER_H
 
+#include "EventArgs.h"
 #include "osaka_forward.h"
 
 namespace Osaka{
 	namespace RPGLib{
+
+		class ModifierEventArgs : public Component::EventArgs{
+		public:
+			ModifierEventArgs(bool _mod_deattach) : mod_deattach(_mod_deattach){
+			}
+			ModifierEventArgs() : mod_deattach(false){
+			}
+			/* This is to tell that Mod is gonna deattach itself */
+			const bool mod_deattach;
+		};
 
 		class Modifier{
 		public:
@@ -18,6 +29,9 @@ namespace Osaka{
 			void Update();
 			/* Sets current_loop to 0 and calls `Reset()`. Should only be called by the owner. */
 			void Restart();
+
+			/* Owner. Raised everytime 1 loop is done. */
+			Component::EventHandler* oneLoop;
 
 			/* Called from Drawable */
 			virtual void __Drawable_Mod(Drawable& raw_obj) = 0;

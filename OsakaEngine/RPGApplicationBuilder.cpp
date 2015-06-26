@@ -52,8 +52,8 @@ namespace Osaka{
 			fileloader = new Engine::DefaultFileLoader();
 #else
 			/* Only do this when everything is ready to go. */
-			//fileloader = std::make_shared<Engine::PhysicsFSFileLoader>(debug, "tests\\tests.7z");
-			fileloader = new Engine::DefaultFileLoader();
+			fileloader = new Engine::PhysicsFSFileLoader(&debug, "data.osaka");
+			//fileloader = new Engine::DefaultFileLoader();
 #endif
 			Engine::SDLLib* lib = new Engine::SDLLib(&debug);
 			RPGApplication* app = this->CreateRPGApp(debug, *lib, *fileloader);

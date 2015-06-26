@@ -19,16 +19,23 @@ namespace Osaka{
 			void Enter() override;
 			void Update(Engine::keyboard_state& state) override;
 			void Draw() override;
+
+			/* This is called from Effect (OneLoop) */
+			virtual void OnFadeInOneLoop(Component::EventArgs& e);
 		private:
 			Timer* timer;
-			bool added_subtitle_effect;
-
+			
+			Square* white_background;
 			Image* background;
 			Image* title;
 			Image* subtitle;
 
 			FloatingEffect* effect;
 			FadeInEffect* fadein;
+
+			/* 0 = fade in start background.
+			 * 1 = fade in start title */
+			int phase;
 		};
 	}
 }
