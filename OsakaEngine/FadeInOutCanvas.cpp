@@ -33,6 +33,7 @@ namespace Osaka{
 			square = factory.CreateSquare(ruler->x_top_left_corner, ruler->y_top_left_corner, ruler->max_height, ruler->max_width);
 			square->rgba = hex;
 			effect = factory.CreateFadeInFadeOutEffect();
+			effect->SetRepetitions(0, true);
 			square->AddMod(effect);
 
 			registree->Register(effect->endAnimation, std::bind(&FadeInOutCanvas::OnEffectEndAnimation, this, std::placeholders::_1));
