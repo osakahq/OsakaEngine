@@ -239,10 +239,15 @@ namespace Osaka{
 					//First increments then grabs value, so... we actually wait the for the actual frame to complete.
 					if( ++current_frame >= frames_per_key ){
 						current_frame = 0;
-						LOG("-- Frame is paused, please press enter to continue...\n");
+						LOG("-- Frame is paused, please press enter to continue or [x] to unpause...\n");
+						std::string buff;
 						paused_time = SDL_GetTicks();
-						getchar();
+						std::getline(std::cin, buff);
 						paused_time = SDL_GetTicks() - paused_time;
+						if( buff == "x" ){
+							pause_frame = false;
+							current_frame = 0;
+						}
 					}
 				}
 #endif

@@ -92,7 +92,7 @@ namespace Osaka{
 				if( diff > 1017 ){
 					//In a fast normal operation, the difference between time-1000 will be minimal.
 					//If the application is starting to slow, make sure to announce that BeforePresent was called late
-					LOG("[FPSCounter] BeforePresent() was called very late: %d\n", time);
+					LOG("[FPSCounter] BeforePresent() was called very late: %d\n", diff);
 				}
 
 				//First increments then grabs value.
