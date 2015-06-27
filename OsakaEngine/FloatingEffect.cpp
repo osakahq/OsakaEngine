@@ -19,16 +19,12 @@ namespace Osaka{
 		FloatingEffect::~FloatingEffect(){
 			timerm = NULL;
 		}
-		bool FloatingEffect::__Drawable_Attach(Drawable* obj, DrawableModifierArgs& args){
-			if( Modifier::__Drawable_Attach(obj, args) ) {
-				DrawableModFloatingArgs& fargs = dynamic_cast<DrawableModFloatingArgs&>(args);
-				floatings.insert(std::make_pair(obj, floating_info(fargs.wiggleY, fargs.percentage_delta)));
-				return true;
-			}
-			return false;
+		void FloatingEffect::_Attach(Drawable* obj, DrawableModifierArgs& args){
+			//This is only called if the obj was succesfully inserted in map (base class)
+			DrawableModFloatingArgs& fargs = dynamic_cast<DrawableModFloatingArgs&>(args);
+			floatings.insert(std::make_pair(obj, floating_info(fargs.wiggleY, fargs.percentage_delta)));
 		}
-		void FloatingEffect::__Drawable_Deattach(Drawable* obj){
-			Modifier::__Drawable_Deattach(obj);
+		void FloatingEffect::_Deattach(Drawable* obj){
 			floatings.erase(obj);
 		}
 
@@ -43,7 +39,7 @@ namespace Osaka{
 			/* We need this so that at first it doesnt go too fast at the beginning */
 			float easing_delta = info.traveled_y / info.wiggleY;
 			if( easing_delta < 0.2f ){
-				//If we don't do this it will never move if info.traveled_y = 0
+				//If we don't do this it will never move if info.traveled_y = 0, because of the multiplication
 				easing_delta = 0.2f;
 			}
 
@@ -88,10 +84,10 @@ namespace Osaka{
 			//easing_delta = 0.035;
 		}
 		
-		void FloatingEffect::Reset(){
+		void FloatingEffect::Reset(bool loop_finished){
 			/* Because of the nature of the effect, 1 loop is done when we are at the middle meaning
 			 * The object is left with the initial y */
-			if( loop_was_done == false ){
+			if( loop_finished == false ){
 				//If `loop_was_done` is false, it means owner called Restart
 				for(auto it = floatings.begin(); it != floatings.end(); ++it){
 					//If the object actually moved, we need to substract those to the current y.

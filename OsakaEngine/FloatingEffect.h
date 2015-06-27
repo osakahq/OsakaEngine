@@ -83,10 +83,11 @@ namespace Osaka{
 			virtual ~FloatingEffect();
 
 			void __Drawable_Mod(Drawable& obj) override;
-			bool __Drawable_Attach(Drawable* obj, DrawableModifierArgs& args) override;
-			void __Drawable_Deattach(Drawable* obj) override;
 		protected:
-			void Reset() override;
+			void _Attach(Drawable* obj, DrawableModifierArgs& args) override;
+			void _Deattach(Drawable* obj) override;
+
+			void Reset(bool loop_finished) override;
 			void _Update() override;
 
 			/* This is delta divided by 100 = 0.16 */

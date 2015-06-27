@@ -35,9 +35,7 @@ namespace Osaka{
 
 			/* When current_loop changes value (++), `loop_was_done` is always true. */
 			if( loop_was_done ){
-				Reset();
-				/* This has to be after Reset() so we can actually identify when: 
-				 * Reset is being called when a loop is done or when owner calls it (Restart) */
+				Reset(loop_was_done); //true
 				loop_was_done = false;
 
 				//It deattaches itself in the next Update.
@@ -67,7 +65,7 @@ namespace Osaka{
 			loop_was_done = false;
 			current_loop = 0;
 			active = true;
-			Reset();
+			Reset(false);
 		}
 		void Modifier::OneLoop(){
 			++current_loop;
@@ -75,19 +73,21 @@ namespace Osaka{
 			loop_was_done = true;
 		}
 
-		bool Modifier::__Drawable_Attach(Drawable* obj, DrawableModifierArgs& args){
+		void Modifier::__Drawable_Attach(Drawable* obj, DrawableModifierArgs& args){
 			//Only when the obj doesn't exists in the map
 			if( objs.find(obj) == objs.end() ){
 				obj->__Mod_Need(need_ex, need_transparency, true);
 				objs[obj] = obj;
-				return true;
+				_Attach(obj, args);
 			}
-			//This return value should be checked if base class overrides this function.
-			return false;
 		}
 		void Modifier::__Drawable_Deattach(Drawable* obj){
 			obj->__Mod_Need(need_ex, need_transparency, false);
 			objs.erase(obj);
+			_Deattach(obj);
 		}
+
+		void Modifier::_Attach(Drawable* obj, DrawableModifierArgs& args){}
+		void Modifier::_Deattach(Drawable* obj){}
 	}
 }

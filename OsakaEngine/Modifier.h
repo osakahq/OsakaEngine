@@ -36,22 +36,28 @@ namespace Osaka{
 			/* Called from Drawable */
 			virtual void __Drawable_Mod(Drawable& raw_obj) = 0;
 			/* Called from Drawable:AddEffect
-			 * If you override this in baseclass, then you should consult the return value
 			 * `args` can be ignored if you don't use it and it is deleted when the function call chain ends.
 			 * You can use `args` to have unique settings for the drawable objects. See FloatingEffect for an example */
-			virtual bool __Drawable_Attach(Drawable* obj, DrawableModifierArgs& args);
+			void __Drawable_Attach(Drawable* obj, DrawableModifierArgs& args);
 			/* Called when the effect is removed from the object (Called from Drawable: remove functions) */
-			virtual void __Drawable_Deattach(Drawable* obj);
+			void __Drawable_Deattach(Drawable* obj);
 
 		protected:
+			/* These 2 functions are called from __Drawable_Attach/...Deattach.
+			 * Instead of calling base functions, you know only need to override this if you need extra functionality */
+			//_Attach is only called if the obj was succesfully inserted into the map
+			virtual void _Attach(Drawable* obj, DrawableModifierArgs& args);
+			virtual void _Deattach(Drawable* obj);
+
 			/* These should be set by the derived class */
 			const bool need_ex;
 			const bool need_transparency;
 
 			/* This is the one base class should override */
 			virtual void _Update() = 0;
-			/* Should only be called by the class itself */
-			virtual void Reset() = 0;
+			/* Should only be called by the class itself 
+			 * loop_finished = is true NOT called from `Restart` and 1 loop was done */
+			virtual void Reset(bool loop_finished) = 0;
 			/* Called from derived class when 1 loop ended */
 			void OneLoop();
 

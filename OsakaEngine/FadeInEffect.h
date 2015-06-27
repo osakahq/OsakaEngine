@@ -17,7 +17,7 @@ namespace Osaka{
 
 			void __Drawable_Mod(Drawable& obj) override;
 		protected:
-			void Reset() override;
+			void Reset(bool loop_finished) override;
 			void _Update() override;
 
 			float fadeInTime;

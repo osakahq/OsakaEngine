@@ -86,7 +86,7 @@ namespace Osaka{
 		void FadeInFadeOutEffect::BeginEndAnimation(){
 			beginSecondPart = true;
 		}
-		void FadeInFadeOutEffect::Reset(){
+		void FadeInFadeOutEffect::Reset(bool loop_finished){
 			beginSecondPart = false;
 			beginStillTime = false;
 			onMidAnimation = false;

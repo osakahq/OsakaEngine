@@ -38,7 +38,7 @@ namespace Osaka{
 			}
 		}
 		
-		void FadeInEffect::Reset(){
+		void FadeInEffect::Reset(bool loop_finished){
 			timer->Start();
 			alpha = 0;
 		}
