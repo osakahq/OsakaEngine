@@ -23,13 +23,16 @@ namespace Osaka{
 			/* This is called from Effect (OneLoop) */
 			virtual void OnFadeInOneLoop(Component::EventArgs& e);
 		private:
+			/* Owner */
 			Timer* timer;
 			
+			/* Owner of all these */
 			Square* white_background;
 			Image* background;
 			Image* title;
 			Image* subtitle;
 
+			/* Owner of all these */
 			FloatingEffect* effect;
 			FadeInEffect* fadein;
 
