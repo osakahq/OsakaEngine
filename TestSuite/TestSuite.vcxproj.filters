@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Tests">
+      <UniqueIdentifier>{d8510015-a8dc-480f-a76f-10371fd82306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\Phase1">
+      <UniqueIdentifier>{b0eb63a3-f18a-41ae-bc80-19f726fd23da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{f5de5c44-a68c-4e05-acf3-f351154c1ced}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\Components">
+      <UniqueIdentifier>{60e44f37-0465-4baf-a9d4-39b28d4c73c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\Components\Builders">
+      <UniqueIdentifier>{8815aa76-7caf-4129-b4e0-6dc654fe9e6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\Components\Scenes">
+      <UniqueIdentifier>{ac52aa47-666d-4bb4-83d7-0fc897ddf300}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_testsuite_macro.h">
+      <Filter>Source Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="RPGLibTestSuite.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="idtests.h">
+      <Filter>Source Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaybackIntroSceneTestBuilder.h">
+      <Filter>Source Files\Tests\Components\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTestFactory.h">
+      <Filter>Source Files\Tests\Components\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="TestApplicationBuilder.h">
+      <Filter>Source Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TestPlaybackIntroScript.h">
+      <Filter>Source Files\Tests\Components\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="StartMenuSceneTestBuilder.h">
+      <Filter>Source Files\Tests\Components\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="TestStartMenuSceneScript.h">
+      <Filter>Source Files\Tests\Components\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TestFadeInOutCanvas.h">
+      <Filter>Source Files\Tests\Components\Scenes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSuite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="_testsuite_macro.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="RPGLibTestSuite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaybackIntroSceneTestBuilder.cpp">
+      <Filter>Source Files\Tests\Components\Builders</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneTestFactory.cpp">
+      <Filter>Source Files\Tests\Components\Builders</Filter>
+    </ClCompile>
+    <ClCompile Include="TestApplicationBuilder.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TestPlaybackIntroScript.cpp">
+      <Filter>Source Files\Tests\Components\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="StartMenuSceneTestBuilder.cpp">
+      <Filter>Source Files\Tests\Components\Builders</Filter>
+    </ClCompile>
+    <ClCompile Include="TestStartMenuSceneScript.cpp">
+      <Filter>Source Files\Tests\Components\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="TestFadeInOutCanvas.cpp">
+      <Filter>Source Files\Tests\Components\Scenes</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

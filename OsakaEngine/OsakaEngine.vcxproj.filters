@@ -1,0 +1,757 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Osaka">
+      <UniqueIdentifier>{919035e3-0bcd-483c-b88d-a0509c97ae44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\Engine">
+      <UniqueIdentifier>{96739543-4479-4184-8ccc-3a7208722766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\Debug">
+      <UniqueIdentifier>{95219fb5-1925-4c0a-9e44-1c8484ffbf1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\Network">
+      <UniqueIdentifier>{eb153371-917f-4f51-8e43-ba0d46faa6bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\Component">
+      <UniqueIdentifier>{ae6bc028-5262-4e32-9b33-41e5fe86cbec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib">
+      <UniqueIdentifier>{467c98d0-fa65-4fda-bf0d-1154b3ba3282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game">
+      <UniqueIdentifier>{46b4a816-5078-463b-8743-476a06a7efdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Util">
+      <UniqueIdentifier>{78456881-623d-4b85-9960-5494f1f91667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Data">
+      <UniqueIdentifier>{e8834b77-36a6-4490-b024-e0c885d64774}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application">
+      <UniqueIdentifier>{8a1ad1b3-be65-4b8e-8679-eb6d93c3782c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Factory">
+      <UniqueIdentifier>{1ffcf84b-710b-4aa5-b21f-872dca77bd44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene">
+      <UniqueIdentifier>{839901c4-5979-45f1-9319-0fd01ca87729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\RPG">
+      <UniqueIdentifier>{2c90e9b2-1f8f-4498-be82-db925d7848e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Scene">
+      <UniqueIdentifier>{f8091478-f8b0-4bfc-8a1e-b3efaab08fdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\Engine\Scene">
+      <UniqueIdentifier>{2425ae76-33ca-4c85-8c27-2666451ecdbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Game">
+      <UniqueIdentifier>{0195bec9-d9e8-49bd-8451-ac6d88870c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\Engine\Sound">
+      <UniqueIdentifier>{db698083-33b1-4b28-97a1-aa7065e682fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\Engine\FileLoader">
+      <UniqueIdentifier>{df7f7c8f-3fd1-4be2-adbb-e7b5fad2fbc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Asset">
+      <UniqueIdentifier>{d258ce3f-3583-406e-8d40-9f53fd30ba72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Time">
+      <UniqueIdentifier>{d834c124-704c-4560-853a-ae760e35de47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\Battle">
+      <UniqueIdentifier>{6b36841c-a127-4efa-94b6-143ad3dfffd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\Credits">
+      <UniqueIdentifier>{17b0b1ea-abbc-496d-b1bf-cbecb3a64913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\Instance">
+      <UniqueIdentifier>{58d1e5f8-0c66-4d71-864e-a4f1f2347859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\Loading">
+      <UniqueIdentifier>{b1686f66-3f2a-4aa0-9fab-9b94d927375b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\Map">
+      <UniqueIdentifier>{78ecb927-2ebc-4b80-b659-8139bdb995fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\Playback">
+      <UniqueIdentifier>{3d31d0a9-e237-41ef-a1b4-dce90d0f3d97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\StartMenu">
+      <UniqueIdentifier>{06e0b0aa-7b20-4474-91f1-5a9d4ea2af78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\World">
+      <UniqueIdentifier>{2b6c536d-e7e2-44a2-b790-5b0227b9caf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\Playback\Intro">
+      <UniqueIdentifier>{7b1d874f-473e-426a-b949-a432c6aa0ef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\Playback\ImageCinematic">
+      <UniqueIdentifier>{95b39989-0832-45d6-b253-5d0e8e91c1e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\FPS">
+      <UniqueIdentifier>{8404eca3-1f70-45ca-a1cf-9da88ad52056}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Asset\Font">
+      <UniqueIdentifier>{f9311a2a-5e40-48dd-8b38-22469113d2a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Scene\InitScene">
+      <UniqueIdentifier>{07d652a3-1501-4bf3-9569-b2c951f21c11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Scene\Layer">
+      <UniqueIdentifier>{537a2906-f6c9-4ffb-86dc-7e4f7035dd87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Scene\Layer\UI">
+      <UniqueIdentifier>{6477ba8a-e8d4-4ba0-a50a-f98a2dad5fa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Scene\Layer\UI\Component">
+      <UniqueIdentifier>{f12a43d9-0485-4a3f-8c47-cb324104e1dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Scene\Layer\Canvas">
+      <UniqueIdentifier>{070b68cf-9a57-4363-8534-6324b7c1b01b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\Loading\Layers">
+      <UniqueIdentifier>{7ee686a2-6cea-4cbd-83e9-b6e7900fde44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Game\Scene\Loading\Layers\LoadingFadeLayer">
+      <UniqueIdentifier>{39732990-e2a1-4d4d-a6cc-fdc267f00b7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Scene\OneLayer">
+      <UniqueIdentifier>{e87c754c-246c-438a-b9a9-4b7cc7042c45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Factory\Builder">
+      <UniqueIdentifier>{645aaa9a-7f99-4f08-a984-89ff68ffa30c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Scene\DummyScene">
+      <UniqueIdentifier>{34465dd6-f7c2-42a7-ae8b-97f05a16d680}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable">
+      <UniqueIdentifier>{10b4636a-26a5-400c-93f0-3bb82b46bc26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Scene\Layer\FadeInOutLayer">
+      <UniqueIdentifier>{83a72211-309d-49a6-895d-6bef2703a28b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable\Modifiers">
+      <UniqueIdentifier>{c5165f01-dbfb-417f-9dfd-e80e466ee692}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerConn.h">
+      <Filter>Source Files\Osaka\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Source Files\Osaka\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="RecieveEventArgs.h">
+      <Filter>Source Files\Osaka\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="EventArgs.h">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Source Files\Osaka\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="EApplication.h">
+      <Filter>Source Files\Osaka\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RPGApplication.h">
+      <Filter>Source Files\Osaka\RPGLib\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Source Files\Osaka\RPGLib\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Source Files\Osaka\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RPGFactory.h">
+      <Filter>Source Files\Osaka\RPGLib\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSession.h">
+      <Filter>Source Files\Osaka\RPGLib\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="RPGScene.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Chest.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Spell.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Stat.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDataLoader.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Party.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Source Files\Osaka\RPGLib\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="StatsManager.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLLib.h">
+      <Filter>Source Files\Osaka\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVars.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSessionManager.h">
+      <Filter>Source Files\Osaka\RPGLib\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleColors.h">
+      <Filter>Source Files\Osaka\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="engine_include.h">
+      <Filter>Source Files\Osaka\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="gamedata_include.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Source Files\Osaka\Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Music.h">
+      <Filter>Source Files\Osaka\Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEffect.h">
+      <Filter>Source Files\Osaka\Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="CreditsCanvas.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Credits</Filter>
+    </ClInclude>
+    <ClInclude Include="CreditsScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Credits</Filter>
+    </ClInclude>
+    <ClInclude Include="CreditsUI.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Credits</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleCanvas.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleUI.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="MapCanvas.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapUI.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="EScene.h">
+      <Filter>Source Files\Osaka\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="IFileLoader.h">
+      <Filter>Source Files\Osaka\Engine\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="physfsrwops.h">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultFileLoader.h">
+      <Filter>Source Files\Osaka\Engine\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsFSFileLoader.h">
+      <Filter>Source Files\Osaka\Engine\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml.hpp">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml_iterators.hpp">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml_utils.hpp">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetManager.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Ruler.h">
+      <Filter>Source Files\Osaka\RPGLib\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaybackIntroCanvas.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Playback\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaybackIntroScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Playback\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCounter.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\FPS</Filter>
+    </ClInclude>
+    <ClInclude Include="ESceneArgs.h">
+      <Filter>Source Files\Osaka\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingArgs.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticText.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Asset\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Asset\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="InitScene.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\InitScene</Filter>
+    </ClInclude>
+    <ClInclude Include="InitSceneArgs.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\InitScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingFadeCanvas.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Loading\Layers\LoadingFadeLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerArgs.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Script.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingFadeScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Loading\Layers\LoadingFadeLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingSceneScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="OneLayerScene.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\OneLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="OneLayer.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\OneLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="OneLayerScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\OneLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaybackIntroSceneScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Playback\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="Hiccups.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\FPS</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneBuilder.h">
+      <Filter>Source Files\Osaka\RPGLib\Factory\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaybackIntroSceneBuilder.h">
+      <Filter>Source Files\Osaka\RPGLib\Factory\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingSceneBuilder.h">
+      <Filter>Source Files\Osaka\RPGLib\Factory\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneFactory.h">
+      <Filter>Source Files\Osaka\RPGLib\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="_checkdelete.h">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="osaka_forward.h">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="rpglib_include.h">
+      <Filter>Source Files\Osaka\RPGLib\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="RPGApplicationBuilder.h">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="StartMenuSceneScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\StartMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="StartMenuSceneBuilder.h">
+      <Filter>Source Files\Osaka\RPGLib\Factory\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="DummyScene.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\DummyScene</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeInOutScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\FadeInOutLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Square.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeInOutCanvas.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\FadeInOutLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeInFadeOutEffect.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable\Modifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawable.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="StartMenuScript.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\StartMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="StartMenuCanvas.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\StartMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableTexture.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDataParams.h">
+      <Filter>Source Files\Osaka\RPGLib\Game\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="global_vars.h">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Registry.h">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadSafeEventHandler.h">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Registree.h">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadSafeEventRegistree.h">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Callback.h">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Modifier.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable\Modifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatingEffect.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable\Modifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeInEffect.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable\Modifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableModifierArgs.h">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable\Modifiers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerConn.cpp">
+      <Filter>Source Files\Osaka\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Source Files\Osaka\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="RecieveEventArgs.cpp">
+      <Filter>Source Files\Osaka\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Source Files\Osaka\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLLib.cpp">
+      <Filter>Source Files\Osaka\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDataLoader.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="EApplication.cpp">
+      <Filter>Source Files\Osaka\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="RPGApplication.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="RPGFactory.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSessionManager.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="GameData.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSession.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Osaka\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine_include.cpp">
+      <Filter>Source Files\Osaka\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Music.cpp">
+      <Filter>Source Files\Osaka\Engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEffect.cpp">
+      <Filter>Source Files\Osaka\Engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="RPGScene.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="physfsrwops.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultFileLoader.cpp">
+      <Filter>Source Files\Osaka\Engine\FileLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Source Files\Osaka\Engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsFSFileLoader.cpp">
+      <Filter>Source Files\Osaka\Engine\FileLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Ruler.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaybackIntroCanvas.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Playback\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaybackIntroScript.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Playback\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSCounter.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\FPS</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingArgs.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticText.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Asset\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Asset\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="InitScene.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\InitScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingFadeCanvas.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Loading\Layers\LoadingFadeLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Script.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingFadeScript.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Loading\Layers\LoadingFadeLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneScript.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingSceneScript.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="OneLayerScene.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\OneLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="OneLayer.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\OneLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaybackIntroSceneScript.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\Playback\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="Hiccups.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\FPS</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneBuilder.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Factory\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaybackIntroSceneBuilder.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Factory\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingSceneBuilder.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Factory\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneFactory.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="OsakaEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="_checkdelete.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="RPGApplicationBuilder.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="StartMenuSceneScript.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\StartMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="StartMenuSceneBuilder.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Factory\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="DummyScene.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\DummyScene</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeInOutScript.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\FadeInOutLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Square.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeInOutCanvas.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\FadeInOutLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeInFadeOutEffect.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable\Modifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawable.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="StartMenuScript.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\StartMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="StartMenuCanvas.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Scene\StartMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawableTexture.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDataParams.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Game\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="global_vars.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadSafeEventHandler.cpp">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Registree.cpp">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadSafeEventRegistree.cpp">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Callback.cpp">
+      <Filter>Source Files\Osaka\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Modifier.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable\Modifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatingEffect.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable\Modifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeInEffect.cpp">
+      <Filter>Source Files\Osaka\RPGLib\Application\Scene\Layer\Drawable\Modifiers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OsakaEngine.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon2.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

@@ -5,6 +5,17 @@
 !*.hpp
 !*.cpp
 !*.xml
+!*.txt
+
+!*.sln
+!*.vcxproj
+!*.vcxproj.filters
+!*.ico
+!*.rc
+!*.aps
+
+!README.md
+!LICENSE
 
 !*OsakaEngine/
 !*TestSuite/
