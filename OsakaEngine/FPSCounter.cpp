@@ -69,6 +69,10 @@ namespace Osaka{
 				//show_sum_frames is a constant
 				if( calls == target_fps ){
 					float avr = static_cast<float>(sum_frame_ms) / calls;
+					if( avr >= 1000 ){
+						//We need to cap it, otherwise buffer overflow
+						avr = 999.999f;
+					}
 					sprintf_s(average_frame_ms, "%.3f", avr);
 					hiccups->EndSet(avr);
 					sum_frame_ms = 0;
