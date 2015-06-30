@@ -10,7 +10,7 @@ Osaka Engine is in an early alpha stage (game wise), most of the base of the eng
 
 Next development milestone: User interface.
 
-### Compile info (Win32)
+### Compile info (Win x86)
 Visual studio 2012 Version 11.0.61030.00 Update 4 (Windows 7)  
 SDL 2.0.3  
 PhysFS 2.0.3  (Compiled using CMake and VS Studio 2012)  
